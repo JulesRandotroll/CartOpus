@@ -1,0 +1,14 @@
+function GenererMotDePasse()
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        //=> tableau
+        $MotDePasse = '';
+        for ($i = 0; $i < 15; $i++) 
+        {
+            $MotDePasse = $MotDePasse . $characters[rand(0, 61)];
+        }
+        return $MotDePasse;
+    }
+    $MotDePasse = GenererMotDePasse();
+    echo'<BR>Mot de passe aléatoire : ';
+    echo $MotDePasse;
