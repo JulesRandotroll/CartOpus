@@ -18,6 +18,7 @@ class Visiteur extends CI_Controller
 
     public function loadAccueil()
     {
+        $this->load->library('calendar');
         $this->load->view('templates/Entete');
         $this->load->view('Visiteur/Accueil');
         $this->load->view('templates/PiedDePage');
@@ -98,6 +99,11 @@ class Visiteur extends CI_Controller
      }// fin function
     
 
+
+    public function GetActionRecherchee()
+    {
+        //if(isset())
+    }
 
 
 }//Fin Visiteur
