@@ -120,6 +120,12 @@ class Visiteur extends CI_Controller
       }
     }
 
+    public function RecupMDP()
+    {
+      $this->load->view('templates/Entete');
+      $this->load->view('Visiteur/RecupMDP');
+      $this->load->view('templates/PiedDePage');
+    }
 
     public function GetActionRecherchee()
     {
