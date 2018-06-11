@@ -1,7 +1,11 @@
                 <div class = "text-center">
                 <BR>
                 <?php 
+<<<<<<< HEAD
                     echo'<a href="'.site_url('Visiteur/SInscrire').'" class="btn btn-danger" > S\'inscrire</a>   ';
+=======
+                    echo'<a href="'.site_url('Visiteur/loadAccueil').'" class="btn btn-danger" > S\'inscrire</a>   ';
+>>>>>>> b98feb9fb1e24030755a1eb728ce62938901a7d3
                     echo'<a href="'.site_url('Visiteur/loadAccueil').'" class="btn btn-danger" > Se connecter</a>';
                 ?>  
                 </div>

@@ -62,7 +62,7 @@ class Visiteur extends CI_Controller
             else
             {
               $donneeAinserer=array(
-                'noprofil'=>'1',
+              'noprofil'=>'1',
               'nomacteur'=>$this->input->post('nom'),
               'prenomacteur'=>$this->input->post('prenom'),
               'motdepasse'=>$this->input->post('mdp'),
