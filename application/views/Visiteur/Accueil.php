@@ -11,7 +11,7 @@
 </div>
 <div class="row" style="background-color:#15B7D1">
     <?php echo form_open('Visiteur/GetActionRecherchee'); ?>
-    <div class="col-sm-4" style="padding:20px">
+    <div class="col-sm-5" style="padding:20px">
         <div class = "text-center">
             <section >
                 <div class = "section-inner" style="padding:20px">
@@ -36,37 +36,39 @@
                     Date : 
                     <?php
                         
-                        $jour = array(1=>1,
-                        2=>2,
-                        3=>3,
-                        4=>4,
-                        5=>5,
-                        6=>6,
-                        7=>7,
-                        8=>8,
-                        9=>9,
-                        10=>10,
-                        11=>11,
-                        12=>12,
-                        13=>13,
-                        14=>14,
-                        15=>15,
-                        16=>16,
-                        17=>17,
-                        18=>18,
-                        19=>19,
-                        20=>20,
-                        21=>21,
-                        22=>22,
-                        23=>23,
-                        24=>24,
-                        25=>25,
-                        26=>26,
-                        27=>27,
-                        28=>28,
-                        29=>29,
-                        30=>30,
-                        31=>31);
+                        $jour = array(
+                            1=>1,
+                            2=>2,
+                            3=>3,
+                            4=>4,
+                            5=>5,
+                            6=>6,
+                            7=>7,
+                            8=>8,
+                            9=>9,
+                            10=>10,
+                            11=>11,
+                            12=>12,
+                            13=>13,
+                            14=>14,
+                            15=>15,
+                            16=>16,
+                            17=>17,
+                            18=>18,
+                            19=>19,
+                            20=>20,
+                            21=>21,
+                            22=>22,
+                            23=>23,
+                            24=>24,
+                            25=>25,
+                            26=>26,
+                            27=>27,
+                            28=>28,
+                            29=>29,
+                            30=>30,
+                            31=>31
+                        );
                         
                         $mois = array(
                             01=>'Janvier',
@@ -105,22 +107,17 @@
         <div class = "text-center">
             <section >
                 <div class = "section-inner" style="padding:20px">
-                    <?php 
-                        echo 'Lieu : ';
-                        echo form_input('Lieu', '', array('placeholder'=>'Rechercher par Lieu'));
-                    ?>
-                </div>
-            <section>
-        </div>
-    </div>
-    <div class="col-sm-1" style="padding:20px">
-        <div>
-            <section >
-                <div class = "section-inner" style="padding:20px">
-                    <?php 
-                        echo form_submit('submit','Rechercher');
-                        echo form_close();
-                    ?>
+                    <table>
+                        <?php
+                            echo '<tr><td>'; 
+                            echo 'Lieu : ';
+                            echo form_input('Lieu', '', array('placeholder'=>'Rechercher'));
+                            echo'</td><td>';
+                            echo form_submit('submit','Rechercher');
+                            echo form_close();
+                            echo'</td></tr>'
+                        ?>
+                    </table>
                 </div>
             <section>
         </div>
