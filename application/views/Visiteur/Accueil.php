@@ -19,13 +19,8 @@
                 <div class = "text-center">
                 <BR>
                 <?php 
-<<<<<<< HEAD
-                    echo'<a href="'.site_url('Visiteur/SInscrire').'" class="btn btn-danger" > S\'inscrire</a>   ';
-                    echo'        <a href="'.site_url('Visiteur/loadAccueil').'" class="btn btn-danger" > Se connecter</a>';
-=======
                     echo'<a href="'.site_url('Visiteur/loadAccueil').'" class="btn btn-danger" > S\'inscrire</a>   ';
                     echo'<a href="'.site_url('Visiteur/loadAccueil').'" class="btn btn-danger" > Se connecter</a>';
->>>>>>> 9dfab63de47b0811577951f5557fefbb18bd6ab2
                 ?>  
                 </div>
             </div>
