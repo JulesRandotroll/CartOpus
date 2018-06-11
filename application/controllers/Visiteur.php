@@ -103,8 +103,22 @@ class Visiteur extends CI_Controller
           $this->load->view('Visiteur/sInscrire',$DonneesInjectees);
           $this->load->view('templates/PiedDePage');
         }
-     }// fin function
+    }// fin function
     
+    public function SeConnecter()
+    {
+      $DonneesInjectees['Titre de la page']='Inscription';
+      if ( $this->input->post('submit'))
+      {
+
+      }
+      else
+      {
+        $this->load->view('templates/Entete');
+        $this->load->view('Visiteur/SeConnecter');
+        $this->load->view('templates/PiedDePage');
+      }
+    }
 
 
     public function GetActionRecherchee()
