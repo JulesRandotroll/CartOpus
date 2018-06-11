@@ -1,6 +1,18 @@
 <html>
 <body>
+<div class = "text-center">
+                <BR>
+                <?php 
+                    //echo'<a href="'.site_url('Visiteur/SInscrire').'" class="btn btn-danger" > S\'inscrire</a>   ';
+                    echo'<a href="'.site_url('Visiteur/loadAccueil').'" class="btn btn-danger" > Se connecter</a>';
+                ?>  
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
 <h2><?php echo ('Inscription') ?></h2>
+
 <?php
 
 echo validation_errors(); // mise en place de la validation
