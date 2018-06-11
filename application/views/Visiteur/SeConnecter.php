@@ -27,22 +27,23 @@
                                 saisies sont réinjectées dans le formulaire */
                             
                             echo form_open('Visiteur/seConnecter');
-                            echo form_label('Mail : ','mail'); // creation d'un label devant la zone de saisie
+                            echo ('Mail : '); // creation d'un label devant la zone de saisie
                             echo form_input('mail','',array('required'=>'required'));
                             echo' ';
-                            echo form_label('Mot de passe : ','mdp');
+                            echo ('Mot de passe : ');
                             echo form_password('mdp','',array('required'=>'required'));
                             echo' ';
                             echo form_submit('submit', 'Se connecter');
                             echo' ';
-                            echo '<a href="'.site_url('Visiteur/RecupMDP').'">Mot de passe oublié ?</a>';
+                            echo '<a style="color:#FFFFFF" href="'.site_url('Visiteur/RecupMDP').'">Mot de passe oublié ?</a>';
                             echo form_close();
 
-                            echo '<a href="'.site_url('Visiteur/sInscrire').'">S\'inscrire ? </a>';
+                            echo '<a style="color:#FFFFFF" href="'.site_url('Visiteur/sInscrire').'">S\'inscrire ? </a>';
                         
                         ?>
                     </div>
             </section>
+            <br>
         </div>
     </div>
     <div class="col-sm-2">
