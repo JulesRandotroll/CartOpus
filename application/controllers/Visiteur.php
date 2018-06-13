@@ -144,7 +144,7 @@ class Visiteur extends CI_Controller
         $this->email->from('cartopus22@gmail.com');
         $this->email->to($mail); 
         $this->email->subject('Récupération du mot de passe');
-        $this->email->message("Voici votre nouveau mot de passe : ".$MotDePasse." <br> Pour le modifier rendez vous sur votre compte CartOpus");
+        $this->email->message("Voici votre nouveau mot de passe : ".$MotDePasse."  Pour le modifier rendez vous sur votre compte CartOpus");
         
         $this->ModelSeConnecter->Update_mdp($MotDePasse,$ancienMDP);
 
