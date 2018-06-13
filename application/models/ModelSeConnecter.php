@@ -34,5 +34,16 @@
             $requete = $this->db->get();
             return $requete->row_array();
         }
+
+        public function GetNoProfil($donneesATester)
+        {
+            $array = array('mail' => $donneesATester['mail'], 'motdepasse' => $donneesATester['mdp']);
+            $this->db->select('NoProfil');
+            $this->db->from('acteur ');
+            $this->db->where($array);
+
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
     }
 ?>

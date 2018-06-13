@@ -35,7 +35,8 @@
                             echo' ';
                             echo '<a style="color:#FFFFFF" href="'.site_url('Visiteur/RecupMDP').'">Mot de passe oublié ?</a>';
                             echo form_close();
-
+                            echo $message;
+                            echo '<br><br>';
                             echo '<a style="color:#FFFFFF" href="'.site_url('Visiteur/sInscrire').'">S\'inscrire ? </a>';
                         
                         ?>

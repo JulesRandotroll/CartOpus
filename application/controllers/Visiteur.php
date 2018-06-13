@@ -105,6 +105,9 @@ class Visiteur extends CI_Controller
     public function SeConnecter()
     {
       $this->session->statut=0;
+      $message=array(
+        'message'=>'',
+      );
       $DonneesInjectees['Titre de la page']='Connexion';
       if ( $this->input->post('submit'))
       {
@@ -119,24 +122,42 @@ class Visiteur extends CI_Controller
           
           if ($this->session->statut==0) // 0 : statut visiteur
           {
+            $message=array(
+              'message'=>'Vous n\'êtes pas encore inscrit',
+            );
+            var_dump($message);
             $this->load->view('templates/Entete');
-            $this->load->view('Visiteur/SeConnecter');
+            $this->load->view('Visiteur/SeConnecter',$message);
             $this->load->view('templates/PiedDePage');
-            echo 'Vous n\'êtes pas encore inscrit';
+         
           }
         }
         else
         {
-          echo 'recupere le noprofil pour renvoyer sur la bonne page d\'accueil';
-          $this->session->statut=1;//1 = Responsable equipe
+          $noprofil = $this->ModelSeConnecter->GetNoProfil($donneesATester);
+          var_dump($noprofil);  
+          $this->session->statut=$noprofil;
+          var_dump($this->session->statut);
+          if ($this->session->statut==1)
+          {
+            redirect('Acteur/AccueilActeur');
+          }
+          if ($this->session->statut==4)
+          {
+
+          }
+          if ($this->session->statut==5)
+          {
+
+          }
           //redirect(site_url('Visiteur/loadAccueil'));
-          redirect('Visiteur/loadAccueil');
+          //redirect('Visiteur/loadAccueil');
         }
       }
       else
       {
         $this->load->view('templates/Entete');
-        $this->load->view('Visiteur/SeConnecter');
+        $this->load->view('Visiteur/SeConnecter',$message);
         $this->load->view('templates/PiedDePage');
       }
     }
