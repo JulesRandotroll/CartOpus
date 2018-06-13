@@ -12,7 +12,7 @@ class Visiteur extends CI_Controller
        $this->load->library('email');
        $this->load->library('table');
        $this->load->helper('form');
-       $this->load->library('session');
+       $this->load->model('ModelSeConnecter');
     } // __construct
 
     public function loadAccueil()
@@ -70,6 +70,9 @@ class Visiteur extends CI_Controller
               );
               $this->load->model('ModelSInscrire');
               $test = $this->ModelSInscrire->Insert_Acteur($donneeAinserer);
+              $this->load->view('templates/Entete');
+              $this->load->view('Visiteur/Accueil');
+              $this->load->view('templates/PiedDePage');
             }
           }// if mdp== confmdp
           else
@@ -119,11 +122,50 @@ class Visiteur extends CI_Controller
       }
     }
 
+    public function GenererMotDePasse()
+    {
+        $characters = '0123456789abcdefghijklmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ';
+        //=> tableau
+        $MotDePasse = '';
+        for ($i = 0; $i < 15; $i++) 
+        {
+            $MotDePasse = $MotDePasse . $characters[rand(0, 59)];
+        }
+        return $MotDePasse;
+    }
+   
+   
     public function RecupMDP()
     {
+      $mail =  $this->input->post('mail');
+      $ancienMDP = $this->ModelSeConnecter->Recup_mdp($mail);
+      $MotDePasse =$this->GenererMotDePasse();
+      if ($ancienMDP['motdepasse']!=null){
+        $this->email->from('cartopus22@gmail.com');
+        $this->email->to($mail); 
+        $this->email->subject('Récupération du mot de passe');
+        $this->email->message("Voici votre nouveau mot de passe : ".$MotDePasse."  Pour le modifier rendez vous sur votre compte CartOpus");
+        
+        $this->ModelSeConnecter->Update_mdp($MotDePasse,$ancienMDP);
+
+        if (!$this->email->send())
+        {
+            $this->email->print_debugger();
+            echo "Error";
+        }
+        else
+        {
+          $this->load->view('templates/Entete');
+          $this->load->view('Visiteur/Accueil'); // accueil Acteur
+          $this->load->view('templates/PiedDePage');
+        }
+      }
+      else
+      {
       $this->load->view('templates/Entete');
       $this->load->view('Visiteur/RecupMDP');
       $this->load->view('templates/PiedDePage');
+      }
     }
 
     public function GetActionRecherchee()
