@@ -168,10 +168,6 @@ class Visiteur extends CI_Controller
       }
     }
 
-    public function GetActionRecherchee()
-    {
-        //if(isset())
-    }
 
 
 }//Fin Visiteur
