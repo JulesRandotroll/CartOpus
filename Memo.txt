@@ -1,3 +1,14 @@
+Perspectives futures pour le projet : 
+    - Archivage (=> selection date => select date min from avoir lieu ==> date max)
+    - tuto => comment ça marche
+    -Page à faire avec Léandre
+    -
+
+Taff A Faire : 
+    -page d'accueil Acteur :    - fiche perso avec l'orga si existe ^^
+                                - liste des action auxuqelles il participe order by date
+
+
 function GenererMotDePasse()
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

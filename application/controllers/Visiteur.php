@@ -12,8 +12,7 @@ class Visiteur extends CI_Controller
        $this->load->library('email');
        $this->load->library('table');
        $this->load->helper('form');
-       //$this->load->model('ModeleArticle'); // chargement modèle, obligatoire
-       //$this->load->model('ModeleUtilisateur');
+       $this->load->library('session');
     } // __construct
 
     public function loadAccueil()
