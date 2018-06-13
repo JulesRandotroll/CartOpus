@@ -32,4 +32,4 @@ INSERT INTO `cartopus`.`organisation` (`NO_ORGANISATION`, `NOLIEU`, `NOMORGANISA
 INSERT INTO `cartopus`.`acteur` (`NOACTEUR`, `NOPROFIL`, `NOMACTEUR`, `PRENOMACTEUR`, `MOTDEPASSE`, `MAIL`, `NOTEL`) VALUES (NULL, '1', 'Chevalier', 'Leandre', 'goldfinger007', 'leandre.mjcduplateau@gmail.com', NULL);
 INSERT INTO `cartopus`.`action` (`NOACTION`, `NOMACTION`, `PublicCible`, `SiteURLAction`, `Description`) VALUES (NULL, 'Iniciation informatiaque', 'jeunes', NULL, 'Quelques cours simples et rapides sur l''utilisation en toute sécurité des différents outils technologiques d''aujourd''hui. ');
 
-4pP@R31L_1Ph20T
+4pP@R31L_1Ph20T.png
