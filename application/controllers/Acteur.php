@@ -15,7 +15,7 @@ class Acteur extends CI_Controller
         $this->load->library('session');
         $this->load->model('ModelActeur');
         //A RETIRER UNE FOIS LA CONNEXION OK
-           $this->session->noActeur = 1;
+           $this->session->noActeur = 2;
         // A RETIRER UNE FOIS LA CONNEXION OK
 
        //$this->load->model('ModeleArticle'); // chargement modèle, obligatoire
@@ -25,8 +25,21 @@ class Acteur extends CI_Controller
     public function AccueilActeur()
     {
         $noActeur = $this->session->noActeur;
-        
+        //On stocke dans une variable locale l'identifiant BDD de l'acteur connecté
 
+        $Acteur = $this->ModelActeur->getActeur($noActeur);
+        //On va chercher les information concernant l'acteur connecté dans la BDD 
+        
+        var_dump($Acteur); //=> sert à voir ce qui est contenu dans la variable (ici $Acteur)
+        
+        $Organisation = $this->ModelActeur->getOrganisation($noActeur);
+        //on va chercher les information concernant l'organisation à laquelle appartient l'acteur connecté
+        //il se peut que cette variable soit "null", auquel cas il faut mettre une condition dans la view
+        // pour ne pas tenter de l'afficher s'l n'y a rien de dedans ^^ 
+        var_dump($Organisation);
+        $Action = $this->ModelActeur->getActions($noActeur);
+        //Même topo que pour $Organisation
+        
         $this->load->view('templates/Entete');
         $this->load->view('Acteur/AccueilActeur',$Données);
         $this->load->view('templates/PiedDePage');

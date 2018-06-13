@@ -14,9 +14,7 @@
  <div class="row" style="background-color:#15B7D1;padding:20px"> 
     <div class="col-sm-1">
         <?php 
-            echo form_open('Visiteur/GetActionRecherchee'); 
-            echo 
-            form_upload('Photo');
+            echo form_open('Visiteur/GetActionRecherchee');
             
         ?>
     </div>
