@@ -1,0 +1,35 @@
+Perspectives futures pour le projet : 
+    - Archivage (=> selection date => select date min from avoir lieu ==> date max)
+    - tuto => comment ça marche
+    -Page à faire avec Léandre
+    -
+
+Taff A Faire : 
+    -page d'accueil Acteur :    - fiche perso avec l'orga si existe ^^
+                                - liste des action auxuqelles il participe order by date
+
+
+function GenererMotDePasse()
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        //=> tableau
+        $MotDePasse = '';
+        for ($i = 0; $i < 15; $i++) 
+        {
+            $MotDePasse = $MotDePasse . $characters[rand(0, 61)];
+        }
+        return $MotDePasse;
+    }
+    $MotDePasse = GenererMotDePasse();
+    echo'<BR>Mot de passe aléatoire : ';
+    echo $MotDePasse;
+
+utilisation fichier style => adaptabilité des graphisme
+
+Script insetion : 
+INSERT INTO `cartopus`.`lieu` (`NOLIEU`, `ADRESSE`, `NOMLIEU`, `LONGITUDE`, `LATITUDE`, `ALTITUDE`, `CodePostal`, `Ville`) VALUES (NULL, '1 Avenue Antoine Mazier', 'MJC du Plateau', '-2.741343', '48.514356', NULL, '22000', 'Saint-Brieuc');
+INSERT INTO `cartopus`.`organisation` (`NO_ORGANISATION`, `NOLIEU`, `NOMORGANISATION`, `NOTELORGA`, `NOFAXORGA`, `SITEURL`) VALUES (NULL, '1', 'MJC du Plateau', NULL, NULL, NULL);
+INSERT INTO `cartopus`.`acteur` (`NOACTEUR`, `NOPROFIL`, `NOMACTEUR`, `PRENOMACTEUR`, `MOTDEPASSE`, `MAIL`, `NOTEL`) VALUES (NULL, '1', 'Chevalier', 'Leandre', 'goldfinger007', 'leandre.mjcduplateau@gmail.com', NULL);
+INSERT INTO `cartopus`.`action` (`NOACTION`, `NOMACTION`, `PublicCible`, `SiteURLAction`, `Description`) VALUES (NULL, 'Iniciation informatiaque', 'jeunes', NULL, 'Quelques cours simples et rapides sur l''utilisation en toute sécurité des différents outils technologiques d''aujourd''hui. ');
+
+4pP@R31L_1Ph20T
