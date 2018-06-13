@@ -12,6 +12,17 @@
 
 <div class="row" style="background-color:#15B7D1;padding:20px">
     <?php 
-        echo 'Coucou Et Bienvenu';
+        var_dump($Acteur);
+        var_dump($Organisation);
+        var_dump($Action);
     ?>
+    <div class="col-sm-5">
+        <div class = "text-center">
+            <section>
+                <div class = "section-inner" style="padding:20px">
+                    
+                </div>
+            </section>
+        </div>
+    </div>
 </div>
