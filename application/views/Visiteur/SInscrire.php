@@ -23,7 +23,7 @@
                                 <?php
                                     echo validation_errors(); // mise en place de la validation
                                     echo form_open('visiteur/sInscrire');
-                                    echo('<table class="table" border=0>');
+                                    echo('<table style="width:100%" border=0>');
 
                                     echo('<tr><td>');
                                     echo('Nom: ');
@@ -57,6 +57,12 @@
                                     echo ('Confirmation du mot de passe: '); // creation d'un label devant la zone de saisie
                                     echo('</td><td>');
                                     echo form_password('confmdp','',array('required'=>'required'));// VERIF si confirme == mdp
+                                    echo('</td></tr>');
+
+                                    echo('<tr><td>');
+                                    echo ('Question Secrète: '); // creation d'un label devant la zone de saisie
+                                    echo('</td><td>');
+                                    echo form_dropdown('reponse', $Questions, 'default');
                                     echo('</td></tr>');
 
                                     echo('<tr><td>');

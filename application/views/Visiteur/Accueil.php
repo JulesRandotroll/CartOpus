@@ -1,8 +1,15 @@
                 <div class = "text-center">
                 <BR>
                 <?php 
+                if ( $this->session->statut ==0)
+                {
                     echo'<a href="'.site_url('Visiteur/SInscrire').'" class="btn btn-danger" > S\'inscrire</a>   ';
                     echo'<a href="'.site_url('Visiteur/SeConnecter').'" class="btn btn-danger" > Se connecter</a>';
+                }
+                else
+                {
+                    echo'<a href="'.site_url('Visiteur/SeDeconnecter').'" class="btn btn-danger" > Se Déconnecter</a>   ';
+                }
                 ?>  
                 </div>
             </div>

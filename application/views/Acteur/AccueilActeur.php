@@ -1,7 +1,7 @@
                 <div class = "text-center">
                     <BR>
                     <?php 
-                        echo'<a href="'.site_url('Visiteur/Deconnexion').'" class="btn btn-danger" > Se deconnecter</a>';
+                        echo'<a href="'.site_url('Visiteur/SeDeconnecter').'" class="btn btn-danger" > Se deconnecter</a>';
                     
                     ?>  
                 </div>
@@ -20,7 +20,7 @@
         <div class = "text-center">
             <section>
                 <div class = "section-inner" style="padding:20px">
-                    
+                <?php echo ($this->session->statut);?>
                 </div>
             </section>
         </div>

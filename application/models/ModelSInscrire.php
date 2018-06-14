@@ -23,5 +23,14 @@
            return $requete->row_array();
            // Select
         }
+
+        public function QuestionSecrete()
+{
+            $this->db->select('*'); 
+            $this->db->from('QuestionSecrete');
+            $requete = $this->db->get();
+            return $requete->result_array();
+       
+} 
     }
 ?>

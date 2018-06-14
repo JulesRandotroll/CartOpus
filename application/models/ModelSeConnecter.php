@@ -45,5 +45,16 @@
             $requete = $this->db->get();
             return $requete->result_array();
         }
+
+        public function GetNoActeur($donneesATester)
+        {
+            $array = array('mail' => $donneesATester['mail'], 'motdepasse' => $donneesATester['mdp']);
+            $this->db->select('NoActeur');
+            $this->db->from('acteur ');
+            $this->db->where($array);
+
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
     }
 ?>
