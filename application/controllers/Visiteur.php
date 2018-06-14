@@ -68,12 +68,16 @@ class Visiteur extends CI_Controller
               'motdepasse'=>$this->input->post('mdp'),
               'mail' => $this->input->post('mail'),
               'notel' => $this->input->post('tel'),
+              'photoprofil'=>'4pP@R31L_1Ph20T.png',
+              'noquestion'=>$this->input->post('question'),
               'reponse'=>$this->input->post('reponse'),
               );
+              var_dump($donneeAinserer);
+              $this->session->statut=1;
               $this->load->model('ModelSInscrire');
               $test = $this->ModelSInscrire->Insert_Acteur($donneeAinserer);
               $this->load->view('templates/Entete');
-              $this->load->view('Visiteur/Accueil');
+              $this->load->view('Visiteur/Accueil',$this->session->statut);
               $this->load->view('templates/PiedDePage');
             }
           }// if mdp== confmdp
@@ -96,7 +100,7 @@ class Visiteur extends CI_Controller
         {
           $this->load->model('ModelSInscrire'); // on charge le modele correspondant
             $question = $this->ModelSInscrire->QuestionSecrete();
-            var_dump($question);
+            //var_dump($question);
           $i=0;
           foreach($question as $uneQuestion)
           {
@@ -122,7 +126,7 @@ class Visiteur extends CI_Controller
                 'Questions'=>$Options,
             );
           
-          var_dump($DonneesInjectees);
+         // var_dump($DonneesInjectees);
           $this->load->view('templates/Entete');
           $this->load->view('Visiteur/sInscrire',$DonneesInjectees);
           $this->load->view('templates/PiedDePage');

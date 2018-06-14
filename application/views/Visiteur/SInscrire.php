@@ -28,13 +28,14 @@
                                     echo('<tr><td>');
                                     echo('Nom: ');
                                     echo('</td><td>');
-                                    echo form_input('nom',$nom,array('required'=>'required','pattern'=>'[a-zA-Z]{1,40}')); 
+                                    echo form_input('nom',$nom,array('required'=>'required','pattern'=>'[a-zA-Z ]{1,40}')); 
                                     echo('</td></tr>');
 
                                     echo('<tr><td>');
                                     echo ('Prénom: ');
                                     echo('</td><td>');
-                                    echo form_input('prenom',$prenom,array('pattern'=>'[a-zA-Z]{1,20}'));                                 echo('</td></tr>');
+                                    echo form_input('prenom',$prenom,array('pattern'=>'[a-zA-Z ]{1,20}'));                          
+                                    echo('</td></tr>');
 
                                     echo('<tr><td>');
                                     echo ('Email d\'identification: '); // creation d'un label devant la zone de saisie
@@ -62,7 +63,12 @@
                                     echo('<tr><td>');
                                     echo ('Question Secrète: '); // creation d'un label devant la zone de saisie
                                     echo('</td><td>');
-                                    echo form_dropdown('reponse', $Questions, 'default');
+                                    echo form_dropdown('question', $Questions, 'default');
+                                    echo('</td></tr>');
+                                    echo('<tr><td>');
+                                    echo ('Reponse: '); 
+                                    echo('</td><td>');
+                                    echo form_input('reponse',$reponse,array('required'=>'required','pattern'=>'[A-Za-z0-9 ]{1,40}'));
                                     echo('</td></tr>');
 
                                     echo('<tr><td>');
