@@ -36,20 +36,21 @@
                 {
                     //var_dump($uneOrga);
                     $this->db->select('*');
-                    $this->db->from('Organisation');
+                    $this->db->from('Organisation o');
+                    $this->db->join('Lieu l','o.nolieu=l.nolieu');
                     $this->db->where('No_Organisation',$uneOrga['No_Organisation']);
                     $requete = $this->db->get();
                     $temporaire = $requete->result_array();
                     //var_dump($temporaire);
-                    
+                    $Temp = $temporaire[0];
                     if(empty($Resultats))
                     {
-                        $Resultats = array($i=>$temporaire);
+                        $Resultats = array($i=>$Temp);
                         
                     }
                     else
                     {
-                        $Resultats = $Resultats + array($i=>$temporaire);
+                        $Resultats = $Resultats + array($i=>$Temp);
                     }
                     $i +=1;
                 }
@@ -59,8 +60,9 @@
 
         public function getActions($noActeur)
         {
-            $this->db->select('noAction, datedebut, noRole');
-            $this->db->from('EtrePartenaire');
+            $this->db->select('noAction, datedebut');
+            $this->db->from('EtrePartenaire p');
+            $this->db->join('Role r','p.noRole=r.noRole');
             $this->db->where('noActeur',$noActeur);
             $requete = $this->db->get();
             $noActions = $requete->result_array();
@@ -74,21 +76,28 @@
                 $i = 0;
                 foreach($noActions as $uneAction)
                 {
+                    $Conditions = array(
+                        'p.noaction'=>$uneAction['noAction'],
+                        'p.datedebut'=>$uneAction['datedebut'],
+                    );
                     //var_dump($uneAction);
                     $this->db->select('*');
-                    $this->db->from('Action');
-                    $this->db->where('noAction',$uneAction['noAction']);
+                    $this->db->from('EtrePartenaire p');
+                    $this->db->join('Action a','a.noaction=p.noaction');
+                    $this->db->join('Role r','p.noRole=r.noRole');
+                    $this->db->where($Conditions);
                     $requete = $this->db->get();
                     $temporaire = $requete->result_array();
                     //var_dump($temporaire);
                     
+                    $Temp = $temporaire[0];
                     if(empty($Resultats))
                     {
-                        $Resultats = array($i=>$temporaire);
+                        $Resultats = array($i=>$Temp);
                     }
                     else
                     {
-                        $Resultats = $Resultats + array($i=>$temporaire);
+                        $Resultats = $Resultats + array($i=>$Temp);
                     }
                     $i +=1;
                 }
@@ -96,5 +105,14 @@
             }
         }
     }
+
+
+/*
+SELECT * 
+FROM action a, etrepartenaire p, role r
+WHERE a.noaction=p.noaction AND r.norole=p.norole
+AND a.noaction = 1 AND datedebut = 2018-06-19 16:00:00
+*/
+
 
 ?>

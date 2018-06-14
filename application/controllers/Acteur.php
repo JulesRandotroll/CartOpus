@@ -42,7 +42,7 @@ class Acteur extends CI_Controller
         //Même topo que pour $Organisation
         //var_dump($Action);
         $Données = array(
-            'Acteur'=>$Acteur,
+            'Acteur'=>$Acteur[0],
             'Organisation'=> $Organisation,
             'Action'=> $Action,
         );
@@ -51,6 +51,73 @@ class Acteur extends CI_Controller
         $this->load->view('templates/PiedDePage');
         
     }
+
+    public function RedimensionnerPhoto($Image,$Source,$Destination,$ratio){
+
+        if(substr(strtolower($Source.$Image), (strlen($Source.$Image)-4),4)==".gif"){
+        $src=imagecreatefromgif($Source.$Image);
+        $ext = 'gif';
+        }
+        else if(substr(strtolower($Source.$Image), (strlen($Source.$Image)-4),4)==".png"){
+        $src=imagecreatefrompng($Source.$Image);
+        $ext = 'png';
+        }
+        else if(substr(strtolower($Source.$Image), (strlen($Source.$Image)-4),4)==".jpg" || substr(strtolower($Source.$Image), (strlen($Source.$Image)-5),5)==".jpeg"){
+        $src=imagecreatefromjpeg($Source.$Image);
+        $ext = 'jpg';
+        }
+
+        $size = getimagesize($Source.$Image);
+        $largeur = $size[0];
+        $hauteur = $size[1];
+
+        if($largeur > $hauteur){
+                  $newlargeur = $ratio;
+                  $newhauteur = round(($hauteur/$largeur)*$ratio);
+        }
+        else {
+                  $newlargeur = ($largeur/$hauteur)*$ratio;
+                  $newhauteur = $ratio;
+        }
+        
+        // the document recommends you to use truecolor to get better result
+        $imtn = imagecreatetruecolor( $newlargeur, $newhauteur );
+        // if the image has transparent color, we first extract the RGB value of it,
+        // then use this color to fill the thumbnail image as the background. This color
+        // is safe to be assigned as the new transparent color later on because it will
+        // be filtered by imagecopyresize.
+        $originaltransparentcolor = imagecolortransparent( $src );
+        if(
+            $originaltransparentcolor >= 0 // -1 for opaque image
+            && $originaltransparentcolor < imagecolorstotal( $src )
+            // for animated GIF, imagecolortransparent will return a color index larger
+            // than total colors, in this case the image is treated as opaque ( actually
+            // it is opaque )
+        ) {
+            $transparentcolor = imagecolorsforindex( $src, $originaltransparentcolor );
+            $newtransparentcolor = imagecolorallocate(
+                $imtn,
+                $transparentcolor['red'],
+                $transparentcolor['green'],
+                $transparentcolor['blue']
+            );
+            // for true color image, we must fill the background manually
+            imagefill( $imtn, 0, 0, $newtransparentcolor );
+            // assign the transparent color in the thumbnail image
+            imagecolortransparent( $imtn, $newtransparentcolor );
+        }
+
+        imagecopyresampled($imtn, $src, 0, 0, 0, 0, $newlargeur, $newhauteur, $largeur, $hauteur);
+        if ($ext == 'jpg')
+        {
+                  imagejpeg($imtn, $Destination.$Image);
+        }else if ($ext == 'png' ) {
+                  imagepng($imtn, $Destination.$Image);
+        } else if ($ext == 'gif') {
+                  imagegif($imtn, $Destination.$Image);
+        }
+
+}
 
 
 }
