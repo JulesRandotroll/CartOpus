@@ -247,8 +247,8 @@ class Visiteur extends CI_Controller
 
     public function SeDeconnecter()
     {
-    $this->session->sess_destroy();
-    redirect('Visiteur/loadAccueil','refresh');
+      $this->session->sess_destroy();
+      redirect('Visiteur/loadAccueil','refresh');
     }
 
 
