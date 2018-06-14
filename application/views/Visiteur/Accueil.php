@@ -1,9 +1,25 @@
+<<<<<<< HEAD
                     <ul class="nav navbar-nav navbar-right">
                         <?php 
                             echo'<li><a href="'.site_url('Visiteur/SInscrire').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-user"></span> S\'inscrire</a></li>';
                             echo'<li><a href="'.site_url('Visiteur/SeConnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-in"></span> Se connecter</a></li>';
                         ?> 
                     </ul>
+=======
+                <div class = "text-center">
+                <BR>
+                <?php 
+                if ( $this->session->statut ==0)
+                {
+                    echo'<a href="'.site_url('Visiteur/SInscrire').'" class="btn btn-danger" > S\'inscrire</a>   ';
+                    echo'<a href="'.site_url('Visiteur/SeConnecter').'" class="btn btn-danger" > Se connecter</a>';
+                }
+                else
+                {
+                    echo'<a href="'.site_url('Visiteur/SeDeconnecter').'" class="btn btn-danger" > Se Déconnecter</a>   ';
+                }
+                ?>  
+>>>>>>> b3e4004ff23c3998c794d565f5cf33866e6a7d8a
                 </div>
             </div>
         </nav>

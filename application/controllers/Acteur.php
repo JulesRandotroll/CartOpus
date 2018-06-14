@@ -15,7 +15,7 @@ class Acteur extends CI_Controller
         $this->load->library('session');
         $this->load->model('ModelActeur');
         //A RETIRER UNE FOIS LA CONNEXION OK
-           $this->session->noActeur = 1;
+           //$this->session->noActeur = 1;
         // A RETIRER UNE FOIS LA CONNEXION OK
 
        //$this->load->model('ModeleArticle'); // chargement modèle, obligatoire

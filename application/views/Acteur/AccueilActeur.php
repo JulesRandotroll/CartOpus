@@ -63,6 +63,7 @@
     <div class="col-sm-10">
         <div class = "text-center">
             <section>
+<<<<<<< HEAD
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                         <?php 
                             echo'<div class="table-responsive">';
@@ -72,6 +73,10 @@
 
                             }
                         ?>
+=======
+                <div class = "section-inner" style="padding:20px">
+                <?php echo ($this->session->statut);?>
+>>>>>>> b3e4004ff23c3998c794d565f5cf33866e6a7d8a
                 </div>
             </section>
         </div>
