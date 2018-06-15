@@ -1,15 +1,13 @@
-<html>
-<body>
-<div class = "text-center">
-                <BR>
-                <?php 
-                    echo'<a href="'.site_url('Visiteur/SInscrire').'" class="btn btn-danger" > S\'inscrire</a>   ';
-                    echo'<a href="'.site_url('Visiteur/SeConnecter').'" class="btn btn-danger" > Se connecter</a>';
-                ?>  
+                    <ul class="nav navbar-nav navbar-right">
+                        <?php 
+                            echo'<li><a href="'.site_url('Visiteur/SInscrire').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-user"></span> S\'inscrire</a></li>';
+                            echo'<li><a href="'.site_url('Visiteur/SeConnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-in"></span> Se connecter</a></li>';
+                        ?> 
+                    </ul>
                 </div>
             </div>
-        </div>
-    </section>
+        </nav>
+    </div>
 </div>
 <div class="row" style="background-color:#15B7D1"> 
     <div class="col-sm-2">

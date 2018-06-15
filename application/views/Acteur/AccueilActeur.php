@@ -15,6 +15,7 @@
         //var_dump($Action);
         //var_dump($_FILES);
     ?>
+    
     <div class="col-sm-4">
     </div>
     <div class="col-sm-4">
@@ -63,20 +64,19 @@
     <div class="col-sm-10">
         <div class = "text-center">
             <section>
-<<<<<<< HEAD
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                         <?php 
                             echo'<div class="table-responsive">';
-                            $this->table->set_heading();
+                            $this->table->set_heading('Nom','Rôle de '.$Acteur['NOMACTEUR'].' '.$Acteur['PRENOMACTEUR'],'Site Internet','Date de debut','Description','');
                             foreach($Action as $uneAction)
                             {
-
+                                $this->table->add_row($uneAction['NOMACTION'],$uneAction['NOMROLE'],$uneAction['SiteURLAction'],$uneAction['DATEDEBUT'],$uneAction['Description'],'<a href="'.site_url('Visiteur/SeConnecter').'" class="btn btn-danger" >Accès</a>');  
                             }
+                            $Style = array('table_open' => '<table class="table" >');
+                            $this->table->set_template($Style);
+                            
+                            echo $this->table->generate();
                         ?>
-=======
-                <div class = "section-inner" style="padding:20px">
-                <?php echo ($this->session->statut);?>
->>>>>>> b3e4004ff23c3998c794d565f5cf33866e6a7d8a
                 </div>
             </section>
         </div>
