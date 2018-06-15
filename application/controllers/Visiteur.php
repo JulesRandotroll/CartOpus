@@ -214,34 +214,101 @@ class Visiteur extends CI_Controller
    
     public function RecupMDP()
     {
-      $mail =  $this->input->post('mail');
-      $ancienMDP = $this->ModelSeConnecter->Recup_mdp($mail);
-      $MotDePasse =$this->GenererMotDePasse();
-      if ($ancienMDP['motdepasse']!=null){
-        $this->email->from('cartopus22@gmail.com');
-        $this->email->to($mail); 
-        $this->email->subject('Récupération du mot de passe');
-        $this->email->message("Voici votre nouveau mot de passe : ".$MotDePasse."  Pour le modifier rendez vous sur votre compte CartOpus");
-        
-        $this->ModelSeConnecter->Update_mdp($MotDePasse,$ancienMDP);
-
-        if (!$this->email->send())
+      $this->load->model('ModelSInscrire'); // on charge le modele correspondant
+      $question = $this->ModelSInscrire->QuestionSecrete();
+      //var_dump($question);
+      $i=0;
+      foreach($question as $uneQuestion)
+      {
+        if(empty($Options))
         {
-            $this->email->print_debugger();
-            echo "Error";
+          $Options = array($uneQuestion['noQuestion']=>$uneQuestion['nomQuestion']);
         }
         else
         {
-          $this->load->view('templates/Entete');
-          $this->load->view('Visiteur/Accueil'); // accueil Acteur
-          $this->load->view('templates/PiedDePage');
+          $temporaire = array($uneQuestion['noQuestion']=>$uneQuestion['nomQuestion']);
+          $Options = $Options + $temporaire;
         }
+      }
+      $DonneesInjectees=array
+      (
+        'Questions'=>$Options,
+        'reponse'=>"",
+        'message'=>"",
+      );
+
+      if ( $this->input->post('recupmail'))
+      {
+          $donneeATester=array(
+            'message'=>"",
+            'Questions'=>$this->input->post('question'),
+            'reponse'=>$this->input->post('reponse'),
+          );
+          var_dump($donneeATester);
+          $test=$this->ModelSeConnecter->testQuestion_Reponse($donneeATester);
+
+          $mail =  $this->input->post('mail');
+          $ancienMDP = $this->ModelSeConnecter->Recup_mdp($mail);
+          $MotDePasse =$this->GenererMotDePasse();
+
+          if ($test != 0)
+          {
+          // if question et reponse ok pour le gens qui correspond à ce mail ...
+            if ($ancienMDP['motdepasse']!=null){
+              $this->email->from('cartopus22@gmail.com');
+              $this->email->to($mail); 
+              $this->email->subject('Récupération du mot de passe');
+              $this->email->message("Voici votre nouveau mot de passe : ".$MotDePasse."  Pour le modifier rendez vous sur votre compte CartOpus");
+              
+              $this->ModelSeConnecter->Update_mdp($MotDePasse,$ancienMDP);
+
+              if (!$this->email->send())
+              {
+                  $this->email->print_debugger();
+                  echo "Error";
+              }
+              else
+              {
+                $mail =  $this->input->post('mail');
+                $mdp=$this->ModelSeConnecter->Recup_mdp($mail);
+                var_dump($mdp['motdepasse']);
+                $donneesATester=array(
+                  'mail'=>$this->input->post('mail'),
+                  'mdp'=>$mdp['motdepasse'],
+                );
+                $profil=$this->ModelSeConnecter->GetNoProfil($donneesATester);
+                $this->session->statut=$profil;
+                $this->load->view('templates/Entete');
+                $this->load->view('Visiteur/Accueil',$this->session->statut); // accueil Acteur
+                $this->load->view('templates/PiedDePage');
+              }
+            }
+            else
+            {
+            $this->load->view('templates/Entete');
+            $this->load->view('Visiteur/RecupMDP',$DonneesInjectees);
+            $this->load->view('templates/PiedDePage');
+            }
+          }
+          else
+          {
+            $DonneesInjectees=array(
+              'Questions'=>$Options,
+              'reponse'=>"",
+              'message'=>'la question et/ou la réponse ne sont pas correcte(s).',
+            );
+            $this->load->view('templates/Entete');
+            $this->load->view('Visiteur/RecupMDP',$DonneesInjectees);
+            $this->load->view('templates/PiedDePage');
+          }
+    
       }
       else
       {
-      $this->load->view('templates/Entete');
-      $this->load->view('Visiteur/RecupMDP');
-      $this->load->view('templates/PiedDePage');
+        var_dump($DonneesInjectees);
+        $this->load->view('templates/Entete');
+        $this->load->view('Visiteur/RecupMDP',$DonneesInjectees);
+        $this->load->view('templates/PiedDePage');
       }
     }
 

@@ -15,6 +15,10 @@ class Acteur extends CI_Controller
         $this->load->library('session');
         $this->load->model('ModelActeur');
         //A RETIRER UNE FOIS LA CONNEXION OK
+        if ($this->session->statut==0)
+        {
+            redirect('Visiteur/loadAccueil');
+        };
            //$this->session->noActeur = 1;
         // A RETIRER UNE FOIS LA CONNEXION OK
 
