@@ -85,6 +85,7 @@
                     $this->db->from('EtrePartenaire p');
                     $this->db->join('Action a','a.noaction=p.noaction');
                     $this->db->join('Role r','p.noRole=r.noRole');
+                    $this->db->join('AvoirLieu l','l.noAction=a.noAction');
                     $this->db->where($Conditions);
                     $requete = $this->db->get();
                     $temporaire = $requete->result_array();

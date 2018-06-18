@@ -42,7 +42,7 @@
                                     echo('</td></tr>');
 
                                     echo('<tr><td>');
-                                    echo ('Téléphone du responsable: '); // creation d'un label devant la zone de saisie
+                                    echo ('Téléphone : '); // creation d'un label devant la zone de saisie
                                     echo('</td><td>');                                echo form_input('tel',$tel,array('pattern'=>'[0-9]{10}'));
                                     echo('</td></tr>');
 
