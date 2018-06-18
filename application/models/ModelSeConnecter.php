@@ -15,6 +15,18 @@
             $requete = $this->db->get();
             return $requete->row_array();
         }
+        public function testQuestion_Reponse($donneeATester)
+        {
+            echo 'question';
+            var_dump($donneeATester['Questions']);
+            echo 'reponse';
+            var_dump($donneeATester['reponse']);
+            $this->db->select('noQuestion,Reponse');
+            $this->db->from('acteur');
+            $this->db->where('noquestion',$donneeATester['Questions'],'reponse',$donneeATester['reponse']);;
+            $requete = $this->db->get();
+            return $requete->row_array();
+        }
 
         public function Update_mdp($MotDePasse,$ancienMDP)
         {
@@ -22,6 +34,8 @@
             $this->db->where('motdepasse',$ancienMDP['motdepasse']);
             $this->db->update('acteur',$Donnees);
         }
+
+        
 
         public function Test_Inscrit($donneesATester)
         {
