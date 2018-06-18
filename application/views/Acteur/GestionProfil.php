@@ -12,9 +12,9 @@
 </div>
 
 <div class="row" style="background-color:#15B7D1">
-    <div class="col-sm-3">
+    <div class="col-sm-2">
     </div>
-    <div class="col-sm-6" style="padding:20px">
+    <div class="col-sm-8" style="padding:20px">
             <div style="padding:20px">
                 <div class = "text-center">
                     <H1 style="color:#FFFFFF">Gestion du compte<H1>
@@ -24,12 +24,14 @@
                                     echo validation_errors(); // mise en place de la validation
                                     echo form_open('Acteur/GestionProfil');
                                     echo('<table style="width:100%" border=0>');
-
-                                    echo 'photo de profil ';
                                     echo('<tr><td>');
                                     echo('Modifier nom: ');
-                                    echo('</td><td>');
+                                    echo '</td><td>';
                                     echo form_input('nom',$nom,array('pattern'=>'[a-zA-Z ]{1,40}')); 
+                                    echo('</td><td>');
+                                    //var_dump($Acteur);
+                                    echo'<a href="'.site_url('Acteur/GestionPhoto').'">'.img('4pP@R31L_1Ph20T.png').'</a>';
+                                   //echo (img($Acteur[0]['PhotoProfil']));
                                     echo('</td></tr>');
 
                                     echo('<tr><td>');
@@ -75,7 +77,7 @@
 
                                     echo('<tr><td>');
                                     echo('</td><td>');
-                                    echo form_submit('valider', 'Modifier');
+                                    echo form_submit('modif', 'Modifier');
                                     echo('</td></tr>');
                                     echo('</table>');
 

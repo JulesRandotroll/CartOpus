@@ -15,13 +15,15 @@ class Acteur extends CI_Controller
         $this->load->library('session');
         $this->load->model('ModelActeur');
         $this->load->model('ModelAction');
-        
+        $this->load->library('upload');
+
+        $this->load->library('image_lib');
         //A RETIRER UNE FOIS LA CONNEXION OK
         if ($this->session->statut==0)
         {
             redirect('Visiteur/loadAccueil');
         };
-           //$this->session->noActeur = 1;
+        //$this->session->noActeur = 1;
         // A RETIRER UNE FOIS LA CONNEXION OK
 
        //$this->load->model('ModeleArticle'); // chargement modèle, obligatoire
@@ -30,13 +32,14 @@ class Acteur extends CI_Controller
 
     public function AccueilActeur()
     {
+
         $noActeur = $this->session->noActeur;
         //On stocke dans une variable locale l'identifiant BDD de l'acteur connecté
 
         $Acteur = $this->ModelActeur->getActeur($noActeur);
         //On va chercher les information concernant l'acteur connecté dans la BDD 
         
-        //var_dump($Acteur); //=> sert à voir ce qui est contenu dans la variable (ici $Acteur)
+       // var_dump($Acteur); //=> sert à voir ce qui est contenu dans la variable (ici $Acteur)
         
         $Organisation = $this->ModelActeur->getOrganisation($noActeur);
         //on va chercher les information concernant l'organisation à laquelle appartient l'acteur connecté
@@ -62,6 +65,18 @@ class Acteur extends CI_Controller
     }
     public function GestionProfil()
     {
+        
+        if ( $this->input->post('modif'))
+        {
+            $this->ModelActeur->UpdateActeur($Donnees,$noActeur);
+        }
+
+        $noActeur = $this->session->noActeur;
+        //On stocke dans une variable locale l'identifiant BDD de l'acteur connecté
+
+        $Acteur = $this->ModelActeur->getActeur($noActeur);
+        //On va chercher les information concernant l'acteur connecté dans la BDD 
+        $DonnéesTitre = array('TitreDeLaPage'=>'Gestion du compte');
         $this->load->model('ModelSInscrire'); // on charge le modele correspondant
         $question = $this->ModelSInscrire->QuestionSecrete();
         $i=0;
@@ -86,9 +101,10 @@ class Acteur extends CI_Controller
             'message'=>'plop is good, plop is life',
             'Questions'=>$Options,
             'reponse'=>'',
+            'Acteur'=>$Acteur,
         );
         //var_dump($DonneesAInjectees);
-        $this->load->view('templates/Entete');
+        $this->load->view('templates/Entete',$DonnéesTitre);
         $this->load->view('Acteur/GestionProfil', $DonneesAInjectees);
         $this->load->view('templates/PiedDePage');
     }
@@ -96,20 +112,28 @@ class Acteur extends CI_Controller
     public function RedimensionnerPhoto($Image,$Source,$Destination,$ratio)
     {
 
-        if(substr(strtolower($Source.$Image), (strlen($Source.$Image)-4),4)==".gif"){
-        $src=imagecreatefromgif($Source.$Image);
+        if(substr(strtolower($Source.'\\'.$Image), (strlen($Source.'\\'.$Image)-4),4)==".gif"){
+        $src=imagecreatefromgif($Source.'\\'.$Image);
         $ext = 'gif';
         }
-        else if(substr(strtolower($Source.$Image), (strlen($Source.$Image)-4),4)==".png"){
-        $src=imagecreatefrompng($Source.$Image);
+        else if(substr(strtolower($Source.'\\'.$Image), (strlen($Source.'\\'.$Image)-4),4)==".png"){
+        $src=imagecreatefrompng($Source.'\\'.$Image);
         $ext = 'png';
         }
-        else if(substr(strtolower($Source.$Image), (strlen($Source.$Image)-4),4)==".jpg" || substr(strtolower($Source.$Image), (strlen($Source.$Image)-5),5)==".jpeg"){
-        $src=imagecreatefromjpeg($Source.$Image);
+        else if(substr(strtolower($Source.'\\'.$Image), (strlen($Source.'\\'.$Image)-4),4)==".jpg" || substr(strtolower($Source.'\\'.$Image), (strlen($Source.'\\'.$Image)-5),5)==".jpeg"){
+        $src=imagecreatefromjpeg($Source.'\\'.$Image);
         $ext = 'jpg';
         }
-
-        $size = getimagesize($Source.$Image);
+        // echo'image';
+        // var_dump($Image);
+        // echo'source';
+        // var_dump($Source);
+        // echo'destination';
+        // var_dump($Destination);
+        // echo'ratio';
+        // var_dump($ratio);
+        $size = getimagesize($Source.'\\'.$Image);
+        
         $largeur = $size[0];
         $hauteur = $size[1];
 
@@ -181,5 +205,66 @@ class Acteur extends CI_Controller
 
     }
 
+    public function GestionPhoto()
+    {
+        ?> 
+        
+        <form method="POST" action="GestionPhoto" enctype="multipart/form-data">
+        <!-- On limite le fichier à 100Ko -->
+        <input type="hidden" name="MAX_FILE_SIZE" value="100000">
+        Fichier : <input type="file" name="avatar">
+        <input type="submit" name="envoyer" value="Envoyer le fichier">
+        </form>
+        <?php
+        $noActeur = $this->session->noActeur;
+       // var_dump($noActeur);
+      //var_dump($_FILES);
+        if(isset($_FILES['avatar']))
+        { 
+           // $dossier = 'upload/';
+            $fichier = basename($_FILES['avatar']['name']);
+         // var_dump($fichier);
+            //var_dump($_FILES);
+            if (is_uploaded_file($_FILES['avatar']['tmp_name']))
+            //if(move_uploaded_file($_FILES['avatar']['tmp_name'], $dossier . $fichier)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
+            {
+                $extensions = array('.png', '.gif', '.jpg', '.jpeg');
+                // récupère la partie de la chaine à partir du dernier . pour connaître l'extension.
+                $extension = strrchr($_FILES['avatar']['name'], '.');
+                //Ensuite on teste
+                //var_dump($extension);
+                if(!in_array($extension, $extensions)) //Si l'extension n'est pas dans le tableau
+                {
+                    $erreur = 'Vous devez uploader un fichier de type png, gif, jpg, jpeg, txt ou doc...';
+                }
+                else
+                {
+                    echo 'Upload effectué avec succès !';
 
+                   
+                    $temp=$this->ModelActeur->GetPhoto($noActeur);
+                    //var_dump($temp);
+                    $AnciennePhoto=$temp[0]['photoprofil'];
+                    $NewPhoto=$fichier;
+                    $Source='D:\Mes Documents\Mes Images\photo music';
+                    $Destination='assets\images\\';
+                    $ratio='150';
+                    $this->RedimensionnerPhoto($NewPhoto,$Source,$Destination,$ratio);
+                    $this->ModelActeur->UpdatePhoto($AnciennePhoto,$NewPhoto,$noActeur);
+                    redirect('Acteur/AccueilActeur');
+                }
+               
+            }
+            else //Sinon (la fonction renvoie FALSE).
+            {
+                echo 'Echec de l\'upload !';
+            }
+        }
+       
+        //$data = array('upload_data' => $this->upload->data());
+       // $this->load->view('Visiteur/loadAccueil', $data);
+   
+        
+    }
 }
+?>

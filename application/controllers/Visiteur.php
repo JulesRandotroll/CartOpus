@@ -38,6 +38,7 @@ class Visiteur extends CI_Controller
     }
     public function SInscrire()
     {
+        $DonnéesTitre = array('TitreDeLaPage'=>'Inscription');
         $DonneesInjectees['Titre de la page']='Inscription';
         if ( $this->input->post('valider'))//si le bouton "Valider l'inscription" a été cliqué ...
         {
@@ -55,8 +56,8 @@ class Visiteur extends CI_Controller
                 'notel' => $this->input->post('tel'),
                 'message' => 'Vous êtes déjà inscrit avec cette adresse mail'
               );
-    
-               $this->load->view('templates/Entete');
+              
+               $this->load->view('templates/Entete',$DonnéesTitre);
                $this->load->view('Visiteur/sInscrire',$DonneesInjectees);
                $this->load->view('templates/PiedDePage');
             }
@@ -77,7 +78,7 @@ class Visiteur extends CI_Controller
 
               $this->load->model('ModelSInscrire');
               $test = $this->ModelSInscrire->Insert_Acteur($donneeAinserer);
-              $this->load->view('templates/Entete');
+              $this->load->view('templates/Entete',$DonnéesTitre);
               $this->load->view('Visiteur/Accueil',$this->session->statut);
               $this->load->view('templates/PiedDePage');
             }
@@ -91,7 +92,7 @@ class Visiteur extends CI_Controller
              'tel' => $this->input->post('tel'),
              'message' => 'La confirmation de mot de passe n\'est pas similaire au mot de passe écrit'
             );
-           $this->load->view('templates/Entete');
+           $this->load->view('templates/Entete',$DonnéesTitre);
            $this->load->view('Visiteur/sInscrire',$DonneesInjectees);
            $this->load->view('templates/PiedDePage');
            //echo 'La confirmation de mot de passe n\'est pas similaire au mot de passe écrit';
@@ -128,7 +129,7 @@ class Visiteur extends CI_Controller
             );
           
          // var_dump($DonneesInjectees);
-          $this->load->view('templates/Entete');
+          $this->load->view('templates/Entete',$DonnéesTitre);
           $this->load->view('Visiteur/sInscrire',$DonneesInjectees);
           $this->load->view('templates/PiedDePage');
         }
@@ -136,6 +137,7 @@ class Visiteur extends CI_Controller
     
     public function SeConnecter()
     {
+      $DonnéesTitre = array('TitreDeLaPage'=>'Connexion');
       $this->session->statut=0;
       $message=array(
         'message'=>'',
@@ -159,7 +161,7 @@ class Visiteur extends CI_Controller
               'message'=>'Vous n\'êtes pas encore inscrit',
             );
             var_dump($message);
-            $this->load->view('templates/Entete');
+            $this->load->view('templates/Entete',$DonnéesTitre);
             $this->load->view('Visiteur/SeConnecter',$message);
             $this->load->view('templates/PiedDePage');
          
@@ -195,7 +197,7 @@ class Visiteur extends CI_Controller
       }
       else
       {
-        $this->load->view('templates/Entete');
+        $this->load->view('templates/Entete',$DonnéesTitre);
         $this->load->view('Visiteur/SeConnecter',$message);
         $this->load->view('templates/PiedDePage');
       }
@@ -215,6 +217,7 @@ class Visiteur extends CI_Controller
    
     public function RecupMDP()
     {
+      $DonnéesTitre = array('TitreDeLaPage'=>'Récupération Mot de Passe');
       $this->load->model('ModelSInscrire'); // on charge le modele correspondant
       $question = $this->ModelSInscrire->QuestionSecrete();
       //var_dump($question);
@@ -271,14 +274,14 @@ class Visiteur extends CI_Controller
               else
               {
               
-                $this->load->view('templates/Entete');
+                $this->load->view('templates/Entete',$DonnéesTitre);
                 $this->load->view('Visiteur/Accueil'); // accueil Acteur
                 $this->load->view('templates/PiedDePage');
               }
             }
             else
             {
-            $this->load->view('templates/Entete');
+            $this->load->view('templates/Entete',$DonnéesTitre);
             $this->load->view('Visiteur/RecupMDP',$DonneesInjectees);
             $this->load->view('templates/PiedDePage');
             }
@@ -290,7 +293,7 @@ class Visiteur extends CI_Controller
               'reponse'=>"",
               'message'=>'la question et/ou la réponse ne sont pas correcte(s).',
             );
-            $this->load->view('templates/Entete');
+            $this->load->view('templates/Entete',$DonnéesTitre);
             $this->load->view('Visiteur/RecupMDP',$DonneesInjectees);
             $this->load->view('templates/PiedDePage');
           }
@@ -298,8 +301,8 @@ class Visiteur extends CI_Controller
       }
       else
       {
-        var_dump($DonneesInjectees);
-        $this->load->view('templates/Entete');
+        //var_dump($DonneesInjectees);
+        $this->load->view('templates/Entete',$DonnéesTitre);
         $this->load->view('Visiteur/RecupMDP',$DonneesInjectees);
         $this->load->view('templates/PiedDePage');
       }
