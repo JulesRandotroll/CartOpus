@@ -53,7 +53,39 @@ class Acteur extends CI_Controller
         $this->load->view('templates/Entete');
         $this->load->view('Acteur/AccueilActeur',$Données);
         $this->load->view('templates/PiedDePage');
-        
+
+    }
+    public function GestionProfil()
+    {
+        $this->load->model('ModelSInscrire'); // on charge le modele correspondant
+        $question = $this->ModelSInscrire->QuestionSecrete();
+        $i=0;
+        foreach($question as $uneQuestion)
+        {
+          if(empty($Options))
+          {
+            $Options = array($uneQuestion['noQuestion']=>$uneQuestion['nomQuestion']);
+          }
+          else
+          {
+            $temporaire = array($uneQuestion['noQuestion']=>$uneQuestion['nomQuestion']);
+            $Options = $Options + $temporaire;
+          }
+        }
+
+        $DonneesAInjectees=array(
+            'nom'=>'',
+            'prenom'=>'',
+            'mail'=>'',
+            'tel'=>'',
+            'message'=>'plop is good, plop is life',
+            'Questions'=>$Options,
+            'reponse'=>'',
+        );
+        //var_dump($DonneesAInjectees);
+        $this->load->view('templates/Entete');
+        $this->load->view('Acteur/GestionProfil', $DonneesAInjectees);
+        $this->load->view('templates/PiedDePage');
     }
 
     public function RedimensionnerPhoto($Image,$Source,$Destination,$ratio){

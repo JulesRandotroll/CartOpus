@@ -73,7 +73,7 @@ class Visiteur extends CI_Controller
               'reponse'=>$this->input->post('reponse'),
               );
               var_dump($donneeAinserer);
-              $this->session->statut=1;
+
               $this->load->model('ModelSInscrire');
               $test = $this->ModelSInscrire->Insert_Acteur($donneeAinserer);
               $this->load->view('templates/Entete');
@@ -269,17 +269,9 @@ class Visiteur extends CI_Controller
               }
               else
               {
-                $mail =  $this->input->post('mail');
-                $mdp=$this->ModelSeConnecter->Recup_mdp($mail);
-                var_dump($mdp['motdepasse']);
-                $donneesATester=array(
-                  'mail'=>$this->input->post('mail'),
-                  'mdp'=>$mdp['motdepasse'],
-                );
-                $profil=$this->ModelSeConnecter->GetNoProfil($donneesATester);
-                $this->session->statut=$profil;
+              
                 $this->load->view('templates/Entete');
-                $this->load->view('Visiteur/Accueil',$this->session->statut); // accueil Acteur
+                $this->load->view('Visiteur/Accueil'); // accueil Acteur
                 $this->load->view('templates/PiedDePage');
               }
             }
