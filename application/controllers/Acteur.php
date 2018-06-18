@@ -142,6 +142,7 @@ class Acteur extends CI_Controller
 
         $DonnéesTitre = array('TitreDeLaPage'=>$Action[0]['NOMACTION']);
         
+        
         $this->load->view('templates/Entete',$DonnéesTitre);
         $this->load->view('Acteur/AfficherAction');
         $this->load->view('templates/PiedDePage');
