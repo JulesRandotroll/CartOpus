@@ -14,6 +14,8 @@ class Acteur extends CI_Controller
         $this->load->helper('form');
         $this->load->library('session');
         $this->load->model('ModelActeur');
+        $this->load->model('ModelAction');
+        
         //A RETIRER UNE FOIS LA CONNEXION OK
         if ($this->session->statut==0)
         {
@@ -50,7 +52,10 @@ class Acteur extends CI_Controller
             'Organisation'=> $Organisation,
             'Action'=> $Action,
         );
-        $this->load->view('templates/Entete');
+        $DonnéesTitre = array('TitreDeLaPage'=>$Acteur[0]['NOMACTEUR'].' '.$Acteur[0]['PRENOMACTEUR']);
+        
+        $this->load->view('templates/Entete',$DonnéesTitre);
+        
         $this->load->view('Acteur/AccueilActeur',$Données);
         $this->load->view('templates/PiedDePage');
 
@@ -88,7 +93,8 @@ class Acteur extends CI_Controller
         $this->load->view('templates/PiedDePage');
     }
 
-    public function RedimensionnerPhoto($Image,$Source,$Destination,$ratio){
+    public function RedimensionnerPhoto($Image,$Source,$Destination,$ratio)
+    {
 
         if(substr(strtolower($Source.$Image), (strlen($Source.$Image)-4),4)==".gif"){
         $src=imagecreatefromgif($Source.$Image);
@@ -153,7 +159,27 @@ class Acteur extends CI_Controller
                   imagegif($imtn, $Destination.$Image);
         }
 
-}
+    }
+
+    public function AfficherActionSelectionnee($noAction,$dateDebut)
+    {
+        var_dump($noAction);
+        var_dump($dateDebut);
+        //str_split($dateDebut,'$20%');
+        $DateDebut=str_replace('%20',' ',$dateDebut);
+
+        $Doonnes = array('a.noaction'=>$noAction,'datedebut'=>$DateDebut,);
+        $Action = $this->ModelAction->getAction($Doonnes);
+        var_dump($Action);
+
+        $DonnéesTitre = array('TitreDeLaPage'=>$Action[0]['NOMACTION']);
+        
+        
+        $this->load->view('templates/Entete',$DonnéesTitre);
+        $this->load->view('Acteur/AfficherAction');
+        $this->load->view('templates/PiedDePage');
+
+    }
 
 
 }

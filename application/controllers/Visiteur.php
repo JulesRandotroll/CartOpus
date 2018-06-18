@@ -25,12 +25,13 @@ class Visiteur extends CI_Controller
       //var_dump($this->session->statut);
       if ($this->input->post('submit'))
       {
-            //coucou
+            echo 'coucou';
       }
       else
       {
-          //$this->load->library('calendar');
-        $this->load->view('templates/Entete');
+        $DonnéesTitre = array('TitreDeLaPage'=>'Cart\'Opus');
+        
+        $this->load->view('templates/Entete',$DonnéesTitre);
         $this->load->view('Visiteur/Accueil',$this->session->statut);
         $this->load->view('templates/PiedDePage');
       }
