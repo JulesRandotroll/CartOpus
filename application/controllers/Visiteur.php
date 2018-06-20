@@ -135,6 +135,7 @@ class Visiteur extends CI_Controller
         }
     }// fin function
     
+
     public function SeConnecter()
     {
       $DonnéesTitre = array('TitreDeLaPage'=>'Connexion');

@@ -63,6 +63,7 @@ class Acteur extends CI_Controller
         $this->load->view('templates/PiedDePage');
 
     }
+    
     public function GestionProfil()
     {
         
@@ -205,7 +206,7 @@ class Acteur extends CI_Controller
         $this->load->view('templates/PiedDePage');
 
     }
-    
+
     public function RenommerPhoto($Image)
     {
         //Je T'aime

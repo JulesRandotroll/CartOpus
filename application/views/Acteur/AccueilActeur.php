@@ -74,15 +74,23 @@
                             echo'<div class="table-responsive">';
                             $this->table->set_heading('Nom','Rôle de '.$Acteur['NOMACTEUR'].' '.$Acteur['PRENOMACTEUR'],'Site Internet','Date de debut','Description','');
                             //var_dump($Action);
-                            foreach($Action as $uneAction)
+                            if($Action != null)
                             {
-                                if($uneAction['DATEFIN']==null){$uneAction['DATEFIN']=0;}
-                                $this->table->add_row($uneAction['NOMACTION'],$uneAction['NOMROLE'],$uneAction['SiteURLAction'],$uneAction['DATEDEBUT'],$uneAction['Description'],'<a href="'.site_url('Acteur/AfficherActionSelectionnee/'.($uneAction['NOACTION']).'/'.($uneAction['DATEDEBUT']).'/'.($uneAction['DATEFIN'])).'" class="btn btn-danger" >Accès</a>');  
+                                foreach($Action as $uneAction)
+                                {
+                                    if($uneAction['DATEFIN']==null){$uneAction['DATEFIN']=0;}
+                                    $this->table->add_row($uneAction['NOMACTION'],$uneAction['NOMROLE'],$uneAction['SiteURLAction'],$uneAction['DATEDEBUT'],$uneAction['Description'],'<a href="'.site_url('Acteur/AfficherActionSelectionnee/'.($uneAction['NOACTION']).'/'.($uneAction['DATEDEBUT']).'/'.($uneAction['DATEFIN'])).'" class="btn btn-danger" >Accès</a>');  
+                                }
+                                $Style = array('table_open' => '<table class="table" >');
+                                $this->table->set_template($Style);
+                                
+                                echo $this->table->generate();
                             }
-                            $Style = array('table_open' => '<table class="table" >');
-                            $this->table->set_template($Style);
+                            else
+                            {
+                                echo '<H4> N\'a participé à aucun évènement pour l\'instant. </H4>';
+                            }
                             
-                            echo $this->table->generate();
                         ?>
                 </div>
             </section>
