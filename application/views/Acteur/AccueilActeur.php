@@ -52,8 +52,13 @@
                             }
                         ?>
                         </td></tr>
+
                     </table>
+                    <?php 
+                    echo'<a href="'.site_url('Acteur/GestionProfil').'" style="color:#000000"><span class="glyphicon glyphicon-wrench"></span> Modifier</a>';
+                   ?>
                 </div>
+              
             </section>
         </div>
     </div>

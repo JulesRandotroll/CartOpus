@@ -57,7 +57,6 @@
                 return $Resultats;
             }
         }
-
         public function getActions($noActeur)
         {
             $this->db->select('noAction, datedebut');
@@ -104,6 +103,47 @@
                 }
                 return $Resultats;
             }
+        }
+
+        public function UpdateActeur($Donnees,$noActeur)
+        {
+         
+            $Donnees = array('nomacteur' => $NomActeur,'prenomacteur'=>$PrenomActeur,'motdepasse'=>$mdp,'mail'=>$mail,'notel'=>$tel,'noQuestion'=>$Questions,'Reponse'=>$Reponse);
+            $this->db->where('noActeur',$noActeur);
+            $this->db->update('acteur',$Donnees);
+        }
+
+        public function UpdatePhoto($AnciennePhoto,$NewPhoto,$noActeur)
+        {
+            //var_dump($noActeur);
+           //var_dump($AnciennePhoto);
+           // var_dump($NewPhoto);
+            $Donnees = array('PhotoProfil' => $NewPhoto);
+            $this->db->where('noActeur',$noActeur);
+            $this->db->where('PhotoProfil',$AnciennePhoto);
+            $this->db->update('acteur',$Donnees);
+        }
+
+        public function GetPhoto($noActeur)
+        {
+            $this->db->select('photoprofil');
+            $this->db->from('Acteur');
+            $this->db->where('noActeur',$noActeur);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
+        public function UploadPhoto($photo)
+        {
+            $config['upload_path'] = '../assets/images/'; 
+            $config['allowed_types'] = 'gif|jpg|png|jpeg'; 
+            $config['max_size'] = '2048'; 
+            $config['max_width']  = '1024';
+            $config['max_height']  = '768'; 
+            $config['overwrite'] = TRUE;
+    
+            $this->load->library("upload", $config);
+            return $this->upload->$photo;
         }
     }
 
