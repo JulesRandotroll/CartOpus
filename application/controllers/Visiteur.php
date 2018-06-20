@@ -166,8 +166,8 @@ class Visiteur extends CI_Controller
           'mdp'=>$this->input->post('mdp'),
         );
         $test = $this->ModelSeConnecter->Test_Inscrit($donneesATester);
-        echo'deja inscrit ?';
-        var_dump($test);
+       // echo'deja inscrit ?';
+       // var_dump($test);
         if($test['count(*)']==0){
           
           if ($this->session->statut==0) // 0 : statut visiteur
@@ -175,7 +175,7 @@ class Visiteur extends CI_Controller
             $message=array(
               'message'=>'Vous n\'êtes pas encore inscrit',
             );
-            var_dump($message);
+           // var_dump($message);
             $this->load->view('templates/Entete',$DonnéesTitre);
             $this->load->view('Visiteur/SeConnecter',$message);
             $this->load->view('templates/PiedDePage');
