@@ -177,6 +177,14 @@ class Acteur extends CI_Controller
         $Actions =$this->ModelAction->getSousAction($noAction,$DateDebut,$DateFin); 
         
         //var_dump($Actions);
+         //var_dump($noAction);
+        //var_dump($dateDebut);
+        //str_split($dateDebut,'$20%');
+        $DateDebut=str_replace('%20',' ',$dateDebut);
+
+        $Doonnes = array('a.noaction'=>$noAction,'datedebut'=>$DateDebut,);
+        $Action = $this->ModelAction->getAction($Doonnes);
+       // var_dump($Action);
 
         // $Doonnes = array('a.noaction'=>$noAction,'datedebut'=>$DateDebut,);
         // $Action = $this->ModelAction->getAction($Doonnes);
@@ -196,6 +204,13 @@ class Acteur extends CI_Controller
         $this->load->view('Acteur/AfficherAction',$Données);
         $this->load->view('templates/PiedDePage');
 
+    }
+    
+    public function RenommerPhoto($Image)
+    {
+        //Je T'aime
+        $noActeur = $this->session->noActeur;
+        return $Image=$noActeur.'_'.date('Y-m-d_H_i_s');
     }
 
     public function GestionPhoto()//$ratio

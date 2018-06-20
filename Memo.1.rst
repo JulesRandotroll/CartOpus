@@ -7,6 +7,7 @@ Perspectives futures pour le projet :
 Taff A Faire : 
     -page d'accueil Acteur :    - fiche perso avec l'orga si existe ^^
                                 - liste des action auxuqelles il participe order by date
+    - penser au vérifications => inscription => adresse déjà utilisée.
 
 
 function GenererMotDePasse()
