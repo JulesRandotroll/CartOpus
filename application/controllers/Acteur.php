@@ -65,6 +65,7 @@ class Acteur extends CI_Controller
     }
     public function GestionProfil()
     {
+        
         $noActeur = $this->session->noActeur;
         if ( $this->input->post('modif'))
         {
@@ -192,17 +193,21 @@ class Acteur extends CI_Controller
 
     }
 
-    public function GestionPhoto()
+    public function GestionPhoto()//$ratio
     {
         ?> 
         
-        <form method="POST" action="GestionPhoto" enctype="multipart/form-data">
+        <!-- <form method="POST" action="GestionPhoto" enctype="multipart/form-data">-->
         <!-- On limite le fichier à 2Mo -->
-        <input type="hidden" name="MAX_FILE_SIZE" value="2000000">
-        Fichier : <input type="file" name="avatar">
-        <input type="submit" name="envoyer" value="Envoyer le fichier">
-        </form>
+        <!--<input type="hidden" name="MAX_FILE_SIZE" value="2000000">-->
+        <!--Fichier : <input type="file" name="avatar">-->
+        <!--<input type="submit" name="envoyer" value="Envoyer le fichier">-->
+        <!--</form> -->
         <?php
+         $DonnéesTitre = array('TitreDeLaPage'=>'Modifier Photo');
+         $this->load->view('templates/Entete',$DonnéesTitre);
+        $this->load->view('Acteur/GestionPhoto');
+        $this->load->view('templates/PiedDePage');
         $noActeur = $this->session->noActeur;
         if(isset($_FILES['avatar']))
         { 
@@ -245,6 +250,7 @@ class Acteur extends CI_Controller
                     //echo 'Destination :';
                     //var_dump($Destination);
                     $ratio='150';
+                    var_dump($ratio);
                     $Redimension=$this->RedimensionnerPhoto($PhotoTempo,$Source,$Destination,$ratio,$ext);
 
                     //echo 'photo redimensionnée :';
@@ -264,7 +270,7 @@ class Acteur extends CI_Controller
                                 
                     $this->ModelActeur->UpdatePhoto($AnciennePhoto,$nomPhoto.$ext,$noActeur);
                     //unlink($Destination.$PhotoTempo);
-                   redirect('Acteur/AccueilActeur');
+                   //redirect('Acteur/AccueilActeur');
                 }
                
             }
