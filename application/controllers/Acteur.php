@@ -168,7 +168,6 @@ class Acteur extends CI_Controller
         return $Image;
     }
 
-<<<<<<< HEAD
     public function AfficherActionSelectionnee($noAction,$dateDebut,$dateFin)
     {
 
@@ -178,15 +177,7 @@ class Acteur extends CI_Controller
         $Actions =$this->ModelAction->getSousAction($noAction,$DateDebut,$DateFin); 
         
         //var_dump($Actions);
-=======
-    public function RenommerPhoto($Image)
-    {
-        $noActeur = $this->session->noActeur;
-        return $Image=$noActeur.'_'.date('Y-m-d_H_i_s');
-    }
-    public function AfficherActionSelectionnee($noAction,$dateDebut)
-    {
-        //var_dump($noAction);
+         //var_dump($noAction);
         //var_dump($dateDebut);
         //str_split($dateDebut,'$20%');
         $DateDebut=str_replace('%20',' ',$dateDebut);
@@ -194,7 +185,6 @@ class Acteur extends CI_Controller
         $Doonnes = array('a.noaction'=>$noAction,'datedebut'=>$DateDebut,);
         $Action = $this->ModelAction->getAction($Doonnes);
        // var_dump($Action);
->>>>>>> 9d5a28b38b2ebece980135f1fdd832e1778b9574
 
         // $Doonnes = array('a.noaction'=>$noAction,'datedebut'=>$DateDebut,);
         // $Action = $this->ModelAction->getAction($Doonnes);
@@ -214,6 +204,12 @@ class Acteur extends CI_Controller
         $this->load->view('Acteur/AfficherAction',$Données);
         $this->load->view('templates/PiedDePage');
 
+    }
+    public function RenommerPhoto($Image)
+    {
+        //Je T'aime
+        $noActeur = $this->session->noActeur;
+        return $Image=$noActeur.'_'.date('Y-m-d_H_i_s');
     }
 
     public function GestionPhoto()//$ratio
