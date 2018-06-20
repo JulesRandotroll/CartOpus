@@ -30,6 +30,7 @@
                                     echo form_input('nom',$nom,array('pattern'=>'[a-zA-Z ]{1,40}')); 
                                     echo('</td><td>');
                                     //var_dump($Acteur);
+                                  
                                     echo'<a href="'.site_url('Acteur/GestionPhoto').'">'.img('4pP@R31L_1Ph20T.png').'</a>';
                                    //echo (img($Acteur[0]['PhotoProfil']));
                                     echo('</td></tr>');

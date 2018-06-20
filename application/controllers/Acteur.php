@@ -17,7 +17,7 @@ class Acteur extends CI_Controller
         $this->load->model('ModelAction');
         $this->load->library('upload');
 
-        $this->load->library('image_lib');
+      
         //A RETIRER UNE FOIS LA CONNEXION OK
         if ($this->session->statut==0)
         {
@@ -65,13 +65,11 @@ class Acteur extends CI_Controller
     }
     public function GestionProfil()
     {
-        
+        $noActeur = $this->session->noActeur;
         if ( $this->input->post('modif'))
         {
             $this->ModelActeur->UpdateActeur($Donnees,$noActeur);
         }
-
-        $noActeur = $this->session->noActeur;
         //On stocke dans une variable locale l'identifiant BDD de l'acteur connecté
 
         $Acteur = $this->ModelActeur->getActeur($noActeur);
@@ -109,92 +107,81 @@ class Acteur extends CI_Controller
         $this->load->view('templates/PiedDePage');
     }
 
-    public function RedimensionnerPhoto($Image,$Source,$Destination,$ratio)
+    public function RedimensionnerPhoto($Image,$Source,$Destination,$ratio,$ext)
     {
+        $src = $ext;
+       // echo $src;
+        if($src==".jpeg")
+        {
+            $src=imagecreatefromjpeg($Source.$Image);
+            $ext = 'jpeg';
+        }
+        else if($src==".png")
+        {
+            $src=imagecreatefrompng($Source.$Image);
+            $ext = 'png';
+        }
+        else if($src==".jpg")
+        {
+            $src=imagecreatefromjpeg($Source.$Image);
+            $ext = 'jpg';
+        }
+        else
+        {
+            echo 'erreur';
+        }
 
-        if(substr(strtolower($Source.'\\'.$Image), (strlen($Source.'\\'.$Image)-4),4)==".gif"){
-        $src=imagecreatefromgif($Source.'\\'.$Image);
-        $ext = 'gif';
-        }
-        else if(substr(strtolower($Source.'\\'.$Image), (strlen($Source.'\\'.$Image)-4),4)==".png"){
-        $src=imagecreatefrompng($Source.'\\'.$Image);
-        $ext = 'png';
-        }
-        else if(substr(strtolower($Source.'\\'.$Image), (strlen($Source.'\\'.$Image)-4),4)==".jpg" || substr(strtolower($Source.'\\'.$Image), (strlen($Source.'\\'.$Image)-5),5)==".jpeg"){
-        $src=imagecreatefromjpeg($Source.'\\'.$Image);
-        $ext = 'jpg';
-        }
-        // echo'image';
-        // var_dump($Image);
-        // echo'source';
-        // var_dump($Source);
-        // echo'destination';
-        // var_dump($Destination);
-        // echo'ratio';
-        // var_dump($ratio);
-        $size = getimagesize($Source.'\\'.$Image);
-        
+        //echo 'taille avant :';
+        $size = getimagesize($Source.$Image);
         $largeur = $size[0];
         $hauteur = $size[1];
-
-        if($largeur > $hauteur){
-                  $newlargeur = $ratio;
-                  $newhauteur = round(($hauteur/$largeur)*$ratio);
+        //var_dump($size);
+        if($largeur > $hauteur)
+        {
+            $newlargeur = $ratio;
+            $newhauteur = round(($hauteur/$largeur)*$ratio);
         }
         else {
-                  $newlargeur = ($largeur/$hauteur)*$ratio;
-                  $newhauteur = $ratio;
+            $newlargeur = ($largeur/$hauteur)*$ratio;
+            $newhauteur = $ratio;
         }
-        
         // the document recommends you to use truecolor to get better result
         $imtn = imagecreatetruecolor( $newlargeur, $newhauteur );
-        // if the image has transparent color, we first extract the RGB value of it,
-        // then use this color to fill the thumbnail image as the background. This color
-        // is safe to be assigned as the new transparent color later on because it will
-        // be filtered by imagecopyresize.
-        $originaltransparentcolor = imagecolortransparent( $src );
-        if(
-            $originaltransparentcolor >= 0 // -1 for opaque image
-            && $originaltransparentcolor < imagecolorstotal( $src )
-            // for animated GIF, imagecolortransparent will return a color index larger
-            // than total colors, in this case the image is treated as opaque ( actually
-            // it is opaque )
-        ) {
-            $transparentcolor = imagecolorsforindex( $src, $originaltransparentcolor );
-            $newtransparentcolor = imagecolorallocate(
-                $imtn,
-                $transparentcolor['red'],
-                $transparentcolor['green'],
-                $transparentcolor['blue']
-            );
-            // for true color image, we must fill the background manually
-            imagefill( $imtn, 0, 0, $newtransparentcolor );
-            // assign the transparent color in the thumbnail image
-            imagecolortransparent( $imtn, $newtransparentcolor );
-        }
+  
 
         imagecopyresampled($imtn, $src, 0, 0, 0, 0, $newlargeur, $newhauteur, $largeur, $hauteur);
+        //var_dump($Destination.$Image);
         if ($ext == 'jpg')
         {
-                  imagejpeg($imtn, $Destination.$Image);
-        }else if ($ext == 'png' ) {
-                  imagepng($imtn, $Destination.$Image);
-        } else if ($ext == 'gif') {
-                  imagegif($imtn, $Destination.$Image);
+            imagejpeg($imtn, $Destination.$Image);
+        
         }
-
+        else if ($ext == 'png' ) 
+        {
+            imagepng($imtn, $Destination.$Image);
+        }
+        else if ($ext == 'jpeg') {
+            imagejpeg($imtn, $Destination.$Image);
+       
+        }
+        return $Image;
     }
 
+    public function RenommerPhoto($Image)
+    {
+        $noActeur = $this->session->noActeur;
+        return $Image=$noActeur.'_'.date('Y-m-d_H_i_s');
+    }
     public function AfficherActionSelectionnee($noAction,$dateDebut)
     {
-        var_dump($noAction);
-        var_dump($dateDebut);
+        //var_dump($noAction);
+        //var_dump($dateDebut);
         //str_split($dateDebut,'$20%');
         $DateDebut=str_replace('%20',' ',$dateDebut);
 
         $Doonnes = array('a.noaction'=>$noAction,'datedebut'=>$DateDebut,);
         $Action = $this->ModelAction->getAction($Doonnes);
-        var_dump($Action);
+       // var_dump($Action);
 
         $DonnéesTitre = array('TitreDeLaPage'=>$Action[0]['NOMACTION']);
         
@@ -210,29 +197,23 @@ class Acteur extends CI_Controller
         ?> 
         
         <form method="POST" action="GestionPhoto" enctype="multipart/form-data">
-        <!-- On limite le fichier à 100Ko -->
-        <input type="hidden" name="MAX_FILE_SIZE" value="100000">
+        <!-- On limite le fichier à 2Mo -->
+        <input type="hidden" name="MAX_FILE_SIZE" value="2000000">
         Fichier : <input type="file" name="avatar">
         <input type="submit" name="envoyer" value="Envoyer le fichier">
         </form>
         <?php
         $noActeur = $this->session->noActeur;
-       // var_dump($noActeur);
-      //var_dump($_FILES);
         if(isset($_FILES['avatar']))
         { 
-           // $dossier = 'upload/';
-            $fichier = basename($_FILES['avatar']['name']);
-         // var_dump($fichier);
             //var_dump($_FILES);
             if (is_uploaded_file($_FILES['avatar']['tmp_name']))
-            //if(move_uploaded_file($_FILES['avatar']['tmp_name'], $dossier . $fichier)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
             {
                 $extensions = array('.png', '.gif', '.jpg', '.jpeg');
                 // récupère la partie de la chaine à partir du dernier . pour connaître l'extension.
                 $extension = strrchr($_FILES['avatar']['name'], '.');
+
                 //Ensuite on teste
-                //var_dump($extension);
                 if(!in_array($extension, $extensions)) //Si l'extension n'est pas dans le tableau
                 {
                     $erreur = 'Vous devez uploader un fichier de type png, gif, jpg, jpeg, txt ou doc...';
@@ -241,17 +222,49 @@ class Acteur extends CI_Controller
                 {
                     echo 'Upload effectué avec succès !';
 
-                   
                     $temp=$this->ModelActeur->GetPhoto($noActeur);
                     //var_dump($temp);
                     $AnciennePhoto=$temp[0]['photoprofil'];
-                    $NewPhoto=$fichier;
-                    $Source='D:\Mes Documents\Mes Images\photo music';
+                    
+                    $str=$_FILES['avatar']['tmp_name'].'\\';
+                    $chaine=explode('\\',$str);
+                    $Source=$chaine[0].'/'.$chaine[1].'/'.$chaine[2].'/';
+                   // echo '<br>Source:';
+                    //var_dump($Source);
+                    $PhotoTempo=$chaine[3];
+                    //echo 'phototempo: ';
+                    //var_dump($PhotoTempo);
+                 
+                    $str=$_FILES['avatar']['type'];
+                    $chaine=explode('/',$str);
+                    //echo 'Extension:';
+                    $ext='.'.$chaine[1];
+                    //var_dump($ext);
+
                     $Destination='assets\images\\';
+                    //echo 'Destination :';
+                    //var_dump($Destination);
                     $ratio='150';
-                    $this->RedimensionnerPhoto($NewPhoto,$Source,$Destination,$ratio);
-                    $this->ModelActeur->UpdatePhoto($AnciennePhoto,$NewPhoto,$noActeur);
-                    redirect('Acteur/AccueilActeur');
+                    $Redimension=$this->RedimensionnerPhoto($PhotoTempo,$Source,$Destination,$ratio,$ext);
+
+                    //echo 'photo redimensionnée :';
+                    //var_dump($Redimension);
+                    
+                    $nomPhoto=$this->RenommerPhoto($Redimension);
+                    //echo 'renommage: ';
+                    //var_dump($nomPhoto);
+             
+
+                    $new=$nomPhoto.$ext;
+                    //echo 'photo toute belle renommée: ';
+                    //var_dump($new);
+
+                    rename($Destination.$Redimension,$Destination.$new);
+                    //var_dump(rename($Destination.$Redimension,$Destination.$new) );
+                                
+                    $this->ModelActeur->UpdatePhoto($AnciennePhoto,$nomPhoto.$ext,$noActeur);
+                    //unlink($Destination.$PhotoTempo);
+                   redirect('Acteur/AccueilActeur');
                 }
                
             }
@@ -260,11 +273,7 @@ class Acteur extends CI_Controller
                 echo 'Echec de l\'upload !';
             }
         }
-       
-        //$data = array('upload_data' => $this->upload->data());
-       // $this->load->view('Visiteur/loadAccueil', $data);
-   
-        
+               
     }
 }
 ?>
