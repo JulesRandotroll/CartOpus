@@ -9,7 +9,7 @@
 
         public function getAction($DonnéesDeTest)
         {
-            var_dump($DonnéesDeTest);
+            //var_dump($DonnéesDeTest);
             $this->db->select('*');
             $this->db->from('Action a');
             $this->db->join('AvoirLieu al','al.noAction=a.noAction');
@@ -17,8 +17,110 @@
             $this->db->where($DonnéesDeTest);
             $requete = $this->db->get();
             return $requete->result_array();
-            
+        }
 
+        public function getFichersPourAction($DonnéesDeTest,$DateFin)
+        {   
+            
+            if($DateFin != null)
+            {
+                $requete = $this->db->query("
+                    SELECT * 
+                    FROM stocker 
+                    WHERE NOACTION =". $DonnéesDeTest['NOACTION'] ." 
+                    HAVING DATEHEURE BETWEEN '". $DonnéesDeTest['DATEHEURE'] .
+                    "' AND '".$DateFin."'"
+                );
+            }
+            else 
+            {
+                $DateMax = $this->ModelAction->getDerniereAction($DonnéesDeTest['NOACTION']);
+                //var_dump($DateMax);
+                if($DateMax[0]['dateheure'] != $DonnéesDeTest['DATEHEURE'])
+                {
+                    $requete = $this->db->query("
+                        SELECT * 
+                        FROM stocker 
+                        WHERE NOACTION = ". $DonnéesDeTest['NOACTION'] ." 
+                        HAVING DATEHEURE BETWEEN '". $DonnéesDeTest['DATEHEURE'] .
+                        "' AND '".$DateMax[0]['dateheure']."'"
+                    );
+                }
+                else
+                {
+                    $requete = $this->db->query("
+                        SELECT * 
+                        FROM stocker 
+                        WHERE NOACTION = ". $DonnéesDeTest['NOACTION'] ." 
+                        HAVING DATEHEURE > '". $DonnéesDeTest['DATEHEURE']
+                    );
+                }
+            }
+            
+            return $requete->result_array();
+
+        }
+
+        public function getDerniereAction($noAction)
+        {
+            $this->db->select_max('dateheure');
+            $this->db->from('stocker');
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
+        public function getSousAction($noAction,$DateDebut,$DateFin)
+        {
+            if($DateFin != null)
+            {
+                $requete = $this->db->query("
+                    SELECT * 
+                    FROM Action a, AvoirLieu al, Lieu l
+                    WHERE al.noAction=a.noAction 
+                    AND l.nolieu=al.nolieu
+                    AND a.noaction = ".$noAction.
+                    " HAVING `DATEDEBUT` BETWEEN '".$DateDebut."' 
+                    AND '".$DateFin."'"
+                );
+            }
+            else 
+            {
+                $DateMax = $this->ModelAction->getDerniereAction($DonnéesDeTest['NOACTION']);
+                //var_dump($DateMax);
+                if($DateMax[0]['dateheure'] != $DonnéesDeTest['DATEHEURE'])
+                {
+                    $requete = $this->db->query("
+                        SELECT * 
+                        FROM Action a, AvoirLieu al, Lieu l
+                        WHERE al.noAction=a.noAction 
+                        AND l.nolieu=al.nolieu
+                        AND a.noaction = ".$noAction.
+                        " HAVING `DATEDEBUT` BETWEEN '".$DateDebut."' 
+                         AND '".$DateMax[0]['dateheure']."'"
+                    );
+                }
+                else
+                {
+                    $requete = $this->db->query("
+                        SELECT * 
+                        FROM Action a, AvoirLieu al, Lieu l
+                        WHERE al.noAction=a.noAction 
+                        AND l.nolieu=al.nolieu
+                        AND a.noaction = ".$noAction.
+                        " HAVING DATEDEBUT > '". $DonnéesDeTest['DATEHEURE']
+                    );
+                }
+            }
+            return $requete->result_array();
+            /* 
+                SELECT * 
+                FROM Action a, AvoirLieu al, Lieu l
+                WHERE al.noAction=a.noAction 
+                AND l.nolieu=al.nolieu
+                AND a.noaction = 4
+                HAVING `DateAction` BETWEEN '2018-03-07 13:00:01' 
+                AND '2018-06-11 00:00:00' 
+            */
         }
     
     

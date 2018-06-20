@@ -129,22 +129,31 @@ class Acteur extends CI_Controller
 
     }
 
-    public function AfficherActionSelectionnee($noAction,$dateDebut)
+    public function AfficherActionSelectionnee($noAction,$dateDebut,$dateFin)
     {
-        var_dump($noAction);
-        var_dump($dateDebut);
-        //str_split($dateDebut,'$20%');
+
+        $DateFin = str_replace('%20',' ',$dateFin);
         $DateDebut=str_replace('%20',' ',$dateDebut);
 
-        $Doonnes = array('a.noaction'=>$noAction,'datedebut'=>$DateDebut,);
-        $Action = $this->ModelAction->getAction($Doonnes);
-        var_dump($Action);
+        $Actions =$this->ModelAction->getSousAction($noAction,$DateDebut,$DateFin); 
+        //var_dump($Actions);
 
-        $DonnéesTitre = array('TitreDeLaPage'=>$Action[0]['NOMACTION']);
+        // $Doonnes = array('a.noaction'=>$noAction,'datedebut'=>$DateDebut,);
+        // $Action = $this->ModelAction->getAction($Doonnes);
+        //var_dump($Action);
+        $Donnes = array('NOACTION'=>$noAction,'DATEHEURE'=>$DateDebut,);
+        $Fichiers = $this->ModelAction->getFichersPourAction($Donnes,$Actions[0]['DATEFIN']);
+        //var_dump($Fichiers);
         
+        $Données = array(
+            'Actions'=>$Actions,
+            'Fichiers'=>$Fichiers,
+        );
+
+        $DonnéesTitre = array('TitreDeLaPage'=>$Actions[0]['NOMACTION']);
         
         $this->load->view('templates/Entete',$DonnéesTitre);
-        $this->load->view('Acteur/AfficherAction');
+        $this->load->view('Acteur/AfficherAction',$Données);
         $this->load->view('templates/PiedDePage');
 
     }
