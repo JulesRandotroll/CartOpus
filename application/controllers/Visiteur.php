@@ -38,8 +38,13 @@ class Visiteur extends CI_Controller
     }
     public function SInscrire()
     {
+
         $DonnéesTitre = array('TitreDeLaPage'=>'Inscription');
         $DonneesInjectees['Titre de la page']='Inscription';
+
+
+       
+
         if ( $this->input->post('valider'))//si le bouton "Valider l'inscription" a été cliqué ...
         {
           if (($this->input->post('mdp'))==($this->input->post('confmdp')))// si ce que l'utilisateur a rentré dans la case mdp est égale a ce qu'il a rentré dans la case confmdp ...
@@ -49,12 +54,16 @@ class Visiteur extends CI_Controller
             $test = $this->ModelSInscrire->Test_Inscrit($donneeATester);// on appelle la fonction Test de ce modele et on passe la variable a tester en paramètre
             if($test['count(*)']!=0) // si la fonction nous retourne un résultat différent de 0 ( si ce mail existe déjà dans la bdd ...)
             {
+              $Options= $this->ObtenirQuestions_Secretes();
               $DonneesInjectees=array
               (
-                'nomacteur'=>$this->input->post('nom'),
-                'prenomacteur'=>$this->input->post('prenom'),
-                'notel' => $this->input->post('tel'),
-                'message' => 'Vous êtes déjà inscrit avec cette adresse mail'
+                'nom'=>'',
+                'prenom'=>'',
+                'mail'=>'',
+                'tel' =>'',
+                'message' => 'Vous êtes déjà inscrit avec cette adresse mail',
+                'Questions'=>$Options,
+                'reponse'=>'',
               );
               
                $this->load->view('templates/Entete',$DonnéesTitre);
@@ -100,22 +109,7 @@ class Visiteur extends CI_Controller
         }// if bouton valider
         else //sinon ...
         {
-          $this->load->model('ModelSInscrire'); // on charge le modele correspondant
-            $question = $this->ModelSInscrire->QuestionSecrete();
-            //var_dump($question);
-          $i=0;
-          foreach($question as $uneQuestion)
-          {
-            if(empty($Options))
-            {
-              $Options = array($uneQuestion['noQuestion']=>$uneQuestion['nomQuestion']);
-            }
-            else
-            {
-              $temporaire = array($uneQuestion['noQuestion']=>$uneQuestion['nomQuestion']);
-              $Options = $Options + $temporaire;
-            }
-          }
+           $Options= $this->ObtenirQuestions_Secretes();
             
               $DonneesInjectees=array
               (
@@ -135,7 +129,27 @@ class Visiteur extends CI_Controller
         }
     }// fin function
     
-
+    public function ObtenirQuestions_Secretes()
+    {
+      $this->load->model('ModelSInscrire'); // on charge le modele correspondant
+      $question = $this->ModelSInscrire->QuestionSecrete();
+      $i=0;
+      foreach($question as $uneQuestion)
+      {
+        if(empty($Options))
+        {
+          $Options = array($uneQuestion['noQuestion']=>$uneQuestion['nomQuestion']);
+        }
+        else
+        {
+          $temporaire = array($uneQuestion['noQuestion']=>$uneQuestion['nomQuestion']);
+          $Options = $Options + $temporaire;
+        }
+          //var_dump($question);
+      }
+       return $Options;
+    }
+    
     public function SeConnecter()
     {
       $DonnéesTitre = array('TitreDeLaPage'=>'Connexion');
