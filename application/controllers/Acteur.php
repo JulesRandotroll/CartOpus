@@ -168,6 +168,17 @@ class Acteur extends CI_Controller
         return $Image;
     }
 
+<<<<<<< HEAD
+    public function AfficherActionSelectionnee($noAction,$dateDebut,$dateFin)
+    {
+
+        $DateFin = str_replace('%20',' ',$dateFin);
+        $DateDebut=str_replace('%20',' ',$dateDebut);
+
+        $Actions =$this->ModelAction->getSousAction($noAction,$DateDebut,$DateFin); 
+        
+        //var_dump($Actions);
+=======
     public function RenommerPhoto($Image)
     {
         $noActeur = $this->session->noActeur;
@@ -183,12 +194,24 @@ class Acteur extends CI_Controller
         $Doonnes = array('a.noaction'=>$noAction,'datedebut'=>$DateDebut,);
         $Action = $this->ModelAction->getAction($Doonnes);
        // var_dump($Action);
+>>>>>>> 9d5a28b38b2ebece980135f1fdd832e1778b9574
 
-        $DonnéesTitre = array('TitreDeLaPage'=>$Action[0]['NOMACTION']);
+        // $Doonnes = array('a.noaction'=>$noAction,'datedebut'=>$DateDebut,);
+        // $Action = $this->ModelAction->getAction($Doonnes);
+        //var_dump($Action);
+        $Donnes = array('NOACTION'=>$noAction,'DATEHEURE'=>$DateDebut,);
+        $Fichiers = $this->ModelAction->getFichersPourAction($Donnes,$DateFin);
+        //var_dump($Fichiers);
         
+        $Données = array(
+            'Actions'=>$Actions,
+            'Fichiers'=>$Fichiers,
+        );
+
+        $DonnéesTitre = array('TitreDeLaPage'=>$Actions[0]['NOMACTION']);
         
         $this->load->view('templates/Entete',$DonnéesTitre);
-        $this->load->view('Acteur/AfficherAction');
+        $this->load->view('Acteur/AfficherAction',$Données);
         $this->load->view('templates/PiedDePage');
 
     }

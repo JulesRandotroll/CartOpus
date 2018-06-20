@@ -19,7 +19,7 @@
  <div class="row" style="background-color:#15B7D1;padding:20px"> 
     <div class="col-sm-1">
         <?php 
-            echo form_open('Visiteur/GetActionRecherchee');
+            echo form_open('Visiteur/loadAccueil');
             
         ?>
     </div>
@@ -158,6 +158,8 @@
                     <!--<span class ="glyphicon glyphicon-search"></span>-->
                         <?php 
                             echo form_submit('submit','Rechercher',array('class'=>'btn-danger btn-lg'));
+                            //echo form_upload('Photo');
+                            
                             echo form_close();
                         ?>
                     </div>

@@ -96,4 +96,11 @@ strtolower => transforme en minuscules
         </section>
     </div>
 -->
+
+
+
+
+
+SELECT * FROM Action a, AvoirLieu al, Lieu l WHERE al.noAction=a.noAction AND l.nolieu=al.nolieu HAVING `DATEDEBUT` BETWEEN '2018-03-07 13:00:01' AND '2018-06-11 00:00:00'
+
    

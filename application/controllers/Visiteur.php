@@ -25,7 +25,7 @@ class Visiteur extends CI_Controller
       //var_dump($this->session->statut);
       if ($this->input->post('submit'))
       {
-            echo 'coucou';
+        echo 'coucou';
       }
       else
       {
