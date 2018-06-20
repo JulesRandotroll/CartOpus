@@ -71,6 +71,7 @@
                             //var_dump($Action);
                             foreach($Action as $uneAction)
                             {
+                                if($uneAction['DATEFIN']==null){$uneAction['DATEFIN']=0;}
                                 $this->table->add_row($uneAction['NOMACTION'],$uneAction['NOMROLE'],$uneAction['SiteURLAction'],$uneAction['DATEDEBUT'],$uneAction['Description'],'<a href="'.site_url('Acteur/AfficherActionSelectionnee/'.($uneAction['NOACTION']).'/'.($uneAction['DATEDEBUT']).'/'.($uneAction['DATEFIN'])).'" class="btn btn-danger" >Accès</a>');  
                             }
                             $Style = array('table_open' => '<table class="table" >');

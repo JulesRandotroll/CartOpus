@@ -63,15 +63,17 @@
 
         public function getDerniereAction($noAction)
         {
-            $this->db->select_max('dateheure');
-            $this->db->from('stocker');
+            $this->db->select_max('datedebut');
+            $this->db->from('AvoirLieu');
+            $this->db->where('noaction',$noAction);
             $requete = $this->db->get();
             return $requete->result_array();
         }
 
         public function getSousAction($noAction,$DateDebut,$DateFin)
         {
-            if($DateFin != null)
+           //echo $noAction;
+            if($DateFin != 0)
             {
                 $requete = $this->db->query("
                     SELECT * 
@@ -85,9 +87,9 @@
             }
             else 
             {
-                $DateMax = $this->ModelAction->getDerniereAction($DonnéesDeTest['NOACTION']);
+                $DateMax = $this->ModelAction->getDerniereAction($noAction);
                 //var_dump($DateMax);
-                if($DateMax[0]['dateheure'] != $DonnéesDeTest['DATEHEURE'])
+                if($DateMax[0]['datedebut'] != $DateDebut)
                 {
                     $requete = $this->db->query("
                         SELECT * 
@@ -96,7 +98,7 @@
                         AND l.nolieu=al.nolieu
                         AND a.noaction = ".$noAction.
                         " HAVING `DATEDEBUT` BETWEEN '".$DateDebut."' 
-                         AND '".$DateMax[0]['dateheure']."'"
+                         AND '".$DateMax[0]['datedebut']."'"
                     );
                 }
                 else
@@ -107,7 +109,7 @@
                         WHERE al.noAction=a.noAction 
                         AND l.nolieu=al.nolieu
                         AND a.noaction = ".$noAction.
-                        " HAVING DATEDEBUT > '". $DonnéesDeTest['DATEHEURE']
+                        " HAVING DATEDEBUT >= '". $DateDebut."'"
                     );
                 }
             }

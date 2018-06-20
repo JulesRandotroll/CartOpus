@@ -25,7 +25,7 @@
                         {   
                             if ($i == 0)
                             {
-                                echo '<H1>'.$uneAction['NOMACTION'].'</H1>';
+                                echo '<H1>'.$uneAction['TitreAction'].'</H1>';
                                 
                                 date_default_timezone_set('Europe/Paris');
                                 // --- La setlocale() fonctionnne pour strftime mais pas pour DateTime->format()
@@ -53,7 +53,6 @@
                                         
                                         echo '<H4>'.$uneAction['Description'].'</H4><BR>';
 
-                                        echo '<BR><H1>images<H1>';
                                     }// >= 1
                                     
                                 }// != null
@@ -72,8 +71,8 @@
                                     echo'<div class="table-responsive">';
                                     //$this->table->set_heading('Jour  ', 'Horraires ');
                                 }//== 1
-
-                                $Action = '<H4>'.$uneAction['TitreAction'].'</H4>';
+                                if($uneAction['DATEFIN']==null){$uneAction['DATEFIN']=0;}
+                                $Action = '<a href="'.site_url('Acteur/AfficherActionSelectionnee/'.($uneAction['NOACTION']).'/'.($uneAction['DATEDEBUT']).'/'.($uneAction['DATEFIN'])).'" style="color:FFFFFF">'.'<H4>'.$uneAction['TitreAction'].'</H4></a>';
 
                                 date_default_timezone_set('Europe/Paris');
                                 // --- La setlocale() fonctionnne pour strftime mais pas pour DateTime->format()
@@ -144,7 +143,7 @@
 
                             
                         }//EndForEach
-                        if($i != 0)
+                        if($i != 1)
                         {
                             $this->table->add_row($Array);
                             $Style = array('table_open' => '<table class="table" >');
@@ -154,13 +153,13 @@
                             echo'</div>';
                         
                         }
+                        else
+                        {
+                            echo '<H1>Images</H1>';
+                        }
                         
                        
-                        // foreach($Fichiers as $unFichier)
-                        // {
-                        //     echo(img($unFichier['FICHIER']).'<BR><BR>');
-                        // }
-
+                        
                     ?>
                 </div>
             </section>

@@ -136,13 +136,14 @@ class Acteur extends CI_Controller
         $DateDebut=str_replace('%20',' ',$dateDebut);
 
         $Actions =$this->ModelAction->getSousAction($noAction,$DateDebut,$DateFin); 
+        
         //var_dump($Actions);
 
         // $Doonnes = array('a.noaction'=>$noAction,'datedebut'=>$DateDebut,);
         // $Action = $this->ModelAction->getAction($Doonnes);
         //var_dump($Action);
         $Donnes = array('NOACTION'=>$noAction,'DATEHEURE'=>$DateDebut,);
-        $Fichiers = $this->ModelAction->getFichersPourAction($Donnes,$Actions[0]['DATEFIN']);
+        $Fichiers = $this->ModelAction->getFichersPourAction($Donnes,$DateFin);
         //var_dump($Fichiers);
         
         $Données = array(
