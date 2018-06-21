@@ -101,7 +101,9 @@
                     }
                     $i +=1;
                 }
+                //var_dump($Resultats);
                 return $Resultats;
+
             }
         }
 

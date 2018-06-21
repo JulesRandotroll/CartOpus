@@ -73,7 +73,7 @@
                         <?php 
                             echo'<div class="table-responsive">';
                             $this->table->set_heading('Nom','Rôle de '.$Acteur['NOMACTEUR'].' '.$Acteur['PRENOMACTEUR'],'Site Internet','Date de debut','Description','');
-                            //var_dump($Action);
+                            var_dump($Action);
                             if($Action != null)
                             {
                                 foreach($Action as $uneAction)
