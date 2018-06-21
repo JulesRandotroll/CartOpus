@@ -163,6 +163,7 @@ class Visiteur extends CI_Controller
         $donneesATester=array
         (
           'mail'=>$this->input->post('mail'),
+          //adresse mail saisie par l'utilisateur.
           'mdp'=>$this->input->post('mdp'),
         );
         $test = $this->ModelSeConnecter->Test_Inscrit($donneesATester);
