@@ -225,8 +225,8 @@ class Acteur extends CI_Controller
         <!--<input type="submit" name="envoyer" value="Envoyer le fichier">-->
         <!--</form> -->
         <?php
-         $DonnéesTitre = array('TitreDeLaPage'=>'Modifier Photo');
-         $this->load->view('templates/Entete',$DonnéesTitre);
+        $DonnéesTitre = array('TitreDeLaPage'=>'Modifier Photo');
+        $this->load->view('templates/Entete',$DonnéesTitre);
         $this->load->view('Acteur/GestionPhoto');
         $this->load->view('templates/PiedDePage');
         $noActeur = $this->session->noActeur;
@@ -242,11 +242,11 @@ class Acteur extends CI_Controller
                 //Ensuite on teste
                 if(!in_array($extension, $extensions)) //Si l'extension n'est pas dans le tableau
                 {
-                    $erreur = 'Vous devez uploader un fichier de type png, gif, jpg, jpeg, txt ou doc...';
+                    $message = 'Vous devez uploader un fichier de type png, gif, jpg, jpeg, txt ou doc...';
                 }
                 else
                 {
-                    echo 'Upload effectué avec succès !';
+                    $message= 'Upload effectué avec succès !';
 
                     $temp=$this->ModelActeur->GetPhoto($noActeur);
                     //var_dump($temp);
@@ -271,7 +271,7 @@ class Acteur extends CI_Controller
                     //echo 'Destination :';
                     //var_dump($Destination);
                     $ratio='150';
-                    var_dump($ratio);
+                    //var_dump($ratio);
                     $Redimension=$this->RedimensionnerPhoto($PhotoTempo,$Source,$Destination,$ratio,$ext);
 
                     //echo 'photo redimensionnée :';
@@ -291,7 +291,7 @@ class Acteur extends CI_Controller
                                 
                     $this->ModelActeur->UpdatePhoto($AnciennePhoto,$nomPhoto.$ext,$noActeur);
                     //unlink($Destination.$PhotoTempo);
-                   //redirect('Acteur/AccueilActeur');
+                    redirect('Acteur/AccueilActeur');
                 }
                
             }
