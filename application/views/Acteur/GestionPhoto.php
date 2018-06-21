@@ -23,6 +23,7 @@
                                 <?php
                                     echo validation_errors(); // mise en place de la validation
                                     echo form_open('Acteur/GestionPhoto');
+                                   
                                 ?>
                                     <form method="POST" action="GestionPhoto" enctype="multipart/form-data">
                                     <!--On limite le fichier à 2Mo -->

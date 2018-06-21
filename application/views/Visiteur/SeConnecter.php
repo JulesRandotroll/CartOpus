@@ -17,28 +17,48 @@
             <H1 align = "center" style="color:#FFFFFF">Connexion</H1><BR>;
             <section >
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
-                    <?php   
-                        echo validation_errors(); // mise en place de la validation
+                    <div class="form-inline">
+                        <BR> <BR>    
+                        <?php   
+                            echo validation_errors(); // mise en place de la validation
                                 /* set_value : en cas de non validation les données déjà
                                 saisies sont réinjectées dans le formulaire */
                             
                             echo form_open('Visiteur/seConnecter');
-                            echo ('Mail : '); // creation d'un label devant la zone de saisie
-                            echo form_input('mail','',array('required'=>'required'));
-                            echo' ';
-                            echo ('Mot de passe : ');
-                            echo form_password('mdp','',array('required'=>'required'));
-                            echo' ';
-                            echo form_submit('submit', 'Se connecter');
-                            echo' ';
+                            
+                            echo '<div class="form-group">';
+                            //echo ('Mail : '); // creation d'un label devant la zone de saisie
+                            
+                            echo form_label('Mail : ', 'Mail');
+                            echo '   ';
+                            echo form_input('mail','',array('required'=>'required','class'=>'form-control'));
+                            echo'</div> ';
+                            echo '   ';
+
+                            echo '<div class="form-group">';
+                            //echo ('Mot de passe : ');
+                            
+                            echo form_label('Mot De Passe : ', 'MDP');
+                            echo '   ';
+                            echo form_password('mdp','',array('required'=>'required','class'=>'form-control'));
+                            echo'</div> ';
+                            
+                            echo form_submit('submit', 'Se connecter',array('class'=>'btn btn-danger'));
+                            
+                            
                             echo '<a style="color:#FFFFFF" href="'.site_url('Visiteur/RecupMDP').'">Mot de passe oublié ?</a>';
+                            
                             echo form_close();
+                           
                             echo $message;
-                            echo '<br><br>';
+                            
+                            
+                            echo '<br>';
                             echo '<a style="color:#FFFFFF" href="'.site_url('Visiteur/sInscrire').'">S\'inscrire ? </a>';
                         
                         ?>
                     </div>
+                </div>
             </section>
             <br>
         </div>
