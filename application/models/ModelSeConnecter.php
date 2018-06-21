@@ -17,10 +17,10 @@
         }
         public function testQuestion_Reponse($donneeATester)
         {
-            echo 'question';
-            var_dump($donneeATester['Questions']);
-            echo 'reponse';
-            var_dump($donneeATester['reponse']);
+            //echo 'question';
+           // var_dump($donneeATester['Questions']);
+           // echo 'reponse';
+           // var_dump($donneeATester['reponse']);
             $this->db->select('noQuestion,Reponse');
             $this->db->from('acteur');
             $this->db->where('noquestion',$donneeATester['Questions'],'reponse',$donneeATester['reponse']);;
@@ -39,7 +39,7 @@
 
         public function Test_Inscrit($donneesATester)
         {
-            var_dump($donneesATester);
+            //var_dump($donneesATester);
             $array = array('mail' => $donneesATester['mail'], 'motdepasse' => $donneesATester['mdp']);
             $this->db->select('count(*)');
             $this->db->from('acteur ');

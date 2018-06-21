@@ -65,7 +65,7 @@
             $this->db->where('noActeur',$noActeur);
             $requete = $this->db->get();
             $noActions = $requete->result_array();
-
+            //var_dump($noActions);
             if(empty($noActions))
             {
                 return NULL;
