@@ -20,7 +20,6 @@
                 <H1 style="color:#FFFFFF">Modifier Photo Profil</H1>
                 <section >
                     <div class = "section-inner" style="background-color:#139CBC;padding:20px">
-<<<<<<< HEAD
                         <table width = '100%'>
                         <tr>
                             <td>
@@ -47,23 +46,6 @@
                         </table>
                     </div>
                 <section>
-=======
-                        <form method="POST" action="GestionPhoto" enctype="multipart/form-data">
-                            <!--On limite le fichier à 2Mo -->
-                            <input type="hidden" name="MAX_FILE_SIZE" value="2000000">
-
-                            <div class="form-inline" action="Acteur/GestionPhoto">
-                                <div class="form-group">
-                                    <label for="fichier">Fichier :</label>
-                                    <?php// echo form_label ('Fichier : ','fichier'); ?>
-                                    <input type="file" name="avatar">
-                                </div>
-                                <input type="submit" class="btn btn-default" name="envoyer" value="Envoyer le fichier">
-                            </div>
-                        </form> 
-                    </div>
-                </section>
->>>>>>> 124b9ed01a4c2ef8b79237bf24651c1f32080f19
             </div>
         </div>    
     </div>
