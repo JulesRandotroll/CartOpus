@@ -214,20 +214,23 @@ class Acteur extends CI_Controller
         return $Image=$noActeur.'_'.date('Y-m-d_H_i_s');
     }
 
-    public function GestionPhoto()//$ratio
+    public function GestionPhoto($Photo)//$ratio
     {
-        ?> 
         
-        <!-- <form method="POST" action="GestionPhoto" enctype="multipart/form-data">-->
-        <!-- On limite le fichier à 2Mo -->
-        <!--<input type="hidden" name="MAX_FILE_SIZE" value="2000000">-->
-        <!--Fichier : <input type="file" name="avatar">-->
-        <!--<input type="submit" name="envoyer" value="Envoyer le fichier">-->
-        <!--</form> -->
-        <?php
-         $DonnéesTitre = array('TitreDeLaPage'=>'Modifier Photo');
-         $this->load->view('templates/Entete',$DonnéesTitre);
-        $this->load->view('Acteur/GestionPhoto');
+        
+        // <!-- <form method="POST" action="GestionPhoto" enctype="multipart/form-data">-->
+        // <!-- On limite le fichier à 2Mo -->
+        // <!--<input type="hidden" name="MAX_FILE_SIZE" value="2000000">-->
+        // <!--Fichier : <input type="file" name="avatar">-->
+        // <!--<input type="submit" name="envoyer" value="Envoyer le fichier">-->
+        // <!--</form> -->
+        
+        
+        //var_dump($Acteur);
+        $Données = array("Photo"=> $Photo);
+        $DonnéesTitre = array('TitreDeLaPage'=>'Modifier Photo');
+        $this->load->view('templates/Entete',$DonnéesTitre);
+        $this->load->view('Acteur/GestionPhoto',$Données);
         $this->load->view('templates/PiedDePage');
         $noActeur = $this->session->noActeur;
         if(isset($_FILES['avatar']))
