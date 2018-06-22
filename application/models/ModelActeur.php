@@ -109,8 +109,8 @@
 
         public function UpdateActeur($Donnees,$noActeur)
         {
-         
-            $Donnees = array('nomacteur' => $NomActeur,'prenomacteur'=>$PrenomActeur,'motdepasse'=>$mdp,'mail'=>$mail,'notel'=>$tel,'noQuestion'=>$Questions,'Reponse'=>$Reponse);
+           // var_dump($Donnees['nom']);
+            $Donnees = array('nomacteur' => $Donnees['nom'],'prenomacteur'=>$Donnees['prenom'],'mail'=>$Donnees['mail'],'notel'=>$Donnees['notel'],'noQuestion'=>$Donnees['noquestion'],'Reponse'=>$Donnees['reponse']);
             $this->db->where('noActeur',$noActeur);
             $this->db->update('acteur',$Donnees);
         }
@@ -135,18 +135,18 @@
             return $requete->result_array();
         }
 
-        public function UploadPhoto($photo)
-        {
-            $config['upload_path'] = '../assets/images/'; 
-            $config['allowed_types'] = 'gif|jpg|png|jpeg'; 
-            $config['max_size'] = '2048'; 
-            $config['max_width']  = '1024';
-            $config['max_height']  = '768'; 
-            $config['overwrite'] = TRUE;
+        // public function UploadPhoto($photo)
+        // {
+        //     $config['upload_path'] = '../assets/images/'; 
+        //     $config['allowed_types'] = 'gif|jpg|png|jpeg'; 
+        //     $config['max_size'] = '2048'; 
+        //     $config['max_width']  = '1024';
+        //     $config['max_height']  = '768'; 
+        //     $config['overwrite'] = TRUE;
     
-            $this->load->library("upload", $config);
-            return $this->upload->$photo;
-        }
+        //     $this->load->library("upload", $config);
+        //     return $this->upload->$photo;
+        // }
     }
 
 
