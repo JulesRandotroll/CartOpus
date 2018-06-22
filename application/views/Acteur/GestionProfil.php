@@ -65,35 +65,18 @@
                                     // echo('</td><td>');
                                     echo '<div class="form-group">';
                                     echo form_label('Modifier téléphone :','ModTel');
-                                    echo form_input('tel',$tel,array('pattern'=>'[0-9]{10}','class'=>'form-control'));
+                                    echo form_input('notel',$notel,array('pattern'=>'[0-9]{10}','class'=>'form-control'));
                                     echo '</div>';
                                     // echo('</td></tr>');
 
-                                    // echo('<tr><td>');
-                                    // echo ('Modifier mot de Passe: '); // creation d'un label devant la zone de saisie
-                                    // echo('</td><td>');
-                                    echo '<div class="form-group">';
-                                    echo form_label('Modifier mot de passe :','ModMDP');
-                                    echo form_password('mdp','',array('required'=>'required','class'=>'form-control'));
-                                    echo '<H6>'.$message.'</H6>';
-                                    echo '</div>';
-                                    // echo('</td></tr>');
-
-                                    // echo('<tr><td>');
-                                    // echo ('Confirmation du nouveau mot de passe: '); // creation d'un label devant la zone de saisie
-                                    // echo('</td><td>');
-                                    echo '<div class="form-group">';
-                                    echo form_label('Confirmation Mot de passe :','ConfMDP');
-                                    echo form_password('confmdp','',array('required'=>'required','class'=>'form-control'));// VERIF si confirme == mdp
-                                    echo '</div>';
-                                    // echo('</td></tr>');
+                                  
 
                                     // echo('<tr><td>');
                                     // echo ('Modifier question Secrète: '); // creation d'un label devant la zone de saisie
                                     // echo('</td><td>');
                                     echo '<div class="form-group">';
                                     echo form_label('Modifier Question:','ModQuest');
-                                    echo form_dropdown('question', $Questions, 'default',array('class'=>'form-control'));
+                                    echo form_dropdown('Question', $Question, $noQuestion,array('class'=>'form-control'));
                                     echo '</div>';
                                     // echo('</td></tr>');
                                     // echo('<tr><td>');
@@ -110,8 +93,10 @@
                                     echo form_submit('modif', 'Modifier');
                                     // echo('</td></tr>');
                                     // echo('</table>');
-
-                                                    //echo form_submit('retour', 'Retour');
+                                    echo '<div class="text-right">';
+                                    echo '<a style="color:#FFFFFF" href="'.site_url('Acteur/ModifierMDP').'">Modifier son mot de passe ? </a>';
+                                    echo '</div>';  
+                                    //echo form_submit('retour', 'Retour');
                                     echo form_close();
                                 ?>
                                 </H4>

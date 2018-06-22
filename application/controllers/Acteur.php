@@ -68,45 +68,66 @@ class Acteur extends CI_Controller
     {
         
         $noActeur = $this->session->noActeur;
+        
         if ( $this->input->post('modif'))
         {
-            $this->ModelActeur->UpdateActeur($Donnees,$noActeur);
+            $DonneesAModifier=array
+            (
+                'nom'=>$this->input->post('nom'),
+                'prenom'=>$this->input->post('prenom'),
+                'mail'=>$this->input->post('mail'),
+                'notel'=>$this->input->post('notel'),
+                'noquestion'=>$this->input->post('Question'),
+                'reponse'=>$this->input->post('reponse'),
+                'message'=>'plop is good plop is life',
+            );
+            var_dump( $DonneesAModifier['noquestion']);
+            var_dump($DonneesAModifier);
+            $this->ModelActeur->UpdateActeur($DonneesAModifier,$noActeur);
         }
-        //On stocke dans une variable locale l'identifiant BDD de l'acteur connecté
-
-        $Acteur = $this->ModelActeur->getActeur($noActeur);
-        //On va chercher les information concernant l'acteur connecté dans la BDD 
-        $DonnéesTitre = array('TitreDeLaPage'=>'Gestion du compte');
-        $this->load->model('ModelSInscrire'); // on charge le modele correspondant
-        $question = $this->ModelSInscrire->QuestionSecrete();
-        $i=0;
-        foreach($question as $uneQuestion)
+        else
         {
-          if(empty($Options))
-          {
-            $Options = array($uneQuestion['noQuestion']=>$uneQuestion['nomQuestion']);
-          }
-          else
-          {
-            $temporaire = array($uneQuestion['noQuestion']=>$uneQuestion['nomQuestion']);
-            $Options = $Options + $temporaire;
-          }
+            $Acteur = $this->ModelActeur->getActeur($noActeur);
+            //On va chercher les information concernant l'acteur connecté dans la BDD 
+            $DonnéesTitre = array('TitreDeLaPage'=>'Gestion du compte');
+            $this->load->model('ModelSInscrire'); // on charge le modele correspondant
+            $question = $this->ModelSInscrire->QuestionSecrete();
+            $i=0;
+            foreach($question as $uneQuestion)
+            {
+            if(empty($Options))
+            {
+                $Options = array($uneQuestion['noQuestion']=>$uneQuestion['nomQuestion']);
+            }
+            else
+            {
+                $temporaire = array($uneQuestion['noQuestion']=>$uneQuestion['nomQuestion']);
+                $Options = $Options + $temporaire;
+            }
+            }
+
+            $Acteur=$this->ModelActeur->getActeur($noActeur);
+            //var_dump($Acteur);
+
+            $DonneesAInjectees=array
+            (
+                'nom'=>$Acteur[0]['NOMACTEUR'],
+                'prenom'=>$Acteur[0]['PRENOMACTEUR'],
+                'mail'=>$Acteur[0]['MAIL'],
+                'notel'=>$Acteur[0]['NOTEL'],
+                'Question'=>$Options,
+                'noQuestion'=>$Acteur[0]['noQuestion'],
+                'reponse'=>$Acteur[0]['Reponse'],
+                'message'=>'plop is good plop is life',
+            );
+            var_dump($DonneesAInjectees);
+        
+            $this->load->view('templates/Entete',$DonnéesTitre);
+            $this->load->view('Acteur/GestionProfil', $DonneesAInjectees);
+            $this->load->view('templates/PiedDePage');
         }
 
-        $DonneesAInjectees=array(
-            'nom'=>'',
-            'prenom'=>'',
-            'mail'=>'',
-            'tel'=>'',
-            'message'=>'plop is good, plop is life',
-            'Questions'=>$Options,
-            'reponse'=>'',
-            'Acteur'=>$Acteur,
-        );
-        //var_dump($DonneesAInjectees);
-        $this->load->view('templates/Entete',$DonnéesTitre);
-        $this->load->view('Acteur/GestionProfil', $DonneesAInjectees);
-        $this->load->view('templates/PiedDePage');
+        
     }
 
     public function RedimensionnerPhoto($Image,$Source,$Destination,$ratio,$ext)
