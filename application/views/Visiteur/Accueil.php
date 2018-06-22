@@ -7,10 +7,22 @@
                         }
                         else
                         {
+                        
+                            echo'<ul class="nav navbar-nav">';
+                            echo'<li><a href="#" style="color:#FFFFFF"><span class="glyphicon glyphicon-plus"></span> Creation Action</a></li>';
+                            echo'<li><a href="'.site_url('Acteur/GestionProfil').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-cog"></span> Compte</a></li>';
+                            echo'</ul>';
+                            echo'<li><a href="'.site_url('Acteur/AccueilActeur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso</a></li>'; 
                             echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se deconnecter</a></li>'; 
                         }
                         ?> 
                     </ul>
+                    
+                    <!-- if($this->session->statut==1) -->
+                    <!-- <ul class="nav navbar-nav">
+                        <li><a href="#" style="color:#FFFFFF">Creation Action</a></li>
+                        <li><a href="Acteur/GestionProfil" style="color:#FFFFFF">Compte</a></li>
+                    </ul> -->
                 </div>
             </div>
         </nav>

@@ -22,24 +22,30 @@
                             echo form_open('visiteur/recupmdp');
                            
                             echo('<tr><td>');
-                            echo ('Mail: '); // creation d'un label devant la zone de saisie
+                            echo '<span style="color:#FF0000"/> * </span>';
+                            echo form_label('Mail : ', 'Mail');   // creation d'un label devant la zone de saisie
                             echo('</td><td>');
-                            echo form_input('mail','',array('required'=>'required'));
+                            echo form_input('mail','',array('required'=>'required','placeholder'=>'Ex : abc@exemple.com'));
                             echo('</td></tr>');
 
                             echo('<tr><td>');
-                            echo ('Question Secrète: '); // creation d'un label devant la zone de saisie
+                            echo '<span style="color:#FF0000"/> * </span>';
+                            echo form_label('Question Secrète', 'Question');  // creation d'un label devant la zone de saisie
                             echo('</td><td>');
                             echo form_dropdown('question', $Questions, 'default');
                             echo('</td></tr>');
+
                             echo('<tr><td>');
-                            echo ('Reponse: '); 
+                            echo '<span style="color:#FF0000"/> * </span>';
+                            echo form_label('Reponse : ', 'Rep');
                             echo('</td><td>');
-                            echo form_input('reponse',$reponse,array('required'=>'required','pattern'=>'[A-Za-z0-9 ]{1,40}'));
+                            echo form_input('reponse',$reponse,array('required'=>'required','placeholder'=>'La réponse à votre question secrète','pattern'=>'[A-Za-z0-9 ]{1,40}'));
                             echo('</td></tr>');
+
                             echo ($message);
+
                             echo('<tr><td>');
-                            echo ("Par email :");
+                            echo form_label('<br>Par Email : ', 'Email');  
                             echo('</td><td>');
                             echo form_submit('recupmail', 'Envoyer');
                             echo('</td></tr>');
@@ -47,7 +53,7 @@
                             echo form_close();
                             echo('</table>');
                             echo '<a style="color:#FFFFFF" href="'.site_url('Visiteur/sInscrire').'">S\'inscrire ? </a>';
-                       
+                            echo '<br><h6><span style="color:#FF0000"/> *</span> Ces champs sont requis</h6> ';
                     ?>
                 </div>
             </section>

@@ -126,6 +126,13 @@
             $this->db->update('acteur',$Donnees);
         }
 
+        public function UpdateMDP($Donnees,$noActeur)
+        {
+            var_dump($Donnees);
+            $Donnees2 = array('motdepasse' => $Donnees);
+            $this->db->where('noActeur',$noActeur);
+            $this->db->update('acteur',$Donnees2);
+        }
         public function GetPhoto($noActeur)
         {
             $this->db->select('photoprofil');

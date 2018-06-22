@@ -28,19 +28,20 @@
                             
                             echo '<div class="form-group">';
                             //echo ('Mail : '); // creation d'un label devant la zone de saisie
-                            
+                            echo '<span style="color:#FF0000"/> * </span>';
                             echo form_label('Mail : ', 'Mail');
                             echo '   ';
-                            echo form_input('mail','',array('required'=>'required','class'=>'form-control'));
+                            echo form_input('mail','',array('required'=>'required','placeholder'=>'Ex :abc@exemple.com','class'=>'form-control'));
                             echo'</div> ';
                             echo '   ';
 
                             echo '<div class="form-group">';
                             //echo ('Mot de passe : ');
                             
+                            echo '<span style="color:#FF0000"/> * </span>';
                             echo form_label('Mot De Passe : ', 'MDP');
                             echo '   ';
-                            echo form_password('mdp','',array('required'=>'required','class'=>'form-control'));
+                            echo form_password('mdp','',array('required'=>'required','placeholder'=>'Votre mot de passe','class'=>'form-control'));
                             echo'</div> ';
                             
                             echo form_submit('submit', 'Se connecter',array('class'=>'btn btn-danger'));
@@ -55,7 +56,7 @@
                             
                             echo '<br>';
                             echo '<a style="color:#FFFFFF" href="'.site_url('Visiteur/sInscrire').'">S\'inscrire ? </a>';
-                        
+                            echo '<br><h6><span style="color:#FF0000"/> *</span> Ces champs sont requis</h6> ';
                         ?>
                     </div>
                 </div>
