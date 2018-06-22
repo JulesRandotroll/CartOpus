@@ -49,7 +49,8 @@
                                     echo'</div> </td><td width = 1%></td> <td>';
                                     // echo('</td></tr>');
                                     echo '   ';
-                                    echo'<a href="'.site_url('Acteur/GestionPhoto').'">'.img('4pP@R31L_1Ph20T.png').'</a>';
+                                    
+                                    echo'<a href="'.site_url('Acteur/GestionPhoto/'.($Acteur[0]['PhotoProfil'])).'">'.img($Acteur[0]['PhotoProfil']).'</a>';
                                     
                                     echo('</td></tr></table>');
                                     // echo ('Modifier email d\'identification: '); // creation d'un label devant la zone de saisie
@@ -90,7 +91,8 @@
 
                                     // echo('<tr><td>');
                                     // echo('</td><td>');
-                                    echo form_submit('modif', 'Modifier');
+
+                                    echo '<div class="text-center">'.form_submit('modif', 'Modifier',array("class"=>"btn btn-danger btn-lg")).'</div>';
                                     // echo('</td></tr>');
                                     // echo('</table>');
                                     echo '<div class="text-right">';

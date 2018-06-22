@@ -20,22 +20,34 @@
                 <H1 style="color:#FFFFFF">Modifier Photo Profil</H1>
                 <section >
                     <div class = "section-inner" style="background-color:#139CBC;padding:20px">
-                        <form method="POST" action="GestionPhoto" enctype="multipart/form-data">
-                            <!--On limite le fichier à 2Mo -->
-                            <input type="hidden" name="MAX_FILE_SIZE" value="2000000">
-
-                            <div class="form-inline" action="Acteur/GestionPhoto">
-                                <div class="form-group">
-                                    <label for="fichier">Fichier :</label>
-                                    <?php// echo form_label ('Fichier : ','fichier'); ?>
+                        <table width = '100%'>
+                        <tr>
+                            <td>
+                                <?php
+                                    echo validation_errors(); // mise en place de la validation
+                                    // echo form_open('Acteur/GestionPhoto');
+                                    echo img($Photo);
+                                ?>
+                            </td>
+                            <td>
+                                <form  method="POST" action="GestionPhoto" enctype="multipart/form-data">
+                                    <input type="hidden" name="MAX_FILE_SIZE" value="2000000">
+                                    <!-- <label for="Fichier" class="control-label">Fichier : </label> -->
                                     <input type="file" name="avatar">
-                                </div>
-                                <input type="submit" class="btn btn-default" name="envoyer" value="Envoyer le fichier">
-                            </div>
-                        </form> 
+                            </td>
+                            <td> 
+                                    <input type="submit" name="envoyer" value="Envoyer le fichier" class="btn btn-danger">
+                                </form> 
+                                <?php
+                                    //echo form_submit('retour', 'Retour');
+                                    echo form_close();
+                                ?>
+                            </td></tr>
+                        </table>
                     </div>
-                </section>
+                <section>
             </div>
-        </div>
+        </div>    
     </div>
 </div>
+
