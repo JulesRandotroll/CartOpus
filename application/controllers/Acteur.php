@@ -130,6 +130,63 @@ class Acteur extends CI_Controller
         
     }
 
+    public function ModifierMDP()
+    {   
+        $noActeur = $this->session->noActeur;
+        if ( $this->input->post('modif'))
+        {
+            $mdpBDD= $this->ModelActeur-> getActeur($noActeur);
+            //var_dump($mdpBDD['0']['MOTDEPASSE']);
+            if ($mdpBDD['0']['MOTDEPASSE']==$this->input->post('motdepasse')) 
+            {
+            // si mdp == mdp deja rentrer dans la bdd
+                var_dump($this->input->post('newmotdepasse'));
+                var_dump($this->input->post('confmdp'));
+                
+                if ($this->input->post('newmotdepasse')==$this->input->post('confmdp'))
+                {
+                    $Donnees=$this->input->post('newmotdepasse');
+                    $this->ModelActeur->UpdateMDP($Donnees,$noActeur);
+                    redirect ('Acteur/AccueilActeur');
+                } 
+                else
+                {
+                    $DonneesAInjectees=array
+                    (
+                        'message'=>'La confirmation de mot de passe n\'est pas semblable au nouveau mot de passe.',
+                    );
+
+                    $DonnéesTitre = array('TitreDeLaPage'=>'Modification du mot de passe');
+                    $this->load->view('templates/Entete',$DonnéesTitre);
+                    $this->load->view('Acteur/ModifierMDP',$DonneesAInjectees);
+                    $this->load->view('templates/PiedDePage');      
+                }
+            }
+            else
+            {
+                $DonneesAInjectees=array
+                    (
+                        'message'=>'Le mot de passe rentré ne vous ai pas attribué.',
+                    );
+
+                $DonnéesTitre = array('TitreDeLaPage'=>'Modification du mot de passe');
+                $this->load->view('templates/Entete',$DonnéesTitre);
+                $this->load->view('Acteur/ModifierMDP',$DonneesAInjectees);
+                $this->load->view('templates/PiedDePage');      
+            }  
+           
+        }
+        else
+        {
+        $DonnéesTitre = array('TitreDeLaPage'=>'Modification du mot de passe');
+        $message=array(
+            'message'=>'',
+        );
+        $this->load->view('templates/Entete',$DonnéesTitre);
+        $this->load->view('Acteur/ModifierMDP',$message);
+        $this->load->view('templates/PiedDePage');
+        }
+    }
     public function RedimensionnerPhoto($Image,$Source,$Destination,$ratio,$ext)
     {
         $src = $ext;
