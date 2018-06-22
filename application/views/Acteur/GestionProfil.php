@@ -23,7 +23,7 @@
                             <H4>
                                 <?php
                                     echo validation_errors(); // mise en place de la validation
-                                    echo form_open('Acteur/GestionProfil');
+                                    echo form_open('Acteur/AccueilActeur');
                                     echo('<table style="width:100%"');
                                     echo('<tr><td width=73%>');
                                     // echo('Modifier nom: ');
