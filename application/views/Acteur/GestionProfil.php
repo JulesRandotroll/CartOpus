@@ -1,7 +1,8 @@
-<ul class="nav navbar-nav navbar-right">
-                        <?php 
+                    <ul class="nav navbar-nav navbar-right">
+                        <?php
+                            echo'<li><a href="'.site_url('Acteur/AccueilActeur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso </a></li>';
                             echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se Déconnecter</a></li>';
-                        ?> 
+                        ?>
                     </ul>
                 </div>
             </div>

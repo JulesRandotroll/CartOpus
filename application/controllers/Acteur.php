@@ -58,8 +58,8 @@ class Acteur extends CI_Controller
         $DonnéesTitre = array('TitreDeLaPage'=>$Acteur[0]['NOMACTEUR'].' '.$Acteur[0]['PRENOMACTEUR']);
         
         $this->load->view('templates/Entete',$DonnéesTitre);
-        
         $this->load->view('Acteur/AccueilActeur',$Données);
+        $this->load->view('Acteur/AjouterUneAction');
         $this->load->view('templates/PiedDePage');
 
     }
