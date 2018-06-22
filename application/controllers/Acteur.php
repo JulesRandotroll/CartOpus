@@ -81,13 +81,13 @@ class Acteur extends CI_Controller
                 'reponse'=>$this->input->post('reponse'),
                 'message'=>'plop is good plop is life',
             );
-            var_dump( $DonneesAModifier['noquestion']);
-            var_dump($DonneesAModifier);
+            // var_dump( $DonneesAModifier['noquestion']);
+            // var_dump($DonneesAModifier);
             $this->ModelActeur->UpdateActeur($DonneesAModifier,$noActeur);
         }
         else
         {
-            $Acteur = $this->ModelActeur->getActeur($noActeur);
+            //$Acteur = $this->ModelActeur->getActeur($noActeur);
             //On va chercher les information concernant l'acteur connecté dans la BDD 
             $DonnéesTitre = array('TitreDeLaPage'=>'Gestion du compte');
             $this->load->model('ModelSInscrire'); // on charge le modele correspondant
@@ -119,8 +119,9 @@ class Acteur extends CI_Controller
                 'noQuestion'=>$Acteur[0]['noQuestion'],
                 'reponse'=>$Acteur[0]['Reponse'],
                 'message'=>'plop is good plop is life',
+                'Acteur'=>$Acteur,
             );
-            var_dump($DonneesAInjectees);
+            //var_dump($DonneesAInjectees);
         
             $this->load->view('templates/Entete',$DonnéesTitre);
             $this->load->view('Acteur/GestionProfil', $DonneesAInjectees);
