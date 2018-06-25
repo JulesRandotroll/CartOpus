@@ -262,8 +262,8 @@ class Acteur extends CI_Controller
         //str_split($dateDebut,'$20%');
         $DateDebut=str_replace('%20',' ',$dateDebut);
 
-        $Doonnes = array('a.noaction'=>$noAction,'datedebut'=>$DateDebut,);
-        $Action = $this->ModelAction->getAction($Doonnes);
+        $Donnees = array('a.noaction'=>$noAction,'datedebut'=>$DateDebut,);
+        $Action = $this->ModelAction->getAction($Donnees);
        // var_dump($Action);
 
         // $Doonnes = array('a.noaction'=>$noAction,'datedebut'=>$DateDebut,);
@@ -387,12 +387,60 @@ class Acteur extends CI_Controller
     
     public function ModifierAction()
     {
+
+        $noActeur = $this->session->noActeur;
+        //var_dump($noActeur);
+        $this->load->model('ModelActeur'); // on charge le modele correspondant
+        $action= $this->ModelActeur->getActions($noActeur);
+        $i=0;
+        //var_dump($action);
+        foreach($action as $uneAction)
+        {
+            if(empty($Options))
+            {
+                $Options = array($uneAction['NOACTION']=>$uneAction['NOMACTION']);
+            }
+            else
+            {
+                $temporaire = array($uneAction['NOACTION']=>$uneAction['NOMACTION']);
+                $Options = $Options + $temporaire;
+            }
+        }
+
         $DonnéesTitre = array('TitreDeLaPage'=>'Modification Action');
-        
+        $DonneesAInjectees=array(
+            'options'=>$Options,
+        );
+        //var_dump($DonneesAInjectees['options'][2]);
         $this->load->view('templates/Entete',$DonnéesTitre);
-        $this->load->view('Acteur/ModifierAction');
+        $this->load->view('Acteur/ModifierAction',$DonneesAInjectees);
         $this->load->view('templates/PiedDePage');
 
+    }
+
+    public function ContacterAdmin()
+    {
+        if ( $this->input->post('Envoyer'))
+        {
+            //1slip1cape@gmail.com mdp: goldfinger007
+            $this->email->from($this->input->post('mail'));
+            $this->email->to('cartopus22@gmail.com'); 
+            $this->email->subject('subject');
+            $this->email->message('message');
+        }
+        else{
+            $DonnéesTitre = array('TitreDeLaPage'=>'Contactez Nous');
+            $this->load->view('templates/Entete',$DonnéesTitre);
+            $this->load->view('Acteur/ContacterAdmin');
+            $this->load->view('templates/PiedDePage');
+        }
+    }
+    public function AjoutThematique()
+    {
+        $DonnéesTitre = array('TitreDeLaPage'=>'Ajout Thématique');
+        $this->load->view('templates/Entete',$DonnéesTitre);
+        $this->load->view('Acteur/AjoutThematique');
+        $this->load->view('templates/PiedDePage');
     }
 }
 ?>

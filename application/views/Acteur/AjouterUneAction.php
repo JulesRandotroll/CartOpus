@@ -20,7 +20,7 @@
                         echo '<div class="col-xs-4">';
                             echo '<div class="form-group">';
                                 echo form_label('Adresse : ', 'adresse');
-                                echo form_input('Adresse', '', Array("placeholder"=>"Adresse ex : 1 rue de la plomberie",'required'=>'required','class'=>'form-control'));
+                                echo form_input('Adresse', '', Array("placeholder"=>"Adresse ex : 1 rue de la plomberie",'class'=>'form-control'));
                             echo '</div>';
                         echo'</div>';
                         echo '<div class="col-xs-4">';
@@ -50,7 +50,7 @@
                         echo '<div class="col-xs-6">';
                             echo '<div class="form-group">';
                                 echo form_label('Date de fin : ', 'df');
-                                echo form_input('DateFin', '', Array("placeholder"=>"Date ex : 12-12-2012",'pattern'=>'(0[1-9]|[12][0-9]|3[01])[\/](0[1-9]|1[012])[\/](19|20)\d\d','required'=>'required','class'=>'form-control'));
+                                echo form_input('DateFin', '', Array("placeholder"=>"Date ex : 12-12-2012",'pattern'=>'(0[1-9]|[12][0-9]|3[01])[\/](0[1-9]|1[012])[\/](19|20)\d\d','class'=>'form-control'));
                             echo '</div>';
                         echo '</div>';
                         // echo '</div>';
@@ -67,17 +67,17 @@
 
                         echo '<div class="form-group">';
                         echo form_label('Public ciblé : ', 'Public');
-                        echo form_dropdown('Publique', $options,'' ,Array('required'=>'required','class'=>'form-control'));
+                        echo form_dropdown('Publique', $options,'' ,Array('class'=>'form-control'));
                         echo '</div>';
 
                         echo '<div class="form-group">';
                         echo form_label('Description ', 'Desc');
-                        echo form_textarea('Description', '',Array("placeholder"=>"Ici, votre description",'required'=>'required','class'=>'form-control'));
+                        echo form_textarea('Description', '',Array("placeholder"=>"Ici, votre description",'class'=>'form-control'));
                         echo '</div>';
 
                         echo '<div class="form-group">';
                         echo form_label('Site de l\'action : ', 'site');
-                        echo form_input('SiteURL', '', Array("placeholder"=>"https://www.exemple.fr",'pattern'=>'(((ht|f)tp(s?))\:\/\/)?(([a-zA-Z0-9]+([@\-\.]?[a-zA-Z0-9]+)*)(\:[a-zA-Z0-9\-\.]+)?@)?(www.|ftp.|[a-zA-Z]+.)?[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,})(\:[0-9]+)','required'=>'required','class'=>'form-control'));
+                        echo form_input('SiteURL', '', Array("placeholder"=>"https://www.exemple.fr",'class'=>'form-control'));//,'pattern'=>'(((ht|f)tp(s?))\:\/\/)?(([a-zA-Z0-9]+([@\-\.]?[a-zA-Z0-9]+)*)(\:[a-zA-Z0-9\-\.]+)?@)?(www.|ftp.|[a-zA-Z]+.)?[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,})(\:[0-9]+)'
                         echo '</div>';
                         
                         echo '<div class="text-center">';
