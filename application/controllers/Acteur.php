@@ -384,6 +384,53 @@ class Acteur extends CI_Controller
         }
                
     }
+
+    public function NouvelleAction()
+    {
+        if($this->input->post('Ajouter'))
+        {
+            $NomAction = $this->input->post('NomAction');
+            $Adresse = $this->input->post('Adresse');
+            $CP = $this->input->post('CodePostale');
+            $Ville = $this->input->post('Ville');
+            $DateDebut = $this->input->post('DateDebut');
+            $HeureDebut = $this->input->post('HeureDebut');
+            $DateFin = $this->input->post('DateFin');
+            $HeureFin = $this->input->post('HeureFin');
+            $Publique = $this->input->post('Publique');
+            $Description = $this->input->post('Description');
+            $SiteURL = $this->input->post('SiteURL');
+            
+            $datedebut = $DateDebut.' '.$HeureDebut;
+            echo $datedebut.'<BR>';
+            date_create($datedebut);
+            echo $datedebut.'<BR>';
+            $Donnes = array(
+                'a.nomAction' => $NomAction,
+                'datedebut' => $DateDebut.' '.$HeureDebut,
+            );
+
+            $Action = $this->ModelAction->getAction($Donnes);
+            if(!empty($Action))
+            {
+                echo 'coucou il y a déjà xD';
+                var_dump($Action);
+            }
+            else
+            {
+                echo 'n\'existe pas'; 
+            }    
+        
+        }
+        else
+        {
+            $this->load->view('templates/Entete',$DonnéesTitre);
+            //$this->load->view('Acteur/AccueilActeur',$Données);
+            $this->load->view('Acteur/AjouterUneAction');
+            $this->load->view('templates/PiedDePage');
+
+        }
+    }
     
 }
 ?>

@@ -18,7 +18,7 @@
             $requete = $this->db->get();
             return $requete->result_array();
         }
-
+        
         public function getFichersPourAction($DonnéesDeTest,$DateFin)
         {   
             
