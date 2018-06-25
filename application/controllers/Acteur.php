@@ -401,24 +401,50 @@ class Acteur extends CI_Controller
             $Description = $this->input->post('Description');
             $SiteURL = $this->input->post('SiteURL');
             
-            $datedebut = $DateDebut.' '.$HeureDebut;
-            echo $datedebut.'<BR>';
-            date_create($datedebut);
-            echo $datedebut.'<BR>';
+            //echo $coucou;
+            $Date = $DateDebut.' '.$HeureDebut.'<BR>';
+            
             $Donnes = array(
                 'a.nomAction' => $NomAction,
                 'datedebut' => $DateDebut.' '.$HeureDebut,
             );
 
+            //var_dump($Donnes);
+
             $Action = $this->ModelAction->getAction($Donnes);
             if(!empty($Action))
             {
-                echo 'coucou il y a déjà xD';
-                var_dump($Action);
+                // echo 'coucou il y a déjà une action de ce nom créée à cette date ^^';
+                //var_dump($Action);
+                // $Doonnes = array('a.noaction'=>$Action[0]['NOACTION'],'datedebut'=>$Date,);
+                // $Fichiers = $this->ModelAction->getFichersPourAction($Donnes,$DateFin);
+
+                $Données = array(
+                    'Actions'=>$Action,
+                    //'Fichiers'=>$Fichiers,
+                );
+
+                $DonnéesTitre = array('TitreDeLaPage'=>$Action[0]['NOMACTION']);
+        
+                $this->load->view('templates/Entete',$DonnéesTitre);
+                $this->load->view('Acteur/AfficherAction',$Données);
+                $this->load->view('templates/PiedDePage');
+
+                
             }
             else
             {
-                echo 'n\'existe pas'; 
+                $DonnéesDeux = array('a.nomAction'=>$NomAction,);
+                $ActionVague = $this->ModelAction->getAction($DonnéesDeux);
+                if(!empty($ActionVague))
+                {
+                    echo 'coucou il y a déjà une action du même nom xD';
+                    var_dump($ActionVague);
+                }
+                else
+                {
+                    echo 'n\'existe pas';
+                } 
             }    
         
         }

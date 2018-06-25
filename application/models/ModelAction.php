@@ -27,7 +27,7 @@
                 $requete = $this->db->query("
                     SELECT * 
                     FROM stocker 
-                    WHERE NOACTION =". $DonnéesDeTest['NOACTION'] ." 
+                    WHERE NOACTION =". $DonnéesDeTest['a.noaction'] ." 
                     HAVING DATEHEURE BETWEEN '". $DonnéesDeTest['DATEHEURE'] .
                     "' AND '".$DateFin."'"
                 );

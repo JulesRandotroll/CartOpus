@@ -40,27 +40,33 @@
                             echo '</div>';
                         echo '</div>';
 
+                        $ToDay = date('d/m/Y');
+                        $ToDayH = date('H:i');
+
                         echo '<div class="col-xs-6">';
                             echo '<div class="form-group">';
                                 echo '<span style="color:#FF0000"/> * </span>';
-                                echo '<input id="date" type="date" value="2017-06-01">';
                                 echo form_label('Date de debut : ', 'dd');
-                                echo form_input('DateDebut', '', Array("placeholder"=>"Date ex : 11-11-2011",'pattern'=>'(0[1-9]|[12][0-9]|3[01])[\/](0[1-9]|1[012])[\/](19|20)\d\d','required'=>'required','class'=>'form-control'));
+                                echo '<input class="form-control" name="DateDebut" id="date" type="date" value="'.$ToDay.'">';
                             echo '</div>';
                             echo '<div class="form-group">';
+                                echo '<span style="color:#FF0000"/> * </span>';
                                 echo form_label('Heure de debut : ', 'dd');
-                                echo form_input('HeureDebut', '', Array("placeholder"=>"Heure ex : 14:14",'required'=>'required','class'=>'form-control'));
+                                echo '<input class="form-control" name="HeureDebut" id="time" type="time" value="'.$ToDayH.'">';
+                                //echo form_input('HeureDebut', '', Array("placeholder"=>"Heure ex : 14:14",'required'=>'required','class'=>'form-control'));
                             echo '</div>';
                         echo'</div>';
 
                         echo '<div class="col-xs-6">';
                             echo '<div class="form-group">';
                                 echo form_label('Date de fin : ', 'df');
-                                echo form_input('DateFin', '', Array("placeholder"=>"Date ex : 12-12-2012",'pattern'=>'(0[1-9]|[12][0-9]|3[01])[\/](0[1-9]|1[012])[\/](19|20)\d\d','required'=>'required','class'=>'form-control'));
+                                echo '<input class="form-control" name="DateFin" id="date" type="date" value="'.$ToDay.'">';
+                                //echo form_input('DateFin', '', Array("placeholder"=>"Date ex : 12-12-2012",'pattern'=>'(0[1-9]|[12][0-9]|3[01])[\/](0[1-9]|1[012])[\/](19|20)\d\d','required'=>'required','class'=>'form-control'));
                             echo '</div>';
                             echo '<div class="form-group">';
                                 echo form_label('Heure de fin : ', 'dd');
-                                echo form_input('HeureFin', '', Array("placeholder"=>"Heure ex : 15:15",'required'=>'required','class'=>'form-control'));
+                                echo '<input name="HeureFin" class="form-control" id="time" type="time" value="'.$ToDayH.'">';
+                                //echo form_input('HeureFin', '', Array("placeholder"=>"Heure ex : 15:15",'required'=>'required','class'=>'form-control'));
                             echo '</div>';
                         echo '</div>';
                         // echo '</div>';
