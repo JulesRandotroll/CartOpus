@@ -42,6 +42,7 @@
                             echo '<div class="form-group">';
                                 echo '<span style="color:#FF0000"/> * </span>';
                                 echo '<input id="date" type="date" value="2017-06-01">';
+                                echo '<input id="time" type="time">';
                                 echo form_label('Date de debut : ', 'dd');
                                 echo form_input('DateDebut', '', Array("placeholder"=>"Date ex : 11-11-2011",'pattern'=>'(0[1-9]|[12][0-9]|3[01])[\/](0[1-9]|1[012])[\/](19|20)\d\d','required'=>'required','class'=>'form-control'));
                             echo '</div>';
