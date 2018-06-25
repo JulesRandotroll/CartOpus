@@ -124,7 +124,18 @@
                 AND '2018-06-11 00:00:00' 
             */
         }
-    
+        
+        public function insertAction($InsertAction)//,$InsertLieu,$InsertAvoirLieu,$InsertEtrePartenaire)
+        {
+            $this->db->insert('Action',$InsertAction);
+            $noAction = $this->db->insert_id();
+            
+            $this->db->insert('Lieu',$InsertLieu);
+            
+            $this->db->insert('AvoirLieu',$InsertAvoirLieu);
+            
+            $this->db->insert('EtrePartenaire',$InsertEtrePartenaire);
+        }
     
     }
 ?>
