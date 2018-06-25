@@ -432,5 +432,14 @@ class Acteur extends CI_Controller
         }
     }
     
+    public function ModifierAction()
+    {
+        $DonnéesTitre = array('TitreDeLaPage'=>'Modification Action');
+        
+        $this->load->view('templates/Entete',$DonnéesTitre);
+        $this->load->view('Acteur/ModifierAction');
+        $this->load->view('templates/PiedDePage');
+
+    }
 }
 ?>
