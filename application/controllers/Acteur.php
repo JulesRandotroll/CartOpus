@@ -496,7 +496,7 @@ class Acteur extends CI_Controller
         if ( $this->input->post('Envoyer'))
         {
             $message=$this->input->post('message');
-            //1cape1slip@gmail.com mdp: goldfinger007
+
             $this->email->from('cartopus22@gmail.com');
             $this->email->to('1cape1slip@gmail.com'); 
             $this->email->subject($this->input->post('subject'));

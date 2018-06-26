@@ -31,7 +31,11 @@
 
                        $options=array(
                            'Ajout Thématique'=>'Ajout Thematique',
-                           'Recuperer Donnees BDD'=>'Récuperer ses données personnelles',
+                           'Recuperer Donnees BDD'=>'Droit d\'acces aux données personnelles',
+                           'Supprimer Donnees BDD'=>'Droit de suppression aux données personnelles',
+                           'Modifier Donnees BDD'=>'Droit de modification aux données personnelles',
+                           'Signalé un problème'=>'Signalé un problème',
+                           'Question'=>'Question',
                            'Autre'=>'Autre',
                        );
                        echo '<div class="form-group">';
