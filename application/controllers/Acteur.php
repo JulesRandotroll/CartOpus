@@ -498,11 +498,12 @@ class Acteur extends CI_Controller
     {
         if ( $this->input->post('Envoyer'))
         {
-            //1slip1cape@gmail.com mdp: goldfinger007
-            $this->email->from($this->input->post('mail'));
-            $this->email->to('cartopus22@gmail.com'); 
-            $this->email->subject('subject');
-            $this->email->message('message');
+            $message=$this->input->post('message');
+            //1cape1slip@gmail.com mdp: goldfinger007
+            $this->email->from('cartopus22@gmail.com');
+            $this->email->to('1cape1slip@gmail.com'); 
+            $this->email->subject($this->input->post('subject'));
+            $this->email->message($message.'Ce message a été envoyé par :'.$this->input->post('mail'));
         }
         else{
             $DonnéesTitre = array('TitreDeLaPage'=>'Contactez Nous');
