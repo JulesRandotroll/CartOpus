@@ -26,7 +26,7 @@
                        echo '<div class="form-group">';
                        echo '<span style="color:#FF0000"/> * </span>';
                        echo form_label('Mail : ', 'email');
-                       echo form_input('mail','',array('required'=>'required','placeholder'=>'Ex:abc@exemple.com','class'=>'form-control')); 
+                       echo form_input('mail','',array('required'=>'required','placeholder'=>'Ex : abc@exemple.com','class'=>'form-control')); 
                        echo '</div>';
 
                        $options=array(
@@ -37,13 +37,13 @@
                        echo '<div class="form-group">';
                        echo '<span style="color:#FF0000"/> * </span>';
                        echo form_label('Objet : ', 'objet');
-                       echo form_dropdown('name', $options, 'default');
+                       echo form_dropdown('subject', $options, 'default');
                        echo '</div>';
 
                        echo '<div class="form-group">';
                        echo '<span style="color:#FF0000"/> * </span>';
                        echo form_label('Message : ', 'mess');
-                       echo form_textarea('Message','',array('required'=>'required','placeholder'=>'Ex:votre message','class'=>'form-control')); 
+                       echo form_textarea('Message','',array('required'=>'required','placeholder'=>'Ex : votre message','class'=>'form-control')); 
                        echo '</div>';
 
                        echo '<div class="text-right">';
