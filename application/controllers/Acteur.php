@@ -402,7 +402,7 @@ class Acteur extends CI_Controller
             $SiteURL = $this->input->post('SiteURL');
             
             //echo $coucou;
-            $Date = $DateDebut.' '.$HeureDebut.'<BR>';
+            $DateD = $DateDebut.' '.$HeureDebut;
             
             $Donnes = array(
                 'a.nomAction' => $NomAction,
@@ -436,14 +436,17 @@ class Acteur extends CI_Controller
             {
                 $DonnéesDeux = array('a.nomAction'=>$NomAction,);
                 $ActionVague = $this->ModelAction->getAction($DonnéesDeux);
+                
                 if(!empty($ActionVague))
                 {
                     echo 'coucou il y a déjà une action du même nom xD';
                     var_dump($ActionVague);
+                    // update ou lien vers l'update ? 
                 }
                 else
                 {
                     echo 'n\'existe pas';
+                    // insert
                 } 
             }    
         
@@ -495,12 +498,28 @@ class Acteur extends CI_Controller
     {
         if ( $this->input->post('Envoyer'))
         {
+<<<<<<< HEAD
             $message=$this->input->post('message');
 
+=======
+            $objet = $this->input->post('subject');
+            $message=$this->input->post('Message');
+            $mail = $this->input->post('mail');
+            //1cape1slip@gmail.com mdp: goldfinger007
+>>>>>>> 6318a354d2ceb4940af12edfa7c7d8b7da5c48e8
             $this->email->from('cartopus22@gmail.com');
             $this->email->to('1cape1slip@gmail.com'); 
-            $this->email->subject($this->input->post('subject'));
-            $this->email->message($message.'Ce message a été envoyé par :'.$this->input->post('mail'));
+            $this->email->subject($objet);
+            $this->email->message($message.'Ce message a été envoyé par : '.$mail);
+            if (!$this->email->send())
+            {
+                $this->email->print_debugger();
+            }
+            else
+            {
+
+            }
+            
         }
         else{
             $DonnéesTitre = array('TitreDeLaPage'=>'Contactez Nous');
