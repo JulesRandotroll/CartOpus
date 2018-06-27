@@ -297,6 +297,42 @@ class Acteur extends CI_Controller
 
     }
 
+    public function ReitererAction()
+    {
+        {
+            if($this->input->post('Reiterer'))
+            {
+                // nouvelle insert
+            }
+            else
+            {
+                $DonnéesTitre = array('TitreDeLaPage'=>'Réitérer Action');
+                $nomAction='plopy';
+                $DonnéesDeTest= array(
+                    'NomAction' => $nomAction,
+                );
+                $Action=$this->ModelAction->getAction($DonnéesDeTest);
+                var_dump($Action[0]);
+                 $DonneesAInjectees=array
+                (
+                    'nomAction'=>$Action[0]['NOMACTION'],
+                    'adresse'=>$Action[0]['ADRESSE'],
+                    'CP'=>$Action[0]['CodePostal'],
+                    'Ville'=>$Action[0]['Ville'],
+                    'DateDebut'=>'',
+                    'DateFin'=>'',
+                    'HeureDebut'=>'',
+                    'HeureFin'=>'',
+                    'PublicCible'=>$Action[0]['PublicCible'],
+                    'Description'=>$Action[0]['Description'],
+                    'SiteURL'=>$Action[0]['SiteURLAction'],
+                );
+                $this->load->view('templates/Entete',$DonnéesTitre);
+                $this->load->view('Acteur/ReitererAction',$DonneesAInjectees);
+                $this->load->view('templates/PiedDePage');
+            }  
+        }
+    }
     public function RenommerPhoto($Image)
     {
         //Je T'aime
