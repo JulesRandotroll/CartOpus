@@ -151,12 +151,15 @@
                             
                             echo $this->table->generate();
                             echo'</div>';
+
+                          
+                        
+                            echo '<H1>Images</H1>';
+                            var_dump($Fichier);
+                    
                         
                         }
-                        else
-                        {
-                            echo '<H1>Images</H1>';
-                        }
+                        
                         
                        
                         

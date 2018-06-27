@@ -33,6 +33,7 @@ class Acteur extends CI_Controller
     public function AccueilActeur()
     {
 
+        $this->session->statut = 1;
         $noActeur = $this->session->noActeur;
         //On stocke dans une variable locale l'identifiant BDD de l'acteur connecté
 
@@ -269,14 +270,24 @@ class Acteur extends CI_Controller
         // $Doonnes = array('a.noaction'=>$noAction,'datedebut'=>$DateDebut,);
         // $Action = $this->ModelAction->getAction($Doonnes);
         //var_dump($Action);
-        $Donnes = array('NOACTION'=>$noAction,'DATEHEURE'=>$DateDebut,);
-        $Fichiers = $this->ModelAction->getFichersPourAction($Donnes,$DateFin);
-        //var_dump($Fichiers);
+        $Donnes = array('NOACTION'=>$noAction,'DATEACTION'=>$DateDebut,);
+        var_dump($Donnes);
+        $Fichiers = $this->ModelAction->getFichersPourAction($Donnes);
+        var_dump($Fichiers);
+        if(empty($Fichiers))
+        {
+            $Données = array(
+                'Actions'=>$Actions,
+            );
+        }
+        else
+        {
+            $Données = array(
+                'Actions'=>$Actions,
+                'Fichiers'=>$Fichiers,
+            );
+        }
         
-        $Données = array(
-            'Actions'=>$Actions,
-            'Fichiers'=>$Fichiers,
-        );
 
         $DonnéesTitre = array('TitreDeLaPage'=>$Actions[0]['NOMACTION']);
         
@@ -397,13 +408,14 @@ class Acteur extends CI_Controller
             $HeureDebut = $this->input->post('HeureDebut');
             $DateFin = $this->input->post('DateFin');
             $HeureFin = $this->input->post('HeureFin');
-            $Publique = $this->input->post('Publique');
+            $Public = $this->input->post('Public');
             $Description = $this->input->post('Description');
             $SiteURL = $this->input->post('SiteURL');
             
             //echo $coucou;
             $DateD = $DateDebut.' '.$HeureDebut;
-            
+            $DateF = $DateFin.' '.$HeureFin;
+
             $Donnes = array(
                 'a.nomAction' => $NomAction,
                 'datedebut' => $DateDebut.' '.$HeureDebut,
@@ -446,7 +458,64 @@ class Acteur extends CI_Controller
                 else
                 {
                     echo 'n\'existe pas';
-                    // insert
+                    
+                    $donnéesAction = array(
+                        'nomaction'=>$NomAction,
+                        'publiccible'=>$Public,
+                        'SiteURLAction'=>$SiteURL,
+                    );
+                    $noAction = $this->ModelAction->insertAction($donnéesAction);
+                    
+                    //gestion du lieu de l'action
+                    $donnéesLieu = array(
+                        'adresse'=>$Adresse,
+                        'CodePostal'=>$CP,
+                        'ville'=>$Ville,
+                    );
+                    //test si le lieu est dejà dans la BDD
+                    $noLieu = $this->ModelAction->getLieu($donnéesLieu);
+                    //Si pas dans la BDD => insert
+                    if(empty($noLieu)) //penser à trouver les coodonnées => léandre API  ?
+                    {
+                        //penser aux coordonnées
+                        $noLieu = $this->ModelAction->insertLieu($donnéesLieu);
+                    }
+
+                   $donnéesAvoirLieu = array(
+                       'DateDebut'=>$DateD,
+                       'NoAction'=>$noAction,
+                       'TitreAction'=>$NomAction,
+                       'NoLieu'=>$noLieu,
+                       'DateFin'=>$DateF,
+                       'Description'=>$Description,
+                   );
+
+                   $this->ModelAction->insertAvoirLieu($donnéesAvoirLieu);
+
+                   $donnéesEtrePartenaire = array(
+                        'NoAction'=>$noAction,
+                        'NoActeur'=> $this->session->noActeur,
+                        'NoRole'=> '2147483642',
+                        'DateDebut'=>$DateD,
+                        'DateFin'=>$DateF,
+                   );
+
+                   $this->ModelAction->insertEtrePartenaire($donnéesEtrePartenaire);
+
+                   $donnéesProfilPourAction = array(
+                        'NoActeur'=> $this->session->noActeur,
+                        'NoAction'=>$noAction,
+                        'DateDebut'=>$DateD,
+                        'NoProfil'=>'3',
+                        'DateFin'=>$DateF,
+                   );
+                   
+                   $noProfil = $this->ModelAction->insertProfilPourAction( $donnéesProfilPourAction);
+                   $this->session->statut = $noProfil;
+
+                   $this->AfficherActionSelectionnee($noAction,$DateD,$DateF);
+                   //Charger la page de l'action créée. 
+
                 } 
             }    
         
@@ -502,9 +571,13 @@ class Acteur extends CI_Controller
             $objet = $this->input->post('subject');
             $message=$this->input->post('Message');
             $mail = $this->input->post('mail');
+<<<<<<< HEAD
+            //1cape1slip@gmail.com mdp: goldebutger007
+=======
             $nom = $this->input->post('nom');
             $prenom = $this->input->post('prenom');
             //1cape1slip@gmail.com mdp: goldfinger007
+>>>>>>> ddabd9566c12e53063140af71b699c5832ceb6a0
             $this->email->from('cartopus22@gmail.com');
             $this->email->to('1cape1slip@gmail.com'); 
             $this->email->subject($objet);

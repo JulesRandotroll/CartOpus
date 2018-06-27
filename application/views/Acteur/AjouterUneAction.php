@@ -4,7 +4,7 @@
     <div class="col-sm-8" style="padding:20px">
         <div style="padding:20px">
             <div class = "text-center">
-                <H1 style="color:#FFFFFF">Ajouter une nouvelle evènement</H1>
+                <H1 style="color:#FFFFFF">Ajouter un nouvel évènement</H1>
             </div>
             <section >
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
@@ -83,7 +83,7 @@
                                                 
                         echo '<div class="form-group">';
                             echo form_label('Public ciblé : ', 'Public');
-                            echo form_dropdown('Publique', $options,'' ,Array('class'=>'form-control'));
+                            echo form_dropdown('Public', $options,'' ,Array('class'=>'form-control'));
                         echo '</div>';
 
                         echo '<div class="form-group">';

@@ -19,46 +19,15 @@
             return $requete->result_array();
         }
         
-        public function getFichersPourAction($DonnéesDeTest,$DateFin)
+        public function getFichersPourAction($DonnéesDeTest)
         {   
             
-            if($DateFin != null)
-            {
-                $requete = $this->db->query("
-                    SELECT * 
-                    FROM stocker 
-                    WHERE NOACTION =". $DonnéesDeTest['a.noaction'] ." 
-                    HAVING DATEHEURE BETWEEN '". $DonnéesDeTest['DATEHEURE'] .
-                    "' AND '".$DateFin."'"
-                );
-            }
-            else 
-            {
-                $DateMax = $this->ModelAction->getDerniereAction($DonnéesDeTest['NOACTION']);
-                //var_dump($DateMax);
-                if($DateMax[0]['dateheure'] != $DonnéesDeTest['DATEHEURE'])
-                {
-                    $requete = $this->db->query("
-                        SELECT * 
-                        FROM stocker 
-                        WHERE NOACTION = ". $DonnéesDeTest['NOACTION'] ." 
-                        HAVING DATEHEURE BETWEEN '". $DonnéesDeTest['DATEHEURE'] .
-                        "' AND '".$DateMax[0]['dateheure']."'"
-                    );
-                }
-                else
-                {
-                    $requete = $this->db->query("
-                        SELECT * 
-                        FROM stocker 
-                        WHERE NOACTION = ". $DonnéesDeTest['NOACTION'] ." 
-                        HAVING DATEHEURE > '". $DonnéesDeTest['DATEHEURE']
-                    );
-                }
-            }
-            
+            $this->db->select('FICHIER');
+            $this->db->from('Stocker');
+            $this->db->where($DonnéesDeTest);
+            $requete = $this->db->get();
             return $requete->result_array();
-
+        
         }
 
         public function getDerniereAction($noAction)
@@ -128,13 +97,38 @@
         public function insertAction($InsertAction)//,$InsertLieu,$InsertAvoirLieu,$InsertEtrePartenaire)
         {
             $this->db->insert('Action',$InsertAction);
-            $noAction = $this->db->insert_id();
-            
-            $this->db->insert('Lieu',$InsertLieu);
-            
+            return $this->db->insert_id();
+        }
+
+        public function getLieu($DonnéesLieu)
+        {    
+            $this->db->select('nolieu');
+            $this->db->from('lieu');
+            $this->db->where($DonnéesLieu);
+            $requete = $this->db->get();
+            $noLieu = $requete->result_array();
+        }
+    
+        public function insertLieu($DonnéesLieu)
+        {
+            $this->db->insert('Lieu',$DonnéesLieu);
+            return $this->db->insert_id();
+        }
+
+        public function insertAvoirLieu($InsertAvoirLieu)
+        {
             $this->db->insert('AvoirLieu',$InsertAvoirLieu);
+        }   
             
+        public function insertEtrePartenaire($InsertEtrePartenaire)
+        {
             $this->db->insert('EtrePartenaire',$InsertEtrePartenaire);
+        }
+
+        public function insertProfilPourAction($InsertProfilPourAction)
+        {
+            $this->db->insert('ProfilPourAction',$InsertProfilPourAction);
+            return $this->db->insert_id();
         }
     
     }
