@@ -606,6 +606,7 @@ class Acteur extends CI_Controller
             $this->load->view('templates/PiedDePage');
         }
     }
+    
     public function AjoutThematique()
     {
         $DonnéesTitre = array('TitreDeLaPage'=>'Ajout Thématique');
