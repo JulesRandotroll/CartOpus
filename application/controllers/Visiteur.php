@@ -202,7 +202,7 @@ class Visiteur extends CI_Controller
           {
             echo('noacteur');
             var_dump($this->session->noActeur);
-            redirect('Visiteur/loadAccueil',$this->session->statut);
+            redirect('SuperAdmin/AccueilSuperAdmin',$this->session->statut);
             echo'noprofil';
             var_dump($noprofil[0]['NoProfil']);
             echo'une cape et un slip';
