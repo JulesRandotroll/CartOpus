@@ -155,7 +155,7 @@
                           
                         
                             echo '<H1>Images</H1>';
-                            var_dump($Fichier);
+                            //var_dump($Fichier);
                     
                         
                         }

@@ -571,13 +571,10 @@ class Acteur extends CI_Controller
             $objet = $this->input->post('subject');
             $message=$this->input->post('Message');
             $mail = $this->input->post('mail');
-<<<<<<< HEAD
             //1cape1slip@gmail.com mdp: goldebutger007
-=======
             $nom = $this->input->post('nom');
             $prenom = $this->input->post('prenom');
             //1cape1slip@gmail.com mdp: goldfinger007
->>>>>>> ddabd9566c12e53063140af71b699c5832ceb6a0
             $this->email->from('cartopus22@gmail.com');
             $this->email->to('1cape1slip@gmail.com'); 
             $this->email->subject($objet);
