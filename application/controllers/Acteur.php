@@ -60,7 +60,6 @@ class Acteur extends CI_Controller
         
         $this->load->view('templates/Entete',$DonnéesTitre);
         $this->load->view('Acteur/AccueilActeur',$Données);
-        $this->load->view('Acteur/AjouterUneAction');
         $this->load->view('templates/PiedDePage');
 
     }
@@ -271,11 +270,12 @@ class Acteur extends CI_Controller
         // $Action = $this->ModelAction->getAction($Doonnes);
         //var_dump($Action);
         $Donnes = array('NOACTION'=>$noAction,'DATEACTION'=>$DateDebut,);
-        var_dump($Donnes);
+        //var_dump($Donnes);
         $Fichiers = $this->ModelAction->getFichersPourAction($Donnes);
-        var_dump($Fichiers);
+        //var_dump($Fichiers);
         if(empty($Fichiers))
         {
+           
             $Données = array(
                 'Actions'=>$Actions,
             );
@@ -451,13 +451,13 @@ class Acteur extends CI_Controller
                 
                 if(!empty($ActionVague))
                 {
-                    echo 'coucou il y a déjà une action du même nom xD';
+                    //echo 'coucou il y a déjà une action du même nom xD';
                     var_dump($ActionVague);
                     // update ou lien vers l'update ? 
                 }
                 else
                 {
-                    echo 'n\'existe pas';
+                    // echo 'n\'existe pas';
                     
                     $donnéesAction = array(
                         'nomaction'=>$NomAction,
@@ -522,8 +522,9 @@ class Acteur extends CI_Controller
         }
         else
         {
+            $DonnéesTitre = array('TitreDeLaPage'=>'Ajouter une Action');
+        
             $this->load->view('templates/Entete',$DonnéesTitre);
-            //$this->load->view('Acteur/AccueilActeur',$Données);
             $this->load->view('Acteur/AjouterUneAction');
             $this->load->view('templates/PiedDePage');
 

@@ -58,13 +58,13 @@
                         echo '<div class="form-group">';
                         echo '<span style="color:#FF0000"/> * </span>';
                         echo form_label('Objet : ', 'objet');
-                        echo form_dropdown('subject', $options, 'default');
+                        echo form_dropdown('subject', $options, 'default',array('required'=>'required','class'=>'form-control'));
                         echo '</div>';
 
                         echo '<div class="form-group">';
                         echo '<span style="color:#FF0000"/> * </span>';
                         echo form_label('Message : ', 'mess');
-                        echo form_textarea('Message','',array('required'=>'required','placeholder'=>'Ex : votre message','class'=>'form-control')); 
+                        echo form_textarea('Message','',array('required'=>'required','placeholder'=>'Expliquez ici le motif de votre contacte','class'=>'form-control')); 
                         echo '</div>';
 
                         echo '<div class="text-right">';
