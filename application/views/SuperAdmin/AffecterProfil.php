@@ -20,6 +20,7 @@
                         <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                             <H4>
                                 <?php
+                                    var_dump($this->modif());
                                     echo form_open('SuperAdmin/AffecterProfil');
 
                                     echo form_label('Rechercher :', 'lbl_Recherche');
@@ -62,31 +63,31 @@
                                     <?php
                                         foreach ($AdminValider as $unActeur)
                                         {
-                                           echo"<tr><td>".$unActeur['NOMACTEUR']." ".$unActeur['PRENOMACTEUR']."</td><td><button class='pull-right'>Modifier</button>"."</td></tr>";
+                                           echo"<tr><td>".$unActeur['NOMACTEUR']." ".$unActeur['PRENOMACTEUR']."</td><td><button>' class='pull-right'>Modifier</button>"."</td></tr>";
                                         }
                                     ?>
                                     </tbody>
                                     <thead>
                                         <tr>
                                             <th>Super Admin</th>
-                                            <th ><button type="button" style="color:black; font-size:100%" class="btn btn-link btn-sm pull-right "><strong>+</strong></button></th> 
+                                            <th ><button type="button" style="color:black; font-size:100%" class="btn btn-link btn-sm pull-right   "><strong>+</strong></button></th> 
                                         </tr>
                                     </thead>
                                     <tbody>
                                     <?php
                                         foreach ($SuperAdmin as $unActeur)
                                         {
-                                           echo"<tr><td>".$unActeur['NOMACTEUR']." ".$unActeur['PRENOMACTEUR']."</td><td><button class='pull-right'>Modifier</button>"."</td></tr>";
+                                           echo"<tr><td>".$unActeur['NOMACTEUR']." ".$unActeur['PRENOMACTEUR']."</td><td>".$result."</td></tr>";
                                         }
                                     ?>
                                     </tbody>
                                   </table>
                                 </div>
-                           
-                                <label for="profil">Quel est le nouveau profil ? : </label><input id="profil" type="number" value="0"/> 
                                 <?php
+          
+                               
 
-                                
+                                   
                                     echo form_close();
                                 ?>
                                 </H4>
