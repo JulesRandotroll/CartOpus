@@ -10,7 +10,7 @@ class SuperAdmin extends CI_Controller {
        $this->load->library('email');
        $this->load->library('table');
        $this->load->helper('form');
-       $this->load->model('ModelSeConnecter');
+       $this->load->model('ModelActeur');
        $this->load->library('session');
     } // __construct
 
@@ -25,9 +25,23 @@ class SuperAdmin extends CI_Controller {
 
     public function AffecterProfil()
     {
+        $noProfil=5;
+        $result5=$this->ModelActeur->GetProfil($noProfil);
+        $noProfil=4;
+        $result4=$this->ModelActeur->GetProfil($noProfil);
+        $noProfil=1||2||3;
+        $result=$this->ModelActeur->GetProfil($noProfil);
+        //var_dump($result);
+        $DonnéesAInjectées=array
+        (
+            'SuperAdmin'=>$result5,
+            'AdminValider'=>$result4,
+            'Acteur'=>$result,
+        );
+        //var_dump($DonnéesAInjectées);
         $DonnéesTitre = array('TitreDeLaPage'=>'Affecter Profil');
         $this->load->view('templates/Entete',$DonnéesTitre);
-        $this->load->view('SuperAdmin/AffecterProfil');
+        $this->load->view('SuperAdmin/AffecterProfil', $DonnéesAInjectées);
         $this->load->view('templates/PiedDePage');
     }
 }
