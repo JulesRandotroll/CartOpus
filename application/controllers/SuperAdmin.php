@@ -44,4 +44,18 @@ class SuperAdmin extends CI_Controller {
         $this->load->view('SuperAdmin/AffecterProfil', $DonnéesAInjectées);
         $this->load->view('templates/PiedDePage');
     }
+
+    public function modif()
+    {
+        if ( isset( $_POST['modif'] ) ) 
+        {
+            $result= '<label for="profil">Quel est le nouveau profil ? : </label> <input id="profil" type="number" value="0"/>';
+        }
+        else
+        {
+            $bouton='<button class="pull-right name="modif" onclick=".modif()."">Modifier</button>';
+            $result= 'plop';
+        }
+        return $result;
+    }
 }
