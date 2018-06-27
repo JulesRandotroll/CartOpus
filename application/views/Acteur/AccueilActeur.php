@@ -80,6 +80,7 @@
                             {
                                 foreach($Action as $uneAction)
                                 {
+<<<<<<< HEAD
                                     if($uneAction['DATEFIN']==null){$uneAction['DATEFIN']=0;}
                                     if(empty($uneAction['SiteURLAction']))
                                     {
@@ -90,6 +91,14 @@
                                         $this->table->add_row($uneAction['NOMACTION'],$uneAction['NOMROLE'],'<a href="'.$uneAction['SiteURLAction'].'" style="color:FFFFFF">Cliquer Ici</a>',$uneAction['DATEDEBUT'],$uneAction['Description'],'<a href="'.site_url('Acteur/AfficherActionSelectionnee/'.($uneAction['NOACTION']).'/'.($uneAction['DATEDEBUT']).'/'.($uneAction['DATEFIN'])).'" class="btn btn-danger" >Accès</a>');
                                     }
                                     
+=======
+                                    if($uneAction['DATEFIN']==null)
+                                    {
+                                        $uneAction['DATEFIN']=0;
+                                    }
+                                    
+                                    $this->table->add_row($uneAction['NOMACTION'],$uneAction['NOMROLE'],$uneAction['SiteURLAction'],$uneAction['DATEDEBUT'],$uneAction['Description'],'<a href="'.site_url('Acteur/AfficherActionSelectionnee/'.($uneAction['NOACTION']).'/'.($uneAction['DATEDEBUT']).'/'.($uneAction['DATEFIN'])).'" class="btn btn-danger" >Accès</a>');  
+>>>>>>> 4cee88c3f8397f339772ab629dcf6d66efa70829
                                 }
                                 $Style = array('table_open' => '<table class="table" >');
                                 $this->table->set_template($Style);

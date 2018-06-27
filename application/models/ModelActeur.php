@@ -142,18 +142,15 @@
             return $requete->result_array();
         }
 
-        // public function UploadPhoto($photo)
-        // {
-        //     $config['upload_path'] = '../assets/images/'; 
-        //     $config['allowed_types'] = 'gif|jpg|png|jpeg'; 
-        //     $config['max_size'] = '2048'; 
-        //     $config['max_width']  = '1024';
-        //     $config['max_height']  = '768'; 
-        //     $config['overwrite'] = TRUE;
-    
-        //     $this->load->library("upload", $config);
-        //     return $this->upload->$photo;
-        // }
+        public function GetProfil($noProfil)
+        {
+            $this->db->select('*');
+            $this->db->from('Acteur');
+            $this->db->where('noProfil',$noProfil);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
     }
 
 

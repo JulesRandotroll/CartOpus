@@ -33,33 +33,60 @@
                                     // echo '</td><td>';
                                     // echo '+';
                                     // echo '</table>';
+                                    //var_dump($Acteur);
                                     ?>
-                                    <table class="table table-bordered">
+                                    <table class="table" >
                                     <thead>
-                                      <tr>
-                                        <th>Acteur</th>
-                                        <th >+</th>
-                                        <!--text align right ?? -->
-                                      </tr>
+                                        <tr>
+                                            <th>Acteur</th>
+                                            <th ><button type="button" style="color:black; font-size:100%" class="btn btn-link btn-sm pull-right "><strong>+</strong></button></th> 
+                                        </tr>
+                                    </thead> 
+                                    <tbody>
+                                    <div class="container">
+                                    <?php
+                                        foreach ($Acteur as $unActeur)
+                                        {
+                                           echo"<tr><td>".$unActeur['NOMACTEUR']." ".$unActeur['PRENOMACTEUR']."</td><td><button class='pull-right'>Modifier</button>"."</td></tr>";
+                                        }
+                                    ?>
+                                    </div>
+                                    </tbody>
+                                    <thead>
+                                        <tr>
+                                            <th>Admin Valider</th>
+                                            <th ><button type="button" style="color:black; font-size:100%" class="btn btn-link btn-sm pull-right "><strong>+</strong></button></th> 
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                      <tr>
-                                       <td>plop</td>
-                                      </tr>
-                                      <tr>
-                                        <td>Mary</td>
-                                        <td>Moe</td>
-                                       
-                                      </tr>
-                                      <tr>
-                                        <td>July</td>
-                                        <td>Dooley</td>
-                                   
-                                      </tr>
+                                    <?php
+                                        foreach ($AdminValider as $unActeur)
+                                        {
+                                           echo"<tr><td>".$unActeur['NOMACTEUR']." ".$unActeur['PRENOMACTEUR']."</td><td><button class='pull-right'>Modifier</button>"."</td></tr>";
+                                        }
+                                    ?>
+                                    </tbody>
+                                    <thead>
+                                        <tr>
+                                            <th>Super Admin</th>
+                                            <th ><button type="button" style="color:black; font-size:100%" class="btn btn-link btn-sm pull-right "><strong>+</strong></button></th> 
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                        foreach ($SuperAdmin as $unActeur)
+                                        {
+                                           echo"<tr><td>".$unActeur['NOMACTEUR']." ".$unActeur['PRENOMACTEUR']."</td><td><button class='pull-right'>Modifier</button>"."</td></tr>";
+                                        }
+                                    ?>
                                     </tbody>
                                   </table>
                                 </div>
+                           
+                                <label for="profil">Quel est le nouveau profil ? : </label><input id="profil" type="number" value="0"/> 
                                 <?php
+
+                                
                                     echo form_close();
                                 ?>
                                 </H4>
