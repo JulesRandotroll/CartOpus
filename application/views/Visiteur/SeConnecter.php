@@ -46,13 +46,11 @@
                             
                             echo form_submit('submit', 'Se connecter',array('class'=>'btn btn-danger'));
                             
-                            
                             echo '<a style="color:#FFFFFF" href="'.site_url('Visiteur/RecupMDP').'">Mot de passe oublié ?</a>';
                             
                             echo form_close();
                            
                             echo $message;
-                            
                             
                             echo '<br>';
                             echo '<a style="color:#FFFFFF" href="'.site_url('Visiteur/sInscrire').'">S\'inscrire ? </a>';
