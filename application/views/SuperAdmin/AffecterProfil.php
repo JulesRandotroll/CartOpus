@@ -49,7 +49,7 @@
                                     <?php
                                         foreach ($Acteur as $unActeur)
                                         {
-                                           echo"<tr><td>".$unActeur['NOMACTEUR']." ".$unActeur['PRENOMACTEUR']."</td><td>".'<a href="'.site_url('SuperAdmin/AffecterProfil/'.($unActeur['NOACTEUR'])).'" class="btn btn-danger pull-right" >Modifier</a>'."</td></tr>";
+                                           echo"<tr><td>".$unActeur['NOMACTEUR']." ".$unActeur['PRENOMACTEUR']."</td><td>".'<a href="'.site_url('SuperAdmin/AffecterProfil/'.($unActeur['NOACTEUR']).'#Mod').'" class="btn btn-danger pull-right" >Modifier</a>'."</td></tr>";
                                         }
                                     ?>
                                     </div>
@@ -64,7 +64,7 @@
                                     <?php
                                         foreach ($AdminValider as $unActeur)
                                         {
-                                           echo"<tr><td>".$unActeur['NOMACTEUR']." ".$unActeur['PRENOMACTEUR']."</td><td>".'<a href="'.site_url('SuperAdmin/AffecterProfil/'.($unActeur['NOACTEUR'])).'" class="btn btn-danger pull-right" >Modifier</a>'."</td></tr>";
+                                           echo"<tr><td>".$unActeur['NOMACTEUR']." ".$unActeur['PRENOMACTEUR']."</td><td>".'<a href="'.site_url('SuperAdmin/AffecterProfil/'.($unActeur['NOACTEUR']).'#Mod').'" class="btn btn-danger pull-right" >Modifier</a>'."</td></tr>";
                                         }
                                     ?>
                                     </tbody>
@@ -78,7 +78,7 @@
                                     <?php
                                         foreach ($SuperAdmin as $unActeur)
                                         {
-                                           echo"<tr><td>".$unActeur['NOMACTEUR']." ".$unActeur['PRENOMACTEUR']."</td><td>".'<a href="'.site_url('SuperAdmin/AffecterProfil/'.($unActeur['NOACTEUR'])).'" class="btn btn-danger pull-right" >Modifier</a>'."</td></tr>";
+                                           echo"<tr><td>".$unActeur['NOMACTEUR']." ".$unActeur['PRENOMACTEUR']."</td><td>".'<a href="'.site_url('SuperAdmin/AffecterProfil/'.($unActeur['NOACTEUR']).'#Mod').'" class="btn btn-danger pull-right" >Modifier</a>'."</td></tr>";
                                         }
                                     ?>
                                     </tbody>
