@@ -326,6 +326,49 @@ class Acteur extends CI_Controller
                 //     'options'=>$Options,
                 // );
             $choix=1;
+            $DonnéesAInjectée=array
+            (
+                'choix'=>$choix,
+                'options'=>$Options,
+            );
+            $DonnéesTitre = array('TitreDeLaPage'=>'Choisir Action à réitérer');
+            $this->load->view('templates/Entete',$DonnéesTitre);
+            $this->load->view('Acteur/ChoisirAction', $DonnéesAInjectée);
+            $this->load->view('templates/PiedDePage');
+
+            if($this->input->post('Choix'))
+            {
+                $DonnéesTitre = array('TitreDeLaPage'=>'Réitérer Action');
+                
+                $noAction=$this->input->post('Action');
+
+                $DonnéesDeTest= array(
+                    'a.NoAction' => $noAction,
+                );
+                $Action=$this->ModelAction->getAction($DonnéesDeTest);
+    
+                //var_dump($Action);
+                $DonneesAPrerentrer=array
+                (
+                    'NomAction'=>$Action[0]['NOMACTION'],
+                    'Adresse'=>$Action[0]['ADRESSE'],
+                    'CodePostale'=>$Action[0]['CodePostal'],
+                    'Ville'=>$Action[0]['Ville'],
+                    'DateDebut'=>'',
+                    'DateFin'=>'',
+                    'HeureDebut'=>'',
+                    'HeureFin'=>'',
+                    'Public'=>$Action[0]['PublicCible'],
+                    'Description'=>$Action[0]['Description'],
+                    'SiteURL'=>$Action[0]['SiteURLAction'],
+                    'options'=>$Options,
+                    'choix'=>$choix,
+                );
+                $this->load->view('templates/Entete',$DonnéesTitre);
+                $this->load->view('Acteur/ChoisirAction', $DonnéesAInjectée);
+                $this->load->view('Acteur/ReitererAction', $DonnéesAPrerentrer);
+                $this->load->view('templates/PiedDePage');
+            }
         }
         else
         {

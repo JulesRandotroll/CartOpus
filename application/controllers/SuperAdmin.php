@@ -40,9 +40,6 @@ class SuperAdmin extends CI_Controller {
             'Acteur'=>$result,
         );
 
-        
-        
-
         //var_dump($DonnéesAInjectées);
         $DonnéesTitre = array('TitreDeLaPage'=>'Affecter Profil');
         $this->load->view('templates/Entete',$DonnéesTitre);
