@@ -22,6 +22,13 @@
                     <?php
                      echo form_open('Acteur/ReitererAction');
 
+                     if ($choix==1)
+                     {
+                     echo '<div class="form-group">';
+                     echo form_label('Action choisie : ', 'Action');
+                     echo form_dropdown('Action', $options,'' ,Array('class'=>'form-control'));
+                     echo '</div>';
+                     }
                      echo '<div class="form-group">';
                          echo '<span style="color:#FF0000"/> * </span>';
                          echo form_label('Nom de l\'action : ', 'Name');

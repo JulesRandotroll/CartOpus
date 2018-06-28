@@ -297,16 +297,44 @@ class Acteur extends CI_Controller
 
     }
 
-    public function ReitererAction()
+    public function ReitererAction($noAction)
     {
+        $choix=0;
+        $Options=0;
+        if ($noAction==0)
+        {
+            $noActeur = $this->session->noActeur;
+            //var_dump($noActeur);
+            $this->load->model('ModelActeur'); // on charge le modele correspondant
+            $action= $this->ModelActeur->getActions($noActeur);
+            $i=0;
+            //var_dump($action);
+            foreach($action as $uneAction)
+            {
+                if(empty($Options))
+                {
+                    $Options = array($uneAction['NOACTION']=>$uneAction['NOMACTION']);
+                }
+                else
+                {
+                    $temporaire = array($uneAction['NOACTION']=>$uneAction['NOMACTION']);
+                    $Options = $Options + $temporaire;
+                }
+            }
+           
+                // $DonneesAInjectees=array(
+                //     'options'=>$Options,
+                // );
+            $choix=1;
+        }
+        else
         {
             $DonnéesTitre = array('TitreDeLaPage'=>'Réitérer Action');
-            $nomAction='plopy';
             $DonnéesDeTest= array(
-                'NomAction' => $nomAction,
+                'a.NoAction' => $noAction,
             );
             $Action=$this->ModelAction->getAction($DonnéesDeTest);
-            
+
             if($this->input->post('Ajouter'))
             {
                 $noAction=$Action[0]['NOACTION'];
@@ -317,7 +345,7 @@ class Acteur extends CI_Controller
             else
             {
                 
-                //var_dump($Action[0]);
+                //var_dump($Action);
                  $DonneesAInjectees=array
                 (
                     'NomAction'=>$Action[0]['NOMACTION'],
@@ -331,12 +359,14 @@ class Acteur extends CI_Controller
                     'Public'=>$Action[0]['PublicCible'],
                     'Description'=>$Action[0]['Description'],
                     'SiteURL'=>$Action[0]['SiteURLAction'],
+                    'options'=>$Options,
+                    'choix'=>$choix,
                 );
                 $this->load->view('templates/Entete',$DonnéesTitre);
                 $this->load->view('Acteur/ReitererAction',$DonneesAInjectees);
                 $this->load->view('templates/PiedDePage');
             }  
-        }
+    }
     }
     public function RenommerPhoto($Image)
     {
@@ -459,7 +489,7 @@ class Acteur extends CI_Controller
 
             $Donnes = array(
                 'a.nomAction' => $NomAction,
-                'datedebut' => $DateDebut.' '.$HeureDebut,
+                'datedebut' => $DateDebut.' '.$HeureDebut, 
             );
 
             //var_dump($Donnes);
@@ -478,7 +508,7 @@ class Acteur extends CI_Controller
                 );
 
                 $DonnéesTitre = array('TitreDeLaPage'=>$Action[0]['NOMACTION']);
-        
+                var_dump($Données);
                 $this->load->view('templates/Entete',$DonnéesTitre);
                 $this->load->view('Acteur/AfficherAction',$Données);
                 $this->load->view('templates/PiedDePage');

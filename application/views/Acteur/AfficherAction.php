@@ -157,19 +157,19 @@
                         }
                         
                         if (isset($Fichiers))
-                            {
-                                echo '<H1>Images</H1>';
+                        {
+                            echo '<H1>Images</H1>';
 
-                                foreach($Fichiers as $unFichier)
-                                {
-                                    echo '<BR>'.img($unFichier['FICHIER']).'<BR>';
-                                }
+                            foreach($Fichiers as $unFichier)
+                            {
+                                echo '<BR>'.img($unFichier['FICHIER']).'<BR>';
+                            }
                                 
                                 //var_dump($Fichiers);
-                            }
-                            
-                       
-                        
+                        }
+                        echo '<div class="text-right">';
+                        echo'<a  href="'.site_url('Acteur/ReitererAction/'.$Actions[0]['NOACTION'].'').'" style="color:#000000"><span class="glyphicon glyphicon-repeat"></span>  </a>';
+                        echo '</div>';
                     ?>
                 </div>
             </section>
