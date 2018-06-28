@@ -133,6 +133,7 @@
             $this->db->where('noActeur',$noActeur);
             $this->db->update('acteur',$Donnees2);
         }
+
         public function GetPhoto($noActeur)
         {
             $this->db->select('photoprofil');
@@ -151,15 +152,25 @@
             return $requete->result_array();
         }
 
+        public function getProfils()
+        {
+            $this->db->select('*');
+            $this->db->from('profil');
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
+        public function setProfil($noActeur,$noProfil)
+        {   
+            $données = array(
+                'noProfil'=>$noProfil,
+            );
+
+            $this->db->where('noActeur',$noActeur);
+            $this->db->update('Acteur',$données);
+        }
+
     }
-
-
-/*
-SELECT * 
-FROM action a, etrepartenaire p, role r
-WHERE a.noaction=p.noaction AND r.norole=p.norole
-AND a.noaction = 1 AND datedebut = 2018-06-19 16:00:00
-*/
 
 
 ?>

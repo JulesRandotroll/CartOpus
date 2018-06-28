@@ -23,8 +23,9 @@ class SuperAdmin extends CI_Controller {
      
     }
 
-    public function AffecterProfil()
+    public function AffecterProfil($noActeur)
     {
+        
         $noProfil=5;
         $result5=$this->ModelActeur->GetProfil($noProfil);
         $noProfil=4;
@@ -38,24 +39,37 @@ class SuperAdmin extends CI_Controller {
             'AdminValider'=>$result4,
             'Acteur'=>$result,
         );
+
+        
+        
+
         //var_dump($DonnéesAInjectées);
         $DonnéesTitre = array('TitreDeLaPage'=>'Affecter Profil');
         $this->load->view('templates/Entete',$DonnéesTitre);
         $this->load->view('SuperAdmin/AffecterProfil', $DonnéesAInjectées);
+        if($noActeur != 0)
+        {
+            $Profils = $this->ModelActeur->getProfils();
+            $Acteur = $this->ModelActeur->getActeur($noActeur);
+            $DonnéesAModifier = array(
+                'Acteur'=>$Acteur[0],
+                'Profils'=>$Profils,
+            );
+           
+            $this->load->view('SuperAdmin/ModifierProfil', $DonnéesAModifier);
+        }
         $this->load->view('templates/PiedDePage');
     }
 
-    public function modif()
+    public function ModifierProfil()
     {
-        if ( isset( $_POST['modif'] ) ) 
+        if($this->input->post('Modifier'))
         {
-            $result= '<label for="profil">Quel est le nouveau profil ? : </label> <input id="profil" type="number" value="0"/>';
+            $noProfil = $this->input->post('Profil').'<BR>';
+            $noActeur = $this->input->post('noActeur');
+            $this->ModelActeur->setProfil($noActeur,$noProfil);
         }
-        else
-        {
-            $bouton='<button class="pull-right name="modif" onclick=".modif()."">Modifier</button>';
-            $result= 'plop';
-        }
-        return $result;
+        
+        $this->AffecterProfil(0);  
     }
 }
