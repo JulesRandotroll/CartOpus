@@ -1,6 +1,8 @@
 <ul class="nav navbar-nav navbar-right">
                         <?php 
-                             echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se Déconnecter</a></li>';
+                             echo'<li><a href="'.site_url('Acteur/AccueilActeur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso </a></li>';    
+                             echo'<li><a href="'.site_url('Acteur/ContacterAdmin').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-send"></span> Contacter Nous</a></li>';
+                            echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se Déconnecter</a></li>';
                         ?> 
                     </ul>
                 </div>
@@ -23,13 +25,13 @@
                      echo '<div class="form-group">';
                          echo '<span style="color:#FF0000"/> * </span>';
                          echo form_label('Nom de l\'action : ', 'Name');
-                         echo form_input('NomAction',$nomAction, '', Array("placeholder"=>"Nom de votre action",'required'=>'required','class'=>'form-control'));
+                         echo form_input('NomAction',$NomAction, '', Array("placeholder"=>"Nom de votre action",'required'=>'required','class'=>'form-control'));
                      echo '</div>';
 
                      echo '<div class="col-xs-4">';
                          echo '<div class="form-group">';
                              echo form_label('Adresse : ', 'adresse');
-                             echo form_input('Adresse', $adresse,'', Array("placeholder"=>"Adresse ex : 1 rue de la plomberie",'class'=>'form-control'));
+                             echo form_input('Adresse', $Adresse,'', Array("placeholder"=>"Adresse ex : 1 rue de la plomberie",'class'=>'form-control'));
                          echo '</div>';
                      echo'</div>';
 
@@ -37,7 +39,7 @@
                          echo '<div class="form-group">';
                              echo '<span style="color:#FF0000"/> * </span>';
                              echo form_label('Code Postale : ', 'CP');
-                             echo form_input('CodePostale', $CP,'', Array('pattern'=>'([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}','placeholder'=>'Code postale ex : 22000','required'=>'required','class'=>'form-control'));
+                             echo form_input('CodePostale', $CodePostale,'', Array('pattern'=>'([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}','placeholder'=>'Code postale ex : 22000','required'=>'required','class'=>'form-control'));
                          echo '</div>';
                      echo '</div>';
 
@@ -92,7 +94,7 @@
                                              
                      echo '<div class="form-group">';
                          echo form_label('Public ciblé : ', 'Public');
-                         echo form_dropdown('Public', $options,'' ,Array('class'=>'form-control',$PublicCible));
+                         echo form_dropdown('Public', $options,'' ,Array('class'=>'form-control',$Public));
                      echo '</div>';
 
                      echo '<div class="form-group">';
@@ -106,7 +108,7 @@
                      echo '</div>';
                      
                      echo '<div class="text-center">';
-                         echo form_submit('Reiterer', 'Réitérer',array("class"=>"btn btn-danger btn-lg"));
+                         echo form_submit('Ajouter', 'Réitérer',array("class"=>"btn btn-danger btn-lg"));
                      echo '</div>';
                      
                      echo '<br><h6><span style="color:#FF0000"/> *</span> Ces champs sont requis</h6> ';

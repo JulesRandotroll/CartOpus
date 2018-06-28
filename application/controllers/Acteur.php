@@ -300,30 +300,35 @@ class Acteur extends CI_Controller
     public function ReitererAction()
     {
         {
-            if($this->input->post('Reiterer'))
+            $DonnéesTitre = array('TitreDeLaPage'=>'Réitérer Action');
+            $nomAction='plopy';
+            $DonnéesDeTest= array(
+                'NomAction' => $nomAction,
+            );
+            $Action=$this->ModelAction->getAction($DonnéesDeTest);
+            
+            if($this->input->post('Ajouter'))
             {
-                // nouvelle insert
+                $noAction=$Action[0]['NOACTION'];
+                $Action=$this->NouvelleAction($noAction);
+                var_dump($Action);
+                //redirect ('Acteur/AccueilActeur');
             }
             else
             {
-                $DonnéesTitre = array('TitreDeLaPage'=>'Réitérer Action');
-                $nomAction='plopy';
-                $DonnéesDeTest= array(
-                    'NomAction' => $nomAction,
-                );
-                $Action=$this->ModelAction->getAction($DonnéesDeTest);
-                var_dump($Action[0]);
+                
+                //var_dump($Action[0]);
                  $DonneesAInjectees=array
                 (
-                    'nomAction'=>$Action[0]['NOMACTION'],
-                    'adresse'=>$Action[0]['ADRESSE'],
-                    'CP'=>$Action[0]['CodePostal'],
+                    'NomAction'=>$Action[0]['NOMACTION'],
+                    'Adresse'=>$Action[0]['ADRESSE'],
+                    'CodePostale'=>$Action[0]['CodePostal'],
                     'Ville'=>$Action[0]['Ville'],
                     'DateDebut'=>'',
                     'DateFin'=>'',
                     'HeureDebut'=>'',
                     'HeureFin'=>'',
-                    'PublicCible'=>$Action[0]['PublicCible'],
+                    'Public'=>$Action[0]['PublicCible'],
                     'Description'=>$Action[0]['Description'],
                     'SiteURL'=>$Action[0]['SiteURLAction'],
                 );
@@ -432,7 +437,7 @@ class Acteur extends CI_Controller
                
     }
 
-    public function NouvelleAction()
+    public function NouvelleAction($noAction)
     {
         if($this->input->post('Ajouter'))
         {
@@ -485,22 +490,22 @@ class Acteur extends CI_Controller
                 $DonnéesDeux = array('a.nomAction'=>$NomAction,);
                 $ActionVague = $this->ModelAction->getAction($DonnéesDeux);
                 
-                if(!empty($ActionVague))
+                if(empty($ActionVague))
                 {
-                    //echo 'coucou il y a déjà une action du même nom xD';
-                    var_dump($ActionVague);
-                    // update ou lien vers l'update ? 
-                }
-                else
-                {
-                    // echo 'n\'existe pas';
-                    
                     $donnéesAction = array(
                         'nomaction'=>$NomAction,
                         'publiccible'=>$Public,
                         'SiteURLAction'=>$SiteURL,
                     );
                     $noAction = $this->ModelAction->insertAction($donnéesAction);
+                    //echo 'coucou il n'y a PAS déjà une action du même nom xD';
+                   // var_dump($ActionVague);
+                    // update ou lien vers l'update ? 
+                }   
+                else
+                {
+                    //$noAction=//le noAction passer en paramètre
+                }
                     
                     //gestion du lieu de l'action
                     $donnéesLieu = array(
@@ -552,7 +557,6 @@ class Acteur extends CI_Controller
                    $this->AfficherActionSelectionnee($noAction,$DateD,$DateF);
                    //Charger la page de l'action créée. 
 
-                } 
             }    
         
         }
