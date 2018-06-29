@@ -299,98 +299,69 @@ class Acteur extends CI_Controller
 
     public function ReitererAction($noAction)
     {
-        $choix=0;
-        $Options=0;
+        var_dump($noAction);
         if ($noAction==0)
         {
-            $noActeur = $this->session->noActeur;
-            //var_dump($noActeur);
-            $this->load->model('ModelActeur'); // on charge le modele correspondant
-            $action= $this->ModelActeur->getActions($noActeur);
-            $i=0;
-            //var_dump($action);
-            foreach($action as $uneAction)
+            if ($this->input->post('Choix'))
             {
-                if(empty($Options))
-                {
-                    $Options = array($uneAction['NOACTION']=>$uneAction['NOMACTION']);
-                }
-                else
-                {
-                    $temporaire = array($uneAction['NOACTION']=>$uneAction['NOMACTION']);
-                    $Options = $Options + $temporaire;
-                }
-            }
-           
-                // $DonneesAInjectees=array(
-                //     'options'=>$Options,
-                // );
-            $choix=1;
-            $DonnéesAInjectée=array
-            (
-                'choix'=>$choix,
-                'options'=>$Options,
-            );
-            $DonnéesTitre = array('TitreDeLaPage'=>'Choisir Action à réitérer');
-            $this->load->view('templates/Entete',$DonnéesTitre);
-            $this->load->view('Acteur/ChoisirAction', $DonnéesAInjectée);
-            $this->load->view('templates/PiedDePage');
-
-            if($this->input->post('Choix'))
-            {
-                $DonnéesTitre = array('TitreDeLaPage'=>'Réitérer Action');
-                
                 $noAction=$this->input->post('Action');
-
-                $DonnéesDeTest= array(
-                    'a.NoAction' => $noAction,
-                );
-                $Action=$this->ModelAction->getAction($DonnéesDeTest);
-    
-                //var_dump($Action);
-                $DonneesAPrerentrer=array
+                //var_dump($noAction);
+                $this->ReitererAction($noAction);
+            }
+            else
+            {
+                $noActeur = $this->session->noActeur;
+                $this->load->model('ModelActeur'); // on charge le modele correspondant
+                $action= $this->ModelActeur->getActions($noActeur);
+                $i=0;
+                //var_dump($action);
+                foreach($action as $uneAction)
+                {
+                    if(empty($Options))
+                    {
+                        $Options = array($uneAction['NOACTION']=>$uneAction['NOMACTION']);
+                    }
+                    else
+                    {
+                        $temporaire = array($uneAction['NOACTION']=>$uneAction['NOMACTION']);
+                        $Options = $Options + $temporaire;
+                    }
+                }
+                
+                $DonneesAInjectees=array
                 (
-                    'NomAction'=>$Action[0]['NOMACTION'],
-                    'Adresse'=>$Action[0]['ADRESSE'],
-                    'CodePostale'=>$Action[0]['CodePostal'],
-                    'Ville'=>$Action[0]['Ville'],
-                    'DateDebut'=>'',
-                    'DateFin'=>'',
-                    'HeureDebut'=>'',
-                    'HeureFin'=>'',
-                    'Public'=>$Action[0]['PublicCible'],
-                    'Description'=>$Action[0]['Description'],
-                    'SiteURL'=>$Action[0]['SiteURLAction'],
                     'options'=>$Options,
-                    'choix'=>$choix,
                 );
+                $DonnéesTitre = array('TitreDeLaPage'=>'Choisir Action à réitérer');
                 $this->load->view('templates/Entete',$DonnéesTitre);
-                $this->load->view('Acteur/ChoisirAction', $DonnéesAInjectée);
-                $this->load->view('Acteur/ReitererAction', $DonnéesAPrerentrer);
+                $this->load->view('Acteur/ChoisirAction', $DonneesAInjectees);
                 $this->load->view('templates/PiedDePage');
+    
+               
             }
         }
         else
         {
-            $DonnéesTitre = array('TitreDeLaPage'=>'Réitérer Action');
+            echo '$noAction !=0';
+           // $DonnéesTitre = array('TitreDeLaPage'=>'Réitérer Action');
             $DonnéesDeTest= array(
                 'a.NoAction' => $noAction,
             );
             $Action=$this->ModelAction->getAction($DonnéesDeTest);
-
-            if($this->input->post('Ajouter'))
+            if ($this->input->post('Ajouter'))
             {
+                var_dump($Action);
+
                 $noAction=$Action[0]['NOACTION'];
                 $Action=$this->NouvelleAction($noAction);
-                var_dump($Action);
-                //redirect ('Acteur/AccueilActeur');
+                
+                redirect ('Acteur/AccueilActeur/'.$noActeur.'');
             }
             else
             {
-                
-                //var_dump($Action);
-                 $DonneesAInjectees=array
+                $DonneesAInjectees=array
                 (
+                    'noAction'=>$Action[0]['NOACTION'],
                     'NomAction'=>$Action[0]['NOMACTION'],
                     'Adresse'=>$Action[0]['ADRESSE'],
                     'CodePostale'=>$Action[0]['CodePostal'],
@@ -402,14 +373,14 @@ class Acteur extends CI_Controller
                     'Public'=>$Action[0]['PublicCible'],
                     'Description'=>$Action[0]['Description'],
                     'SiteURL'=>$Action[0]['SiteURLAction'],
-                    'options'=>$Options,
-                    'choix'=>$choix,
+                    //'options'=>$Options,
+                    'choix'=>0,
                 );
                 $this->load->view('templates/Entete',$DonnéesTitre);
                 $this->load->view('Acteur/ReitererAction',$DonneesAInjectees);
                 $this->load->view('templates/PiedDePage');
-            }  
-    }
+            }
+        }
     }
     public function RenommerPhoto($Image)
     {
@@ -577,9 +548,6 @@ class Acteur extends CI_Controller
                 }   
                 else
                 {
-                    //$noAction=//le noAction passer en paramètre
-                }
-                    
                     //gestion du lieu de l'action
                     $donnéesLieu = array(
                         'adresse'=>$Adresse,
@@ -630,6 +598,8 @@ class Acteur extends CI_Controller
                    $this->AfficherActionSelectionnee($noAction,$DateD,$DateF);
                    //Charger la page de l'action créée. 
 
+                }
+                  
             }    
         
         }

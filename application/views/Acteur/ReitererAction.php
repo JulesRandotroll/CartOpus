@@ -9,7 +9,8 @@
             </div>
         </nav>
     </div>
-</div><div class="row" style="background-color:#15B7D1">
+</div>
+<div class="row" style="background-color:#15B7D1">
     <div class="col-sm-2">
     </div>
     <div class="col-sm-8" style="padding:20px">
@@ -20,19 +21,20 @@
             <section >
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <?php
-                     echo form_open('Acteur/ReitererAction');
+                     echo form_open('Acteur/ReitererAction/'.$noAction.'');
 
                      if ($choix==1)
                      {
-                     echo '<div class="form-group">';
-                     echo form_label('Action choisie : ', 'Action');
-                     echo form_dropdown('Action', $options,'' ,Array('class'=>'form-control'));
-                     echo '</div>';
+                        echo '<div class="form-group">';
+                            echo form_label('Action choisie : ', 'Action');
+                            echo form_dropdown('Action', $options,'' ,array('class'=>'form-control'));
+                        echo '</div>';
                      }
+
                      echo '<div class="form-group">';
                          echo '<span style="color:#FF0000"/> * </span>';
                          echo form_label('Nom de l\'action : ', 'Name');
-                         echo form_input('NomAction',$NomAction, '', Array("placeholder"=>"Nom de votre action",'required'=>'required','class'=>'form-control'));
+                         echo form_input('NomAction',$NomAction, '', array("placeholder"=>"Nom de votre action",'required'=>'required','class'=>'form-control'));
                      echo '</div>';
 
                      echo '<div class="col-xs-4">';
