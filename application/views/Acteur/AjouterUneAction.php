@@ -60,12 +60,12 @@
                             echo '<div class="form-group">';
                                 echo '<span style="color:#FF0000"/> * </span>';
                                 echo form_label('Date de debut : ', 'dd');
-                                echo '<input class="form-control" name="DateDebut" id="date" type="date" value="'.$ToDay.'">';
+                                echo '<input class="form-control" name="DateDebut" id="date" type="date" value="'.$ToDay.'" required>';
                             echo '</div>';
                             echo '<div class="form-group">';
                                 echo '<span style="color:#FF0000"/> * </span>';
                                 echo form_label('Heure de debut : ', 'dd');
-                                echo '<input class="form-control" name="HeureDebut" id="time" type="time" value="'.$ToDayH.'">';
+                                echo '<input class="form-control" name="HeureDebut" id="time" type="time" value="'.$ToDayH.'" required>';
                                 //echo form_input('HeureDebut', '', Array("placeholder"=>"Heure ex : 14:14",'required'=>'required','class'=>'form-control'));
                             echo '</div>';
                         echo'</div>';
