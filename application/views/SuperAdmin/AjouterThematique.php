@@ -25,6 +25,7 @@
                         echo '<div class="text-center">';
                         echo form_submit('AjoutThematique', 'Ajouter',array('class'=>'btn btn-danger'));
                         echo '</div>';
+                        
                     ?>
                 </div>
             </section>
