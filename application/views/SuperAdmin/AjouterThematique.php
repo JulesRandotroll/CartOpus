@@ -25,7 +25,7 @@
                         echo '<div class="text-center">';
                         echo form_submit('AjoutThematique', 'Ajouter',array('class'=>'btn btn-danger'));
                         echo '</div>';
-                        
+
                     ?>
                 </div>
             </section>
@@ -67,7 +67,7 @@
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     Associations de nouveaux mots clés! 
 
-
+                    coucou mon Namour 2 rave <3
 
                 </div>
             </section>
