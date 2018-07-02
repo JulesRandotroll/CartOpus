@@ -33,3 +33,6 @@ INSERT INTO `cartopus`.`acteur` (`NOACTEUR`, `NOPROFIL`, `NOMACTEUR`, `PRENOMACT
 INSERT INTO `cartopus`.`action` (`NOACTION`, `NOMACTION`, `PublicCible`, `SiteURLAction`, `Description`) VALUES (NULL, 'Iniciation informatiaque', 'jeunes', NULL, 'Quelques cours simples et rapides sur l''utilisation en toute sécurité des différents outils technologiques d''aujourd''hui. ');
 
 4pP@R31L_1Ph20T
+
+
+ALTER TABLE `zone` ADD `Origine` VARCHAR(16) NOT NULL AFTER `NOMZONE`, ADD `LongitudeMax` VARCHAR(16) NOT NULL AFTER `Origine`, ADD `LatitudeMax` VARCHAR(16) NOT NULL AFTER `LongitudeMax`;

@@ -23,13 +23,13 @@
                     <?php
                      echo form_open('Acteur/ReitererAction/'.$noAction.'');
 
-                     if ($choix==1)
-                     {
-                        echo '<div class="form-group">';
-                            echo form_label('Action choisie : ', 'Action');
-                            echo form_dropdown('Action', $options,'' ,array('class'=>'form-control'));
-                        echo '</div>';
-                     }
+                    //  if ($choix==1)
+                    //  {
+                    //     echo '<div class="form-group">';
+                    //         echo form_label('Action choisie : ', 'Action');
+                    //         echo form_dropdown('Action', $options,'' ,array('class'=>'form-control'));
+                    //     echo '</div>';
+                    //  }
 
                      echo '<div class="form-group">';
                          echo '<span style="color:#FF0000"/> * </span>';
@@ -113,7 +113,7 @@
 
                      echo '<div class="form-group">';
                          echo form_label('Site de l\'action : ',$SiteURL, 'site');
-                         echo form_input('SiteURL', '', Array("placeholder"=>"https://www.exemple.fr",'class'=>'form-control'));//,'pattern'=>'(((ht|f)tp(s?))\:\/\/)?(([a-zA-Z0-9]+([@\-\.]?[a-zA-Z0-9]+)*)(\:[a-zA-Z0-9\-\.]+)?@)?(www.|ftp.|[a-zA-Z]+.)?[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,})(\:[0-9]+)'
+                         echo form_input('SiteURL',$SiteURL, '', Array("placeholder"=>"https://www.exemple.fr",'class'=>'form-control'));//,'pattern'=>'(((ht|f)tp(s?))\:\/\/)?(([a-zA-Z0-9]+([@\-\.]?[a-zA-Z0-9]+)*)(\:[a-zA-Z0-9\-\.]+)?@)?(www.|ftp.|[a-zA-Z]+.)?[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,})(\:[0-9]+)'
                      echo '</div>';
                      
                      echo '<div class="text-center">';

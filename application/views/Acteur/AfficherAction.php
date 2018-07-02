@@ -169,6 +169,7 @@
                         }
                         echo '<div class="text-right">';
                         echo'<a  href="'.site_url('Acteur/ReitererAction/'.$Actions[0]['NOACTION'].'').'" style="color:#000000"><span class="glyphicon glyphicon-repeat"></span>  </a>';
+                        echo'<a  href="'.site_url('Acteur/ModifierAction/'.$Actions[0]['NOACTION'].'').'" style="color:#000000"><span class="glyphicon glyphicon-pencil"></span>  </a>';
                         echo '</div>';
                     ?>
                 </div>

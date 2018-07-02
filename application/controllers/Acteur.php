@@ -16,7 +16,7 @@ class Acteur extends CI_Controller
         $this->load->model('ModelActeur');
         $this->load->model('ModelAction');
         $this->load->library('upload');
-
+        //var_dump($this->session->statut);
       
         //A RETIRER UNE FOIS LA CONNEXION OK
         if ($this->session->statut==0)
@@ -299,7 +299,8 @@ class Acteur extends CI_Controller
 
     public function ReitererAction($noAction)
     {
-        var_dump($noAction);
+        $noActeur = $this->session->noActeur;
+        //var_dump($noAction);
         if ($noAction==0)
         {
             if ($this->input->post('Choix'))
@@ -342,20 +343,21 @@ class Acteur extends CI_Controller
         }
         else
         {
-            echo '$noAction !=0';
-           // $DonnéesTitre = array('TitreDeLaPage'=>'Réitérer Action');
+            //echo '$noAction !=0';
+            // $DonnéesTitre = array('TitreDeLaPage'=>'Réitérer Action');
             $DonnéesDeTest= array(
                 'a.NoAction' => $noAction,
             );
             $Action=$this->ModelAction->getAction($DonnéesDeTest);
             if ($this->input->post('Ajouter'))
             {
-                var_dump($Action);
+               
+                //var_dump($Action);
 
                 $noAction=$Action[0]['NOACTION'];
                 $Action=$this->NouvelleAction($noAction);
                 
-                redirect ('Acteur/AccueilActeur/'.$noActeur.'');
+                redirect ('Acteur/AccueilActeur/'.$noActeur);
             }
             else
             {
@@ -374,8 +376,9 @@ class Acteur extends CI_Controller
                     'Description'=>$Action[0]['Description'],
                     'SiteURL'=>$Action[0]['SiteURLAction'],
                     //'options'=>$Options,
-                    'choix'=>0,
+                    //'choix'=>0,
                 );
+                $DonnéesTitre = array('TitreDeLaPage'=>$Action[0]['NOMACTION']);
                 $this->load->view('templates/Entete',$DonnéesTitre);
                 $this->load->view('Acteur/ReitererAction',$DonneesAInjectees);
                 $this->load->view('templates/PiedDePage');
@@ -509,6 +512,7 @@ class Acteur extends CI_Controller
             //var_dump($Donnes);
 
             $Action = $this->ModelAction->getAction($Donnes);
+            //var_dump($Action);
             if(!empty($Action))
             {
                 // echo 'coucou il y a déjà une action de ce nom créée à cette date ^^';
@@ -531,9 +535,10 @@ class Acteur extends CI_Controller
             }
             else
             {
+                
                 $DonnéesDeux = array('a.nomAction'=>$NomAction,);
                 $ActionVague = $this->ModelAction->getAction($DonnéesDeux);
-                
+               // var_dump($ActionVague);
                 if(empty($ActionVague))
                 {
                     $donnéesAction = array(
@@ -545,9 +550,7 @@ class Acteur extends CI_Controller
                     //echo 'coucou il n'y a PAS déjà une action du même nom xD';
                    // var_dump($ActionVague);
                     // update ou lien vers l'update ? 
-                }   
-                else
-                {
+                }
                     //gestion du lieu de l'action
                     $donnéesLieu = array(
                         'adresse'=>$Adresse,
@@ -598,7 +601,6 @@ class Acteur extends CI_Controller
                    $this->AfficherActionSelectionnee($noAction,$DateD,$DateF);
                    //Charger la page de l'action créée. 
 
-                }
                   
             }    
         
@@ -614,37 +616,98 @@ class Acteur extends CI_Controller
         }
     }
     
-    public function ModifierAction()
+    public function ModifierAction($noAction)
     {
-
         $noActeur = $this->session->noActeur;
-        //var_dump($noActeur);
-        $this->load->model('ModelActeur'); // on charge le modele correspondant
-        $action= $this->ModelActeur->getActions($noActeur);
-        $i=0;
-        //var_dump($action);
-        foreach($action as $uneAction)
+        //var_dump($noAction);
+        if ($noAction==0)
         {
-            if(empty($Options))
+            if ($this->input->post('Choix'))
             {
-                $Options = array($uneAction['NOACTION']=>$uneAction['NOMACTION']);
+                $noAction=$this->input->post('Action');
+                //var_dump($noAction);
+                $this->ModifierAction($noAction);
             }
             else
             {
-                $temporaire = array($uneAction['NOACTION']=>$uneAction['NOMACTION']);
-                $Options = $Options + $temporaire;
+                $noActeur = $this->session->noActeur;
+                $this->load->model('ModelActeur'); // on charge le modele correspondant
+                $action= $this->ModelActeur->getActions($noActeur);
+                $i=0;
+                //var_dump($action);
+                foreach($action as $uneAction)
+                {
+                    if(empty($Options))
+                    {
+                        $Options = array($uneAction['NOACTION']=>$uneAction['NOMACTION']);
+                    }
+                    else
+                    {
+                        $temporaire = array($uneAction['NOACTION']=>$uneAction['NOMACTION']);
+                        $Options = $Options + $temporaire;
+                    }
+                }
+                
+                $DonneesAInjectees=array
+                (
+                    'options'=>$Options,
+                );
+                $DonnéesTitre = array('TitreDeLaPage'=>'Choisir Action à réitérer');
+                $this->load->view('templates/Entete',$DonnéesTitre);
+                $this->load->view('Acteur/ChoisirAction', $DonneesAInjectees);
+                $this->load->view('templates/PiedDePage');
+    
+               
             }
         }
+        else
+        {
+            //echo '$noAction !=0';
+            // $DonnéesTitre = array('TitreDeLaPage'=>'Réitérer Action');
+            $DonnéesDeTest= array(
+                'a.NoAction' => $noAction,
+            );
+            $Action=$this->ModelAction->getAction($DonnéesDeTest);
+            if ($this->input->post('Ajouter'))
+            {
+               
+                //var_dump($Action);
 
-        $DonnéesTitre = array('TitreDeLaPage'=>'Modification Action');
-        $DonneesAInjectees=array(
-            'options'=>$Options,
-        );
-        //var_dump($DonneesAInjectees['options'][2]);
-        $this->load->view('templates/Entete',$DonnéesTitre);
-        $this->load->view('Acteur/ModifierAction',$DonneesAInjectees);
-        $this->load->view('templates/PiedDePage');
+                $noAction=$Action[0]['NOACTION'];
+                $Action=$this->NouvelleAction($noAction);
+                
+                redirect ('Acteur/AccueilActeur/'.$noActeur);
+            }
+            else
+            {
+                var_dump($Action);
+                $DonneesAInjectees=array
+                (
+                    'noAction'=>$Action[0]['NOACTION'],
+                    'NomAction'=>$Action[0]['NOMACTION'],
+                    'Adresse'=>$Action[0]['ADRESSE'],
+                    'CodePostale'=>$Action[0]['CodePostal'],
+                    'Ville'=>$Action[0]['Ville'],
+                    'DateDebut'=>$Action[0]['DATEDEBUT'],
+                    'DateFin'=>$Action[0]['DATEFIN'],
+                    // 'HeureDebut'=>$Action[0]['HeureDebut'],
+                    // 'HeureFin'=>$Action[0]['HeureFin'],
+                    'Public'=>$Action[0]['PublicCible'],
+                    'Description'=>$Action[0]['Description'],
+                    'SiteURL'=>$Action[0]['SiteURLAction'],
+                    //'options'=>$Options,
+                    //'choix'=>0,
+                );
+            
+                $DonnéesTitre = array('TitreDeLaPage'=>'Modification Action');
 
+                //var_dump($DonneesAInjectees['options'][2]);
+                $this->load->view('templates/Entete',$DonnéesTitre);
+                $this->load->view('Acteur/ModifierAction',$DonneesAInjectees);
+                $this->load->view('templates/PiedDePage');
+            }
+        }
+ 
     }
 
     public function ContacterAdmin()
