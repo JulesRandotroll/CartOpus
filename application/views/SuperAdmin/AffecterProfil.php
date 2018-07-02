@@ -1,7 +1,7 @@
 <ul class="nav navbar-nav navbar-right">
                         <?php 
-                         echo'<li><a href="'.site_url('SuperAdmin/AccueilSuperAdmin').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-user"></span> Page Perso</a></li>';
-                             echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se Déconnecter</a></li>';
+                            echo'<li><a href="'.site_url('SuperAdmin/AccueilSuperAdmin').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-user"></span> Page Perso</a></li>';
+                            echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se Déconnecter</a></li>';
                         ?> 
                     </ul>
                 </div>
@@ -20,24 +20,7 @@
                     <section >
                         <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                             <H4>
-                                <!-- <?php
-                                    // //var_dump($this->modif());
-                                    // echo form_open('SuperAdmin/AffecterProfil');
-
-                                    // echo form_label('Rechercher :', 'lbl_Recherche');
-                                    // echo '  ';
-                                    // echo form_input('MotCle', '', array('placeholder'=>'Rechercher'));
-                                    // echo '<a href="SuperAdmin/AccueilSuperAdmin" style="color:#000000"><span class="glyphicon glyphicon-search"></span></a></li>';
-                                    // echo ' ';
-                                    // // echo '<div class="table-bordered width=100%">';
-                                    // echo '<tr><td>';
-                                    // echo 'Acteur';
-                                    // echo '</td><td>';
-                                    // echo '+';
-                                    // echo '</table>';
-                                    //var_dump($Acteur);
-                                    ?> -->
-                                    <table class="table" >
+                            <table class="table" >
                                     <thead>
                                         <tr>
                                             <th>Acteur</th>
@@ -45,14 +28,14 @@
                                         </tr>
                                     </thead> 
                                     <tbody>
-                                    <div class="container">
-                                    <?php
-                                        foreach ($Acteur as $unActeur)
-                                        {
-                                           echo"<tr><td>".$unActeur['NOMACTEUR']." ".$unActeur['PRENOMACTEUR']."</td><td>".'<a href="'.site_url('SuperAdmin/AffecterProfil/'.($unActeur['NOACTEUR']).'#Mod').'" class="btn btn-danger pull-right" >Modifier</a>'."</td></tr>";
-                                        }
-                                    ?>
-                                    </div>
+                                        <div class="container">
+                                            <?php
+                                                foreach ($Acteur as $unActeur)
+                                                {
+                                                echo"<tr><td>".$unActeur['NOMACTEUR']." ".$unActeur['PRENOMACTEUR']."</td><td>".'<a href="'.site_url('SuperAdmin/AffecterProfil/'.($unActeur['NOACTEUR']).'#Mod').'" class="btn btn-danger pull-right" >Modifier</a>'."</td></tr>";
+                                                }
+                                            ?>
+                                        </div>
                                     </tbody>
                                     <thead>
                                         <tr>
@@ -61,12 +44,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php
-                                        foreach ($AdminValider as $unActeur)
-                                        {
-                                           echo"<tr><td>".$unActeur['NOMACTEUR']." ".$unActeur['PRENOMACTEUR']."</td><td>".'<a href="'.site_url('SuperAdmin/AffecterProfil/'.($unActeur['NOACTEUR']).'#Mod').'" class="btn btn-danger pull-right" >Modifier</a>'."</td></tr>";
-                                        }
-                                    ?>
+                                        <?php
+                                            foreach ($AdminValider as $unActeur)
+                                            {
+                                            echo"<tr><td>".$unActeur['NOMACTEUR']." ".$unActeur['PRENOMACTEUR']."</td><td>".'<a href="'.site_url('SuperAdmin/AffecterProfil/'.($unActeur['NOACTEUR']).'#Mod').'" class="btn btn-danger pull-right" >Modifier</a>'."</td></tr>";
+                                            }
+                                        ?>
                                     </tbody>
                                     <thead>
                                         <tr>
@@ -82,13 +65,9 @@
                                         }
                                     ?>
                                     </tbody>
-                                  </table>
-                                </div>
+                            </table>
+                        </div>
                                 <?php
-          
-                               
-
-                                   
                                     echo form_close();
                                 ?>
                                 </H4>
