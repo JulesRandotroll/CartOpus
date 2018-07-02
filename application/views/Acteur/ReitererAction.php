@@ -113,11 +113,7 @@
 
                      echo '<div class="form-group">';
                          echo form_label('Site de l\'action : ',$SiteURL, 'site');
-<<<<<<< HEAD
                          echo form_input('SiteURL',$SiteURL, '', Array("placeholder"=>"https://www.exemple.fr",'class'=>'form-control'));//,'pattern'=>'(((ht|f)tp(s?))\:\/\/)?(([a-zA-Z0-9]+([@\-\.]?[a-zA-Z0-9]+)*)(\:[a-zA-Z0-9\-\.]+)?@)?(www.|ftp.|[a-zA-Z]+.)?[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,})(\:[0-9]+)'
-=======
-                         echo form_input('SiteURL', '', Array("placeholder"=>"https://www.exemple.fr","class"=>"form-control"));//,'pattern'=>'(((ht|f)tp(s?))\:\/\/)?(([a-zA-Z0-9]+([@\-\.]?[a-zA-Z0-9]+)*)(\:[a-zA-Z0-9\-\.]+)?@)?(www.|ftp.|[a-zA-Z]+.)?[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,})(\:[0-9]+)'
->>>>>>> b244149708046d083fc61f68852435d48cfe6209
                      echo '</div>';
                      
                      echo '<div class="text-center">';

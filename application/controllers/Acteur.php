@@ -358,11 +358,7 @@ class Acteur extends CI_Controller
                 $noAction=$Action[0]['NOACTION'];
                 $Action=$this->NouvelleAction($noAction);
                 
-<<<<<<< HEAD
                 redirect ('Acteur/AccueilActeur/'.$noActeur);
-=======
-                redirect('Acteur/AccueilActeur/'.$noActeur);
->>>>>>> b244149708046d083fc61f68852435d48cfe6209
             }
             else
             {
@@ -383,11 +379,7 @@ class Acteur extends CI_Controller
                     //'options'=>$Options,
                     //'choix'=>0,
                 );
-<<<<<<< HEAD
-                $DonnéesTitre = array('TitreDeLaPage'=>$Action[0]['NOMACTION']);
-=======
                 $DonnéesTitre = array('TitreDeLaPage'=>'Choisir Action à réitérer');
->>>>>>> b244149708046d083fc61f68852435d48cfe6209
                 $this->load->view('templates/Entete',$DonnéesTitre);
                 $this->load->view('Acteur/ReitererAction',$DonneesAInjectees);
                 $this->load->view('templates/PiedDePage');
@@ -521,12 +513,9 @@ class Acteur extends CI_Controller
             var_dump($Donnes);
 
             $Action = $this->ModelAction->getAction($Donnes);
-<<<<<<< HEAD
             //var_dump($Action);
-=======
 
             //Action exactemment la même
->>>>>>> b244149708046d083fc61f68852435d48cfe6209
             if(!empty($Action))
             {
                 // echo 'coucou il y a déjà une action de ce nom créée à cette date ^^';
@@ -553,7 +542,6 @@ class Acteur extends CI_Controller
             
             if(empty($ActionVague))
             {
-<<<<<<< HEAD
                 
                 $DonnéesDeux = array('a.nomAction'=>$NomAction,);
                 $ActionVague = $this->ModelAction->getAction($DonnéesDeux);
@@ -584,33 +572,6 @@ class Acteur extends CI_Controller
                         //penser aux coordonnées
                         $noLieu = $this->ModelAction->insertLieu($donnéesLieu);
                     }
-=======
-                $donnéesAction = array(
-                    'nomaction'=>$NomAction,
-                    'publiccible'=>$Public,
-                    'SiteURLAction'=>$SiteURL,
-                );
-                $noAction = $this->ModelAction->insertAction($donnéesAction);
-                //echo 'coucou il n'y a PAS déjà une action du même nom xD';
-                // var_dump($ActionVague);
-                // update ou lien vers l'update ? 
-            }
-
-            //gestion du lieu de l'action
-            $donnéesLieu = array(
-                'adresse'=>$Adresse,
-                'CodePostal'=>$CP,
-                'ville'=>$Ville,
-            );
-            //test si le lieu est dejà dans la BDD
-            $noLieu = $this->ModelAction->getLieu($donnéesLieu);
-            //Si pas dans la BDD => insert
-            if(empty($noLieu)) //penser à trouver les coodonnées => léandre API  ?
-            {
-                //penser aux coordonnées
-                $noLieu = $this->ModelAction->insertLieu($donnéesLieu);
-            }
->>>>>>> b244149708046d083fc61f68852435d48cfe6209
 
             $donnéesAvoirLieu = array(
                 'DateDebut'=>$DateD,
@@ -647,12 +608,9 @@ class Acteur extends CI_Controller
             $this->AfficherActionSelectionnee($noAction,$DateD,$DateF);
             //Charger la page de l'action créée. 
 
-<<<<<<< HEAD
                   
             }    
         
-=======
->>>>>>> b244149708046d083fc61f68852435d48cfe6209
         }
         else
         {
