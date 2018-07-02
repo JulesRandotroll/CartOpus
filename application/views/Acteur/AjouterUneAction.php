@@ -22,7 +22,7 @@
             <section >
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <?php
-                        echo form_open('Acteur/NouvelleAction');
+                        echo form_open('Acteur/NouvelleAction/0');
 
                         echo '<div class="form-group">';
                             echo '<span style="color:#FF0000"/> * </span>';
