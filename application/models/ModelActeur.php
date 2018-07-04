@@ -79,10 +79,10 @@
                         'a.noaction'=>$uneAction['noAction'],
                         'p.datedebut'=>$uneAction['datedebut'],
                     );
-                    echo 'Action :';
-                    var_dump($uneAction);
-                    echo 'Conditions : ';
-                    var_dump($Conditions);
+                    //echo 'Action :';
+                    //var_dump($uneAction);
+                   // echo 'Conditions : ';
+                    //var_dump($Conditions);
                     $this->db->select('*');
                     $this->db->from('EtrePartenaire p');
                     $this->db->join('Action a','a.noaction=p.noaction');
@@ -91,8 +91,8 @@
                     $this->db->where($Conditions);
                     $requete = $this->db->get();
                     $temporaire = $requete->result_array();
-                    echo 'Temporaire : ';
-                    var_dump($temporaire);
+                    //echo 'Temporaire : ';
+                   // var_dump($temporaire);
                     
                     $Temp = $temporaire[0];
                     if(empty($Resultats))
@@ -105,8 +105,8 @@
                     }
                     $i +=1;
                 }
-                echo 'Resultat :';
-                var_dump($Resultats);
+                //echo 'Resultat :';
+                //var_dump($Resultats);
                 return $Resultats;
 
             }

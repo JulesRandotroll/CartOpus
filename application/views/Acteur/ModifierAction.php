@@ -20,7 +20,7 @@
             <section >
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <?php
-                        echo form_open('Acteur/ModifierAction'.$noAction);
+                        echo form_open('Acteur/ModifierAction/0'.$noAction);
     
                          echo '<div class="form-group">';
                              echo '<span style="color:#FF0000"/> * </span>';
@@ -72,12 +72,12 @@
                          echo '<div class="col-xs-6">';
                              echo '<div class="form-group">';
                                  echo form_label('Date de fin : ',$DateFin, 'df');
-                                 echo '<input class="form-control" name="DateFin" id="date" type="date" value="'.$DateFin.'">';//$ToDay
+                                 echo '<input class="form-control" name="DateFin" id="date" type="date" >';//$ToDay
                                  //echo form_input('DateFin', '', Array("placeholder"=>"Date ex : 12-12-2012",'pattern'=>'(0[1-9]|[12][0-9]|3[01])[\/](0[1-9]|1[012])[\/](19|20)\d\d','required'=>'required','class'=>'form-control'));
                              echo '</div>';
                              echo '<div class="form-group">';
                                  echo form_label('Heure de fin : ', 'dd');
-                                 echo '<input name="HeureFin" class="form-control" id="time" type="time" value="'.$ToDayH.'">';
+                                 echo '<input name="HeureFin" class="form-control" id="time" type="time" >';
                                  //echo form_input('HeureFin', '', Array("placeholder"=>"Heure ex : 15:15",'required'=>'required','class'=>'form-control'));
                              echo '</div>';
                          echo '</div>';
@@ -116,7 +116,7 @@
 
                         echo'<li><a href="'.site_url('Acteur/AjoutSousAction').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-plus"></span> Ajout Sous Action</a></li>';
                         echo'<li><a href="'.site_url('Acteur/AjoutCollaborateur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-plus"></span> Ajout Collaborateur</a></li>';
-                        echo'<li><a href="'.site_url('Acteur/AjoutThematique').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-plus"></span> Ajout Thématique</a></li>';
+                        echo'<li><a href="'.site_url('Acteur/AjoutThematique/'.$NomAction).'" style="color:#FFFFFF"><span class="glyphicon glyphicon-plus"></span> Ajout Thématique</a></li>';
                         echo form_close();
                     ?>
                 </div>
