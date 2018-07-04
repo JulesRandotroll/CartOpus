@@ -508,99 +508,87 @@ class Acteur extends CI_Controller
                 'datedebut' => $DateDebut.' '.$HeureDebut, 
             );
 
-            var_dump($Donnes);
+           // var_dump($Donnes);
 
             $Action = $this->ModelAction->getAction($Donnes);
 
             //Action exactemment la même
             if(!empty($Action))
             {
-                // echo 'coucou il y a déjà une action de ce nom créée à cette date ^^';
-                var_dump($Action);
-                // $Doonnes = array('a.noaction'=>$Action[0]['NOACTION'],'datedebut'=>$Date,);
-                // $Fichiers = $this->ModelAction->getFichersPourAction($Donnes,$DateFin);
+                $this->AfficherActionSelectionnee($Action[0]['NOACTION'],$Action[0]['DATEDEBUT'],$Action[0]['DATEFIN']);
+            } //if Action existe
+            else
+            {
 
-                $Données = array(
-                    'Actions'=>$Action,
-                    //'Fichiers'=>$Fichiers,
-                );
-
-                $DonnéesTitre = array('TitreDeLaPage'=>$Action[0]['NOMACTION']);
-                var_dump($Données);
-                $this->load->view('templates/Entete',$DonnéesTitre);
-                $this->load->view('Acteur/AfficherAction',$Données);
-                $this->load->view('templates/PiedDePage');
-
+                $DonnéesDeux = array('a.nomAction'=>$NomAction,);
+                $ActionMemeNom = $this->ModelAction->getAction($DonnéesDeux);
                 
-            }
-           
-            $DonnéesDeux = array('a.nomAction'=>$NomAction,);
-            $ActionVague = $this->ModelAction->getAction($DonnéesDeux);
-            
-            if(empty($ActionVague))
-            {
-                $donnéesAction = array(
-                    'nomaction'=>$NomAction,
-                    'publiccible'=>$Public,
-                    'SiteURLAction'=>$SiteURL,
+                if(empty($ActionMemeNom))
+                {
+                    $donnéesAction = array(
+                        'nomaction'=>$NomAction,
+                        'publiccible'=>$Public,
+                        'SiteURLAction'=>$SiteURL,
+                    );
+
+                    $noAction = $this->ModelAction->insertAction($donnéesAction);
+                } // si action du même nom existe.
+                else
+                {
+                    $noAction = $ActionMemeNom[0]['NOACTION'];
+                }
+                //gestion du lieu de l'action
+                $donnéesLieu = array(
+                    'adresse'=>$Adresse,
+                    'CodePostal'=>$CP,
+                    'ville'=>$Ville,
                 );
-                $noAction = $this->ModelAction->insertAction($donnéesAction);
-                //echo 'coucou il n'y a PAS déjà une action du même nom xD';
-                // var_dump($ActionVague);
-                // update ou lien vers l'update ? 
-            }
+                //test si le lieu est dejà dans la BDD
+                $noLieu = $this->ModelAction->getLieu($donnéesLieu);
+                //Si pas dans la BDD => insert
+                if(empty($noLieu)) //penser à trouver les coodonnées => léandre API  ?
+                {
+                    //penser aux coordonnées
+                    $noLieu = $this->ModelAction->insertLieu($donnéesLieu);
+                } //si le lieu n'existe pas
 
-            //gestion du lieu de l'action
-            $donnéesLieu = array(
-                'adresse'=>$Adresse,
-                'CodePostal'=>$CP,
-                'ville'=>$Ville,
-            );
-            //test si le lieu est dejà dans la BDD
-            $noLieu = $this->ModelAction->getLieu($donnéesLieu);
-            //Si pas dans la BDD => insert
-            if(empty($noLieu)) //penser à trouver les coodonnées => léandre API  ?
-            {
-                //penser aux coordonnées
-                $noLieu = $this->ModelAction->insertLieu($donnéesLieu);
-            }
+                $donnéesAvoirLieu = array(
+                    'DateDebut'=>$DateD,
+                    'NoAction'=>$noAction,
+                    'TitreAction'=>$NomAction,
+                    'NoLieu'=>$noLieu,
+                    'DateFin'=>$DateF,
+                    'Description'=>$Description,
+                );
 
-            $donnéesAvoirLieu = array(
-                'DateDebut'=>$DateD,
-                'NoAction'=>$noAction,
-                'TitreAction'=>$NomAction,
-                'NoLieu'=>$noLieu,
-                'DateFin'=>$DateF,
-                'Description'=>$Description,
-            );
+                $this->ModelAction->insertAvoirLieu($donnéesAvoirLieu);
 
-            $this->ModelAction->insertAvoirLieu($donnéesAvoirLieu);
+                $donnéesEtrePartenaire = array(
+                    'NoAction'=>$noAction,
+                    'NoActeur'=> $this->session->noActeur,
+                    'NoRole'=> '2147483642',
+                    'DateDebut'=>$DateD,
+                    'DateFin'=>$DateF,
+                );
 
-            $donnéesEtrePartenaire = array(
-                'NoAction'=>$noAction,
-                'NoActeur'=> $this->session->noActeur,
-                'NoRole'=> '2147483642',
-                'DateDebut'=>$DateD,
-                'DateFin'=>$DateF,
-            );
+                $this->ModelAction->insertEtrePartenaire($donnéesEtrePartenaire);
 
-            $this->ModelAction->insertEtrePartenaire($donnéesEtrePartenaire);
+                $donnéesProfilPourAction = array(
+                    'NoActeur'=> $this->session->noActeur,
+                    'NoAction'=>$noAction,
+                    'DateDebut'=>$DateD,
+                    'NoProfil'=>'3',
+                    'DateFin'=>$DateF,
+                );
+                
+                $noProfil = $this->ModelAction->insertProfilPourAction( $donnéesProfilPourAction);
+                $this->session->statut = $noProfil;
 
-            $donnéesProfilPourAction = array(
-                'NoActeur'=> $this->session->noActeur,
-                'NoAction'=>$noAction,
-                'DateDebut'=>$DateD,
-                'NoProfil'=>'3',
-                'DateFin'=>$DateF,
-            );
-            
-            $noProfil = $this->ModelAction->insertProfilPourAction( $donnéesProfilPourAction);
-            $this->session->statut = $noProfil;
-
-            $this->AfficherActionSelectionnee($noAction,$DateD,$DateF);
-            //Charger la page de l'action créée. 
-
-        }
+                $this->AfficherActionSelectionnee($noAction,$DateD,$DateF);
+                //Charger la page de l'action créée. 
+                
+            } //fin if action existe
+        } //if input
         else
         {
             $DonnéesTitre = array('TitreDeLaPage'=>'Ajouter une Action');
@@ -609,7 +597,7 @@ class Acteur extends CI_Controller
             $this->load->view('Acteur/AjouterUneAction');
             $this->load->view('templates/PiedDePage');
 
-        }
+        }// fin if input
     }
     
     public function ModifierAction()

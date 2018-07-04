@@ -73,12 +73,12 @@
                         echo '<div class="col-xs-6">';
                             echo '<div class="form-group">';
                                 echo form_label('Date de fin : ', 'df');
-                                echo '<input class="form-control" name="DateFin" id="date" type="date" value="'.$ToDay.'">';
+                                echo '<input class="form-control" name="DateFin" id="date" type="date">';
                                 //echo form_input('DateFin', '', Array("placeholder"=>"Date ex : 12-12-2012",'pattern'=>'(0[1-9]|[12][0-9]|3[01])[\/](0[1-9]|1[012])[\/](19|20)\d\d','required'=>'required','class'=>'form-control'));
                             echo '</div>';
                             echo '<div class="form-group">';
                                 echo form_label('Heure de fin : ', 'dd');
-                                echo '<input name="HeureFin" class="form-control" id="time" type="time" value="'.$ToDayH.'">';
+                                echo '<input name="HeureFin" class="form-control" id="time" type="time">';
                                 //echo form_input('HeureFin', '', Array("placeholder"=>"Heure ex : 15:15",'required'=>'required','class'=>'form-control'));
                             echo '</div>';
                         echo '</div>';

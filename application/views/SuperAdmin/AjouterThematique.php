@@ -28,6 +28,7 @@
 
                     ?>
                 </div>
+            
             </section>
         <BR>
         </div>
@@ -40,10 +41,24 @@
                     Insertion de nouvelles sous-thématiques ! 
                     <?php
                         $thematique='plop';
+
+                        foreach($Thematique as $uneThematique)
+                        {
+                            if(empty($Options))
+                            {
+                                $Options = array($uneThematique['NOTHEMATIQUE'] => $uneThematique['NOMTHEMATIQUE']);
+                            }
+                            else
+                            {
+                                $temp = array($uneThematique['NOTHEMATIQUE'] => $uneThematique['NOMTHEMATIQUE']);
+                                $Options = $Options + $temp;
+                            }
+                        }
+
                         echo '<div class="form-group">';
                         echo '<span style="color:#FF0000"/> * </span>';
                         echo form_label('Thématique : ', 'thematique'); 
-                        echo form_dropdown('thematique', $thematique, 'default',array('required'=>'required','class'=>'form-control'));
+                        echo form_dropdown('thematique', $Options, 'default',array('required'=>'required','class'=>'form-control'));
                         echo '</div>';
 
                         echo '<div class="form-group">';
