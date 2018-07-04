@@ -83,6 +83,7 @@
                         echo '</div>';
                         
 
+<<<<<<< HEAD
                         $options = array(
                             "Tout Public"=>"Tout Public",
                             "Enfants"=>"Enfants",
@@ -97,12 +98,28 @@
                             echo form_label('Public ciblé : ', 'Public');
                             echo form_dropdown('Public', $options,'',Array("class"=>"form-control",$Public));
                         echo '</div>';
+=======
+                     echo '<div class="col-xs-6">';
+                         echo '<div class="form-group">';
+                             echo form_label('Date de fin : ', 'df');
+                             echo '<input class="form-control" name="DateFin" id="date" type="date" >';
+                             //echo form_input('DateFin', '', Array("placeholder"=>"Date ex : 12-12-2012",'pattern'=>'(0[1-9]|[12][0-9]|3[01])[\/](0[1-9]|1[012])[\/](19|20)\d\d','required'=>'required','class'=>'form-control'));
+                         echo '</div>';
+                         echo '<div class="form-group">';
+                             echo form_label('Heure de fin : ', 'dd');
+                             echo '<input name="HeureFin" class="form-control" id="time" type="time" >';
+                             //echo form_input('HeureFin', '', Array("placeholder"=>"Heure ex : 15:15",'required'=>'required','class'=>'form-control'));
+                         echo '</div>';
+                     echo '</div>';
+                    
+>>>>>>> aaf82a8cf10c5ba598657d7f9dba5cc4838374e6
 
                         echo '<div class="form-group">';
                             echo form_label('Description ', 'Desc');
                             echo form_textarea('Description', $Description,'',Array("placeholder"=>"Ici, votre description","class"=>"form-control"));
                         echo '</div>';
 
+<<<<<<< HEAD
                         echo '<div class="form-group">';
                             echo form_label('Site de l\'action : ',$SiteURL, 'site');
                             echo form_input('SiteURL', '', Array("placeholder"=>"https://www.exemple.fr","class"=>"form-control"));//,'pattern'=>'(((ht|f)tp(s?))\:\/\/)?(([a-zA-Z0-9]+([@\-\.]?[a-zA-Z0-9]+)*)(\:[a-zA-Z0-9\-\.]+)?@)?(www.|ftp.|[a-zA-Z]+.)?[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,})(\:[0-9]+)'
@@ -114,6 +131,24 @@
                         
                         echo '<br><h6><span style="color:#FF0000"/> *</span> Ces champs sont requis</h6> ';
                         echo form_close();
+=======
+                     echo '<div class="form-group">';
+                         echo form_label('Description ', 'Desc');
+                         echo form_textarea('Description', $Description,'',Array("placeholder"=>"Ici, votre description","class"=>"form-control"));
+                     echo '</div>';
+
+                     echo '<div class="form-group">';
+                         echo form_label('Site de l\'action : ',$SiteURL, 'site');
+                         echo form_input('SiteURL',$SiteURL, '', Array("placeholder"=>"https://www.exemple.fr",'class'=>'form-control'));//,'pattern'=>'(((ht|f)tp(s?))\:\/\/)?(([a-zA-Z0-9]+([@\-\.]?[a-zA-Z0-9]+)*)(\:[a-zA-Z0-9\-\.]+)?@)?(www.|ftp.|[a-zA-Z]+.)?[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,})(\:[0-9]+)'
+                     echo '</div>';
+                     
+                     echo '<div class="text-center">';
+                         echo form_submit('Ajouter', 'Réitérer',array("class"=>"btn btn-danger btn-lg"));
+                     echo '</div>';
+                     
+                     echo '<br><h6><span style="color:#FF0000"/> *</span> Ces champs sont requis</h6> ';
+                     echo form_close();
+>>>>>>> aaf82a8cf10c5ba598657d7f9dba5cc4838374e6
                      
                     ?>
                 </div>

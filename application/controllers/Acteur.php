@@ -16,7 +16,7 @@ class Acteur extends CI_Controller
         $this->load->model('ModelActeur');
         $this->load->model('ModelAction');
         $this->load->library('upload');
-
+        //var_dump($this->session->statut);
       
         //A RETIRER UNE FOIS LA CONNEXION OK
         if ($this->session->statut==0)
@@ -141,8 +141,8 @@ class Acteur extends CI_Controller
             if ($mdpBDD['0']['MOTDEPASSE']==$this->input->post('motdepasse')) 
             {
             // si mdp == mdp deja rentrer dans la bdd
-                var_dump($this->input->post('newmotdepasse'));
-                var_dump($this->input->post('confmdp'));
+                //var_dump($this->input->post('newmotdepasse'));
+                //var_dump($this->input->post('confmdp'));
                 
                 if ($this->input->post('newmotdepasse')==$this->input->post('confmdp'))
                 {
@@ -264,7 +264,7 @@ class Acteur extends CI_Controller
 
         $Donnees = array('a.noaction'=>$noAction,'datedebut'=>$DateDebut,);
         $Action = $this->ModelAction->getAction($Donnees);
-        var_dump($Action);
+        //var_dump($Action);
 
         // $Doonnes = array('a.noaction'=>$noAction,'datedebut'=>$DateDebut,);
         // $Action = $this->ModelAction->getAction($Doonnes);
@@ -299,7 +299,8 @@ class Acteur extends CI_Controller
 
     public function ReitererAction($noAction)
     {
-        var_dump($noAction);
+        $noActeur = $this->session->noActeur;
+        //var_dump($noAction);
         if ($noAction==0)
         {
             if ($this->input->post('Choix'))
@@ -331,7 +332,9 @@ class Acteur extends CI_Controller
                 $DonneesAInjectees=array
                 (
                     'options'=>$Options,
+                    'message'=>'reiterer',
                 );
+                var_dump($DonneesAInjectees);
                 $DonnéesTitre = array('TitreDeLaPage'=>'Choisir Action à réitérer');
                 $this->load->view('templates/Entete',$DonnéesTitre);
                 $this->load->view('Acteur/ChoisirAction', $DonneesAInjectees);
@@ -342,8 +345,8 @@ class Acteur extends CI_Controller
         }
         else
         {
-            echo '$noAction !=0';
-           // $DonnéesTitre = array('TitreDeLaPage'=>'Réitérer Action');
+            //echo '$noAction !=0';
+            // $DonnéesTitre = array('TitreDeLaPage'=>'Réitérer Action');
             $DonnéesDeTest= array(
                 'a.NoAction' => $noAction,
             );
@@ -351,12 +354,13 @@ class Acteur extends CI_Controller
 
             if ($this->input->post('Ajouter'))
             {
-                var_dump($Action);
+               
+                //var_dump($Action);
 
                 $noAction=$Action[0]['NOACTION'];
                 $Action=$this->NouvelleAction($noAction);
                 
-                redirect('Acteur/AccueilActeur/'.$noActeur);
+                redirect ('Acteur/AccueilActeur/'.$noActeur);
             }
             else
             {
@@ -375,7 +379,7 @@ class Acteur extends CI_Controller
                     'Description'=>$Action[0]['Description'],
                     'SiteURL'=>$Action[0]['SiteURLAction'],
                     //'options'=>$Options,
-                    'choix'=>0,
+                    //'choix'=>0,
                 );
                 $DonnéesTitre = array('TitreDeLaPage'=>'Choisir Action à réitérer');
                 $this->load->view('templates/Entete',$DonnéesTitre);
@@ -508,17 +512,79 @@ class Acteur extends CI_Controller
                 'datedebut' => $DateDebut.' '.$HeureDebut, 
             );
 
+<<<<<<< HEAD
            // var_dump($Donnes);
+=======
+            //var_dump($Donnes);
+>>>>>>> aaf82a8cf10c5ba598657d7f9dba5cc4838374e6
 
             $Action = $this->ModelAction->getAction($Donnes);
+            //var_dump($Action);
 
             //Action exactemment la même
             if(!empty($Action))
             {
+<<<<<<< HEAD
                 $this->AfficherActionSelectionnee($Action[0]['NOACTION'],$Action[0]['DATEDEBUT'],$Action[0]['DATEFIN']);
             } //if Action existe
             else
             {
+=======
+                // echo 'coucou il y a déjà une action de ce nom créée à cette date ^^';
+                //var_dump($Action);
+                // $Doonnes = array('a.noaction'=>$Action[0]['NOACTION'],'datedebut'=>$Date,);
+                // $Fichiers = $this->ModelAction->getFichersPourAction($Donnes,$DateFin);
+
+                $Données = array(
+                    'Actions'=>$Action,
+                    //'Fichiers'=>$Fichiers,
+                );
+
+                $DonnéesTitre = array('TitreDeLaPage'=>$Action[0]['NOMACTION']);
+               // var_dump($Données);
+                $this->load->view('templates/Entete',$DonnéesTitre);
+                $this->load->view('Acteur/AfficherAction',$Données);
+                $this->load->view('templates/PiedDePage');
+
+                
+            }
+           
+            $DonnéesDeux = array('a.nomAction'=>$NomAction,);
+            $ActionVague = $this->ModelAction->getAction($DonnéesDeux);
+            
+            if(empty($ActionVague))
+            {
+                
+                $DonnéesDeux = array('a.nomAction'=>$NomAction,);
+                $ActionVague = $this->ModelAction->getAction($DonnéesDeux);
+               // var_dump($ActionVague);
+                if(empty($ActionVague))
+                {
+                    $donnéesAction = array(
+                        'nomaction'=>$NomAction,
+                        'publiccible'=>$Public,
+                        'SiteURLAction'=>$SiteURL,
+                    );
+                    $noAction = $this->ModelAction->insertAction($donnéesAction);
+                    //echo 'coucou il n'y a PAS déjà une action du même nom xD';
+                   // var_dump($ActionVague);
+                    // update ou lien vers l'update ? 
+                }
+                    //gestion du lieu de l'action
+                    $donnéesLieu = array(
+                        'adresse'=>$Adresse,
+                        'CodePostal'=>$CP,
+                        'ville'=>$Ville,
+                    );
+                    //test si le lieu est dejà dans la BDD
+                    $noLieu = $this->ModelAction->getLieu($donnéesLieu);
+                    //Si pas dans la BDD => insert
+                    if(empty($noLieu)) //penser à trouver les coodonnées => léandre API  ?
+                    {
+                        //penser aux coordonnées
+                        $noLieu = $this->ModelAction->insertLieu($donnéesLieu);
+                    }
+>>>>>>> aaf82a8cf10c5ba598657d7f9dba5cc4838374e6
 
                 $DonnéesDeux = array('a.nomAction'=>$NomAction,);
                 $ActionMemeNom = $this->ModelAction->getAction($DonnéesDeux);
@@ -584,11 +650,18 @@ class Acteur extends CI_Controller
                 $noProfil = $this->ModelAction->insertProfilPourAction( $donnéesProfilPourAction);
                 $this->session->statut = $noProfil;
 
+<<<<<<< HEAD
                 $this->AfficherActionSelectionnee($noAction,$DateD,$DateF);
                 //Charger la page de l'action créée. 
                 
             } //fin if action existe
         } //if input
+=======
+                  
+            }    
+        
+        }
+>>>>>>> aaf82a8cf10c5ba598657d7f9dba5cc4838374e6
         else
         {
             $DonnéesTitre = array('TitreDeLaPage'=>'Ajouter une Action');
@@ -600,37 +673,102 @@ class Acteur extends CI_Controller
         }// fin if input
     }
     
-    public function ModifierAction()
+    public function ModifierAction($noAction)
     {
-
         $noActeur = $this->session->noActeur;
-        //var_dump($noActeur);
-        $this->load->model('ModelActeur'); // on charge le modele correspondant
-        $action= $this->ModelActeur->getActions($noActeur);
-        $i=0;
-        //var_dump($action);
-        foreach($action as $uneAction)
+        var_dump($noAction);
+        if ($noAction==0)
         {
-            if(empty($Options))
+            if ($this->input->post('Choix'))
             {
-                $Options = array($uneAction['NOACTION']=>$uneAction['NOMACTION']);
+                $noAction=$this->input->post('Action');
+                echo 'ici'; 
+                var_dump($noAction);
+                $this->ModifierAction($noAction);
             }
             else
             {
-                $temporaire = array($uneAction['NOACTION']=>$uneAction['NOMACTION']);
-                $Options = $Options + $temporaire;
+                $noActeur = $this->session->noActeur;
+                $this->load->model('ModelActeur'); // on charge le modele correspondant
+                $action= $this->ModelActeur->getActions($noActeur);
+                $i=0;
+                //var_dump($action);
+                foreach($action as $uneAction)
+                {
+                    if(empty($Options))
+                    {
+                        $Options = array($uneAction['NOACTION']=>$uneAction['NOMACTION']);
+                    }
+                    else
+                    {
+                        $temporaire = array($uneAction['NOACTION']=>$uneAction['NOMACTION']);
+                        $Options = $Options + $temporaire;
+                    }
+                }
+                
+                $DonneesAInjectees=array
+                (
+                    'options'=>$Options,
+                    'message'=>'modifier',
+                );
+                $DonnéesTitre = array('TitreDeLaPage'=>'Choisir Action à réitérer');
+                $this->load->view('templates/Entete',$DonnéesTitre);
+                $this->load->view('Acteur/ChoisirAction', $DonneesAInjectees);
+                $this->load->view('templates/PiedDePage');
+    
+               
             }
         }
+        else
+        {
+            //if 
+           // echo '$noAction !=0';
+            // $DonnéesTitre = array('TitreDeLaPage'=>'Réitérer Action');
+            $DonnéesDeTest= array(
+                'a.NoAction' => $noAction,
+                'datedebut'=>$dateDebut,
+            );
+            $Action=$this->ModelAction->getAction($DonnéesDeTest);
+            var_dump($Action);
+            if ($this->input->post('Ajouter'))
+            {
+               
+                //var_dump($Action);
+                $noAction=$Action[0]['NOACTION'];
+                $Action=$this->NouvelleAction($noAction);
+                
+                redirect ('Acteur/AccueilActeur/'.$noActeur);
+            }
+            else
+            {
+                //var_dump($Action);
+                $DonneesAInjectees=array
+                (
+                    'noAction'=>$Action[0]['NOACTION'],
+                    'NomAction'=>$Action[0]['NOMACTION'],
+                    'Adresse'=>$Action[0]['ADRESSE'],
+                    'CodePostale'=>$Action[0]['CodePostal'],
+                    'Ville'=>$Action[0]['Ville'],
+                    'DateDebut'=>$Action[0]['DATEDEBUT'],
+                    'DateFin'=>$Action[0]['DATEFIN'],
+                    // 'HeureDebut'=>$Action[0]['HeureDebut'],
+                    // 'HeureFin'=>$Action[0]['HeureFin'],
+                    'Public'=>$Action[0]['PublicCible'],
+                    'Description'=>$Action[0]['Description'],
+                    'SiteURL'=>$Action[0]['SiteURLAction'],
+                    //'options'=>$Options,
+                    //'choix'=>0,
+                );
+            
+                $DonnéesTitre = array('TitreDeLaPage'=>'Modification Action');
 
-        $DonnéesTitre = array('TitreDeLaPage'=>'Modification Action');
-        $DonneesAInjectees=array(
-            'options'=>$Options,
-        );
-        //var_dump($DonneesAInjectees['options'][2]);
-        $this->load->view('templates/Entete',$DonnéesTitre);
-        $this->load->view('Acteur/ModifierAction',$DonneesAInjectees);
-        $this->load->view('templates/PiedDePage');
-
+                //var_dump($DonneesAInjectees['options'][2]);
+                $this->load->view('templates/Entete',$DonnéesTitre);
+                $this->load->view('Acteur/ModifierAction/'.$noAction,$DonneesAInjectees);
+                $this->load->view('templates/PiedDePage');
+            }
+        }
+ 
     }
 
     public function ContacterAdmin()
@@ -676,11 +814,15 @@ class Acteur extends CI_Controller
         }
     }
     
-    public function AjoutThematique()
+    public function AjoutThematique($NomAction)
     {
+        // sortir toutes les thématiques dans faire références puis recup le nom correspondant puis les injectées
+        $DonnéesAInjecter=array(
+            'NomAction'=>$NomAction,
+        );
         $DonnéesTitre = array('TitreDeLaPage'=>'Ajout Thématique');
         $this->load->view('templates/Entete',$DonnéesTitre);
-        $this->load->view('Acteur/AjoutThematique');
+        $this->load->view('Acteur/AjoutThematique',$DonnéesAInjecter);
         $this->load->view('templates/PiedDePage');
     }
 }

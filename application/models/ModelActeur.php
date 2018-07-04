@@ -126,6 +126,7 @@
                 $i = 0;
                 foreach($noActions as $uneAction)
                 {
+<<<<<<< HEAD
                     $requete = $this->db->query("
                     SELECT * 
                     FROM etrepartenaire p, action a, Role r, AvoirLieu l 
@@ -147,6 +148,26 @@
 
                     $temporaire = $requete->result_array();
                     //var_dump($temporaire);    
+=======
+                    $Conditions = array(
+                        'a.noaction'=>$uneAction['noAction'],
+                        'p.datedebut'=>$uneAction['datedebut'],
+                    );
+                    //echo 'Action :';
+                    //var_dump($uneAction);
+                   // echo 'Conditions : ';
+                    //var_dump($Conditions);
+                    $this->db->select('*');
+                    $this->db->from('EtrePartenaire p');
+                    $this->db->join('Action a','a.noaction=p.noaction');
+                    $this->db->join('Role r','p.noRole=r.noRole');
+                    $this->db->join('AvoirLieu l','l.noAction=a.noAction');
+                    $this->db->where($Conditions);
+                    $requete = $this->db->get();
+                    $temporaire = $requete->result_array();
+                    //echo 'Temporaire : ';
+                   // var_dump($temporaire);
+>>>>>>> aaf82a8cf10c5ba598657d7f9dba5cc4838374e6
                     
                     if(!empty($temporaire))
                     {    
@@ -164,7 +185,11 @@
 
                 }
                 //echo 'Resultat :';
+<<<<<<< HEAD
                 // var_dump($Resultats);
+=======
+                //var_dump($Resultats);
+>>>>>>> aaf82a8cf10c5ba598657d7f9dba5cc4838374e6
                 return $Resultats;
 
             }
