@@ -16,6 +16,14 @@
             return $requete->result_array();
         }
 
+        public function getMail($Mail)
+        {
+            $this->db->select('*');
+            $this->db->from('Acteur');
+            $this->db->where('mail',$Mail);
+            $requete = $this->db->get();
+            return $requete->row_array();
+        }
         public function getOrganisation($noActeur)
         {
             $this->db->select('No_Organisation');
@@ -175,6 +183,13 @@
             $this->db->update('Acteur',$données);
         }
 
+        public function GetRole()
+        {
+            $this->db->select('*');
+            $this->db->from('Role');
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
     }
 
 

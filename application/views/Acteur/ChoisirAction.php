@@ -24,12 +24,12 @@
                     <?php
                     if ($message=='reiterer')
                     {
-                        echo form_open('Acteur/ReitererAction/0');
+                        echo form_open('Acteur/ReitererAction/'.$noAction);
                     }
                     else
                     {
                         echo 'plop ?';
-                        echo form_open('Acteur/ModifierAction/0');
+                        echo form_open('Acteur/ModifierAction/'.$noAction);
                     }
                         echo '<div class="form-group">';
                         echo form_label('Action choisie : ', 'Action');

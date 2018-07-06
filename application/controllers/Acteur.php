@@ -628,14 +628,14 @@ class Acteur extends CI_Controller
     public function ModifierAction($noAction)
     {
         $noActeur = $this->session->noActeur;
-        var_dump($noAction);
+        //var_dump($noAction);
         if ($noAction==0)
         {
             if ($this->input->post('Choix'))
             {
                 $noAction=$this->input->post('Action');
-                echo 'ici'; 
-                var_dump($noAction);
+                //echo 'ici'; 
+                //var_dump($noAction);
                 $this->ModifierAction($noAction);
             }
             else
@@ -649,11 +649,11 @@ class Acteur extends CI_Controller
                 {
                     if(empty($Options))
                     {
-                        $Options = array($uneAction['NOACTION']=>$uneAction['NOMACTION']);
+                        $Options = array($uneAction['NOACTION']=>array($uneAction['DATEDEBUT'].' '.$uneAction['DATEFIN']));
                     }
                     else
                     {
-                        $temporaire = array($uneAction['NOACTION']=>$uneAction['NOMACTION']);
+                        $temporaire = array($uneAction['NOACTION']=>array($uneAction['DATEDEBUT'].' '.$uneAction['DATEFIN']));
                         $Options = $Options + $temporaire;
                     }
                 }
@@ -661,6 +661,7 @@ class Acteur extends CI_Controller
                 $DonneesAInjectees=array
                 (
                     'options'=>$Options,
+                    'noAction'=>$uneAction['NOACTION'],
                     'message'=>'modifier',
                 );
                 $DonnéesTitre = array('TitreDeLaPage'=>'Choisir Action à réitérer');
@@ -673,12 +674,12 @@ class Acteur extends CI_Controller
         }
         else
         {
-            //if 
+             
            // echo '$noAction !=0';
             // $DonnéesTitre = array('TitreDeLaPage'=>'Réitérer Action');
             $DonnéesDeTest= array(
                 'a.NoAction' => $noAction,
-                'datedebut'=>$dateDebut,
+                //'datedebut'=>$dateDebut,
             );
             $Action=$this->ModelAction->getAction($DonnéesDeTest);
             var_dump($Action);
@@ -716,7 +717,7 @@ class Acteur extends CI_Controller
 
                 //var_dump($DonneesAInjectees['options'][2]);
                 $this->load->view('templates/Entete',$DonnéesTitre);
-                $this->load->view('Acteur/ModifierAction/'.$noAction,$DonneesAInjectees);
+                $this->load->view('Acteur/ModifierAction',$DonneesAInjectees);
                 $this->load->view('templates/PiedDePage');
             }
         }
@@ -766,6 +767,127 @@ class Acteur extends CI_Controller
         }
     }
     
+    public function AjoutCollaborateur($noAction,$dateDebut,$dateFin)
+    {
+        $DonnéesTitre = array('TitreDeLaPage'=>'Ajout Collaborateur');
+        $noActeur = $this->session->noActeur;
+
+        if ($this->input->post('valider'))
+        {
+            $Nom=$this->input->post('nom');
+            $Prenom=$this->input->post('prenom');
+            $Mail=$this->input->post('mail');
+            $ConfMail=$this->input->post('confmail');
+            $Role=$this->input->post('role');
+            //echo 'plop';
+            if ($Mail!=$ConfMail)
+            {
+                $message='La confirmation de mail n\'est pas semblable au mail rentrer ';
+                echo $message;
+            }
+            else
+             {
+                $test=$this->ModelActeur->GetMail($Mail);
+                var_dump($test);
+                if ($test==null)
+                { ?>
+                    <script type="text/javascript">
+                        document.write("chat");
+                        if (result= window.confirm("message")==true)
+                        {
+                            document.write("chaton");
+                            window.location.replace("Visiteur/loadAccueil");
+                             <?php//redirect ('Visiteur/loadAccueil')?>
+                        }
+                        else
+                        {
+                            document.write("poulpe");
+                        }
+                    </script>
+                <?php ; }
+                else
+                { ?>
+                    <script type="text/javascript">
+                        document.write("paschat");
+                    </script> 
+                <?php ;
+                }
+                
+                // if ($test==null)
+                // {
+                //    echo'<script type="text/javascript">
+                //      document.write("chat");
+                //      var text = element.textContent;
+                //     element.textContent = "this is some sample text";
+                //     document.write(text)
+                //      if (var result= window.confirm("message")) {
+                //         text = "Too young"
+                //      }
+                //      else{
+                //          text="ok"
+                //      }
+                //     document.write(text) </script>';
+                //     // <script> if (var result= window.confirm("message")) 
+                //     // text = "Too young"</script>
+
+                //     //  <script>var result= window.confirm("message")</script>
+                    
+                //      //echo 'text';
+                //     //echo '<script>var '.$r.'= confirm("Ce mail ne correspond à aucun acteur de la BDD envoyer un mail pour l\'inscription ?");</script>';
+                //     // var_dump($r);
+                //     // if ('<script>$result= window.confirm("message")</script>' == true) {
+                //     //     $message = "You pressed OK!";
+                        
+                //     // } else {
+                //     //     $message = "You pressed Cancel!";
+                //     // } 
+                //     // echo $message;
+                //     //redirect('orderManagement/index', 'refresh'); 
+                // }
+                // else
+                // {
+                //     echo '<script>alert("ajout ok");</script>';
+                // }
+             }
+        }
+        else
+        {
+            $DateFin = str_replace('%20',' ',$dateFin);
+            $DateDebut=str_replace('%20',' ',$dateDebut);
+            //$Actions =$this->ModelAction->getSousAction($noAction,$DateDebut,$DateFin); 
+            $Donnees = array('a.noaction'=>$noAction,'datedebut'=>$DateDebut,);
+            //var_dump($Donnees);
+            $Action = $this->ModelAction->getAction($Donnees);
+            //var_dump($Action);
+
+            $this->load->model('ModelActeur'); // on charge le modele correspondant
+            $Role = $this->ModelActeur->GetRole();
+            $i=0;
+            foreach($Role as $unRole)
+            {
+                if(empty($Options))
+                {
+                    $Options = array($unRole['NOROLE']=>$unRole['NOMROLE']);
+                }
+                else
+                {
+                    $temporaire = array($unRole['NOROLE']=>$unRole['NOMROLE']);
+                    $Options = $Options + $temporaire;
+                }
+            }
+
+            $DonneesAInjecter=array(
+                'noAction'=>$noAction,
+                'DateDebut'=>$Action[0]['DATEDEBUT'],
+                'DateFin'=>$Action[0]['DATEFIN'],
+                'Role'=>$Options,
+            );
+
+            $this->load->view('templates/Entete',$DonnéesTitre);
+            $this->load->view('Acteur/AjoutCollaborateur',$DonneesAInjecter);
+            $this->load->view('templates/PiedDePage');
+        }
+    }
     public function AjoutThematique($NomAction)
     {
         // sortir toutes les thématiques dans faire références puis recup le nom correspondant puis les injectées
