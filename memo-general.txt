@@ -1,0 +1,15 @@
+super admin redirect accueil si != 5
+pareil pour admin validé si <=4
+
+pour le bloc acteur possible d'être acteur, collaborateur ou responsable avec différents niveaux de droits
+responsable est le créateur de l'action peut ajouter des collaborateur cf schéma
+
+lorsqu'on ajoute une acteur
+
+admin_valider est un modérateur du site et peut valider
+- les actions et les commentaires
+-> idée de mettre le responsable en gestion des commentaires avec droit de regard pour l'admin_validé
+
+l'url appelle une fonction du contrôleur qui appelle un vue
+- site_url -> localhost/cartopus/index.php/
+
