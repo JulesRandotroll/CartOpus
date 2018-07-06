@@ -503,91 +503,27 @@ class Acteur extends CI_Controller
             $Description = $this->input->post('Description');
             $SiteURL = $this->input->post('SiteURL');
             
-            //echo $coucou;
             $DateD = $DateDebut.' '.$HeureDebut;
             $DateF = $DateFin.' '.$HeureFin;
 
-            $Donnes = array(
+            $TestActionExistante = array(
                 'a.nomAction' => $NomAction,
                 'datedebut' => $DateDebut.' '.$HeureDebut, 
             );
 
-<<<<<<< HEAD
-           // var_dump($Donnes);
-=======
-            //var_dump($Donnes);
->>>>>>> aaf82a8cf10c5ba598657d7f9dba5cc4838374e6
-
-            $Action = $this->ModelAction->getAction($Donnes);
-            //var_dump($Action);
-
-            //Action exactemment la même
-            if(!empty($Action))
-            {
-<<<<<<< HEAD
-                $this->AfficherActionSelectionnee($Action[0]['NOACTION'],$Action[0]['DATEDEBUT'],$Action[0]['DATEFIN']);
-            } //if Action existe
-            else
-            {
-=======
-                // echo 'coucou il y a déjà une action de ce nom créée à cette date ^^';
-                //var_dump($Action);
-                // $Doonnes = array('a.noaction'=>$Action[0]['NOACTION'],'datedebut'=>$Date,);
-                // $Fichiers = $this->ModelAction->getFichersPourAction($Donnes,$DateFin);
-
-                $Données = array(
-                    'Actions'=>$Action,
-                    //'Fichiers'=>$Fichiers,
-                );
-
-                $DonnéesTitre = array('TitreDeLaPage'=>$Action[0]['NOMACTION']);
-               // var_dump($Données);
-                $this->load->view('templates/Entete',$DonnéesTitre);
-                $this->load->view('Acteur/AfficherAction',$Données);
-                $this->load->view('templates/PiedDePage');
-
+            $ActionExistante = $this->ModelAction->getAction($TestActionExistante);
+            if(!empty($ActionExistante))
+            {   
                 
+                echo '<script> alert("Cet évènement existe déjà"); </script>';
+                //traitement profilpourEvenement si evenement non validé.
+                
+                $this->AfficherActionSelectionnee($ActionExistante[0]['NOACTION'],$ActionExistante[0]['DATEDEBUT'],$ActionExistante[0]['DATEFIN']);
             }
-           
-            $DonnéesDeux = array('a.nomAction'=>$NomAction,);
-            $ActionVague = $this->ModelAction->getAction($DonnéesDeux);
-            
-            if(empty($ActionVague))
+            else // Action déjà existante
             {
-                
-                $DonnéesDeux = array('a.nomAction'=>$NomAction,);
-                $ActionVague = $this->ModelAction->getAction($DonnéesDeux);
-               // var_dump($ActionVague);
-                if(empty($ActionVague))
-                {
-                    $donnéesAction = array(
-                        'nomaction'=>$NomAction,
-                        'publiccible'=>$Public,
-                        'SiteURLAction'=>$SiteURL,
-                    );
-                    $noAction = $this->ModelAction->insertAction($donnéesAction);
-                    //echo 'coucou il n'y a PAS déjà une action du même nom xD';
-                   // var_dump($ActionVague);
-                    // update ou lien vers l'update ? 
-                }
-                    //gestion du lieu de l'action
-                    $donnéesLieu = array(
-                        'adresse'=>$Adresse,
-                        'CodePostal'=>$CP,
-                        'ville'=>$Ville,
-                    );
-                    //test si le lieu est dejà dans la BDD
-                    $noLieu = $this->ModelAction->getLieu($donnéesLieu);
-                    //Si pas dans la BDD => insert
-                    if(empty($noLieu)) //penser à trouver les coodonnées => léandre API  ?
-                    {
-                        //penser aux coordonnées
-                        $noLieu = $this->ModelAction->insertLieu($donnéesLieu);
-                    }
->>>>>>> aaf82a8cf10c5ba598657d7f9dba5cc4838374e6
-
-                $DonnéesDeux = array('a.nomAction'=>$NomAction,);
-                $ActionMemeNom = $this->ModelAction->getAction($DonnéesDeux);
+                $DonnéesActionMemeNom = array('a.nomAction'=>$NomAction,);
+                $ActionMemeNom = $this->ModelAction->getAction($DonnéesActionMemeNom);
                 
                 if(empty($ActionMemeNom))
                 {
@@ -598,71 +534,72 @@ class Acteur extends CI_Controller
                     );
 
                     $noAction = $this->ModelAction->insertAction($donnéesAction);
-                } // si action du même nom existe.
+                } // fin si action du même nom existe.
                 else
                 {
                     $noAction = $ActionMemeNom[0]['NOACTION'];
-                }
-                //gestion du lieu de l'action
-                $donnéesLieu = array(
-                    'adresse'=>$Adresse,
-                    'CodePostal'=>$CP,
-                    'ville'=>$Ville,
-                );
-                //test si le lieu est dejà dans la BDD
-                $noLieu = $this->ModelAction->getLieu($donnéesLieu);
-                //Si pas dans la BDD => insert
-                if(empty($noLieu)) //penser à trouver les coodonnées => léandre API  ?
-                {
-                    //penser aux coordonnées
-                    $noLieu = $this->ModelAction->insertLieu($donnéesLieu);
-                } //si le lieu n'existe pas
+                } //fin si pas action même nom
 
-                $donnéesAvoirLieu = array(
-                    'DateDebut'=>$DateD,
-                    'NoAction'=>$noAction,
-                    'TitreAction'=>$NomAction,
-                    'NoLieu'=>$noLieu,
-                    'DateFin'=>$DateF,
-                    'Description'=>$Description,
-                );
+                ///Insertion ÊtrePartenaire :
+                    $donnéesEtrePartenaire = array(
+                        'NoAction'=>$noAction,
+                        'NoActeur'=> $this->session->noActeur,
+                        'NoRole'=> '2147483642',
+                        'DateDebut'=>$DateD,
+                        'DateFin'=>$DateF,
+                    );
 
-                $this->ModelAction->insertAvoirLieu($donnéesAvoirLieu);
-
-                $donnéesEtrePartenaire = array(
-                    'NoAction'=>$noAction,
-                    'NoActeur'=> $this->session->noActeur,
-                    'NoRole'=> '2147483642',
-                    'DateDebut'=>$DateD,
-                    'DateFin'=>$DateF,
-                );
-
-                $this->ModelAction->insertEtrePartenaire($donnéesEtrePartenaire);
-
-                $donnéesProfilPourAction = array(
-                    'NoActeur'=> $this->session->noActeur,
-                    'NoAction'=>$noAction,
-                    'DateDebut'=>$DateD,
-                    'NoProfil'=>'3',
-                    'DateFin'=>$DateF,
-                );
+                    $this->ModelAction->insertEtrePartenaire($donnéesEtrePartenaire);
                 
-                $noProfil = $this->ModelAction->insertProfilPourAction( $donnéesProfilPourAction);
-                $this->session->statut = $noProfil;
+                ///Insertion  Profil Pour Action :
+                    $donnéesProfilPourAction = array(
+                        'NoActeur'=> $this->session->noActeur,
+                        'NoAction'=>$noAction,
+                        'DateDebut'=>$DateD,
+                        'NoProfil'=>'3',
+                        'DateFin'=>$DateF,
+                    );     
 
-<<<<<<< HEAD
+                    $this->ModelAction->insertProfilPourAction( $donnéesProfilPourAction);
+                    $this->session->statut = 3;
+
+                ///Test si Lieu existe déjà : 
+                    $donnéesLieu = array(
+                        'adresse'=>$Adresse,
+                        'CodePostal'=>$CP,
+                        'ville'=>$Ville,
+                    );
+                    var_dump($donnéesLieu);
+                    $Lieux = $this->ModelAction->getLieu($donnéesLieu);
+                    $noLieu = $Lieux[0]['nolieu'];
+                    var_dump($noLieu);
+                    if($noLieu==null) //penser à trouver les coodonnées => léandre API  ?
+                    {
+                        //penser aux coordonnées
+                        $noLieu = $this->ModelAction->insertLieu($donnéesLieu);
+                        
+                    } //si le lieu n'existe pas
+
+                /// Insertion Avoir Lieu : 
+                    $donnéesAvoirLieu = array(
+                        'DateDebut'=>$DateD,
+                        'NoAction'=>$noAction,
+                        'TitreAction'=>$NomAction,
+                        'NoLieu'=>$noLieu,
+                        'DateFin'=>$DateF,
+                        'Description'=>$Description,
+                    );
+
+                    $this->ModelAction->insertAvoirLieu($donnéesAvoirLieu);
+                ///
+                
+                echo '<script> alert("Insetion effectuée avec succès"); </script>';
                 $this->AfficherActionSelectionnee($noAction,$DateD,$DateF);
                 //Charger la page de l'action créée. 
-                
-            } //fin if action existe
-        } //if input
-=======
-                  
-            }    
-        
+
+            } //Fin Action N'existe aps => insertion
         }
->>>>>>> aaf82a8cf10c5ba598657d7f9dba5cc4838374e6
-        else
+        else //input Ajouter
         {
             $DonnéesTitre = array('TitreDeLaPage'=>'Ajouter une Action');
         
@@ -670,7 +607,7 @@ class Acteur extends CI_Controller
             $this->load->view('Acteur/AjouterUneAction');
             $this->load->view('templates/PiedDePage');
 
-        }// fin if input
+        }//Fin input Ajouter
     }
     
     public function ModifierAction($noAction)
@@ -793,7 +730,7 @@ class Acteur extends CI_Controller
             }
             else
             {
-
+                echo 'plop';
             }
             
         }
