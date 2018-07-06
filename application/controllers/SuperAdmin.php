@@ -13,6 +13,10 @@ class SuperAdmin extends CI_Controller {
        $this->load->model('ModelActeur');
        $this->load->model('ModelThematique');
        $this->load->library('session');
+       if ($this->session->statut!=5)
+        {
+            redirect('Visiteur/loadAccueil');
+        };
     } // __construct
 
     public function AccueilSuperAdmin()
@@ -31,14 +35,17 @@ class SuperAdmin extends CI_Controller {
         $result5=$this->ModelActeur->GetProfil($noProfil);
         $noProfil=4;
         $result4=$this->ModelActeur->GetProfil($noProfil);
-        $noProfil=1||2||3;
-        $result=$this->ModelActeur->GetProfil($noProfil);
+        $noProfil=1;
+        $result1=$this->ModelActeur->GetProfil($noProfil);
+        $noProfil=0;
+        $result0=$this->ModelActeur->GetProfil($noProfil);
         //var_dump($result);
         $DonnéesAInjectées=array
         (
             'SuperAdmin'=>$result5,
             'AdminValider'=>$result4,
-            'Acteur'=>$result,
+            'Acteur'=>$result1,
+            'Visiteur'=>$result0,
         );
 
         //var_dump($DonnéesAInjectées);
