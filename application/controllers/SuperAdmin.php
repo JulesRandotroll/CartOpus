@@ -76,8 +76,11 @@ class SuperAdmin extends CI_Controller {
         $thematiques = $this->ModelThematique->getThematiques();
         var_dump($thematiques);
         $DonnéesTitre = array('TitreDeLaPage'=>'Ajout thématique');
+
+        $Données=array('Thematique'=>$thematiques);
+
         $this->load->view('templates/Entete',$DonnéesTitre);
-        $this->load->view('SuperAdmin/AjouterThematique');
+        $this->load->view('SuperAdmin/AjouterThematique',$Données);
         $this->load->view('templates/PiedDePage');
      
     }

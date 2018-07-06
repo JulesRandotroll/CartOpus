@@ -63,7 +63,7 @@
                         <?php 
                             echo form_label('Rechercher :', 'lbl_Recherche');
                             echo '  ';
-                            echo form_input('MotCle', '', array('placeholder'=>'Rechercher'));
+                            echo form_input('MotCle', '', array('placeholder'=>'Rechercher','class'=>'form-control'));
                             echo ' ';
                         ?>
                     </div>
@@ -75,7 +75,7 @@
                                 'Musique'=>array('Musique','Rock','Jazz','Blues'),
                                 'Sport'=>array('Sport','Kayak','Karate')
                             );
-                            echo form_dropdown('Thematique', $option, 'default');
+                            echo form_dropdown('Thematique', $option, 'default',array('class'=>'form-control'));
                             echo ' ';
                         ?>
                     </div>
@@ -126,18 +126,18 @@
                             );
                             
                             $mois = array(
-                                01=>'Janvier',
-                                02=>'Fevrier',
-                                03=>'Mars',
-                                04=>'Avril',
-                                05=>'Mai',
-                                06=>'Juin',
-                                07=>'Juillet',
-                                08=>'Aout',
-                                09=>'Septembre',
-                                10=>'Octobre',
-                                11=>'Novembre',
-                                12=>'Decembre',
+                                '01'=>'Janvier',
+                                '02'=>'Fevrier',
+                                '03'=>'Mars',
+                                '04'=>'Avril',
+                                '05'=>'Mai',
+                                '06'=>'Juin',
+                                '07'=>'Juillet',
+                                '08'=>'Août',
+                                '09'=>'Septembre',
+                                '10'=>'Octobre',
+                                '11'=>'Novembre',
+                                '12'=>'Decembre',
                             );
                             
                             $AnneeEnCours = date('Y');
@@ -151,10 +151,11 @@
                                 $AnneeEnCours=>$AnneeEnCours,
                                 $AnneeEnCours+1=>$AnneeEnCours+1
                             );
-
-                            echo form_dropdown('Jour', $jour, date('d'));
-                            echo form_dropdown('Mois', $mois, date('m'));
-                            echo form_dropdown('Annee', $annee, date('Y'));
+                            $ToDay = date('d/m/Y');
+                            echo '<input class="form-control" name="DateDebut" id="date" type="date" value="'.$ToDay.'" required>';
+                            // echo form_dropdown('Jour', $jour, date('d'),array('class'=>'form-control'));
+                            // echo form_dropdown('Mois', $mois, date('m'),array('class'=>'form-control'));
+                            // echo form_dropdown('Annee', $annee, date('Y'),array('class'=>'form-control'));
                         ?>
                     </div>
                 </div>
@@ -172,7 +173,7 @@
                                 echo form_label('Lieu :', 'lbl_Lieu');
                                 echo '  '; 
                                 
-                                echo form_input('Lieu', '', array('placeholder'=>'Rechercher'));
+                                echo form_input('Lieu', '', array('placeholder'=>'Rechercher','class'=>'form-control'));
                                 echo ' ';
                             ?>
                        

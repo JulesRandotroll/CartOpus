@@ -1,0 +1,128 @@
+SELECT l.datedebut, a.nomAction 
+FROM etrepartenaire p, action a, Role r, AvoirLieu l 
+WHERE a.noaction=p.noaction 
+AND p.noRole=r.noRole 
+AND l.noAction=a.noAction
+AND l.DATEDEBUT = p.DATEDEBUT
+AND l.DATEDEBUT = '2018-07-26 11:00:00' 
+AND l.NOACTION in( 
+	SELECT a.noAction 
+	FROM etrepartenaire p, action a, Role r, AvoirLieu l 
+	WHERE a.noaction=p.noaction 
+	AND p.noRole=r.noRole 
+	AND l.noAction=a.noAction
+	AND l.DATEDEBUT = p.DATEDEBUT 
+	AND l.NOACTION= 4 )
+
+
+
+
+
+SELECT p.datedebut, a.nomAction 
+FROM etrepartenaire p, action a, Role r, AvoirLieu l 
+WHERE a.noaction=p.noaction 
+AND p.noRole=r.noRole 
+AND l.noAction=a.noAction 
+AND a.noAction = 4
+
+
+
+
+
+
+
+
+
+
+
+
+public function getActions($noActeur)
+        {
+            $this->db->select('noAction, datedebut');
+            $this->db->from('EtrePartenaire p');
+            $this->db->join('Role r','p.noRole=r.noRole');
+            $this->db->where('noActeur',$noActeur);
+            $requete = $this->db->get();
+            $noActions = $requete->result_array();
+            //var_dump($noActions);
+            if(empty($noActions))
+            {
+                return NULL;
+            }
+            else
+            {
+                $i = 0;
+                foreach($noActions as $uneAction)
+                {
+                    // $Conditions =array('p.datedebut'=>$uneAction['datedebut'],);
+                    // $ConditionsBis = array('a.noaction'=>$uneAction['noAction'],);
+                    // echo 'Action :';
+                    // var_dump($uneAction);
+                    // echo 'Conditions : ';
+                    // var_dump($Conditions);
+
+                    // $this->db->select('a.noAction');
+                    // $this->db->from('EtrePartenaire p');
+                    // $this->db->join('Action a','a.noaction=p.noaction');
+                    // $this->db->join('Role r','p.noRole=r.noRole');
+                    // $this->db->join('AvoirLieu l','l.noAction=a.noAction AND l.DATEDEBUT = p.DATEDEBUT ');
+                    // $this->db->where($ConditionsBis);
+                    // $requete = $this->db->get();
+                    // $Result = $requete->result_array();
+
+                    // var_dump($Result);
+
+                    // $this->db->select('*');
+                    // $this->db->from('EtrePartenaire p');
+                    // $this->db->join('Action a','a.noaction=p.noaction');
+                    // $this->db->join('Role r','p.noRole=r.noRole');
+                    // $this->db->join('AvoirLieu l','l.noAction=a.noAction AND l.DATEDEBUT = p.DATEDEBUT ');
+                    // $this->db->where($Conditions);
+                    // $this->db->where_in('l.noaction',$Result);
+                    // $requete = $this->db->get();
+                    // $temporaire = $requete->result_array();
+                    // echo 'Temporaire : ';
+                    // var_dump($temporaire);
+                    
+                    $requete = $this->db->query("
+                    SELECT * 
+                    FROM etrepartenaire p, action a, Role r, AvoirLieu l 
+                    WHERE a.noaction=p.noaction 
+                    AND p.noRole=r.noRole 
+                    AND l.noAction=a.noAction
+                    AND l.DATEDEBUT = p.DATEDEBUT
+                    AND l.DATEDEBUT = '".$uneAction['datedebut']."' 
+                    AND l.NOACTION in ( 
+                        SELECT a.noAction 
+                        FROM etrepartenaire p, action a, Role r, AvoirLieu l 
+                        WHERE a.noaction=p.noaction 
+                        AND p.noRole=r.noRole 
+                        AND l.noAction=a.noAction
+                        AND l.DATEDEBUT = p.DATEDEBUT 
+                        AND l.NOACTION=".$uneAction['noAction']." )
+                    
+                    ");
+                    $temporaire = $requete->result_array();
+                    var_dump($temporaire);    
+                    
+                    if(!empty($temporaire))
+                    {    
+                        $Temp = $temporaire[0];
+                        if(empty($Resultats))
+                        {
+                            $Resultats = array($i=>$Temp);
+                        }
+                        else
+                        {
+                            $Resultats = $Resultats + array($i=>$Temp);
+                        }
+                        $i +=1;
+                    }
+
+                }
+                echo 'Resultat :';
+                // var_dump($Resultats);
+                return $Resultats;
+
+            }
+        }

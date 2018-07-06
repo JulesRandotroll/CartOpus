@@ -106,7 +106,7 @@
             $this->db->from('lieu');
             $this->db->where($DonnéesLieu);
             $requete = $this->db->get();
-            $noLieu = $requete->result_array();
+            return $requete->result_array();
         }
     
         public function insertLieu($DonnéesLieu)
