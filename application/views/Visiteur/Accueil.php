@@ -9,7 +9,16 @@
                         {
                             if ($this->session->statut==1){
                             echo'<ul class="nav navbar-nav">';
-                            echo'<li><a href="#" style="color:#FFFFFF"><span class="glyphicon glyphicon-plus"></span> Creation Action</a></li>';
+                            echo '<li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:#FFFFFF ;background-color:#0E7896">Action
+                                <span class="caret"></span></a>
+                                <ul class="dropdown-menu" style="background-color:#139CBC">
+                                    <li><a href="'.site_url('Acteur/NouvelleAction/0').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-plus"></span> Ajouter Action</a></li>
+                                    <li><a href="'.site_url('Acteur/ReitererAction/0').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-repeat"></span> Réitérer Action</a></li>
+                                    <li><a href="'.site_url('Acteur/ModifierAction/0').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-pencil"></span> Modifier Action</a></li>
+                                </ul>
+                            </li>';
+                           // echo'<li><a href="'.site_url('Acteur/NouvelleAction/0').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-plus"></span> Creation Action</a></li>';
                             echo'<li><a href="'.site_url('Acteur/GestionProfil').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-cog"></span> Compte</a></li>';
                             echo'</ul>';
                             echo'<li><a href="'.site_url('Acteur/AccueilActeur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso</a></li>'; 
@@ -54,7 +63,7 @@
                         <?php 
                             echo form_label('Rechercher :', 'lbl_Recherche');
                             echo '  ';
-                            echo form_input('MotCle', '', array('placeholder'=>'Rechercher'));
+                            echo form_input('MotCle', '', array('placeholder'=>'Rechercher','class'=>'form-control'));
                             echo ' ';
                         ?>
                     </div>
@@ -66,7 +75,7 @@
                                 'Musique'=>array('Musique','Rock','Jazz','Blues'),
                                 'Sport'=>array('Sport','Kayak','Karate')
                             );
-                            echo form_dropdown('Thematique', $option, 'default');
+                            echo form_dropdown('Thematique', $option, 'default',array('class'=>'form-control'));
                             echo ' ';
                         ?>
                     </div>
@@ -117,6 +126,7 @@
                             );
                             
                             $mois = array(
+<<<<<<< HEAD
                                 01=>'Janvier',
                                 02=>'Fevrier',
                                 03=>'Mars',
@@ -129,6 +139,20 @@
                                 10=>'Octobre',
                                 11=>'Novembre',
                                 12=>'Decembre',
+=======
+                                '01'=>'Janvier',
+                                '02'=>'Fevrier',
+                                '03'=>'Mars',
+                                '04'=>'Avril',
+                                '05'=>'Mai',
+                                '06'=>'Juin',
+                                '07'=>'Juillet',
+                                '08'=>'Août',
+                                '09'=>'Septembre',
+                                '10'=>'Octobre',
+                                '11'=>'Novembre',
+                                '12'=>'Decembre',
+>>>>>>> e0ddbd36955a53c6f60d3f6388da70b4413fd430
                             );
                             
                             $AnneeEnCours = date('Y');
@@ -142,10 +166,11 @@
                                 $AnneeEnCours=>$AnneeEnCours,
                                 $AnneeEnCours+1=>$AnneeEnCours+1
                             );
-
-                            echo form_dropdown('Jour', $jour, date('d'));
-                            echo form_dropdown('Mois', $mois, date('m'));
-                            echo form_dropdown('Annee', $annee, date('Y'));
+                            $ToDay = date('d/m/Y');
+                            echo '<input class="form-control" name="DateDebut" id="date" type="date" value="'.$ToDay.'" required>';
+                            // echo form_dropdown('Jour', $jour, date('d'),array('class'=>'form-control'));
+                            // echo form_dropdown('Mois', $mois, date('m'),array('class'=>'form-control'));
+                            // echo form_dropdown('Annee', $annee, date('Y'),array('class'=>'form-control'));
                         ?>
                     </div>
                 </div>
@@ -163,7 +188,7 @@
                                 echo form_label('Lieu :', 'lbl_Lieu');
                                 echo '  '; 
                                 
-                                echo form_input('Lieu', '', array('placeholder'=>'Rechercher'));
+                                echo form_input('Lieu', '', array('placeholder'=>'Rechercher','class'=>'form-control'));
                                 echo ' ';
                             ?>
                        

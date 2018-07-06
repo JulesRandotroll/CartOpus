@@ -6,7 +6,7 @@
                                 <ul class="dropdown-menu" style="background-color:#139CBC">
                                     <li><a href="'.site_url('Acteur/NouvelleAction/0').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-plus"></span> Ajouter Action</a></li>
                                     <li><a href="'.site_url('Acteur/ReitererAction/0').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-repeat"></span> Réitérer Action</a></li>
-                                    <li><a href="'.site_url('Acteur/ModifierAction').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-pencil"></span> Modifier Action</a></li>
+                                    <li><a href="'.site_url('Acteur/ModifierAction/0').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-pencil"></span> Modifier Action</a></li>
                                 </ul>
                         </li>';
                    // echo'<li><a href="'.site_url('Acteur/NouvelleAction/0').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-plus"></span> Ajouter Action</a></li>';    
@@ -93,11 +93,11 @@
                                     if($uneAction['DATEFIN']==null){$uneAction['DATEFIN']=0;}
                                     if(empty($uneAction['SiteURLAction']))
                                     {
-                                        $this->table->add_row($uneAction['NOMACTION'],$uneAction['NOMROLE'],$uneAction['SiteURLAction'],$uneAction['DATEDEBUT'],$uneAction['Description'],'<a href="'.site_url('Acteur/AfficherActionSelectionnee/'.($uneAction['NOACTION']).'/'.($uneAction['DATEDEBUT']).'/'.($uneAction['DATEFIN'])).'" class="btn btn-danger" >Accès</a>');  
+                                        $this->table->add_row($uneAction['NOMACTION'],$uneAction['NOMROLE'],$uneAction['SiteURLAction'],$uneAction['DATEDEBUT'],$uneAction['Description'],'<a href="'.site_url('Acteur/AfficherActionSelectionnee/'.($uneAction['NOACTION']).'/'.($uneAction['DATEDEBUT']).'/'.($uneAction['DATEFIN'])).'" class="btn btn-danger" >Accès</a>','<a href="'.site_url('Acteur/AjoutCollaborateur/'.($uneAction['NOACTION']).'/'.($uneAction['DATEDEBUT']).'/'.($uneAction['DATEFIN'])).'" class="btn btn-danger" >Ajout Collaborateur</a>');  
                                     }
                                     else
                                     {
-                                        $this->table->add_row($uneAction['NOMACTION'],$uneAction['NOMROLE'],'<a href="'.$uneAction['SiteURLAction'].'" style="color:FFFFFF">Cliquer Ici</a>',$uneAction['DATEDEBUT'],$uneAction['Description'],'<a href="'.site_url('Acteur/AfficherActionSelectionnee/'.($uneAction['NOACTION']).'/'.($uneAction['DATEDEBUT']).'/'.($uneAction['DATEFIN'])).'" class="btn btn-danger" >Accès</a>');
+                                        $this->table->add_row($uneAction['NOMACTION'],$uneAction['NOMROLE'],'<a href="'.$uneAction['SiteURLAction'].'" style="color:FFFFFF">Cliquer Ici</a>',$uneAction['DATEDEBUT'],$uneAction['Description'],'<a href="'.site_url('Acteur/AfficherActionSelectionnee/'.($uneAction['NOACTION']).'/'.($uneAction['DATEDEBUT']).'/'.($uneAction['DATEFIN'])).'" class="btn btn-danger" >Accès</a>','<a href="'.site_url('Acteur/AjoutCollaborateur/'.($uneAction['NOACTION']).'/'.($uneAction['DATEDEBUT']).'/'.($uneAction['DATEFIN'])).'" class="btn btn-danger" >Ajout Collaborateur</a>');
                                     }
                                     
                                 }

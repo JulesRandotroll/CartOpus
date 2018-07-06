@@ -11,6 +11,7 @@ class SuperAdmin extends CI_Controller {
        $this->load->library('table');
        $this->load->helper('form');
        $this->load->model('ModelActeur');
+       $this->load->model('ModelThematique');
        $this->load->library('session');
     } // __construct
 
@@ -69,4 +70,19 @@ class SuperAdmin extends CI_Controller {
         
         $this->AffecterProfil(0);  
     }
+
+    public function AjouterThematique()
+    {
+        $thematiques = $this->ModelThematique->getThematiques();
+        var_dump($thematiques);
+        $DonnéesTitre = array('TitreDeLaPage'=>'Ajout thématique');
+
+        $Données=array('Thematique'=>$thematiques);
+
+        $this->load->view('templates/Entete',$DonnéesTitre);
+        $this->load->view('SuperAdmin/AjouterThematique',$Données);
+        $this->load->view('templates/PiedDePage');
+     
+    }
+
 }

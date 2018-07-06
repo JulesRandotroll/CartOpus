@@ -17,13 +17,20 @@
     <div class="col-sm-8" style="padding:20px">
         <div style="padding:20px">
             <div class = "text-center">
-                <H1 style="color:#FFFFFF">Choisir une action à réitérer</H1>
+                <H1 style="color:#FFFFFF">Choisir une action</H1>
             </div>
             <section >
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <?php
-                        echo form_open('Acteur/ReitererAction/0');
-
+                    if ($message=='reiterer')
+                    {
+                        echo form_open('Acteur/ReitererAction/'.$noAction);
+                    }
+                    else
+                    {
+                        echo 'plop ?';
+                        echo form_open('Acteur/ModifierAction/'.$noAction);
+                    }
                         echo '<div class="form-group">';
                         echo form_label('Action choisie : ', 'Action');
                         echo form_dropdown('Action', $options,'' ,Array('class'=>'form-control'));

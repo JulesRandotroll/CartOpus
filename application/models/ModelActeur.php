@@ -16,6 +16,14 @@
             return $requete->result_array();
         }
 
+        public function getMail($Mail)
+        {
+            $this->db->select('*');
+            $this->db->from('Acteur');
+            $this->db->where('mail',$Mail);
+            $requete = $this->db->get();
+            return $requete->row_array();
+        }
         public function getOrganisation($noActeur)
         {
             $this->db->select('No_Organisation');
@@ -57,6 +65,57 @@
                 return $Resultats;
             }
         }
+
+        // public function getActions($noActeur)
+            // {
+            //     $this->db->select('noAction, datedebut');
+            //     $this->db->from('EtrePartenaire p');
+            //     $this->db->join('Role r','p.noRole=r.noRole');
+            //     $this->db->where('noActeur',$noActeur);
+            //     $requete = $this->db->get();
+            //     $noActions = $requete->result_array();
+            //     //var_dump($noActions);
+            //     if(empty($noActions))
+            //     {
+            //         return NULL;
+            //     }
+            //     else
+            //     {
+            //         $i = 0;
+            //         foreach($noActions as $uneAction)
+            //         {
+            //             $Conditions = array(
+            //                 'p.noaction'=>$uneAction['noAction'],
+            //                 'p.datedebut'=>$uneAction['datedebut'],
+            //             );
+            //             //var_dump($uneAction);
+            //             $this->db->select('*');
+            //             $this->db->from('EtrePartenaire p');
+            //             $this->db->join('Action a','a.noaction=p.noaction');
+            //             $this->db->join('Role r','p.noRole=r.noRole');
+            //             $this->db->join('AvoirLieu l','l.noAction=a.noAction');
+            //             $this->db->where($Conditions);
+            //             $requete = $this->db->get();
+            //             $temporaire = $requete->result_array();
+            //             //var_dump($temporaire);
+                        
+            //             $Temp = $temporaire[0];
+            //             if(empty($Resultats))
+            //             {
+            //                 $Resultats = array($i=>$Temp);
+            //             }
+            //             else
+            //             {
+            //                 $Resultats = $Resultats + array($i=>$Temp);
+            //             }
+            //             $i +=1;
+            //         }
+            //         //var_dump($Resultats);
+            //         return $Resultats;
+
+        //}
+        //}
+
         public function getActions($noActeur)
         {
             $this->db->select('noAction, datedebut');
@@ -75,33 +134,45 @@
                 $i = 0;
                 foreach($noActions as $uneAction)
                 {
-                    $Conditions = array(
-                        'p.noaction'=>$uneAction['noAction'],
-                        'p.datedebut'=>$uneAction['datedebut'],
-                    );
-                    //var_dump($uneAction);
-                    $this->db->select('*');
-                    $this->db->from('EtrePartenaire p');
-                    $this->db->join('Action a','a.noaction=p.noaction');
-                    $this->db->join('Role r','p.noRole=r.noRole');
-                    $this->db->join('AvoirLieu l','l.noAction=a.noAction');
-                    $this->db->where($Conditions);
-                    $requete = $this->db->get();
-                    $temporaire = $requete->result_array();
-                    //var_dump($temporaire);
+                    $requete = $this->db->query("
+                    SELECT * 
+                    FROM etrepartenaire p, action a, Role r, AvoirLieu l 
+                    WHERE a.noaction=p.noaction 
+                    AND p.noRole=r.noRole 
+                    AND l.noAction=a.noAction
+                    AND l.DATEDEBUT = p.DATEDEBUT
+                    AND l.DATEDEBUT = '".$uneAction['datedebut']."' 
+                    AND l.NOACTION in ( 
+                        SELECT a.noAction 
+                        FROM etrepartenaire p, action a, Role r, AvoirLieu l 
+                        WHERE a.noaction=p.noaction 
+                        AND p.noRole=r.noRole 
+                        AND l.noAction=a.noAction
+                        AND l.DATEDEBUT = p.DATEDEBUT 
+                        AND l.NOACTION=".$uneAction['noAction']." )
                     
-                    $Temp = $temporaire[0];
-                    if(empty($Resultats))
-                    {
-                        $Resultats = array($i=>$Temp);
+                    ");
+
+                    $temporaire = $requete->result_array();
+                    //var_dump($temporaire);    
+                    
+                    if(!empty($temporaire))
+                    {    
+                        $Temp = $temporaire[0];
+                        if(empty($Resultats))
+                        {
+                            $Resultats = array($i=>$Temp);
+                        }
+                        else
+                        {
+                            $Resultats = $Resultats + array($i=>$Temp);
+                        }
+                        $i +=1;
                     }
-                    else
-                    {
-                        $Resultats = $Resultats + array($i=>$Temp);
-                    }
-                    $i +=1;
+
                 }
-                //var_dump($Resultats);
+                //echo 'Resultat :';
+                // var_dump($Resultats);
                 return $Resultats;
 
             }
@@ -170,6 +241,13 @@
             $this->db->update('Acteur',$données);
         }
 
+        public function GetRole()
+        {
+            $this->db->select('*');
+            $this->db->from('Role');
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
     }
 
 
