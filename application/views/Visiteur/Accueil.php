@@ -126,6 +126,20 @@
                             );
                             
                             $mois = array(
+<<<<<<< HEAD
+                                01=>'Janvier',
+                                02=>'Fevrier',
+                                03=>'Mars',
+                                04=>'Avril',
+                                05=>'Mai',
+                                06=>'Juin',
+                                07=>'Juillet',
+                                13=>'Aout',
+                                09=>'Septembre',
+                                10=>'Octobre',
+                                11=>'Novembre',
+                                12=>'Decembre',
+=======
                                 '01'=>'Janvier',
                                 '02'=>'Fevrier',
                                 '03'=>'Mars',
@@ -138,6 +152,7 @@
                                 '10'=>'Octobre',
                                 '11'=>'Novembre',
                                 '12'=>'Decembre',
+>>>>>>> e0ddbd36955a53c6f60d3f6388da70b4413fd430
                             );
                             
                             $AnneeEnCours = date('Y');
