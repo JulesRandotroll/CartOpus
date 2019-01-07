@@ -84,7 +84,7 @@ class Visiteur extends CI_Controller
               'noquestion'=>$this->input->post('question'),
               'reponse'=>$this->input->post('reponse'),
               );
-              var_dump($donneeAinserer);
+              //var_dump($donneeAinserer);
 
               $this->load->model('ModelSInscrire');
               $test = $this->ModelSInscrire->Insert_Acteur($donneeAinserer);
@@ -202,10 +202,10 @@ class Visiteur extends CI_Controller
           if ($this->session->statut==5)
           {
             echo('noacteur');
-            var_dump($this->session->noActeur);
+            //var_dump($this->session->noActeur);
             redirect('SuperAdmin/AccueilSuperAdmin',$this->session->statut);
             echo'noprofil';
-            var_dump($noprofil[0]['NoProfil']);
+           // var_dump($noprofil[0]['NoProfil']);
             echo'une cape et un slip';
           }
           //redirect(site_url('Visiteur/loadAccueil'));
@@ -265,7 +265,7 @@ class Visiteur extends CI_Controller
             'Questions'=>$this->input->post('question'),
             'reponse'=>$this->input->post('reponse'),
           );
-          var_dump($donneeATester);
+          //var_dump($donneeATester);
           $test=$this->ModelSeConnecter->testQuestion_Reponse($donneeATester);
 
           $mail =  $this->input->post('mail');
