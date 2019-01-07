@@ -22,9 +22,9 @@
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <?php
                         echo form_open('Acteur/AjoutCollaborateur/'.($noAction).'/'.($DateDebut).'/'.($DateFin));
-                        var_dump($noAction);    
-                        var_dump($DateDebut);
-                        var_dump($DateFin);
+                        //var_dump($noAction);    
+                       // var_dump($DateDebut);
+                       // var_dump($DateFin);
                         
                         echo '<div class="form-group">';
                             echo form_label('Nom : ', 'Nom');

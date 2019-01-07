@@ -15,7 +15,7 @@
                                 <ul class="dropdown-menu" style="background-color:#139CBC">
                                     <li><a href="'.site_url('Acteur/NouvelleAction/0').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-plus"></span> Ajouter Action</a></li>
                                     <li><a href="'.site_url('Acteur/ReitererAction/0').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-repeat"></span> Réitérer Action</a></li>
-                                    <li><a href="'.site_url('Acteur/ModifierAction/0').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-pencil"></span> Modifier Action</a></li>
+                                    <li><a href="'.site_url('#').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-pencil"></span> Modifier Action</a></li>
                                 </ul>
                             </li>';
                            // echo'<li><a href="'.site_url('Acteur/NouvelleAction/0').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-plus"></span> Creation Action</a></li>';
@@ -126,6 +126,7 @@
                             );
                             
                             $mois = array(
+<<<<<<< HEAD
                                 01=>'Janvier',
                                 02=>'Fevrier',
                                 03=>'Mars',
@@ -138,6 +139,20 @@
                                 10=>'Octobre',
                                 11=>'Novembre',
                                 12=>'Decembre',
+=======
+                                '01'=>'Janvier',
+                                '02'=>'Fevrier',
+                                '03'=>'Mars',
+                                '04'=>'Avril',
+                                '05'=>'Mai',
+                                '06'=>'Juin',
+                                '07'=>'Juillet',
+                                '08'=>'Août',
+                                '09'=>'Septembre',
+                                '10'=>'Octobre',
+                                '11'=>'Novembre',
+                                '12'=>'Decembre',
+>>>>>>> 53000f7dd0c9bd8003252428d99bff76a805e21e
                             );
                             
                             $AnneeEnCours = date('Y');
