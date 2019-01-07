@@ -32,7 +32,7 @@
                         echo '<div class="form-group">';
                         echo '<span style="color:#FF0000"/> * </span>';
                         echo form_label('Nom : ', 'Nom');
-                        echo form_input('nom',$nom,array('required'=>'required','placeholder'=>'Votre nom','pattern'=>'[a-zA-Z]{1,40}','class'=>'form-control')); 
+                        echo form_input('nom',$nom,array('required'=>'required','placeholder'=>'Votre nom','pattern'=>'[a-zA-Z ]{1,40}','class'=>'form-control')); 
                         echo '</div>';
                             // echo('</td></tr>');
 

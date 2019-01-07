@@ -1,1 +1,10 @@
 insertion
+
+ALTER TABLE acteur 
+ADD MailVisible boolean
+
+ALTER TABLE acteur 
+ADD NoTelVisible boolean
+
+ALTER TABLE `acteur` CHANGE `MailVisible` `MailVisible` BOOLEAN NULL DEFAULT FALSE;
+ALTER TABLE `acteur` CHANGE `NoTelVisible` `NoTelVisible` BOOLEAN NULL DEFAULT FALSE;
