@@ -569,10 +569,10 @@ class Acteur extends CI_Controller
                         'CodePostal'=>$CP,
                         'ville'=>$Ville,
                     );
-                    var_dump($donnéesLieu);
+                    //var_dump($donnéesLieu);
                     $Lieux = $this->ModelAction->getLieu($donnéesLieu);
                     $noLieu = $Lieux[0]['nolieu'];
-                    var_dump($noLieu);
+                    //var_dump($noLieu);
                     if($noLieu==null) //penser à trouver les coodonnées => léandre API  ?
                     {
                         //penser aux coordonnées

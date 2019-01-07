@@ -79,11 +79,11 @@ class Visiteur extends CI_Controller
               'motdepasse'=>$this->input->post('mdp'),
               'mail' => $this->input->post('mail'),
               'notel' => $this->input->post('tel'),
-              'photoprofil'=>'4pP@R31L_1Ph20T.png',
+              'photoprofil'=>'4pPaR31L_1Ph20T.png',
               'noquestion'=>$this->input->post('question'),
               'reponse'=>$this->input->post('reponse'),
               );
-              var_dump($donneeAinserer);
+              //var_dump($donneeAinserer);
 
               $this->load->model('ModelSInscrire');
               $test = $this->ModelSInscrire->Insert_Acteur($donneeAinserer);
