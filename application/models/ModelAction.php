@@ -19,6 +19,37 @@
             return $requete->result_array();
         }
         
+        public function UpdateAction($NoAction,$DonneesAModifier)
+        { 
+            
+            //var_dump($DonneesAModifier);
+            $NoAction=array('NOACTION' =>$NoAction);
+            //var_dump($NoAction);
+            $Donnees = array('NomAction'=>$DonneesAModifier['NomAction'],'PublicCible'=>$DonneesAModifier['PublicCible'],'SiteURLAction'=>$DonneesAModifier['SiteURLAction']);
+            $this->db->where('NOACTION',$NoAction['NOACTION']);
+            $this->db->update('action',$Donnees);
+        }
+
+        public function UpdateLieu($NoLieu,$DonneesAModifier)
+        { 
+            //var_dump($DonneesAModifier);
+            $NoLieu=array('NoLieu' =>$NoLieu);
+            //var_dump($NoLieu);
+            $Donnees = array('Adresse'=>$DonneesAModifier['Adresse'],'CodePostal'=>$DonneesAModifier['CodePostal'],'Ville'=>$DonneesAModifier['Ville']);
+            $this->db->where('NOLIEU',$NoLieu['NoLieu'][0]['nolieu']);
+            $this->db->update('lieu',$Donnees);
+        }
+        
+        public function UpdateAvoirLieu($NoAction,$NoLieu,$DonneesAModifier)
+        { 
+            var_dump($NoLieu);
+            $NoAction=array('NoAction' =>$NoAction);
+            $NoLieu=array('NoLieu' =>$NoLieu);
+            $Donnees = array('DateDebut'=>$DonneesAModifier['DateDebut'],'DateFin'=>$DonneesAModifier['DateFin'],'TitreAction'=>$DonneesAModifier['TitreAction'],'Description'=>$DonneesAModifier['Description']);
+            $this->db->where('NOLIEU',$NoLieu['NoLieu'],'NOACTION',$NoAction['NoAction']);
+            $this->db->update('avoirlieu',$Donnees);
+        }
+        
         public function getFichersPourAction($DonnéesDeTest)
         {   
             

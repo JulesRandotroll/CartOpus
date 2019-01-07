@@ -199,7 +199,7 @@
 
         public function UpdateMDP($Donnees,$noActeur)
         {
-            var_dump($Donnees);
+            //var_dump($Donnees);
             $Donnees2 = array('motdepasse' => $Donnees);
             $this->db->where('noActeur',$noActeur);
             $this->db->update('acteur',$Donnees2);
