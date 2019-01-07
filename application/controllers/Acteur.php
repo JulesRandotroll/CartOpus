@@ -17,17 +17,11 @@ class Acteur extends CI_Controller
         $this->load->model('ModelAction');
         $this->load->library('upload');
         //var_dump($this->session->statut);
-      
-        //A RETIRER UNE FOIS LA CONNEXION OK
+    
         if ($this->session->statut==0)
         {
             redirect('Visiteur/loadAccueil');
         };
-        //$this->session->noActeur = 1;
-        // A RETIRER UNE FOIS LA CONNEXION OK
-
-       //$this->load->model('ModeleArticle'); // chargement modèle, obligatoire
-       //$this->load->model('ModeleUtilisateur');
     } // __construct
 
     public function AccueilActeur()
@@ -334,7 +328,7 @@ class Acteur extends CI_Controller
                     'options'=>$Options,
                     'message'=>'reiterer',
                 );
-                var_dump($DonneesAInjectees);
+                //var_dump($DonneesAInjectees);
                 $DonnéesTitre = array('TitreDeLaPage'=>'Choisir Action à réitérer');
                 $this->load->view('templates/Entete',$DonnéesTitre);
                 $this->load->view('Acteur/ChoisirAction', $DonneesAInjectees);
@@ -390,7 +384,6 @@ class Acteur extends CI_Controller
     }
     public function RenommerPhoto($Image)
     {
-        //Je T'aime
         $noActeur = $this->session->noActeur;
         return $Image=$noActeur.'_'.date('Y-m-d_H_i_s');
     }
@@ -569,10 +562,10 @@ class Acteur extends CI_Controller
                         'CodePostal'=>$CP,
                         'ville'=>$Ville,
                     );
-                    var_dump($donnéesLieu);
+                    //var_dump($donnéesLieu);
                     $Lieux = $this->ModelAction->getLieu($donnéesLieu);
                     $noLieu = $Lieux[0]['nolieu'];
-                    var_dump($noLieu);
+                    //var_dump($noLieu);
                     if($noLieu==null) //penser à trouver les coodonnées => léandre API  ?
                     {
                         //penser aux coordonnées
@@ -667,14 +660,46 @@ class Acteur extends CI_Controller
                 //'datedebut'=>$dateDebut,
             );
             $Action=$this->ModelAction->getAction($DonnéesDeTest);
-            var_dump($Action);
-            if ($this->input->post('Ajouter'))
-            {
-               
+            //var_dump($Action);
+            if ($this->input->post('Modifier'))
+            { 
                 //var_dump($Action);
                 $noAction=$Action[0]['NOACTION'];
-                $Action=$this->NouvelleAction($noAction);
+                // modifier toutes les tables concernées (action , lieu , avoir lieu )
+                //var_dump($noAction);
+
+                $DonneesAModifierAction=array(
+                    'NomAction'=>$this->input->post('NomAction'),
+                    'PublicCible'=>$this->input->post('PublicCible'),
+                    'SiteURLAction'=>$this->input->post('SiteURLAction'),
+                );
+                 $Action=$this->ModelAction->UpdateAction($noAction,$DonneesAModifierAction);
                 
+////////////////////////////////////////////////////////////////////////////////////////////////
+                $DonneesAModifierLieu=array(
+                    'Adresse'=>$this->input->post('Adresse'),
+                    'CodePostal'=>$this->input->post('CodePostale'),
+                    'Ville'=>$this->input->post('Ville'),
+
+                );
+                $noLieu=$this->ModelAction->getLieu($DonneesAModifierLieu);
+                if ($noLieu==null){
+                    $Lieu=$this->ModelAction->insertLieu($DonneesAModifierLieu);
+                    $noLieu=$Lieu['noLieu'];
+                }
+               
+                var_dump($noLieu);              
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+                 $DonneesAModifierAvoirLieu=array(
+                    'DateDebut'=>$this->input->post('DateDebut'),
+                    'NoLieu'=>$noLieu,
+                    'DateFin'=>$this->input->post('DateFin'),
+                    'TitreAction'=>$this->input->post('NomAction'),
+                    'Description'=>$this->input->post('Description'),
+                 );
+                 $AvoirLieu=$this->ModelAction->UpdateAvoirLieu($noAction,$noLieu[0]['nolieu'],$DonneesAModifierAvoirLieu);
+
                 redirect ('Acteur/AccueilActeur/'.$noActeur);
             }
             else
@@ -720,7 +745,6 @@ class Acteur extends CI_Controller
             //1cape1slip@gmail.com mdp: goldebutger007
             $nom = $this->input->post('nom');
             $prenom = $this->input->post('prenom');
-            //1cape1slip@gmail.com mdp: goldfinger007
             $this->email->from('cartopus22@gmail.com');
             $this->email->to('1cape1slip@gmail.com'); 
             $this->email->subject($objet);
@@ -731,7 +755,7 @@ class Acteur extends CI_Controller
             }
             else
             {
-                echo 'plop';
+                echo 'ok';
             }
             
         }
@@ -771,69 +795,41 @@ class Acteur extends CI_Controller
                 echo $message;
             }
             else
-             {
+            {
                 $test=$this->ModelActeur->GetMail($Mail);
-                var_dump($test);
+                //var_dump($test);
                 if ($test==null)
-                { ?>
-                    <script type="text/javascript">
-                        document.write("chat");
-                        if (result= window.confirm("message")==true)
-                        {
-                            document.write("chaton");
-                            window.location.replace("Visiteur/loadAccueil");
-                             <?php//redirect ('Visiteur/loadAccueil')?>
-                        }
-                        else
-                        {
-                            document.write("poulpe");
-                        }
-                    </script>
-                <?php ; }
-                else
-                { ?>
-                    <script type="text/javascript">
-                        document.write("paschat");
-                    </script> 
-                <?php ;
-                }
-                
-                // if ($test==null)
-                // {
-                //    echo'<script type="text/javascript">
-                //      document.write("chat");
-                //      var text = element.textContent;
-                //     element.textContent = "this is some sample text";
-                //     document.write(text)
-                //      if (var result= window.confirm("message")) {
-                //         text = "Too young"
-                //      }
-                //      else{
-                //          text="ok"
-                //      }
-                //     document.write(text) </script>';
-                //     // <script> if (var result= window.confirm("message")) 
-                //     // text = "Too young"</script>
+                { 
+                    // faire un confirm en js pour plus de sécurité
+                    $Acteur=$this->ModelActeur->GetActeur($noActeur);
+                   // var_dump($Acteur);
 
-                //     //  <script>var result= window.confirm("message")</script>
+                    $SiteURL=site_url("Visiteur/SInscrire");
+                    $objet ='Demande d\inscription';
+                    $message = $Acteur[0]['NOMACTEUR'].' '.$Acteur[0]['PRENOMACTEUR'].' souhaiterai que vous soyez son collaborateur pour l\'évenement '.$noAction.' Et pour ceci il faut vous inscrire sur le site : '.$SiteURL;
                     
-                //      //echo 'text';
-                //     //echo '<script>var '.$r.'= confirm("Ce mail ne correspond à aucun acteur de la BDD envoyer un mail pour l\'inscription ?");</script>';
-                //     // var_dump($r);
-                //     // if ('<script>$result= window.confirm("message")</script>' == true) {
-                //     //     $message = "You pressed OK!";
-                        
-                //     // } else {
-                //     //     $message = "You pressed Cancel!";
-                //     // } 
-                //     // echo $message;
-                //     //redirect('orderManagement/index', 'refresh'); 
-                // }
-                // else
-                // {
-                //     echo '<script>alert("ajout ok");</script>';
-                // }
-             }
+                    $mail = $this->input->post('mail');
+                    //var_dump($mail);
+
+                    $this->email->from('cartopus22@gmail.com');
+                    $this->email->to($mail); 
+                    $this->email->subject($objet);
+                    $this->email->message($message);
+
+                    if (!$this->email->send())
+                    {
+                        $this->email->print_debugger();
+                    }
+                    else
+                    {
+                        echo 'mail envoyé';
+                    }
+                }
+                else
+                {
+                    echo' insert dans etrepartenaire avec le role du dropdown et l\'acteur choisi pour l\'action selectionnée';
+                }
+            }
         }
         else
         {
