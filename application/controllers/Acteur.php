@@ -880,5 +880,7 @@ class Acteur extends CI_Controller
         $this->load->view('Acteur/AjoutThematique',$DonnéesAInjecter);
         $this->load->view('templates/PiedDePage');
     }
+
+    
 }
 ?>

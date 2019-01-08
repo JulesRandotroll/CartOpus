@@ -63,7 +63,7 @@
                         <?php 
                             echo form_label('Rechercher :', 'lbl_Recherche');
                             echo '  ';
-                            echo form_input('MotCle', '', array('placeholder'=>'Rechercher','class'=>'form-control'));
+                            echo form_input('MotCle', '', array('placeholder'=>'Rechercher','class'=>'form-control', 'name'=>'txtRecherche','pattern'=>'^[a-zA-Z ]*'));
                             echo ' ';
                         ?>
                     </div>
@@ -75,7 +75,7 @@
                                 'Musique'=>array('Musique','Rock','Jazz','Blues'),
                                 'Sport'=>array('Sport','Kayak','Karate')
                             );
-                            echo form_dropdown('Thematique', $option, 'default',array('class'=>'form-control'));
+                            //echo form_dropdown('Thematique', $option, 'default',array('class'=>'form-control'));
                             echo ' ';
                         ?>
                     </div>
@@ -152,7 +152,8 @@
                                 $AnneeEnCours+1=>$AnneeEnCours+1
                             );
                             $ToDay = date('d/m/Y');
-                            echo '<input class="form-control" name="DateDebut" id="date" type="date" value="'.$ToDay.'" required>';
+                            //echo '<input class="form-control" name="DateDebut" id="date" type="date" value="'.$ToDay.'" required>';
+
                             // echo form_dropdown('Jour', $jour, date('d'),array('class'=>'form-control'));
                             // echo form_dropdown('Mois', $mois, date('m'),array('class'=>'form-control'));
                             // echo form_dropdown('Annee', $annee, date('Y'),array('class'=>'form-control'));
@@ -173,7 +174,7 @@
                                 echo form_label('Lieu :', 'lbl_Lieu');
                                 echo '  '; 
                                 
-                                echo form_input('Lieu', '', array('placeholder'=>'Rechercher','class'=>'form-control'));
+                                //echo form_input('Lieu', '', array('placeholder'=>'Rechercher','class'=>'form-control'));
                                 echo ' ';
                             ?>
                        
@@ -210,11 +211,23 @@
             <section >
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <H1 style="color:#FFFFFF">Actualité<H1>
+
+                    <table>
+        
+                        <tr>
+                            <th>Nom Action</th>
+                        </tr>
+                    
+                            <?php foreach ($lesActions As $uneAction):
+                                echo '<tr>';
+                                echo '<td><h4>'.$uneAction['NOMACTION'].' </h4></td></br>';
+                                echo'</tr>';
+                            endforeach ?>
+                        
+                    </table>
+
                 </div>
             </section>
         </div>
     </div>
 </div>
-
-
-

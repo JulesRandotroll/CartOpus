@@ -14,6 +14,9 @@ class Visiteur extends CI_Controller
        $this->load->helper('form');
        $this->load->model('ModelSeConnecter');
        $this->load->library('session');
+
+       $this->load->model('ModelRecherche');
+       $this->load->library("pagination");
     } // __construct
 
     public function loadAccueil()
@@ -25,13 +28,14 @@ class Visiteur extends CI_Controller
       //var_dump($this->session->statut);
       if ($this->input->post('submit'))
       {
-        echo 'coucou';
+        $Recherche =$this->input->post('MotCle');
+        redirect('Visiteur/BarreRecherche/'.$Recherche);
       }
       else
       {
-        $DonnéesTitre = array('TitreDeLaPage'=>'Cart\'Opus');
+        $DonneesTitre = array('TitreDeLaPage'=>'Cart\'Opus');
         
-        $this->load->view('templates/Entete',$DonnéesTitre);
+        $this->load->view('templates/Entete',$DonneesTitre);
         $this->load->view('Visiteur/Accueil',$this->session->statut);
         $this->load->view('templates/PiedDePage');
       }
@@ -330,6 +334,43 @@ class Visiteur extends CI_Controller
       redirect('Visiteur/loadAccueil','refresh');
     }
 
+    public function BarreRecherche($Recherche)
+    {
+      
+      if(!($Recherche==NULL)&& !($Recherche==""))
+      {
+        $config = array();
+        $config["Base_url"] = site_url('Visiteur/BarreRecherche/'.$Recherche);
+        $config["total_rows"] = $this->ModelRecherche->nombreRecherche($Recherche);
+        $config["per_page"] = 5;
+        $config["uri_segment"] = 3;
+
+        $config['fist_link'] = 'Premier';
+        $config['last_link'] = 'Dernier';
+        $config['next_link'] = 'Suivant';
+        $config['prev_link'] = 'Précédent';
+
+        $this->pagination->initialize($config);
+
+        $noPage = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        $DonneesInjectees['TitreDeLaPage'] = 'Résultat de la Recherche';
+        $DonneesInjectees['lesActions'] = $this->ModelRecherche->actionRecherche($Recherche, $config['per_page'], $noPage);
+        $DonneesInjectees['lienPagination'] = $this->pagination->create_links();
+        
+        echo'coucou';
+        var_dump($DonneesInjectees);
+        $this->load->view('templates/Entete');
+        $this->load->view('Visiteur/Accueil', $DonneesInjectees);
+        $this->load->view('templates/PiedDePage');
+      
+      }
+      else 
+      {
+        $this->load->view('templates/Entete');
+        $this->load->view('Visiteur/Accueil');
+        $this->load->view('templates/PiedDePage');
+      }
+    }
 
 }//Fin Visiteur
 
