@@ -29,7 +29,14 @@ class Visiteur extends CI_Controller
       if ($this->input->post('submit'))
       {
         $Recherche =$this->input->post('MotCle');
+        //$Recherche =$this->input->post('Lieu');
         redirect('Visiteur/BarreRecherche/'.$Recherche);
+      }
+      else if($this->input->post('submit_lieu'))
+      {
+        $Recherche =$this->input->post('Lieu');
+
+        redirect('Visiteur/BarreRechercheLieu/'.$Recherche);
       }
       else
       {
@@ -39,7 +46,8 @@ class Visiteur extends CI_Controller
         $this->load->view('Visiteur/Accueil',$this->session->statut);
         $this->load->view('templates/PiedDePage');
       }
-    }
+    } //fin loadAccueil
+
     public function SInscrire()
     {
 
@@ -131,7 +139,7 @@ class Visiteur extends CI_Controller
           $this->load->view('Visiteur/sInscrire',$DonneesInjectees);
           $this->load->view('templates/PiedDePage');
         }
-    }// fin function
+    } // fin SInscrire
     
     public function ObtenirQuestions_Secretes()
     {
@@ -152,7 +160,7 @@ class Visiteur extends CI_Controller
           //var_dump($question);
       }
        return $Options;
-    }
+    } // fin ObtenirQuestions_Secretes
     
     public function SeConnecter()
     {
@@ -221,7 +229,7 @@ class Visiteur extends CI_Controller
         $this->load->view('Visiteur/SeConnecter',$message);
         $this->load->view('templates/PiedDePage');
       }
-    }
+    } // fin SeConnecter
 
     public function GenererMotDePasse()
     {
@@ -233,7 +241,7 @@ class Visiteur extends CI_Controller
             $MotDePasse = $MotDePasse . $characters[rand(0, 59)];
         }
         return $MotDePasse;
-    }
+    } // fin GenererMotDePasse
    
     public function RecupMDP()
     {
@@ -326,23 +334,29 @@ class Visiteur extends CI_Controller
         $this->load->view('Visiteur/RecupMDP',$DonneesInjectees);
         $this->load->view('templates/PiedDePage');
       }
-    }
+    } // fin RecupMDP
 
     public function SeDeconnecter()
     {
       $this->session->sess_destroy();
       redirect('Visiteur/loadAccueil','refresh');
-    }
+    } // fin SeDeconnecter
 
     public function BarreRecherche($Recherche)
     {
+      $DonneesTitre = array('TitreDeLaPage'=>'Cart\'Opus');
       
       if(!($Recherche==NULL)&& !($Recherche==""))
       {
         $config = array();
         $config["Base_url"] = site_url('Visiteur/BarreRecherche/'.$Recherche);
         $config["total_rows"] = $this->ModelRecherche->nombreRecherche($Recherche);
-        $config["per_page"] = 5;
+        $config["total_rows"] = $this->ModelRecherche->nombreActeur($Recherche);
+        $config["total_rows"] = $this->ModelRecherche->nombreOrganisation($Recherche);
+        $config["total_rows"] = $this->ModelRecherche->nombreThematique($Recherche);
+        //$config["total_rows"] = $this->ModelRecherche->nombreLieu($Recherche);
+        $config["total_rows"] = $this->ModelRecherche->nombreMotCle($Recherche);
+        $config["per_page"] = 10;
         $config["uri_segment"] = 3;
 
         $config['fist_link'] = 'Premier';
@@ -353,25 +367,185 @@ class Visiteur extends CI_Controller
         $this->pagination->initialize($config);
 
         $noPage = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-        $DonneesInjectees['TitreDeLaPage'] = 'Résultat de la Recherche';
+
         $DonneesInjectees['lesActions'] = $this->ModelRecherche->actionRecherche($Recherche, $config['per_page'], $noPage);
+        $DonneesInjectees['lesActeurs'] = $this->ModelRecherche->acteurRecherche($Recherche, $config['per_page'], $noPage);
+        $DonneesInjectees['lesOrganisations'] = $this->ModelRecherche->organisationRecherche($Recherche, $config['per_page'], $noPage);
+        $DonneesInjectees['lesThematiques'] = $this->ModelRecherche->thematiqueRecherche($Recherche, $config['per_page'], $noPage);
+        $DonneesInjectees['lesMotsCles'] = $this->ModelRecherche->motCleRecherche($Recherche, $config['per_page'], $noPage);
         $DonneesInjectees['lienPagination'] = $this->pagination->create_links();
         
-        echo'coucou';
-        var_dump($DonneesInjectees);
-        $this->load->view('templates/Entete');
+
+        //traitement des doublons !!!
+        // var_dump($DonneesInjectees['lesActions']);
+        // echo('lesThematiques');
+        // var_dump($DonneesInjectees['lesThematiques']);
+
+        if(!empty($DonneesInjectees['lesThematiques']))
+        {
+          foreach($DonneesInjectees['lesThematiques'] as $uneThematique):
+            $exist = FALSE;
+            $noAction = $uneThematique['NOACTION'];
+
+            if(!empty($DonneesInjectees['lesActions']))
+            {
+              foreach($DonneesInjectees['lesActions'] as $uneAction):
+                // faire test sur les dates de debut
+                if ($uneAction['NOACTION']==$noAction)
+                {
+                  $exist = TRUE;
+                }
+              endforeach;
+              if ($exist==FALSE)
+              {
+                array_push($DonneesInjectees['lesActions'],$uneThematique);
+              }
+            }
+            else
+            {
+              $DonneesInjectees['lesActions'] = array(0=>$uneThematique);
+            } 
+          endforeach;
+        }
+
+
+        if(!empty($DonneesInjectees['lesMotsCles']))
+        {
+          foreach($DonneesInjectees['lesMotsCles'] as $unMotCle):
+            $exist = FALSE;
+            $noAction = $unMotCle['NOACTION'];
+
+            if(!empty($DonneesInjectees['lesActions']))
+            {
+              foreach($DonneesInjectees['lesActions'] as $uneAction):
+                // faire test sur les dates de debut
+                if ($uneAction['NOACTION']==$noAction)
+                {
+                  $exist = TRUE;
+                }
+              endforeach;
+              if ($exist==FALSE)
+              {
+                array_push($DonneesInjectees['lesActions'],$unMotCle);
+              }
+            }
+            else
+            {
+              $DonneesInjectees['lesActions'] = array(0=>$unMotCle);
+            } 
+          endforeach;
+        }
+
+        //echo('final');
+        //var_dump($DonneesInjectees['lesActions']);
+
+        $this->load->view('templates/Entete',$DonneesTitre);
         $this->load->view('Visiteur/Accueil', $DonneesInjectees);
         $this->load->view('templates/PiedDePage');
       
       }
       else 
       {
-        $this->load->view('templates/Entete');
+        $this->load->view('templates/Entete',$DonneesTitre);
+        $this->load->view('Visiteur/Accueil');
+        $this->load->view('templates/PiedDePage');
+      }
+    } // fin BarreRecherche
+  
+    public function BarreRechercheLieu($Recherche)
+    {
+      $DonneesTitre = array('TitreDeLaPage'=>'Cart\'Opus');
+      
+      if(!($Recherche==NULL)&& !($Recherche==""))
+      {
+        $config = array();
+        $config["Base_url"] = site_url('Visiteur/BarreRecherche/'.$Recherche);
+        $config["total_rows"] = $this->ModelRecherche->nombreLieu($Recherche);
+        $config["per_page"] = 10;
+        $config["uri_segment"] = 3;
+
+        $config['fist_link'] = 'Premier';
+        $config['last_link'] = 'Dernier';
+        $config['next_link'] = 'Suivant';
+        $config['prev_link'] = 'Précédent';
+
+        $this->pagination->initialize($config);
+
+        $noPage = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
+        $DonneesInjectees['lesLieux'] = $this->ModelRecherche->lieuRecherche($Recherche, $config['per_page'], $noPage);
+        
+        $DonneesInjectees['lienPagination'] = $this->pagination->create_links();
+
+        //gestion des doublons dans les lieux (bon courage  :) )
+
+        if(!empty($DonneesInjectees['lesLieux']['actions']))
+        {
+          foreach($DonneesInjectees['lesLieux']['actions'] as $Action):
+            $exist = FALSE;
+            $noAction = $Action['NOACTION'];
+
+            if(!empty($DonneesInjectees['lesActions']))
+            {
+              foreach($DonneesInjectees['lesActions'] as $uneAction):
+                // faire test sur les dates de debut
+                if ($uneAction['NOACTION']==$noAction)
+                {
+                  $exist = TRUE;
+                }
+              endforeach;
+              if ($exist==FALSE)
+              {
+                array_push($DonneesInjectees['lesActions'],$Action);
+              }
+            }
+            else
+            {
+              $DonneesInjectees['lesActions'] = array(0=>$Action);
+            } 
+          endforeach;
+        }
+
+        if(!empty($DonneesInjectees['lesLieux']['organisations']))
+        {
+          foreach($DonneesInjectees['lesLieux']['actions'] as $Organisation):
+            $exist = FALSE;
+            $noAction = $Organisation['NOACTION'];
+
+            if(!empty($DonneesInjectees['lesActions']))
+            {
+              foreach($DonneesInjectees['lesActions'] as $uneAction):
+                // faire test sur les dates de debut
+                if ($uneAction['NOACTION']==$noAction)
+                {
+                  $exist = TRUE;
+                }
+              endforeach;
+              if ($exist==FALSE)
+              {
+                array_push($DonneesInjectees['lesActions'],$Organisation);
+              }
+            }
+            else
+            {
+              $DonneesInjectees['lesActions'] = array(0=>$Organisation);
+            } 
+          endforeach;
+        }
+
+
+        $this->load->view('templates/Entete',$DonneesTitre);
+        $this->load->view('Visiteur/Accueil', $DonneesInjectees);
+        $this->load->view('templates/PiedDePage');
+      
+      }
+      else 
+      {
+        $this->load->view('templates/Entete',$DonneesTitre);
         $this->load->view('Visiteur/Accueil');
         $this->load->view('templates/PiedDePage');
       }
     }
-
 }//Fin Visiteur
 
 ?>
