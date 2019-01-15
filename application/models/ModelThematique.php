@@ -15,7 +15,8 @@
                 FROM thematique 
                 WHERE nothematique NOT IN ( 
                     SELECT NoSousThematique FROM SousThematique 
-                    );
+                    )
+                ORDER BY NOMTHEMATIQUE ASC
             '); 
            return $requete->result_array();
         }
@@ -32,7 +33,7 @@
 
         public function getSousThemes()
         {
-            $this->db->select('s.NOSOUSTHEMATIQUE,t.NOMTHEMATIQUE');
+            $this->db->select('DISTINCT(NOMTHEMATIQUE), NOSOUSTHEMATIQUE');
             $this->db->from('sousthematique s');
             $this->db->join('thematique t','t.nothematique=s.nosousthematique');
             $this->db->order_by('t.NOMTHEMATIQUE','ASC');
@@ -111,11 +112,18 @@
             return $final;
         }
         
+        //Sert aussi à supprimer une sousthematique 
         public function updateSsThematique_To_Thematique($Where)
         {
             
             $this->db->where($Where);
             $this->db->delete('sousThematique');
+        }
+
+        public function DeleteThematique($Where)
+        {
+            $this->db->where($Where);
+            $this->db->delete('Thematique');
         }
 
         public function InsererThematique($Donnees)

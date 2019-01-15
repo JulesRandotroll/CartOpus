@@ -168,7 +168,7 @@
                             echo form_label('Sous thématiques : ', 'lbl_thematique'); 
                     ?>
 
-                    <div class="dropup">
+                    <div class="dropdown">
                         <button class="btn btn-default dropdown-toggle form-control" type="button" data-toggle="dropdown" value='0'>
                             <span id='Dropdown_Lier_SsThematique' value='0'>Selectionnez une sous-thématique</span>
                             <span class="caret"></span>
@@ -208,8 +208,8 @@
                         echo form_label('Sous-thématique à migrer : ', 'NewTheme');
                     ?>
 
-                    <div class="dropup">
-                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" value='0'>
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle form-control" type="button" data-toggle="dropdown" value='0'>
                             <span id='Dropdown_Migrer'>Selectionnez une sous-thématique</span>
                             <span class="caret"></span>
                         </button>
@@ -246,9 +246,42 @@
 
 <!--  PLOP -->
 <div class="row" style="background-color:#15B7D1">
-<BR><BR><BR>
+    <div class='col-sm-1'>
+    </div>
+    <div class='col-sm-5'>
+        <div class='text-center'>
+            <H1 align = "center" style="color:#FFFFFF">Supprimmer une thématique</H1>;
+            <section>
+                <div class = "section-inner" style="background-color:#139CBC;padding:20px">
+                    <?php 
+                       echo form_open('SuperAdmin/SupprimerThematique',array("id"=>"form_Migrer"));
+                       echo '<div class="form-group">';
+                       echo form_label('Sous-thématique à migrer : ', 'NewTheme'); 
+                    
+                       echo form_submit();
+                       echo form_close();
+                    ?>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class='col-sm-5'>
+        <div class='text-center'>
+            <H1 align = "center" style="color:#FFFFFF">Supprimer une sous-thématique</H1>;
+            <section>
+                <div class = "section-inner" style="background-color:#139CBC;padding:20px">
+                    <?php 
+                    
+                    
+                    ?>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class='col-sm-1'>
+    </div>
+    <BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
 </div>
 
-<H1>Mise en page puis penser à faire les suppressions ^^ </H1>
 
 <script src=<?php echo('"'.js_url("JavaScript_AjouterThematique").'"') ?>></script>
