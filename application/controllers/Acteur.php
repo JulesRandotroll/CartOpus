@@ -316,6 +316,11 @@ class Acteur extends CI_Controller
             $noAction=$this->input->post('Action');
             $this->SupprimerAction($noAction);
         }
+        if($this->input->post('Choix_Collaborateur'))
+        {
+            $noAction=$this->input->post('Action');
+            redirect('Acteur/AjoutCollaborateur/'.$noAction); 
+        }
         else
         {
             //$noActeur = $this->session->noActeur;
@@ -964,7 +969,7 @@ class Acteur extends CI_Controller
         }
     }
     
-    public function AjoutCollaborateur($noAction,$dateDebut,$dateFin)
+    public function AjoutCollaborateur($noAction)
     {
         $DonnéesTitre = array('TitreDeLaPage'=>'Ajout Collaborateur');
         $noActeur = $this->session->noActeur;
