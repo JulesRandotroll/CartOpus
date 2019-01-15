@@ -13,6 +13,10 @@ class SuperAdmin extends CI_Controller {
        $this->load->model('ModelActeur');
        $this->load->model('ModelThematique');
        $this->load->library('session');
+       if ($this->session->statut!=5)
+        {
+            redirect('Visiteur/loadAccueil');
+        };
     } // __construct
 
     public function AccueilSuperAdmin()
@@ -31,14 +35,17 @@ class SuperAdmin extends CI_Controller {
         $result5=$this->ModelActeur->GetProfil($noProfil);
         $noProfil=4;
         $result4=$this->ModelActeur->GetProfil($noProfil);
-        $noProfil=1||2||3;
-        $result=$this->ModelActeur->GetProfil($noProfil);
+        $noProfil=1;
+        $result1=$this->ModelActeur->GetProfil($noProfil);
+        $noProfil=0;
+        $result0=$this->ModelActeur->GetProfil($noProfil);
         //var_dump($result);
         $DonnéesAInjectées=array
         (
             'SuperAdmin'=>$result5,
             'AdminValider'=>$result4,
-            'Acteur'=>$result,
+            'Acteur'=>$result1,
+            'Visiteur'=>$result0,
         );
 
         //var_dump($DonnéesAInjectées);
@@ -71,18 +78,71 @@ class SuperAdmin extends CI_Controller {
         $this->AffecterProfil(0);  
     }
 
+    public Function AfficherThematique()
+    {
+        $thematiques = $this->ModelThematique->getSurThematiques();
+            //var_dump($thematiques);
+            $DonnéesTitre = array('TitreDeLaPage'=>'Ajout thématique');
+
+            $Données=array('Thematique'=>$thematiques);
+
+            $this->load->view('templates/Entete',$DonnéesTitre);
+            $this->load->view('SuperAdmin/AjouterThematique',$Données);
+            $this->load->view('templates/PiedDePage');
+        
+    }
+
     public function AjouterThematique()
     {
-        $thematiques = $this->ModelThematique->getThematiques();
-        //var_dump($thematiques);
-        $DonnéesTitre = array('TitreDeLaPage'=>'Ajout thématique');
+        if($this->input->post('AjoutThematique'))
+        {
+            $ThematiqueAInserer = $this->input->post('nouvellethematique');
+            $Donnees=array('NOMTHEMATIQUE'=>$ThematiqueAInserer);
+            $Thematiques = $this->ModelThematique->getThematiquesExiste($Donnees);
+            if(empty($Thematiques))
+            {
+                $this->ModelThematique->InsererThematique($Donnees);
+            }
+            else
+            {
+                echo '<script>alert("Cette Thematique existe déjà")</script>';
+            }
+            $this->AfficherThematique();
+        }
+        elseif($this->input->post('AjoutSSThematique'))
+        {
+            $NoThematique = $this->input->post('thematique');
+            $SousThematque = $this->input->post('nouveausousthematique');
+            
+            $Donnees = array('NOMTHEMATIQUE'=>$SousThematque);
+            $Thematiques = $this->ModelThematique->getThematiquesExiste($Donnees);
 
-        $Données=array('Thematique'=>$thematiques);
-
-        $this->load->view('templates/Entete',$DonnéesTitre);
-        $this->load->view('SuperAdmin/AjouterThematique',$Données);
-        $this->load->view('templates/PiedDePage');
-     
+            if(empty($Thematiques))
+            {
+                $noSousThematique =$this->ModelThematique->InsererThematique($Donnees);
+                $Donnees = array(
+                    'NOTHEMATIQUE'=>$NoThematique,
+                    'NOSOUSTHEMATIQUE'=>$noSousThematique,
+                );
+                $this->ModelThematique->InsererSousThematique($Donnees);
+            }
+            else
+            {
+                echo '<script>alert("Cette Sous-Thematique existe déjà")</script>';
+            }
+            $this->AfficherThematique();
+        
+        }
+        elseif($this->input->post('AjoutMotCle'))
+        {
+            $Thematique = $this->input->post('Thema');
+            $MotClé = $this->input->post('nouveauMotCle');
+        }
+        else
+        {
+            $this->AfficherThematique();
+        }
+        
     }
 
 }

@@ -16,7 +16,7 @@
                         //var_dump($Acteur);
                         foreach($Profils as $unProfil)
                         {
-                            if($unProfil['NOPROFIL'] != 0 && $unProfil['NOPROFIL'] != 2 && $unProfil['NOPROFIL'] != 3)
+                            if( $unProfil['NOPROFIL'] != 2 && $unProfil['NOPROFIL'] != 3)
                             {
                                 if(empty($Options))
                                 {

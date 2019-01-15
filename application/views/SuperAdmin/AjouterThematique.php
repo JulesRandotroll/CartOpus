@@ -17,6 +17,7 @@
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     Insertion de nouvelles thématiques ! 
                     <?php
+                        echo form_open('SuperAdmin/AjouterThematique');
                         echo '<div class="form-group">';
                         echo form_label('Nouvelle Thématique: ', 'NewTheme');
                         echo form_input('nouvellethematique','',array('required'=>'required','placeholder'=>'Ex: Musique','pattern'=>'[a-zA-Z]{1,40}','class'=>'form-control')); 
@@ -25,7 +26,7 @@
                         echo '<div class="text-center">';
                         echo form_submit('AjoutThematique', 'Ajouter',array('class'=>'btn btn-danger'));
                         echo '</div>';
-
+                        echo form_close();
                     ?>
                 </div>
             
@@ -54,21 +55,22 @@
                                 $Options = $Options + $temp;
                             }
                         }
-
+                        echo form_open('SuperAdmin/AjouterThematique');
                         echo '<div class="form-group">';
                         echo '<span style="color:#FF0000"/> * </span>';
-                        echo form_label('Thématique : ', 'thematique'); 
+                        echo form_label('Thématique : ', 'lbl_thematique'); 
                         echo form_dropdown('thematique', $Options, 'default',array('required'=>'required','class'=>'form-control'));
                         echo '</div>';
 
                         echo '<div class="form-group">';
                         echo form_label('Nouveau Sous Thématique: ', 'NewSSTheme');
-                        echo form_input('nouveausousthematique','',array('required'=>'required','placeholder'=>'Ex: Rock,Jazz,Pop','pattern'=>'[a-zA-Z]{1,40}','class'=>'form-control')); 
+                        echo form_input('nouveausousthematique','',array('required'=>'required','placeholder'=>'Ex: Rock,Jazz,Pop','pattern'=>'[a-zA-Z ]{1,40}','class'=>'form-control')); 
                         echo '</div>';
 
                         echo '<div class="text-center">';
                         echo form_submit('AjoutSSThematique', 'Ajouter',array('class'=>'btn btn-danger'));
                         echo '</div>';
+                        echo form_close();
                     ?>
                 </div>
             </section>
@@ -82,8 +84,24 @@
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     Associations de nouveaux mots clés! 
 
-                    coucou mon Namour 2 rave <3
+                    <?php
+                        echo form_open('SuperAdmin/AjouterThematique');
+                        echo '<div class="form-group">';
+                        echo '<span style="color:#FF0000"/> * </span>';
+                        echo form_label('Thématique : ', 'lbl_thematique'); 
+                        echo form_dropdown('Thema', $Options, 'default',array('required'=>'required','class'=>'form-control'));
+                        echo '</div>';
 
+                        echo '<div class="form-group">';
+                        echo form_label('Nouveau Sous Thématique: ', 'NewSSTheme');
+                        echo form_input('nouveauMotCle','',array('required'=>'required','placeholder'=>'Ex: Rock,Jazz,Pop','pattern'=>'[a-zA-Z]{1,40}','class'=>'form-control')); 
+                        echo '</div>';
+
+                        echo '<div class="text-center">';
+                        echo form_submit('AjoutMotCle', 'Ajouter',array('class'=>'btn btn-danger'));
+                        echo '</div>';
+                        echo form_close();
+                    ?>
                 </div>
             </section>
         <BR>

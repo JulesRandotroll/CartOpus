@@ -171,7 +171,7 @@
             $this->db->or_like('nomLieu', $Recherche);
             $query = $this->db->get();
             $test = $query->result_array();
-            var_dump($test);
+            //var_dump($test);
             
             $this->db->limit($nbLignesRetournees, $PremiereLigneRetournee);
             $this->db->select('*');
@@ -179,7 +179,7 @@
             $this->db->where_in($test);
             $query = $this->db->get();
             $Orga = $query->result_array();
-            var_dump($Orga);
+            //var_dump($Orga);
 
             $this->db->limit($nbLignesRetournees, $PremiereLigneRetournee);
             $this->db->select('*');
@@ -188,15 +188,15 @@
             $this->db->where_in($test);
             $query = $this->db->get();
             $Action = $query->result_array();
-            var_dump($Action);
+            //var_dump($Action);
 
             $resultats = array(
                 "actions"=>$Action,
                 "organisations"=>$Orga
-                
+
             );
 
-            var_dump($resultats);
+            //var_dump($resultats);
 
             return $resultats;
         }

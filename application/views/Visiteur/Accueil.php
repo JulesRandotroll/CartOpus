@@ -1,5 +1,5 @@
                     <ul class="nav navbar-nav navbar-right">
-                        <?php 
+                        <?php
                         //var_dump($this->session->statut);
                         if ($this->session->statut==0){
                             echo'<li><a href="'.site_url('Visiteur/SInscrire').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-user"></span> S\'inscrire</a></li>';
@@ -21,23 +21,23 @@
                            // echo'<li><a href="'.site_url('Acteur/NouvelleAction/0').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-plus"></span> Creation Action</a></li>';
                             echo'<li><a href="'.site_url('Acteur/GestionProfil').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-cog"></span> Compte</a></li>';
                             echo'</ul>';
-                            echo'<li><a href="'.site_url('Acteur/AccueilActeur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso</a></li>'; 
-                            echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se deconnecter</a></li>'; 
+                            echo'<li><a href="'.site_url('Acteur/AccueilActeur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso</a></li>';
+                            echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se deconnecter</a></li>';
                             }
                             if($this->session->statut==4)
                             {
-                                echo'<li><a href="'.site_url('plop').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso</a></li>'; 
-                                echo'<li><a href="'.site_url('plop').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se deconnecter</a></li>'; 
+                                echo'<li><a href="'.site_url('#').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso</a></li>';
+                                echo'<li><a href="'.site_url('#').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se deconnecter</a></li>';
                             }
                             if($this->session->statut==5)
                             {
-                                echo'<li><a href="'.site_url('plop').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso</a></li>'; 
-                                echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se deconnecter</a></li>'; 
+                                echo'<li><a href="'.site_url('SuperAdmin/AccueilSuperAdmin').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso</a></li>';
+                                echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se deconnecter</a></li>';
                             }
                         }
-                        ?> 
+                        ?>
                     </ul>
-                    
+
                     <!-- if($this->session->statut==1) -->
                     <!-- <ul class="nav navbar-nav">
                         <li><a href="#" style="color:#FFFFFF">Creation Action</a></li>
@@ -48,30 +48,29 @@
         </nav>
     </div>
 </div>
- <div class="row" style="background-color:#15B7D1;padding:20px"> 
+ <div class="row" style="background-color:#15B7D1;padding:20px">
     <div class="col-sm-1">
-        <?php 
-            echo form_open('Visiteur/loadAccueil');
-            
+        <?php
+            echo form_open('Visiteur/Rechercher');
         ?>
     </div>
     <div class="col-sm-3" style="padding:10px">
         <div class = "text-center">
-            <section >
+            <section>
                 <div class = "section-inner" style="padding:10px">
                     <div class="form-group">
-                        <?php 
+                        <?php
                             echo form_label('Rechercher :', 'lbl_Recherche');
                             echo '  ';
-                            echo form_input('MotCle', '', array('placeholder'=>'Rechercher','class'=>'form-control', 'name'=>'txtRecherche','pattern'=>'^[a-zA-Z ]*','required'=>'required'));
+                            echo form_input('MotCle', '', array('placeholder'=>'Rechercher','class'=>'form-control', 'name'=>'txtRecherche','pattern'=>'^[a-zA-Z ]*'));
                             echo ' ';
                         ?>
                     </div>
                     <div class="form-group">
                         <?php
 
-                            echo form_submit('submit','Rechercher',array('class'=>'btn-danger btn-lg'));
-                            echo form_close();
+                            //echo form_submit('submit','Rechercher',array('class'=>'btn-danger btn-lg'));
+
                             // echo form_label('Thématique :', 'lbl_Thematique');
                             // echo ' ';
                             // $option = array(
@@ -154,6 +153,7 @@
                                 $AnneeEnCours=>$AnneeEnCours,
                                 $AnneeEnCours+1=>$AnneeEnCours+1
                             );
+
                             $ToDay = date('d/m/Y');
                             //echo '<input class="form-control" name="DateDebut" id="date" type="date" value="'.$ToDay.'" required>';
 
@@ -171,17 +171,17 @@
             <section>
                 <div class = "section-inner" style="padding:10px">
                     <div class="form-group">
-                       
+
                             <?php
-                                echo form_open('Visiteur/loadAccueil');
+                                
 
                                 echo form_label('Lieu :', 'lbl_Lieu');
                                 echo '  '; 
                                 
-                                echo form_input('Lieu', '', array('placeholder'=>'Rechercher','class'=>'form-control','name'=>'txtRechercheLieu','pattern'=>'^[a-zA-Z ]*','required'=>'required'));
+                                echo form_input('Lieu', '', array('placeholder'=>'Rechercher','class'=>'form-control','name'=>'txtRechercheLieu','pattern'=>'^[a-zA-Z ]*'));
                                 echo ' ';
                             ?>
-                       
+
                     </div>
                 </div>
             </section>
@@ -195,12 +195,89 @@
                     <div class="form-group">
                     <!--<span class ="glyphicon glyphicon-search"></span>-->
                         <?php 
-                            echo form_submit('submit_lieu','Rechercher',array('class'=>'btn-danger btn-lg'));
+                            echo form_submit('submit','Rechercher',array('class'=>'btn-danger btn-lg'));
                             //echo form_upload('Photo');
-                            
+
                             echo form_close();
                         ?>
                     </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="background-color:#15B7D1">
+    <div class="col-sm-2" style="padding:20px">
+    </div>
+    <div class="col-sm-8" style="padding:20px">
+        <div class = "text-center">
+            <section >
+                <div class = "section-inner" style="background-color:#139CBC;padding:20px">
+                    <H1 style="color:#FFFFFF">Les Actions</H1>
+
+                        <?php
+
+                            if(!empty($lesActions))
+                            {
+                        ?>
+                        <table class='table'>
+                            <tr>
+                                <th>Nom Action</th>
+                                <th>Public Cible</th>
+                                <th>Site URL</th>
+                            </tr>
+                        <?php
+                            foreach ($lesActions As $uneAction):
+                                echo '<tr>';
+                                echo '<td><h4>'.$uneAction['NOMACTION'].'</h4></td>';
+                                echo '<td><h4>'.$uneAction['PublicCible'].'</h4></td>';
+                                echo '<td><h4>'.$uneAction['SiteURLAction'].' </h4></td>';
+                                echo '</tr>';
+                            endforeach ;
+                            }
+                        ?>
+                                </table>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+<div class="row" style="background-color:#15B7D1">
+    <div class="col-sm-4" style="padding:20px">
+    </div>
+    <div class="col-sm-4" style="padding:20px">
+        <div class = "text-center">
+            <section >
+                <div class = "section-inner" style="background-color:#139CBC;padding:20px">
+                    <H1 style="color:#FFFFFF">Les Acteurs</H1>
+                
+                        <?php
+                        
+                        if(!empty($lesActeurs))
+                        {
+                            ?>
+                                <table class='table'>
+                                    <tr>
+                                        <th></th>
+                                        <th>Nom Acteur</th>
+                                    </tr>
+                                    <?php
+                                    foreach ($lesActeurs As $unActeur):
+                                        echo '<tr>';
+                                        echo '<td><img src="'.img_url($unActeur['PhotoProfil']).'"></td>';
+                                        echo '<td><h4>'.$unActeur['NOMACTEUR'].'</h4>';
+                                        echo '<h5>'.$unActeur['PRENOMACTEUR'].'</h5></td>';
+                                        echo '</tr>';
+                                    endforeach ;
+                        
+                                    ?>
+                                </table>
+                        <?php
+                        }
+
+                        ?>
+                    </table>
                 </div>
             </section>
         </div>
@@ -214,53 +291,34 @@
         <div class = "text-center">
             <section >
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
-                    <H1 style="color:#FFFFFF">Actualité<H1>
-
-                    <table class='table'>
-                        <tr>
-                            <th>Nom Action</th>
-                            <th>Public Cible</th>
-                            <th>Site URL</th>
-                            <th>Site URL</th>
-                        </tr>
-
-                            <?php
-
-                            if(!empty($lesActions))
-                            {
-                                foreach ($lesActions As $uneAction):
-                                    //var_dump($uneAction);
-                                    echo '<tr>';
-                                    echo '<td><h4>'.$uneAction['NOMACTION'].'</h4></td>';
-                                    echo '<td><h4>'.$uneAction['PublicCible'].'</h4></td>';
-                                    echo '<td><h4>'.$uneAction['SiteURLAction'].' </h4></td>';
-                                    echo '</tr>';
-                                endforeach ;
-                            }
-                            
-                            if(!empty($lesActeurs))
-                            {
-                                foreach ($lesActeurs As $unActeur):
-                                    echo '<tr>';
-                                    echo '<td><img src="'.img_url($unActeur['PhotoProfil']).'"></td>';
-                                    echo '<td><h4>'.$unActeur['NOMACTEUR'].'</h4>';
-                                    echo '<h5>'.$unActeur['PRENOMACTEUR'].'</h5></td>';
-                                    echo '</tr>';
-                                endforeach ;
-                            }
-
-                            if(!empty($lesOrganisations))
-                            {
-                                foreach ($lesOrganisations As $uneOrganisation):
-                                    echo '<tr>';
-                                    echo '<td><h4>'.$uneOrganisation['NOMORGANISATION'].'</h4></td>';
-                                    echo '<td><h4>'.$uneOrganisation['NOTELORGA'].'</h4></td>';
-                                    echo '<td><h4>'.$uneOrganisation['NOFAXORGA'].'</h4></td>';
-                                    echo '<td><h4>'.$uneOrganisation['SITEURL'].'</h4></td>';
-                                    echo '</tr>';
-                                endforeach ;
-                            }
-
+                    <H1 style="color:#FFFFFF">Les Organisations</H1>
+                
+                        <?php
+                        
+                        if(!empty($lesOrganisations))
+                        {
+                            ?>
+                                <table class='table'>
+                                    <tr>
+                                        <th>Nom Organisation</th>
+                                        <th>Numéro de Téléphone</th>
+                                        <th>Numéro de Fax</th>
+                                        <th>Site URL</th>
+                                    </tr>
+                                    <?php
+                                    foreach ($lesOrganisations As $uneOrganisation):
+                                        echo '<tr>';
+                                        echo '<td><h4>'.$uneOrganisation['NOMORGANISATION'].'</h4></td>';
+                                        echo '<td><h4>'.$uneOrganisation['NOTELORGA'].'</h4></td>';
+                                        echo '<td><h4>'.$uneOrganisation['NOFAXORGA'].'</h4></td>';
+                                        echo '<td><h4>'.$uneOrganisation['SITEURL'].'</h4></td>';
+                                        echo '</tr>';
+                                    endforeach ;
+                        
+                                    ?>
+                                </table>
+                        <?php
+                        }
                             //if(!empty($lesThematiques))
                             //{
                                 //foreach ($lesThematiques As $uneThematique):
@@ -288,10 +346,8 @@
                                 //endforeach ;
                             //}
 
-                            ?>
-                                  
+                        ?>
                     </table>
-
                 </div>
             </section>
         </div>
