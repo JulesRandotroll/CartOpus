@@ -183,10 +183,46 @@ class SuperAdmin extends CI_Controller {
         }
         else
         {
-            echo '<script>alert("Veuillez selectionner une thematique et / ou une sous thematique, merci",wait()</script>';
+            echo '<script>alert("Veuillez selectionner une thematique et / ou une sous thematique, merci"</script>';
             $this->AfficherThematique();
         }
         
         
     }
+
+    public function SupprimerThematique($noThematique)
+    {
+        if($noThematique != '0')
+        {
+            $Where = array('NoThematique'=>$noThematique);
+            $this->ModelThematique->DeleteThematique($Where);
+            
+            redirect('SuperAdmin/AfficherThematique');
+        }
+        else
+        {
+            echo '<script>alert("Veuillez selectionner une thematique, merci"</script>';
+            $this->AfficherThematique();
+        }
+    }
+
+    public function SupprimerSousThematique($noSousThematique)
+    {
+        if($noThematique != '0')
+        {
+            $Where = array('NoSousThematique'=>$noSousThematique);
+            $this->ModelThematique->DeleteThematique($Where);
+
+            $Where = array('NoThematique'=>$noSousThematique);
+            $this->ModelThematique->DeleteThematique($Where);
+
+            redirect('SuperAdmin/AfficherThematique');
+        }
+        else
+        {
+            echo '<script>alert("Veuillez selectionner une sous-thematique, merci"</script>';
+            $this->AfficherThematique();
+        }
+    }
+
 }
