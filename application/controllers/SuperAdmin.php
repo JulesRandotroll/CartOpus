@@ -81,10 +81,17 @@ class SuperAdmin extends CI_Controller {
     public Function AfficherThematique()
     {
         $thematiques = $this->ModelThematique->getSurThematiques();
+        $DpdThematiques = $this->ModelThematique->getTheme_SousTheme();
+        $SsThematique = $this->ModelThematique->getSousThemes();
+
             //var_dump($thematiques);
             $DonnéesTitre = array('TitreDeLaPage'=>'Ajout thématique');
 
-            $Données=array('Thematique'=>$thematiques);
+            $Données=array(
+                'Thematique'=>$thematiques,
+                'Theme_SsTheme'=>$DpdThematiques,
+                'SsThemes'=>$SsThematique,
+            );
 
             $this->load->view('templates/Entete',$DonnéesTitre);
             $this->load->view('SuperAdmin/AjouterThematique',$Données);
@@ -94,55 +101,92 @@ class SuperAdmin extends CI_Controller {
 
     public function AjouterThematique()
     {
-        if($this->input->post('AjoutThematique'))
+        $ThematiqueAInserer = $this->input->post('nouvellethematique');
+        $Donnees=array('NOMTHEMATIQUE'=>$ThematiqueAInserer);
+        var_dump($Donnees);
+        $Thematiques = $this->ModelThematique->getThematiquesExiste($Donnees);
+        if(empty($Thematiques))
         {
-            $ThematiqueAInserer = $this->input->post('nouvellethematique');
-            $Donnees=array('NOMTHEMATIQUE'=>$ThematiqueAInserer);
-            $Thematiques = $this->ModelThematique->getThematiquesExiste($Donnees);
-            if(empty($Thematiques))
-            {
-                $this->ModelThematique->InsererThematique($Donnees);
-            }
-            else
-            {
-                echo '<script>alert("Cette Thematique existe déjà")</script>';
-            }
-            $this->AfficherThematique();
-        }
-        elseif($this->input->post('AjoutSSThematique'))
-        {
-            $NoThematique = $this->input->post('thematique');
-            $SousThematque = $this->input->post('nouveausousthematique');
-            
-            $Donnees = array('NOMTHEMATIQUE'=>$SousThematque);
-            $Thematiques = $this->ModelThematique->getThematiquesExiste($Donnees);
-
-            if(empty($Thematiques))
-            {
-                $noSousThematique =$this->ModelThematique->InsererThematique($Donnees);
-                $Donnees = array(
-                    'NOTHEMATIQUE'=>$NoThematique,
-                    'NOSOUSTHEMATIQUE'=>$noSousThematique,
-                );
-                $this->ModelThematique->InsererSousThematique($Donnees);
-            }
-            else
-            {
-                echo '<script>alert("Cette Sous-Thematique existe déjà")</script>';
-            }
-            $this->AfficherThematique();
-        
-        }
-        elseif($this->input->post('AjoutMotCle'))
-        {
-            $Thematique = $this->input->post('Thema');
-            $MotClé = $this->input->post('nouveauMotCle');
+            $this->ModelThematique->InsererThematique($Donnees);
+            redirect('SuperAdmin/AfficherThematique');
         }
         else
         {
+            echo '<script>alert("Cette Thematique existe déjà")</script>';
             $this->AfficherThematique();
         }
         
     }
 
+    public function MigrationSousThematique($noSousThematique)
+    {
+        if($noSousThematique != '0')
+        {
+            $Donnees = array("noSousThematique"=>$noSousThematique);
+            //var_dump($Donnees);
+            $this->ModelThematique->updateSsThematique_To_Thematique($Donnees); 
+            redirect('SuperAdmin/AfficherThematique');   
+        }
+        else
+        {
+            echo '<script>alert("Veuillez selectionner une sous thematique, merci")</script>';
+            $this->AfficherThematique();
+        }
+    }
+
+    public function CreerSsThematique($noThematique)
+    {
+        var_dump($noThematique);
+        if($noThematique != '0')
+        {
+            $SousThematque = $this->input->post('nouvellesousthematique');
+            
+        
+            $Donnees = array('NOMTHEMATIQUE'=>$SousThematque);
+            $Thematiques = $this->ModelThematique->getThematiquesExiste($Donnees);
+
+            var_dump($Donnees);
+
+            if(empty($Thematiques))
+            {
+                $noSousThematique =$this->ModelThematique->InsererThematique($Donnees);
+                $Donnees = array(
+                    'NOTHEMATIQUE'=>$noThematique,
+                    'NOSOUSTHEMATIQUE'=>$noSousThematique,
+                );
+                $this->ModelThematique->InsererSousThematique($Donnees);
+                redirect('SuperAdmin/AfficherThematique');
+            }                                              
+            else
+            {
+                echo '<script>alert("Cette Sous-Thematique existe déjà")</script>';
+                $this->AfficherThematique();
+            }
+        }
+        else
+        {
+            echo '<script>alert("Veuillez selectionner une thematique, merci")</script>';
+            $this->AfficherThematique();
+        }        
+    }
+
+    public function lierThematiques($noSousThematique, $noThematique)
+    {
+        if($noThematique != '0' && $noSousThematique != '0')
+        {
+            $Donnees = array(
+                'NOTHEMATIQUE'=>$noThematique,
+                'NOSOUSTHEMATIQUE'=>$noSousThematique,
+            );
+            $this->ModelThematique->InsererSousThematique($Donnees);    
+            redirect('SuperAdmin/AfficherThematique');
+        }
+        else
+        {
+            echo '<script>alert("Veuillez selectionner une thematique et / ou une sous thematique, merci",wait()</script>';
+            $this->AfficherThematique();
+        }
+        
+        
+    }
 }

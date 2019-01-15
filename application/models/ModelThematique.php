@@ -7,44 +7,6 @@
             /* chargement database.php (dans config), obligatoirement dans le constructeur */
         }
 
-        // public function getThematiques()
-            // {
-            //     $NotIn = $this->ModelThematique->getAllFromSousThematique();
-            //     var_dump($NotIn);
-
-            //     foreach($NotIn as $uneSousThematique)
-            //     {
-            //         echo 'Southématique';
-            //         var_dump($uneSousThematique);
-                    
-            //         if(empty($Donnees))
-            //         {
-            //             $Donnees = array($uneSousThematique['nosousthematique']);
-            //             echo 'miniDonnées 1 : ';
-            //             var_dump($Donnees);
-            //         }
-            //         else
-            //         {
-            //             $temp = array($uneSousThematique['nosousthematique']);
-            //             echo 'Temp : ';
-            //             var_dump($temp);
-            //             $Donnees = $Donnees + $temp;
-            //             echo 'miniDonnées : ';
-            //             var_dump($Donnees);
-            //         }
-            //     }
-
-
-
-            //     echo 'Données :';
-            //     var_dump($Donnees);
-
-            //     $this->db->select('*');
-            //     $this->db->from('thematique');
-            //     $this->db->where_not_in('nothematique',$Données);
-            //     $requete = $this->db->get();
-            //     return $requete->result_array();
-        // }
 
         public function getSurThematiques()
         {
@@ -58,6 +20,27 @@
            return $requete->result_array();
         }
 
+        public function getSousTheme($Where)
+        {
+            $this->db->select('s.NOSOUSTHEMATIQUE,t.NOMTHEMATIQUE');
+            $this->db->from('sousthematique s');
+            $this->db->join('thematique t','t.nothematique=s.nosousthematique');
+            $this->db->where($Where);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
+        public function getSousThemes()
+        {
+            $this->db->select('s.NOSOUSTHEMATIQUE,t.NOMTHEMATIQUE');
+            $this->db->from('sousthematique s');
+            $this->db->join('thematique t','t.nothematique=s.nosousthematique');
+            $this->db->order_by('t.NOMTHEMATIQUE','ASC');
+            $requete = $this->db->get();
+            return $requete->result_array();
+            
+        }
+
         public function getThematiquesExiste($NomThematique)
         {
             $this->db->select('NomThematique');
@@ -66,7 +49,75 @@
             $requete = $this->db->get();
             return $requete->result_array();
         }
+
+        public function getMotCleExiste($Donnees)
+        {
+            $this->db->select("MotCle");
+            $this->db->from("FaireReference");
+            $this->db->where($Donnees);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
+        public function getTheme_SousTheme()
+        {
+            $Themes = $this->getSurThematiques();
+            //var_dump($Themes);
+            foreach($Themes as $unTheme)
+            {
+                $Where = array("s.noThematique"=>$unTheme["NOTHEMATIQUE"]);
+                $SsTheme = $this->getSousTheme($Where);
+                //var_dump($SsTheme);
+                foreach($SsTheme as $unSsTheme)
+                {
+                    if(empty($array) || $array == null)
+                    {
+                        $array = array($unSsTheme['NOSOUSTHEMATIQUE']=>$unSsTheme['NOMTHEMATIQUE']);
+                    }
+                    else
+                    {
+                        $temp = array($unSsTheme['NOSOUSTHEMATIQUE']=>$unSsTheme['NOMTHEMATIQUE']);
+                        $array = $array + $temp;
+                    }
+                }
+
+                if(empty($final))
+                {
+                    if(empty($array) || $array == null)
+                    {
+                        $final = array($unTheme["NOMTHEMATIQUE"]=>array($unTheme["NOTHEMATIQUE"]=>$unTheme["NOMTHEMATIQUE"]));
+                    }
+                    else
+                    {
+                        $final = array($unTheme["NOMTHEMATIQUE"]=>$array);
+                    }
+                }
+                else
+                {
+                    if(empty($array) || $array == null)
+                    {
+                        $temp = array($unTheme["NOMTHEMATIQUE"]=>array($unTheme["NOTHEMATIQUE"]=>$unTheme["NOMTHEMATIQUE"]));
+                    }
+                    else
+                    {
+                        $temp = array($unTheme["NOMTHEMATIQUE"]=>$array);
+                         
+                    }
+                    $final = $final + $temp;   
+                }
+
+                $array = null;
+            }
+            return $final;
+        }
         
+        public function updateSsThematique_To_Thematique($Where)
+        {
+            
+            $this->db->where($Where);
+            $this->db->delete('sousThematique');
+        }
+
         public function InsererThematique($Donnees)
         {
             $this->db->insert('Thematique',$Donnees);
@@ -78,5 +129,6 @@
             $this->db->insert('SousThematique',$Donnees);
         }
     }   
+
 
 ?>

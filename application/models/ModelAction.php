@@ -9,7 +9,7 @@
 
         public function getAction($DonnéesDeTest)
         {
-            //var_dump($DonnéesDeTest);
+            var_dump($DonnéesDeTest);
             $this->db->select('*');
             $this->db->from('Action a');
             $this->db->join('AvoirLieu al','al.noAction=a.noAction');
@@ -42,14 +42,31 @@
         
         public function UpdateAvoirLieu($NoAction,$NoLieu,$DonneesAModifier)
         { 
-            var_dump($NoLieu);
-            $NoAction=array('NoAction' =>$NoAction);
-            $NoLieu=array('NoLieu' =>$NoLieu);
-            $Donnees = array('DateDebut'=>$DonneesAModifier['DateDebut'],'DateFin'=>$DonneesAModifier['DateFin'],'TitreAction'=>$DonneesAModifier['TitreAction'],'Description'=>$DonneesAModifier['Description']);
-            $this->db->where('NOLIEU',$NoLieu['NoLieu'],'NOACTION',$NoAction['NoAction']);
+            //var_dump($NoLieu);
+            //var_dump($NoAction);
+            //var_dump($DonneesAModifier);
+            $Where = array(
+                'NOLIEU'=> $NoLieu,
+                'NOACTION'=>$NoAction ,
+            );
+
+            //'NOLIEU',$NoLieu,'NOACTION',$NoAction,'DATEDEBUT','2019-01-12 11:55:00'
+
+            $Donnees = array('DATEDEBUT'=>$DonneesAModifier['DateDebut'],'DATEFIN'=>$DonneesAModifier['DateFin'],'TitreAction'=>$DonneesAModifier['TitreAction'],'Description'=>$DonneesAModifier['Description']);
+           // var_dump($Donnees);
+            $this->db->where($Where);
             $this->db->update('avoirlieu',$Donnees);
         }
         
+        public function UpdateEtrePartenaire($DonnéesDeTest,$DonneesAModifier)
+        {
+            var_dump($DonnéesDeTest);
+            $Where=array('NOACTION'=>$DonnéesDeTest['NoAction'],'NOACTEUR'=>$DonnéesDeTest['NoActeur']);
+            $Donnees=array('DATEDEBUT'=>$DonneesAModifier['DateDebut'],'DATEFIN'=>$DonneesAModifier['DateFin']);
+            var_dump($Donnees);
+            $this->db->where($Where);
+            $this->db->update('etrepartenaire',$Donnees);
+        }
         public function getFichersPourAction($DonnéesDeTest)
         {   
             
@@ -160,6 +177,31 @@
         {
             $this->db->insert('ProfilPourAction',$InsertProfilPourAction);
             return $this->db->insert_id();
+        }
+
+        public function Suppr_Action($DonneesASupprimer)
+        {
+           // var_dump($DonneesASupprimer);
+            $this->db->where('noAction', $DonneesASupprimer);
+            $this->db->delete('action');
+        }
+        public function Suppr_AvoirLieu($DonneesASupprimer)
+        {
+           // var_dump($DonneesASupprimer);
+            $this->db->where('noAction', $DonneesASupprimer);
+            $this->db->delete('avoirlieu');
+        }
+        public function Suppr_EtrePartenaire($DonneesASupprimer)
+        {
+           // var_dump($DonneesASupprimer);
+            $this->db->where('noAction', $DonneesASupprimer);
+            $this->db->delete('etrepartenaire');
+        }
+        public function Suppr_ProfilPourAction($DonneesASupprimer)
+        {
+           // var_dump($DonneesASupprimer);
+            $this->db->where('noAction', $DonneesASupprimer);
+            $this->db->delete('profilpouraction');
         }
     
     }
