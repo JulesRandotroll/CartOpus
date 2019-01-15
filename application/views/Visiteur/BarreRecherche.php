@@ -162,7 +162,6 @@
             <section>
                 <div class = "section-inner" style="padding:10px">
                     <div class="form-group">
-<<<<<<< HEAD:application/views/Visiteur/Accueil.php
 
                             <?php
                                 echo form_label('Lieu :', 'lbl_Lieu');
@@ -172,15 +171,6 @@
                                 echo ' ';
                             ?>
 
-=======
-                        <?php
-                            echo form_label('Lieu :', 'lbl_Lieu');
-                            echo '  '; 
-                            
-                            echo form_input('Lieu', '', array('placeholder'=>'Rechercher','class'=>'form-control','name'=>'txtRechercheLieu','pattern'=>'^[a-zA-Z ]*'));
-                            echo ' ';
-                        ?>
->>>>>>> 615398c2d2bb3ef321ed6987846e98a8f19367fc:application/views/Visiteur/BarreRecherche.php
                     </div>
                 </div>
             </section>
