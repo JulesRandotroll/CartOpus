@@ -22,7 +22,7 @@
     </div>
     <div class="col-sm-6">
         <div class = "text-center">
-        <H1 align = "center" style="color:#FFFFFF">Liste des thématiques et sous thématiques</H1>;
+        <H1 align = "center" style="color:#FFFFFF">Liste des thématiques et sous thématiques</H1>
             <section >
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     
@@ -48,7 +48,7 @@
     <!-- Ajout Thématique -->
     <div class="col-sm-5">
         <div class = "text-center">
-            <H1 align = "center" style="color:#FFFFFF">Création de thématiques</H1>;
+            <H1 align = "center" style="color:#FFFFFF">Création de thématiques</H1>
             <section >
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <?php
@@ -73,7 +73,7 @@
     <!-- Ajout Sous-Thématique -->
     <div class="col-sm-5">
         <div class = "text-center">
-            <H1 align = "center" style="color:#FFFFFF">Création de sous-thématiques</H1>;
+            <H1 align = "center" style="color:#FFFFFF">Création de sous-thématiques</H1>
             <section >
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <?php
@@ -134,7 +134,7 @@
     </div>
     <div class='col-sm-5'>
         <div class='text-center'>
-            <H1 align = "center" style="color:#FFFFFF">Lier thématique et sous-thématique</H1>;
+            <H1 align = "center" style="color:#FFFFFF">Lier thématique et sous-thématique</H1>
             <section>
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <?php
@@ -196,7 +196,7 @@
     </div>
     <div class="col-sm-5">
         <div class='text-center'>
-            <H1 align = "center" style="color:#FFFFFF">Migration de sous-thématiques vers thématique</H1>;
+            <H1 align = "center" style="color:#FFFFFF">Migration de sous-thématiques vers thématique</H1>
             <section>
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                    

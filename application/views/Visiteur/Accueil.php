@@ -66,7 +66,7 @@
                         <?php
                             echo form_label('Rechercher :', 'lbl_Recherche');
                             echo '  ';
-                            echo form_input('MotCle', '', array('placeholder'=>'Rechercher','class'=>'form-control', 'name'=>'txtRecherche','pattern'=>'^[a-zA-Z ]*'));
+                            echo form_input('MotCle', '', array('placeholder'=>'Rechercher','class'=>'form-control','name'=>'txtRecherche','pattern'=>'^[a-zA-Z0-9 ]*'));
                             echo ' ';
                         ?>
                     </div>
@@ -177,12 +177,10 @@
                     <div class="form-group">
 
                             <?php
-                                
-
                                 echo form_label('Lieu :', 'lbl_Lieu');
                                 echo '  '; 
                                 
-                                echo form_input('Lieu', '', array('placeholder'=>'Rechercher','class'=>'form-control','name'=>'txtRechercheLieu','pattern'=>'^[a-zA-Z ]*'));
+                                echo form_input('Lieu', '', array('placeholder'=>'Rechercher','class'=>'form-control','name'=>'txtRechercheLieu','pattern'=>'^[a-zA-Z0-9 ]*'));
                                 echo ' ';
                             ?>
 
