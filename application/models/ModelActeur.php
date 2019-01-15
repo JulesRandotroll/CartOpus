@@ -123,6 +123,7 @@
             $this->db->from('EtrePartenaire p');
             $this->db->join('Role r','p.noRole=r.noRole');
             $this->db->where('noActeur',$noActeur);
+            $this->db->order_by("datedebut", "desc");
             $requete = $this->db->get();
             $noActions = $requete->result_array();
             //var_dump($noActions);
@@ -154,6 +155,7 @@
                     
                     ");
 
+                    // le in est a enlever ?
                     $temporaire = $requete->result_array();
                     //var_dump($temporaire);    
                     
@@ -173,7 +175,7 @@
 
                 }
                 //echo 'Resultat :';
-                // var_dump($Resultats);
+                //var_dump($Resultats);
                 return $Resultats;
 
             }
