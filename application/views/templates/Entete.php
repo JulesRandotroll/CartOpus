@@ -19,9 +19,9 @@
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>                        
+                        <span class="icon-bar"></span>
                     </button>
-                        <?php 
+                        <?php
                             echo'<a href="'.site_url('Visiteur/loadAccueil').'">'.img('logoAccueil.png').'</a>';
                             //.site_url => référence au debut de l'uRL ex : http://cartopus... ou http://127.0.0.1/cartopus....
                             //dans les deux cas site URL fonctionnera.
@@ -47,5 +47,3 @@
                             <a href="#"  style="color:#FFFFFF">Page 3</a>
                         </li>
                     </ul> -->
-                    
-

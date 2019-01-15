@@ -134,15 +134,15 @@
                                     {
                                         $temp = array($Action.$Horaire=>$Action.$Horaire);
                                         $Array = $Array + $temp;
-                                        
                                     }
                                 }
                                 else
                                 {
                                     $Jour = $jourTest;
-                                    $this->table->add_row($Array);
                                     $Array = array(strftime("%A %d %B %Y",$DD),$Action.$Horaire);
 
+                                    $this->table->add_row($Array);
+                                   
                                 }
 
 

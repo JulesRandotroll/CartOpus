@@ -118,6 +118,7 @@
 
         public function getActions($noActeur)
         {
+            // echo $noActeur;
             $this->db->select('noAction, datedebut');
             $this->db->from('EtrePartenaire p');
             $this->db->join('Role r','p.noRole=r.noRole');

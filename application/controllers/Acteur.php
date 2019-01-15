@@ -182,6 +182,7 @@ class Acteur extends CI_Controller
         $this->load->view('templates/PiedDePage');
         }
     }
+
     public function RedimensionnerPhoto($Image,$Source,$Destination,$ratio,$ext)
     {
         $src = $ext;
@@ -942,7 +943,7 @@ class Acteur extends CI_Controller
             }
             else
             {
-                echo 'ok';
+                $this->AccueilActeur();
             }
             
         }

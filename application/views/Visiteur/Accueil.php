@@ -1,5 +1,5 @@
                     <ul class="nav navbar-nav navbar-right">
-                        <?php 
+                        <?php
                         //var_dump($this->session->statut);
                         if ($this->session->statut==0){
                             echo'<li><a href="'.site_url('Visiteur/SInscrire').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-user"></span> S\'inscrire</a></li>';
@@ -25,23 +25,23 @@
                            // echo'<li><a href="'.site_url('Acteur/NouvelleAction/0').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-plus"></span> Creation Action</a></li>';
                             echo'<li><a href="'.site_url('Acteur/GestionProfil').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-cog"></span> Compte</a></li>';
                             echo'</ul>';
-                            echo'<li><a href="'.site_url('Acteur/AccueilActeur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso</a></li>'; 
-                            echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se deconnecter</a></li>'; 
+                            echo'<li><a href="'.site_url('Acteur/AccueilActeur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso</a></li>';
+                            echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se deconnecter</a></li>';
                             }
                             if($this->session->statut==4)
                             {
-                                echo'<li><a href="'.site_url('plop').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso</a></li>'; 
-                                echo'<li><a href="'.site_url('plop').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se deconnecter</a></li>'; 
+                                echo'<li><a href="'.site_url('#').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso</a></li>';
+                                echo'<li><a href="'.site_url('#').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se deconnecter</a></li>';
                             }
                             if($this->session->statut==5)
                             {
-                                echo'<li><a href="'.site_url('plop').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso</a></li>'; 
-                                echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se deconnecter</a></li>'; 
+                                echo'<li><a href="'.site_url('SuperAdmin/AccueilSuperAdmin').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso</a></li>';
+                                echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se deconnecter</a></li>';
                             }
                         }
-                        ?> 
+                        ?>
                     </ul>
-                    
+
                     <!-- if($this->session->statut==1) -->
                     <!-- <ul class="nav navbar-nav">
                         <li><a href="#" style="color:#FFFFFF">Creation Action</a></li>
@@ -52,11 +52,11 @@
         </nav>
     </div>
 </div>
- <div class="row" style="background-color:#15B7D1;padding:20px"> 
+ <div class="row" style="background-color:#15B7D1;padding:20px">
     <div class="col-sm-1">
-        <?php 
+        <?php
             echo form_open('Visiteur/loadAccueil');
-            
+
         ?>
     </div>
     <div class="col-sm-3" style="padding:10px">
@@ -64,7 +64,7 @@
             <section >
                 <div class = "section-inner" style="padding:10px">
                     <div class="form-group">
-                        <?php 
+                        <?php
                             echo form_label('Rechercher :', 'lbl_Recherche');
                             echo '  ';
                             echo form_input('MotCle', '', array('placeholder'=>'Rechercher','class'=>'form-control'));
@@ -130,18 +130,18 @@
                             );
                             
                             $mois = array(
-                                '01'=>'Janvier',
-                                '02'=>'Fevrier',
-                                '03'=>'Mars',
-                                '04'=>'Avril',
-                                '05'=>'Mai',
-                                '06'=>'Juin',
-                                '07'=>'Juillet',
-                                '08'=>'Août',
-                                '09'=>'Septembre',
-                                '10'=>'Octobre',
-                                '11'=>'Novembre',
-                                '12'=>'Decembre',
+                                01=>'Janvier',
+                                02=>'Fevrier',
+                                03=>'Mars',
+                                04=>'Avril',
+                                05=>'Mai',
+                                06=>'Juin',
+                                07=>'Juillet',
+                                13=>'Aout',
+                                09=>'Septembre',
+                                10=>'Octobre',
+                                11=>'Novembre',
+                                12=>'Decembre',
                             );
                             
                             $AnneeEnCours = date('Y');
@@ -155,6 +155,7 @@
                                 $AnneeEnCours=>$AnneeEnCours,
                                 $AnneeEnCours+1=>$AnneeEnCours+1
                             );
+
                             $ToDay = date('d/m/Y');
                             echo '<input class="form-control" name="DateDebut" id="date" type="date" value="'.$ToDay.'" required>';
                             // echo form_dropdown('Jour', $jour, date('d'),array('class'=>'form-control'));
@@ -171,16 +172,16 @@
             <section>
                 <div class = "section-inner" style="padding:10px">
                     <div class="form-group">
-                       
+
                             <?php
-                                
+
                                 echo form_label('Lieu :', 'lbl_Lieu');
-                                echo '  '; 
-                                
+                                echo '  ';
+
                                 echo form_input('Lieu', '', array('placeholder'=>'Rechercher','class'=>'form-control'));
                                 echo ' ';
                             ?>
-                       
+
                     </div>
                 </div>
             </section>
@@ -193,10 +194,10 @@
                     <BR>
                     <div class="form-group">
                     <!--<span class ="glyphicon glyphicon-search"></span>-->
-                        <?php 
+                        <?php
                             echo form_submit('submit','Rechercher',array('class'=>'btn-danger btn-lg'));
                             //echo form_upload('Photo');
-                            
+
                             echo form_close();
                         ?>
                     </div>
@@ -219,6 +220,3 @@
         </div>
     </div>
 </div>
-
-
-

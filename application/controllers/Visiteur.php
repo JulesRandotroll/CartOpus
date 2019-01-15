@@ -14,6 +14,7 @@ class Visiteur extends CI_Controller
        $this->load->helper('form');
        $this->load->model('ModelSeConnecter');
        $this->load->library('session');
+       $this->load->model('ModelActeur');
     } // __construct
 
     public function loadAccueil()
@@ -330,6 +331,23 @@ class Visiteur extends CI_Controller
       redirect('Visiteur/loadAccueil','refresh');
     }
 
+    public function AfficherActeur($noActeur)
+    {
+      $Acteur = $this->ModelActeur->getActeur($noActeur);
+      $Organisation = $this->ModelActeur->getOrganisation($noActeur);
+      $Action = $this->ModelActeur->getActions($noActeur);
+      $Données = array(
+          'Acteur'=>$Acteur[0],
+          'Organisation'=> $Organisation,
+          'Action'=> $Action,
+      );
+      $DonnéesTitre = array('TitreDeLaPage'=>$Acteur[0]['NOMACTEUR'].' '.$Acteur[0]['PRENOMACTEUR']);
+      
+      $this->load->view('templates/Entete',$DonnéesTitre);
+      $this->load->view('Visiteur/AfficherActeur',$Données);
+      $this->load->view('templates/PiedDePage');
+
+    }
 
 }//Fin Visiteur
 

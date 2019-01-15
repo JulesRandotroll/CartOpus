@@ -23,7 +23,23 @@
                             <table class="table" >
                                     <thead>
                                         <tr>
+                                            <th>Déboutés</th>
+                                            <th></th>
+                                            <th ><button type="button" style="color:black; font-size:100%" class="btn btn-link btn-sm pull-right "><strong>+</strong></button></th> 
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                            foreach ($Visiteur as $unActeur)
+                                            {
+                                            echo '<tr><td> <a href="'.site_url('Visiteur/AfficherActeur/'.($unActeur['NOACTEUR'])).'" style="color:FFFFFF">'.$unActeur['NOMACTEUR']." ".$unActeur['PRENOMACTEUR']."</a></td><td> ".$unActeur['MAIL']."</td><td>".'<a href="'.site_url('SuperAdmin/AffecterProfil/'.($unActeur['NOACTEUR']).'#Mod').'" class="btn btn-danger pull-right" >Modifier</a>'."</td></tr>";
+                                            }
+                                        ?>
+                                    </tbody>
+                                    <thead>
+                                        <tr>
                                             <th>Acteur</th>
+                                            <th></th>
                                             <th ><button type="button" style="color:black; font-size:100%" class="btn btn-link btn-sm pull-right "><strong>+</strong></button></th> 
                                         </tr>
                                     </thead> 
@@ -32,7 +48,7 @@
                                             <?php
                                                 foreach ($Acteur as $unActeur)
                                                 {
-                                                echo"<tr><td>".$unActeur['NOMACTEUR']." ".$unActeur['PRENOMACTEUR']."</td><td>".'<a href="'.site_url('SuperAdmin/AffecterProfil/'.($unActeur['NOACTEUR']).'#Mod').'" class="btn btn-danger pull-right" >Modifier</a>'."</td></tr>";
+                                                echo '<tr><td> <a href="'.site_url('Visiteur/AfficherActeur/'.($unActeur['NOACTEUR'])).'" style="color:FFFFFF">'.$unActeur['NOMACTEUR']." ".$unActeur['PRENOMACTEUR']."</a></td><td> ".$unActeur['MAIL']."</td><td>".'<a href="'.site_url('SuperAdmin/AffecterProfil/'.($unActeur['NOACTEUR']).'#Mod').'" class="btn btn-danger pull-right" >Modifier</a>'."</td></tr>";
                                                 }
                                             ?>
                                         </div>
@@ -40,6 +56,7 @@
                                     <thead>
                                         <tr>
                                             <th>Admin Valider</th>
+                                            <th></th>
                                             <th ><button type="button" style="color:black; font-size:100%" class="btn btn-link btn-sm pull-right "><strong>+</strong></button></th> 
                                         </tr>
                                     </thead>
@@ -47,13 +64,14 @@
                                         <?php
                                             foreach ($AdminValider as $unActeur)
                                             {
-                                            echo"<tr><td>".$unActeur['NOMACTEUR']." ".$unActeur['PRENOMACTEUR']."</td><td>".'<a href="'.site_url('SuperAdmin/AffecterProfil/'.($unActeur['NOACTEUR']).'#Mod').'" class="btn btn-danger pull-right" >Modifier</a>'."</td></tr>";
+                                            echo"<tr><td>".$unActeur['NOMACTEUR']." ".$unActeur['PRENOMACTEUR']."</td><td>"."</td><td> ".'<a href="'.site_url('SuperAdmin/AffecterProfil/'.($unActeur['NOACTEUR']).'#Mod').'" class="btn btn-danger pull-right" >Modifier</a>'."</td></tr>";
                                             }
                                         ?>
                                     </tbody>
                                     <thead>
                                         <tr>
                                             <th>Super Admin</th>
+                                            <th></th>
                                             <th ><button type="button" style="color:black; font-size:100%" class="btn btn-link btn-sm pull-right   "><strong>+</strong></button></th> 
                                         </tr>
                                     </thead>
@@ -61,7 +79,7 @@
                                     <?php
                                         foreach ($SuperAdmin as $unActeur)
                                         {
-                                           echo"<tr><td>".$unActeur['NOMACTEUR']." ".$unActeur['PRENOMACTEUR']."</td><td>".'<a href="'.site_url('SuperAdmin/AffecterProfil/'.($unActeur['NOACTEUR']).'#Mod').'" class="btn btn-danger pull-right" >Modifier</a>'."</td></tr>";
+                                           echo"<tr><td>".$unActeur['NOMACTEUR']." ".$unActeur['PRENOMACTEUR']."</td><td>"."</td><td> ".'<a href="'.site_url('SuperAdmin/AffecterProfil/'.($unActeur['NOACTEUR']).'#Mod').'" class="btn btn-danger pull-right" >Modifier</a>'."</td></tr>";
                                         }
                                     ?>
                                     </tbody>
