@@ -51,6 +51,11 @@
                         echo form_open('Acteur/SupprimerAction',array("id"=>"form_suppr"));
                         $page="Supprimer";
                     }
+                    if ($page ==4)
+                    {
+                        echo form_open('Acteur/ChoixAction/4');
+                        $page="Ajout_Collaborateur";
+                    }
 
                         echo '<div class="form-group">';
                         echo form_label('Action choisie : ', 'Action');

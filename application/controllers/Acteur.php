@@ -316,7 +316,7 @@ class Acteur extends CI_Controller
             $noAction=$this->input->post('Action');
             $this->SupprimerAction($noAction);
         }
-        if($this->input->post('Choix_Collaborateur'))
+        if($this->input->post('Choix_Ajout_Collaborateur'))
         {
             $noAction=$this->input->post('Action');
             redirect('Acteur/AjoutCollaborateur/'.$noAction); 
@@ -981,11 +981,27 @@ class Acteur extends CI_Controller
             $Mail=$this->input->post('mail');
             $ConfMail=$this->input->post('confmail');
             $Role=$this->input->post('role');
+
+            //var_dump($Nom);
             //echo 'plop';
             if ($Mail!=$ConfMail)
             {
-                $message='La confirmation de mail n\'est pas semblable au mail rentrer ';
-                echo $message;
+                $message='La confirmation de mail n\'est pas semblable au mail rentré ';
+
+                $DonneesAInjecter=array(
+                    'noAction'=>$noAction,
+                    'Nom'=>$Nom,
+                    'Prenom'=>$Prenom,
+                    'Mail'=>$Mail,
+                    'ConfMail'=>"",
+                    'Role'=>$Role,
+                    'message'=>$message,
+               );
+   
+               $this->load->view('templates/Entete',$DonnéesTitre);
+               $this->load->view('Acteur/AjoutCollaborateur',$DonneesAInjecter);
+               $this->load->view('templates/PiedDePage');
+  
             }
             else
             {
@@ -993,9 +1009,8 @@ class Acteur extends CI_Controller
                 //var_dump($test);
                 if ($test==null)
                 { 
-                    // faire un confirm en js pour plus de sécurité
                     $Acteur=$this->ModelActeur->GetActeur($noActeur);
-                   // var_dump($Acteur);
+                    //var_dump($Acteur);
 
                     $SiteURL=site_url("Visiteur/SInscrire");
                     $objet ='Demande d\inscription';
@@ -1013,10 +1028,6 @@ class Acteur extends CI_Controller
                     {
                         $this->email->print_debugger();
                     }
-                    else
-                    {
-                        echo 'mail envoyé';
-                    }
                 }
                 else
                 {
@@ -1026,14 +1037,6 @@ class Acteur extends CI_Controller
         }
         else
         {
-            $DateFin = str_replace('%20',' ',$dateFin);
-            $DateDebut=str_replace('%20',' ',$dateDebut);
-            //$Actions =$this->ModelAction->getSousAction($noAction,$DateDebut,$DateFin); 
-            $Donnees = array('a.noaction'=>$noAction,'datedebut'=>$DateDebut,);
-            //var_dump($Donnees);
-            $Action = $this->ModelAction->getAction($Donnees);
-            //var_dump($Action);
-
             $this->load->model('ModelActeur'); // on charge le modele correspondant
             $Role = $this->ModelActeur->GetRole();
             $i=0;
@@ -1050,10 +1053,14 @@ class Acteur extends CI_Controller
                 }
             }
 
+            $message="";
             $DonneesAInjecter=array(
                 'noAction'=>$noAction,
-                'DateDebut'=>$Action[0]['DATEDEBUT'],
-                'DateFin'=>$Action[0]['DATEFIN'],
+                'Nom'=>"",
+                'Prenom'=>"",
+                'Mail'=>"",
+                'ConfMail'=>"",
+                'message'=>$message,
                 'Role'=>$Options,
             );
 

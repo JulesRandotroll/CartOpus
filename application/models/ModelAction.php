@@ -9,7 +9,7 @@
 
         public function getAction($DonnéesDeTest)
         {
-            var_dump($DonnéesDeTest);
+           // var_dump($DonnéesDeTest);
             $this->db->select('*');
             $this->db->from('Action a');
             $this->db->join('AvoirLieu al','al.noAction=a.noAction');
