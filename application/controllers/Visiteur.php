@@ -346,6 +346,7 @@ class Visiteur extends CI_Controller
       $this->load->view('templates/Entete',$DonnéesTitre);
       $this->load->view('Visiteur/AfficherActeur',$Données);
       $this->load->view('templates/PiedDePage');
+      
 
     }
 
