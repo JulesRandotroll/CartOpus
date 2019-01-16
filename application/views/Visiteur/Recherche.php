@@ -86,7 +86,7 @@ if(!empty($lesOrganisations))
                                 <th>Numéro de Téléphone</th>
                                 <th>Numéro de Fax</th>
                                 <th>Site URL</th>
-                            </tr>";
+                            </tr>
                             <?php        
                                 foreach ($lesOrganisations As $uneOrganisation):
                                     echo '<tr>';

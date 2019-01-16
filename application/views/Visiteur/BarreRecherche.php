@@ -1,32 +1,34 @@
                     <ul class="nav navbar-nav navbar-right">
                         <?php
                         //var_dump($this->session->statut);
-                        if ($this->session->statut==0){
+                        if ($this->session->statut==0)
+                        {
                             echo'<li><a href="'.site_url('Visiteur/SInscrire').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-user"></span> S\'inscrire</a></li>';
                             echo'<li><a href="'.site_url('Visiteur/SeConnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-in"></span> Se connecter</a></li>';
                         }
                         else
                         {
-                            if ($this->session->statut==1){
-                            echo'<ul class="nav navbar-nav">';
-                            echo '<li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:#FFFFFF ;background-color:#0E7896">Action
-                                <span class="caret"></span></a>
-                                <ul class="dropdown-menu" style="background-color:#139CBC">
-                                    <li><a href="'.site_url('Acteur/NouvelleAction/0').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-plus"></span> Ajouter Action</a></li>
-                                    <li><a href="'.site_url('Acteur/AjoutSousAction').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter SousAction</a></li>
-                                    <li><a href="'.site_url('Acteur/ReitererAction/0').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-repeat"></span> Renouveler Action</a></li>
-                                    <li><a href="'.site_url('#').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-pencil"></span> Modifier Action</a></li>
-                                    <li><a href="'.site_url('#').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-trash"></span> Supprimer Action</a></li>
-                                </ul>
-                            </li>';
-                            echo'<li><a href="'.site_url('Acteur/AjoutCollaborateur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-user"></span> Ajout Collaborateur</a></li>';
-                    echo'<li><a href="#" style="color:#FFFFFF"><span class="glyphicon glyphicon-plus"></span> Ajout Thématique</a></li>';//'.site_url('Acteur/AjoutThematique/'.$NomAction).'
-                           // echo'<li><a href="'.site_url('Acteur/NouvelleAction/0').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-plus"></span> Creation Action</a></li>';
-                            echo'<li><a href="'.site_url('Acteur/GestionProfil').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-cog"></span> Compte</a></li>';
-                            echo'</ul>';
-                            echo'<li><a href="'.site_url('Acteur/AccueilActeur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso</a></li>';
-                            echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se deconnecter</a></li>';
+                            if ($this->session->statut==1)
+                            {
+                                echo'<ul class="nav navbar-nav">';
+                                echo '<li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:#FFFFFF ;background-color:#0E7896">Action
+                                    <span class="caret"></span></a>
+                                    <ul class="dropdown-menu" style="background-color:#139CBC">
+                                        <li><a href="'.site_url('Acteur/NouvelleAction/0').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-plus"></span> Ajouter Action</a></li>
+                                        <li><a href="'.site_url('Acteur/AjoutSousAction').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter SousAction</a></li>
+                                        <li><a href="'.site_url('Acteur/ReitererAction/0').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-repeat"></span> Renouveler Action</a></li>
+                                        <li><a href="'.site_url('#').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-pencil"></span> Modifier Action</a></li>
+                                        <li><a href="'.site_url('#').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-trash"></span> Supprimer Action</a></li>
+                                    </ul>
+                                </li>';
+                                echo'<li><a href="'.site_url('Acteur/AjoutCollaborateur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-user"></span> Ajout Collaborateur</a></li>';
+                                echo'<li><a href="#" style="color:#FFFFFF"><span class="glyphicon glyphicon-plus"></span> Ajout Thématique</a></li>';//'.site_url('Acteur/AjoutThematique/'.$NomAction).'
+                                //echo'<li><a href="'.site_url('Acteur/NouvelleAction/0').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-plus"></span> Creation Action</a></li>';
+                                echo'<li><a href="'.site_url('Acteur/GestionProfil').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-cog"></span> Compte</a></li>';
+                                echo'</ul>';
+                                echo'<li><a href="'.site_url('Acteur/AccueilActeur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso</a></li>';
+                                echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se deconnecter</a></li>';
                             }
                             if($this->session->statut==4)
                             {
@@ -67,11 +69,10 @@
                         <?php
                             echo form_label('Rechercher :', 'lbl_Recherche');
                             echo '  ';
-                            echo form_input('MotCle', '', array('placeholder'=>'Rechercher','class'=>'form-control', 'name'=>'txtRecherche','pattern'=>'^[a-zA-Z ]*'));
+                            echo form_input('MotCle', '', array('placeholder'=>'Rechercher','class'=>'form-control','name'=>'txtRecherche','pattern'=>'^[a-zA-Z0-9 ]*'));
                             echo ' ';
                         ?>
-                    </div>
-                    
+                    </div> 
                 </div>
             </section>
         </div>
@@ -162,13 +163,15 @@
             <section>
                 <div class = "section-inner" style="padding:10px">
                     <div class="form-group">
-                        <?php
-                            echo form_label('Lieu :', 'lbl_Lieu');
-                            echo '  '; 
-                            
-                            echo form_input('Lieu', '', array('placeholder'=>'Rechercher','class'=>'form-control','name'=>'txtRechercheLieu','pattern'=>'^[a-zA-Z ]*'));
-                            echo ' ';
-                        ?>
+
+                            <?php
+                                echo form_label('Lieu :', 'lbl_Lieu');
+                                echo '  '; 
+                                
+                                echo form_input('Lieu', '', array('placeholder'=>'Rechercher','class'=>'form-control','name'=>'txtRechercheLieu','pattern'=>'^[a-zA-Z0-9 ]*'));
+                                echo ' ';
+                            ?>
+
                     </div>
                 </div>
             </section>
