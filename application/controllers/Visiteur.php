@@ -698,6 +698,8 @@ class Visiteur extends CI_Controller
     }
   }
 
+  //Penser à refaire "Afficher Acteur" 
+
 }//Fin Visiteur
 
 ?>
