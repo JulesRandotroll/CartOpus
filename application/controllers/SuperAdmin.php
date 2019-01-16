@@ -136,7 +136,11 @@ class SuperAdmin extends CI_Controller {
     public function AjouterThematique()
     {
         $ThematiqueAInserer = $this->input->post('nouvellethematique');
-        $Donnees=array('NOMTHEMATIQUE'=>$ThematiqueAInserer);
+        $Données=array(
+            'Thematique'=>$thematiques,
+            'Theme_SsTheme'=>$DpdThematiques,
+            'SsThemes'=>$SsThematique,
+        );
         //var_dump($Donnees);
         $Thematiques = $this->ModelThematique->getThematiquesExiste($Donnees);
         if(empty($Thematiques))
