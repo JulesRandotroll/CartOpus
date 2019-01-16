@@ -201,7 +201,6 @@ class SuperAdmin extends CI_Controller {
                 $Message = 'Création et insertion de la sous-thématique effectuée';
                 $this->session->set_flashdata('Message',$Message);
                 redirect('SuperAdmin/AfficherThematique');
-                redirect('SuperAdmin/AfficherThematique');
             }                                              
             else
             {
@@ -234,7 +233,7 @@ class SuperAdmin extends CI_Controller {
                 $this->ModelThematique->InsererSousThematique($Donnees);    
                 
                 $Message = 'Liaison de la thématique et de la sous-thématique effectuée';
-                $this->session->set_flashdata('Attention',$Message);
+                $this->session->set_flashdata('Message',$Message);
                 redirect('SuperAdmin/AfficherThematique');
             }
             else
@@ -263,7 +262,7 @@ class SuperAdmin extends CI_Controller {
             $this->ModelThematique->DeleteThematique($Where);
             
             $Message = 'Suppression de la thématique effectuée';
-            $this->session->set_flashdata('Danger',$Message);
+            $this->session->set_flashdata('Message',$Message);
             redirect('SuperAdmin/AfficherThematique');
         }
         else
