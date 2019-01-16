@@ -87,12 +87,46 @@ class SuperAdmin extends CI_Controller {
             //var_dump($thematiques);
             $DonnéesTitre = array('TitreDeLaPage'=>'Ajout thématique');
 
-            $Données=array(
-                'Thematique'=>$thematiques,
-                'Theme_SsTheme'=>$DpdThematiques,
-                'SsThemes'=>$SsThematique,
-            );
-
+            //Envoie des données et du message s'il existe
+            if($this->session->flashdata('Message')!=null)
+            {
+                $Message=$this->session->flashdata('Message');
+                $Données=array(
+                    'Thematique'=>$thematiques,
+                    'Theme_SsTheme'=>$DpdThematiques,
+                    'SsThemes'=>$SsThematique,
+                    'Message'=>$Message,
+                );
+            }
+            elseif($this->session->flashdata('Danger')!=null)
+            {
+                $Danger = $this->session->flashdata('Danger');
+                $Données=array(
+                    'Thematique'=>$thematiques,
+                    'Theme_SsTheme'=>$DpdThematiques,
+                    'SsThemes'=>$SsThematique,
+                    'Danger'=>$Danger
+                );
+            }
+            elseif($this->session->flashdata('Attention')!=null)
+            {
+                $Données=array(
+                    'Thematique'=>$thematiques,
+                    'Theme_SsTheme'=>$DpdThematiques,
+                    'SsThemes'=>$SsThematique,
+                    'Danger'=>$Danger
+                );
+            }
+            else
+            {
+                $Données=array(
+                    'Thematique'=>$thematiques,
+                    'Theme_SsTheme'=>$DpdThematiques,
+                    'SsThemes'=>$SsThematique,
+                );
+            }
+            
+            
             $this->load->view('templates/Entete',$DonnéesTitre);
             $this->load->view('SuperAdmin/AjouterThematique',$Données);
             $this->load->view('templates/PiedDePage');
@@ -103,17 +137,21 @@ class SuperAdmin extends CI_Controller {
     {
         $ThematiqueAInserer = $this->input->post('nouvellethematique');
         $Donnees=array('NOMTHEMATIQUE'=>$ThematiqueAInserer);
-        var_dump($Donnees);
+        //var_dump($Donnees);
         $Thematiques = $this->ModelThematique->getThematiquesExiste($Donnees);
         if(empty($Thematiques))
         {
             $this->ModelThematique->InsererThematique($Donnees);
+           
+            $Message = 'Ajout de la thématique effectuée';
+            $this->session->set_flashdata('Message',$Message);
             redirect('SuperAdmin/AfficherThematique');
         }
         else
         {
-            echo '<script>alert("Cette Thematique existe déjà")</script>';
-            $this->AfficherThematique();
+            $Message = 'Cette thématique éxiste déja';
+            $this->session->set_flashdata('Attention',$Message);
+            redirect('SuperAdmin/AfficherThematique');
         }
         
     }
@@ -125,12 +163,16 @@ class SuperAdmin extends CI_Controller {
             $Donnees = array("noSousThematique"=>$noSousThematique);
             //var_dump($Donnees);
             $this->ModelThematique->updateSsThematique_To_Thematique($Donnees); 
-            redirect('SuperAdmin/AfficherThematique');   
+            
+            $Message = 'Migration de la sous-thématique en thématique effectuée';
+            $this->session->set_flashdata('Message',$Message);
+            redirect('SuperAdmin/AfficherThematique'); 
         }
         else
         {
-            echo '<script>alert("Veuillez selectionner une sous thematique, merci")</script>';
-            $this->AfficherThematique();
+            $Message = 'Veuillez sélectionner une sous-thématique à migrer, merci';
+            $this->session->set_flashdata('Danger',$Message);
+            redirect('SuperAdmin/AfficherThematique'); 
         }
     }
 
@@ -155,18 +197,24 @@ class SuperAdmin extends CI_Controller {
                     'NOSOUSTHEMATIQUE'=>$noSousThematique,
                 );
                 $this->ModelThematique->InsererSousThematique($Donnees);
+
+                $Message = 'Création et insertion de la sous-thématique effectuée';
+                $this->session->set_flashdata('Message',$Message);
+                redirect('SuperAdmin/AfficherThematique');
                 redirect('SuperAdmin/AfficherThematique');
             }                                              
             else
             {
-                echo '<script>alert("Cette Sous-Thematique existe déjà")</script>';
-                $this->AfficherThematique();
+                $Message = 'Cette Sous-Thematique existe déjà';
+                $this->session->set_flashdata('Attention',$Message);
+                redirect('SuperAdmin/AfficherThematique');
             }
         }
         else
         {
-            echo '<script>alert("Veuillez selectionner une thematique, merci")</script>';
-            $this->AfficherThematique();
+            $Message = 'Veuillez selectionner une thematique, merci';
+            $this->session->set_flashdata('Danger',$Message);
+            redirect('SuperAdmin/AfficherThematique');
         }        
     }
 
@@ -178,13 +226,30 @@ class SuperAdmin extends CI_Controller {
                 'NOTHEMATIQUE'=>$noThematique,
                 'NOSOUSTHEMATIQUE'=>$noSousThematique,
             );
-            $this->ModelThematique->InsererSousThematique($Donnees);    
-            redirect('SuperAdmin/AfficherThematique');
+            //Teste sur l'existance préalable de ce couple ou non
+            $Existe = $this->ModelThematique->getSousThematiqueExiste($Donnees);
+
+            if(empty($Existe))
+            {
+                $this->ModelThematique->InsererSousThematique($Donnees);    
+                
+                $Message = 'Liaison de la thématique et de la sous-thématique effectuée';
+                $this->session->set_flashdata('Attention',$Message);
+                redirect('SuperAdmin/AfficherThematique');
+            }
+            else
+            {
+                $Message = 'Ce couple thématique / sous-thématique existe déjà';
+                $this->session->set_flashdata('Attention',$Message);
+                redirect('SuperAdmin/AfficherThematique');
+            }
+            
         }
         else
         {
-            echo '<script>alert("Veuillez selectionner une thematique et / ou une sous thematique, merci"</script>';
-            $this->AfficherThematique();
+            $Message = 'Veuillez selectionner une thematique et / ou une sous thematique, merci';
+            $this->session->set_flashdata('Danger',$Message);
+            redirect('SuperAdmin/AfficherThematique');
         }
         
         
@@ -197,31 +262,39 @@ class SuperAdmin extends CI_Controller {
             $Where = array('NoThematique'=>$noThematique);
             $this->ModelThematique->DeleteThematique($Where);
             
+            $Message = 'Suppression de la thématique effectuée';
+            $this->session->set_flashdata('Danger',$Message);
             redirect('SuperAdmin/AfficherThematique');
         }
         else
         {
-            echo '<script>alert("Veuillez selectionner une thematique, merci"</script>';
-            $this->AfficherThematique();
+            $Message = 'Veuillez sélectionner une thématique à supprimer, merci';
+            $this->session->set_flashdata('Danger',$Message);
+            redirect('SuperAdmin/AfficherThematique');
         }
     }
 
     public function SupprimerSousThematique($noSousThematique)
     {
-        if($noThematique != '0')
+        if($noSousThematique != '0')
         {
             $Where = array('NoSousThematique'=>$noSousThematique);
-            $this->ModelThematique->DeleteThematique($Where);
+            
+            $this->ModelThematique->updateSsThematique_To_Thematique($Where);
 
             $Where = array('NoThematique'=>$noSousThematique);
+            //Supression de la dernière occuenre ce la sous thématique
             $this->ModelThematique->DeleteThematique($Where);
 
+            $Message = 'Supression de la sous thématique effectuée';
+            $this->session->set_flashdata('Message',$Message);
             redirect('SuperAdmin/AfficherThematique');
         }
         else
         {
-            echo '<script>alert("Veuillez selectionner une sous-thematique, merci"</script>';
-            $this->AfficherThematique();
+            $Message = 'Veuillez sélectionner une thématique à suprimer, merci';
+            $this->session->set_flashdata('Danger',$Message);
+            redirect('SuperAdmin/AfficherThematique');
         }
     }
 

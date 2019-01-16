@@ -51,6 +51,15 @@
             return $requete->result_array();
         }
 
+        public function getSousThematiqueExiste($Where)
+        {
+            $this->db->select('*');
+            $this->db->from('SousThematique');
+            $this->db->where($Where);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
         public function getMotCleExiste($Donnees)
         {
             $this->db->select("MotCle");

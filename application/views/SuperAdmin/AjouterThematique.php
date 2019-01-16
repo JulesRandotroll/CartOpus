@@ -18,6 +18,35 @@
 
 <!--  Affichage de toute les thematiques et sous thematiques  -->
 <div class="row" style="background-color:#15B7D1">
+    <div class='col-sm-1'>
+    </div>
+    <div class='col-sm-10'>
+        <?php
+        if(isset($Message))
+        {
+            echo"<div class='alert alert-success alert-dismissible'>
+                <a href='#' class = 'close' data-dismiss='alert' aria-label='close'>&times;</a>
+                <strong> Message </strong>".$Message."
+            </div>";
+        }
+        elseif(isset($Danger))
+        {
+            echo"<div class='alert alert-danger alert-dismissible'>
+                <a href='#' class = 'close' data-dismiss='alert' aria-label='close'>&times;</a>
+                <strong> Attention </strong> ".$Danger."
+            </div>";
+        }
+        elseif(isset($Attention))
+        {
+            echo"<div class='alert alert-attention alert-dismissible'>
+                <a href='#' class = 'close' data-dismiss='alert' aria-label='close'>&times;</a>
+                <strong> Attention </strong> ".$Attention."
+            </div>";
+        }
+        ?>
+    </div>
+</div>
+<div class="row" style="background-color:#15B7D1">
     <div class="col-sm-3">
     </div>
     <div class="col-sm-6">
@@ -42,8 +71,12 @@
     </div>
 </div>
 
+
+
 <!--  Creation thematique et sous thematique  -->
 <div class="row" style="background-color:#15B7D1"> 
+
+
     <div class="col-sm-1"></div>
     <!-- Ajout Thématique -->
     <div class="col-sm-5">
@@ -254,12 +287,31 @@
             <section>
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <?php 
-                       echo form_open('SuperAdmin/SupprimerThematique',array("id"=>"form_Migrer"));
+                       echo form_open('SuperAdmin/SupprimerThematique',array("id"=>"form_SupprimerThematique"));
                        echo '<div class="form-group">';
-                       echo form_label('Sous-thématique à migrer : ', 'NewTheme'); 
-                    
-                       echo form_submit();
-                       echo form_close();
+                       echo form_label('Thématique à supprimer : ', 'NewTheme'); 
+                    ?>
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle form-control" type="button" data-toggle="dropdown" value='0'>
+                            <span id='Dropdown_Supprimer_Thematique'>Selectionnez une thématique</span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <input class="form-control myInput" type="text" placeholder="Recherche">
+                            <li class="divider"></li>
+                            <?php 
+                                foreach ($Thematique as $uneThematique)
+                                {
+                                    echo '<li class="supprimer_Thematique" value = "'.$uneThematique['NOTHEMATIQUE'].'"><a>'.$uneThematique['NOMTHEMATIQUE'].'</a></li>';
+                                }
+                            ?>
+                        </ul> 
+                    </div>
+                    <?php
+                        echo '</div>';
+                        
+                        echo form_submit('SupprimerThematique', 'Supprimer',array('class'=>'btn btn-danger','id'=>'btn_suppr_Thematique'));
+                        echo form_close();
                     ?>
                 </div>
             </section>
@@ -271,8 +323,31 @@
             <section>
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <?php 
-                    
-                    
+                       echo form_open('SuperAdmin/SupprimerSousThematique',array("id"=>"form_SupprimerSousThematique"));
+                       echo '<div class="form-group">';
+                       echo form_label('Sous-thématique à supprimer : ', 'NewTheme'); 
+                    ?>
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle form-control" type="button" data-toggle="dropdown" value='0'>
+                            <span id='Dropdown_Supprimer_SousThematique'>Selectionnez une sous - thématique</span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <input class="form-control myInput" type="text" placeholder="Recherche">
+                            <li class="divider"></li>
+                            <?php 
+                                foreach ($SsThemes as $unSousTheme)
+                                {
+                                    echo '<li class="supprimer_SsThematique" value = "'.$unSousTheme['NOSOUSTHEMATIQUE'].'"><a>'.$unSousTheme['NOMTHEMATIQUE'].'</a></li>';
+                                }
+                            ?>
+                        </ul> 
+                    </div>
+                    <?php
+                        echo '</div>';
+                        
+                        echo form_submit('SupprimerSsThematique', 'Supprimer',array('class'=>'btn btn-danger','id'=>'btn_suppr_SousThematique'));
+                        echo form_close();
                     ?>
                 </div>
             </section>
