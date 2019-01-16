@@ -88,7 +88,7 @@
                         echo form_open('SuperAdmin/AjouterThematique');
                         echo '<div class="form-group">';
                         echo form_label('Nouvelle Thématique: ', 'NewTheme');
-                        echo form_input('nouvellethematique','',array('required'=>'required','placeholder'=>'Ex: Musique','pattern'=>'[a-zA-Z]{1,40}','class'=>'form-control')); 
+                        echo form_input('nouvellethematique','',array('required'=>'required','placeholder'=>'Ex: Musique','pattern'=>'[a-zA-Z0-9 -.]{1,40}','class'=>'form-control')); 
                         echo '</div>';
 
                         echo '<div class="text-center">';
@@ -140,7 +140,7 @@
 
                         echo '<div class="form-group">';
                         echo form_label('Nouvelle Sous Thématique: ', 'NewSSTheme');
-                        echo form_input('nouvellesousthematique','',array('required'=>'required','placeholder'=>'Ex: Rock,Jazz,Pop','pattern'=>'[a-zA-Z ]{1,40}','class'=>'form-control')); 
+                        echo form_input('nouvellesousthematique','',array('required'=>'required','placeholder'=>'Ex: Rock,Jazz,Pop','pattern'=>'[a-zA-Z0-9 -.]{1,40}','class'=>'form-control')); 
                         echo '</div>';
 
                         echo '<div class="text-center">';
@@ -283,7 +283,7 @@
     </div>
     <div class='col-sm-5'>
         <div class='text-center'>
-            <H1 align = "center" style="color:#FFFFFF">Supprimmer une thématique</H1>;
+            <H1 align = "center" style="color:#FFFFFF">Supprimmer une thématique</H1>
             <section>
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <?php 
@@ -319,7 +319,7 @@
     </div>
     <div class='col-sm-5'>
         <div class='text-center'>
-            <H1 align = "center" style="color:#FFFFFF">Supprimer une sous-thématique</H1>;
+            <H1 align = "center" style="color:#FFFFFF">Supprimer une sous-thématique</H1>
             <section>
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <?php 
