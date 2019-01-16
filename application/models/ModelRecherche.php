@@ -27,15 +27,15 @@
             $this->db->from('action');
             $this->db->like('NOMACTION', $nomAction);
             $query = $this->db->get();
-             if($query->num_rows()>0)
-             {
-                 foreach ($query->result_array() as $ligne) 
-                 {
-                     $jeuEnr[] = $ligne;
-                 }
-                 return $jeuEnr;
-             }
-             return FALSE;
+            if($query->num_rows()>0)
+            {
+                foreach ($query->result_array() as $ligne) 
+                {
+                    $jeuEnr[] = $ligne;
+                }
+                return $jeuEnr;
+            }
+            return FALSE;
             //$requete = $this->db->get();
             //return $requete->result_array();
             
@@ -60,15 +60,15 @@
             $this->db->from('acteur');
             $this->db->like('NOMACTEUR', $nomActeur);
             $query = $this->db->get();
-             if($query->num_rows()>0)
-             {
-                 foreach ($query->result_array() as $ligne) 
-                 {
-                     $jeuEnr[] = $ligne;
-                 }
-                 return $jeuEnr;
-             }
-             return FALSE;
+            if($query->num_rows()>0)
+            {
+                foreach ($query->result_array() as $ligne) 
+                {
+                    $jeuEnr[] = $ligne;
+                }
+                return $jeuEnr;
+            }
+            return FALSE;
         }
 
         public function nombreOrganisation($Recherche = FALSE)
@@ -83,7 +83,6 @@
             return $requete;
         }
 
-
         public function organisationRecherche($nomOrganisation, $nbLignesRetournees, $PremiereLigneRetournee)
         {
             $this->db->limit($nbLignesRetournees, $PremiereLigneRetournee);
@@ -93,15 +92,15 @@
             $this->db->like('NOMORGANISATION', $nomOrganisation);
 
             $query = $this->db->get();
-             if($query->num_rows()>0)
-             {
-                 foreach ($query->result_array() as $ligne) 
-                 {
-                     $jeuEnr[] = $ligne;
-                 }
-                 return $jeuEnr;
-             }
-             return FALSE;
+            if($query->num_rows()>0)
+            {
+                foreach ($query->result_array() as $ligne) 
+                {
+                    $jeuEnr[] = $ligne;
+                }
+                return $jeuEnr;
+            }
+            return FALSE;
         }
 
         public function nombreThematique($Recherche = FALSE)
@@ -125,15 +124,15 @@
             $this->db->join('action a', 'f.noaction = a.noaction');
             $this->db->like('NOMTHEMATIQUE', $nomThematique);
             $query = $this->db->get();
-             if($query->num_rows()>0)
-             {
-                 foreach ($query->result_array() as $ligne) 
-                 {
-                     $jeuEnr[] = $ligne;
-                 }
-                 return $jeuEnr;
-             }
-             return FALSE;
+            if($query->num_rows()>0)
+            {
+                foreach ($query->result_array() as $ligne) 
+                {
+                    $jeuEnr[] = $ligne;
+                }
+                return $jeuEnr;
+            }
+            return FALSE;
 
              /* 
                 SELECT * 
@@ -159,10 +158,8 @@
             return $requete;
         }
 
-
         public function lieuRecherche($Recherche, $nbLignesRetournees, $PremiereLigneRetournee)
         {
-            
             $this->db->select('noLieu');
             $this->db->from('lieu');
             $this->db->like('Ville', $Recherche);
@@ -193,10 +190,10 @@
             $resultats = array(
                 "actions"=>$Action,
                 "organisations"=>$Orga
-
             );
-
-            //var_dump($resultats);
+            
+            var_dump($Recherche);
+            var_dump($resultats);
 
             return $resultats;
         }
@@ -213,7 +210,6 @@
             return $requete;
         }
 
-
         public function motCleRecherche($nomMotCle, $nbLignesRetournees, $PremiereLigneRetournee)
         {
             $this->db->limit($nbLignesRetournees, $PremiereLigneRetournee);
@@ -222,16 +218,15 @@
             $this->db->join('action a', 'f.noaction=a.noaction');
             $this->db->like('MOTCLE', $nomMotCle);
             $query = $this->db->get();
-             if($query->num_rows()>0)
-             {
-                 foreach ($query->result_array() as $ligne) 
-                 {
-                     $jeuEnr[] = $ligne;
-                 }
-                 return $jeuEnr;
-             }
-             return FALSE;
+            if($query->num_rows()>0)
+            {
+                foreach ($query->result_array() as $ligne) 
+                {
+                    $jeuEnr[] = $ligne;
+                }
+                return $jeuEnr;
+            }
+            return FALSE;
         }
-
     }
 ?>

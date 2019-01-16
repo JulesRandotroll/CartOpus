@@ -532,8 +532,6 @@ class Visiteur extends CI_Controller
     $RechercheMotCle = $this->input->post('MotCle');
     $RechercheLieu = $this->input->post('Lieu');
 
-
-
     $config = array();
     $config["Base_url"] = site_url('Visiteur/Rechercher');
 
@@ -548,13 +546,11 @@ class Visiteur extends CI_Controller
     $this->pagination->initialize($config);
 
     $noPage = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-
     
     $DonneesInjectees['lienPagination'] = $this->pagination->create_links();
 
     if(!empty($RechercheMotCle))
     {
-      //Copie / colle du test sur la BarreRecherch()
 
       $config["total_rows"] = $this->ModelRecherche->nombreRecherche($RechercheMotCle);
       $config["total_rows"] = $this->ModelRecherche->nombreActeur($RechercheMotCle);
@@ -579,7 +575,6 @@ class Visiteur extends CI_Controller
 
       $recherche = true;
     }
-
     //tests des doublons et création des 3 Tableaux finaux
 
     if(!empty($lesThematiques))
@@ -688,7 +683,6 @@ class Visiteur extends CI_Controller
           $DonneesInjectees['lesOrganisations'] = array(0=>$Organisation);
         } 
       endforeach;
-
     }
 
     if($recherche == false)
