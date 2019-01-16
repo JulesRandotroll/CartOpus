@@ -140,7 +140,7 @@
 
                         echo '<div class="form-group">';
                         echo form_label('Nouvelle Sous Thématique: ', 'NewSSTheme');
-                        echo form_input('nouvellesousthematique','',array('required'=>'required','placeholder'=>'Ex: Rock,Jazz,Pop','pattern'=>'[a-zA-Z ]{1,40}','class'=>'form-control')); 
+                        echo form_input('nouvellesousthematique','',array('required'=>'required','placeholder'=>'Ex: Rock,Jazz,Pop','pattern'=>'[a-zA-Z0-9 -.]{1,40}','class'=>'form-control')); 
                         echo '</div>';
 
                         echo '<div class="text-center">';

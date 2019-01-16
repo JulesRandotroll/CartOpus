@@ -568,7 +568,6 @@ class Visiteur extends CI_Controller
       $lesThematiques = $this->ModelRecherche->thematiqueRecherche($RechercheMotCle, $config['per_page'], $noPage);
       $lesMotsCles = $this->ModelRecherche->motCleRecherche($RechercheMotCle, $config['per_page'], $noPage);
 
-      $recherche = true;
     }
 
     if(!empty($RechercheLieu))
@@ -576,12 +575,10 @@ class Visiteur extends CI_Controller
       $config["total_rows"] = $this->ModelRecherche->nombreLieu($RechercheLieu);
       
       $lesLieux = $this->ModelRecherche->lieuRecherche($RechercheLieu, $config['per_page'], $noPage);
-
-      $recherche = true;
     }
 
-    //tests des doublons et création des 3 Tableaux finaux
 
+    //tests des doublons et création des 3 Tableaux finaux ET vérification de l'existence de résultats
     if(!empty($lesThematiques))
     {
       foreach($lesThematiques as $uneThematique):
@@ -607,10 +604,12 @@ class Visiteur extends CI_Controller
           $DonneesInjectees['lesActions'] = array(0=>$uneThematique);
         } 
       endforeach;
+      $recherche = true;
     }
 
     if(!empty($lesMotsCles))
     {
+      var_dump($lesMotsCles);
       foreach($lesMotsCles as $unMotCle):
         $exist = FALSE;
         $noAction = $unMotCle['NOACTION'];
@@ -634,62 +633,68 @@ class Visiteur extends CI_Controller
           $DonneesInjectees['lesActions'] = array(0=>$unMotCle);
         } 
       endforeach;
+      $recherche = true;
     }
 
-    if(!empty($lesLieux['actions']))
+    if(!empty($lesLieux) || $lesLieux != null)
     {
-      foreach($lesLieux['actions'] as $Action):
-        $exist = FALSE;
-        $noAction = $Action['NOACTION'];
+      if(!empty($lesLieux['actions']))
+      {
+        foreach($lesLieux['actions'] as $Action):
+          $exist = FALSE;
+          $noAction = $Action['NOACTION'];
 
-        if(!empty($DonneesInjectees['lesActions']))
-        {
-          foreach($DonneesInjectees['lesActions'] as $uneAction):
-            // faire test sur les dates de debut
-            if ($uneAction['NOACTION']==$noAction)
-            {
-              $exist = TRUE;
-            }
-          endforeach;
-          if ($exist==FALSE)
+          if(!empty($DonneesInjectees['lesActions']))
           {
-            array_push($DonneesInjectees['lesActions'],$Action);
-          }
-        }
-        else
-        {
-          $DonneesInjectees['lesActions'] = array(0=>$Action);
-        } 
-      endforeach;
-    }
-
-    if(!empty($lesLieux['organisations']))
-    {
-      foreach($lesLieux['organisations'] as $Organisation):
-        $exist = FALSE;
-        $noOrganisation = $Organisation['NO_ORGANISATION'];
-
-        if(!empty($DonneesInjectees['lesOrganisations']))
-        {
-          foreach($DonneesInjectees['lesOrganisations'] as $uneOrganisation):
-            // faire test sur les dates de debut
-            if ($uneOrganisation['NO_ORGANISATION']== $noOrganisation)
+            foreach($DonneesInjectees['lesActions'] as $uneAction):
+              // faire test sur les dates de debut
+              if ($uneAction['NOACTION']==$noAction)
+              {
+                $exist = TRUE;
+              }
+            endforeach;
+            if ($exist==FALSE)
             {
-              $exist = TRUE;
+              array_push($DonneesInjectees['lesActions'],$Action);
             }
-          endforeach;
-          if ($exist==FALSE)
-          {
-            array_push($DonneesInjectees['lesOrganisations'],$Organisation);
           }
-        }
-        else
-        {
-          $DonneesInjectees['lesOrganisations'] = array(0=>$Organisation);
-        } 
-      endforeach;
+          else
+          {
+            $DonneesInjectees['lesActions'] = array(0=>$Action);
+          } 
+        endforeach;
+        $recherche = true;
+      }
 
+      if(!empty($lesLieux['organisations']))
+      {
+        foreach($lesLieux['organisations'] as $Organisation):
+          $exist = FALSE;
+          $noOrganisation = $Organisation['NO_ORGANISATION'];
+
+          if(!empty($DonneesInjectees['lesOrganisations']))
+          {
+            foreach($DonneesInjectees['lesOrganisations'] as $uneOrganisation):
+              // faire test sur les dates de debut
+              if ($uneOrganisation['NO_ORGANISATION']== $noOrganisation)
+              {
+                $exist = TRUE;
+              }
+            endforeach;
+            if ($exist==FALSE)
+            {
+              array_push($DonneesInjectees['lesOrganisations'],$Organisation);
+            }
+          }
+          else
+          {
+            $DonneesInjectees['lesOrganisations'] = array(0=>$Organisation);
+          } 
+        endforeach;
+        $recherche = true;
+      }
     }
+    
 
     if($recherche == false)
     {

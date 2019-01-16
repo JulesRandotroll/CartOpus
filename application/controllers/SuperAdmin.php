@@ -137,7 +137,7 @@ class SuperAdmin extends CI_Controller {
     {
         $ThematiqueAInserer = $this->input->post('nouvellethematique');
         $Donnees=array('NOMTHEMATIQUE'=>$ThematiqueAInserer);
-        //var_dump($Donnees);
+        
         $Thematiques = $this->ModelThematique->getThematiquesExiste($Donnees);
         if(empty($Thematiques))
         {

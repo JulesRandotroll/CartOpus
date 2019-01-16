@@ -19,7 +19,6 @@
             $requete = $this->db->count_all_results();
             return $requete;
         }
-
         public function actionRecherche($nomAction, $nbLignesRetournees, $PremiereLigneRetournee)
         {
             $this->db->limit($nbLignesRetournees, $PremiereLigneRetournee);
@@ -52,7 +51,6 @@
             $requete = $this->db->count_all_results();
             return $requete;
         }
-
         public function acteurRecherche($nomActeur, $nbLignesRetournees, $PremiereLigneRetournee)
         {
             $this->db->limit($nbLignesRetournees, $PremiereLigneRetournee);
@@ -82,8 +80,6 @@
             $requete = $this->db->count_all_results();
             return $requete;
         }
-
-
         public function organisationRecherche($nomOrganisation, $nbLignesRetournees, $PremiereLigneRetournee)
         {
             $this->db->limit($nbLignesRetournees, $PremiereLigneRetournee);
@@ -115,7 +111,6 @@
             $requete = $this->db->count_all_results();
             return $requete;
         }
-
         public function thematiqueRecherche($nomThematique, $nbLignesRetournees, $PremiereLigneRetournee)
         {
             $this->db->limit($nbLignesRetournees, $PremiereLigneRetournee);
@@ -152,9 +147,9 @@
             }
             $this->db->from('lieu');
             $this->db->like('Ville', $Recherche);
-            $this->db->or_where('CodePostal', $Recherche);
-            $this->db->or_where('Adresse', $Recherche);
-            $this->db->or_where('Ville', $Recherche);
+            $this->db->or_like('CodePostal', $Recherche);
+            $this->db->or_like('Adresse', $Recherche);
+            $this->db->or_like('Ville', $Recherche);
             $requete = $this->db->count_all_results();
             return $requete;
         }
@@ -171,34 +166,39 @@
             $this->db->or_like('nomLieu', $Recherche);
             $query = $this->db->get();
             $test = $query->result_array();
-            //var_dump($test);
+            var_dump($test);
             
-            $this->db->limit($nbLignesRetournees, $PremiereLigneRetournee);
-            $this->db->select('*');
-            $this->db->from('organisation');
-            $this->db->where_in($test);
-            $query = $this->db->get();
-            $Orga = $query->result_array();
-            //var_dump($Orga);
-
-            $this->db->limit($nbLignesRetournees, $PremiereLigneRetournee);
-            $this->db->select('*');
-            $this->db->from('avoirLieu aL');
-            $this->db->join('action a', 'aL.noAction=a.noAction');
-            $this->db->where_in($test);
-            $query = $this->db->get();
-            $Action = $query->result_array();
-            //var_dump($Action);
-
-            $resultats = array(
-                "actions"=>$Action,
-                "organisations"=>$Orga
-
-            );
-
-            //var_dump($resultats);
-
-            return $resultats;
+            if(!empty($test))
+            {
+                $this->db->limit($nbLignesRetournees, $PremiereLigneRetournee);
+                $this->db->select('*');
+                $this->db->from('organisation');
+                $this->db->where_in($test);
+                $query = $this->db->get();
+                $Orga = $query->result_array();
+                //var_dump($Orga);
+    
+                $this->db->limit($nbLignesRetournees, $PremiereLigneRetournee);
+                $this->db->select('*');
+                $this->db->from('avoirLieu aL');
+                $this->db->join('action a', 'aL.noAction=a.noAction');
+                $this->db->where_in($test);
+                $query = $this->db->get();
+                $Action = $query->result_array();
+                //var_dump($Action);
+    
+                $resultats = array(
+                    "actions"=>$Action,
+                    "organisations"=>$Orga
+    
+                );
+    
+                return $resultats;            
+            }
+            else 
+            {
+                return null;
+            }
         }
 
         public function nombreMotCle($Recherche = FALSE)
