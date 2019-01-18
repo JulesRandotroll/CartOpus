@@ -58,6 +58,15 @@
             echo form_open('Visiteur/Rechercher');
         ?>
     </div>
+   <?php  
+    if (isset($message))
+    {
+        echo'<div class="alert alert-danger alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Attention</strong> '.$message.'
+            </div>';
+    }
+    ?>
     <div class="col-sm-3" style="padding:10px">
         <div class = "text-center">
             <section>

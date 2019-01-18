@@ -7,6 +7,18 @@
             /* chargement database.php (dans config), obligatoirement dans le constructeur */
         }
 
+        public function getActionSimple($noAction)
+        {
+            //var_dump($noAction);
+            $DonnéesDeTest=array("a.NOACTION"=>$noAction);
+
+            $this->db->select('*');
+            $this->db->from('action a');
+            $this->db->join('AvoirLieu al','al.noAction=a.noAction');
+            $this->db->where($DonnéesDeTest);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
         public function getAction($DonnéesDeTest)
         {
            // var_dump($DonnéesDeTest);
@@ -60,10 +72,10 @@
         
         public function UpdateEtrePartenaire($DonnéesDeTest,$DonneesAModifier)
         {
-            var_dump($DonnéesDeTest);
+            //var_dump($DonnéesDeTest);
             $Where=array('NOACTION'=>$DonnéesDeTest['NoAction'],'NOACTEUR'=>$DonnéesDeTest['NoActeur']);
             $Donnees=array('DATEDEBUT'=>$DonneesAModifier['DateDebut'],'DATEFIN'=>$DonneesAModifier['DateFin']);
-            var_dump($Donnees);
+           // var_dump($Donnees);
             $this->db->where($Where);
             $this->db->update('etrepartenaire',$Donnees);
         }

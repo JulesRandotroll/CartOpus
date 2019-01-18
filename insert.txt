@@ -8,3 +8,5 @@ ADD NoTelVisible boolean
 
 ALTER TABLE `acteur` CHANGE `MailVisible` `MailVisible` BOOLEAN NULL DEFAULT FALSE;
 ALTER TABLE `acteur` CHANGE `NoTelVisible` `NoTelVisible` BOOLEAN NULL DEFAULT FALSE;
+
+ALTER TABLE `acteur` ADD `Finaliser` BOOLEAN NOT NULL DEFAULT FALSE ;

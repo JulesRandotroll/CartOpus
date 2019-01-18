@@ -30,7 +30,7 @@
                             // echo('</td><td>');
                             
                         echo '<div class="form-group">';
-                        echo '<span style="color:#FF0000"/> * </span>';
+                        echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                         echo form_label('Nom : ', 'Nom');
                         echo form_input('nom',$nom,array('required'=>'required','placeholder'=>'Votre nom','pattern'=>'[a-zA-Z ]{1,40}','class'=>'form-control')); 
                         echo '</div>';
@@ -51,29 +51,51 @@
                             // echo ('Email d\'identification: '); // creation d'un label devant la zone de saisie
                             // echo('</td><td>');
                             
-                        echo '<div class="form-group">';
-                        echo '<span style="color:#FF0000"/> * </span>';
-                        echo form_label('Mail : ', 'Mail');  
-                        echo form_input('mail',$mail,array('required'=>'required','placeholder'=>'Votre mail. Exemple : abc@exemple.com','pattern'=>'[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})','class'=>'form-control'));
+                        echo '<div class="row">';
+                            echo '<div class="col-xs-7">';
+                                echo '<div class="form-group">';
+                                    echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/>* </span>';
+                                    echo form_label('Mail : ', 'Mail');  
+                                    echo form_input('mail',$mail,array('required'=>'required','placeholder'=>'Votre mail. Exemple : abc@exemple.com','pattern'=>'[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})','class'=>'form-control'));
+                                echo '</div>';
+                            echo '</div>';
+                            echo '<div class="col-xs-4">';
+                                echo '<div class="form-group">';
+                                    echo form_label('Visible par tous', 'visible'); 
+                                    echo form_checkbox('checkmail',$mailvisible,false,array('class'=>'form-control input-sm', "id"=>'mailvisible'));
+                                    
+                                    //echo '<input type="checkbox" name="formWheelchair" value="Yes" />';
+                                echo '</div>';
+                            echo'</div>';
+                            echo '<div class="col-xs-1">';
+                            echo'<a href="#" class="btn btn-danger btn-xs" data-toggle="popover" title="RGPD" data-trigger="hover" data-content="Acceptez vous que votre mail soit visible par tout le monde ?">  ?</a>';
+                            echo '</div>';
                         echo '</div>';
                             // echo('</td></tr>');
 
                             // echo('<tr><td>');
                             // echo ('Téléphone : '); // creation d'un label devant la zone de saisie
                             //echo('</td><td>');                                
-                           
-                        echo '<div class="form-group">';
-                        echo form_label('Telephone : ', 'Telephone');
-                        echo form_input('tel',$tel,array('pattern'=>'[0-9]{10}','placeholder'=>'Votre numero de téléphone (facultatif)','class'=>'form-control'));
+                        echo '<div class="row">';
+                            echo '<div class="col-xs-7">';
+                                echo '<div class="form-group">';
+                                    echo form_label('Telephone : ', 'Telephone');
+                                    echo form_input('tel',$tel,array('pattern'=>'[0-9]{10}','placeholder'=>'Votre numero de téléphone (facultatif)','class'=>'form-control'));
+                                echo '</div>';
+                            echo '</div>';
+                            echo '<div class="col-xs-4">';
+                                echo '<div class="form-group">';
+                                    echo form_label('Visible par tous', 'visible'); 
+                                    echo form_checkbox('checktel', $telvisible, false,array('class'=>'form-control input-sm','id'=>'telvisible'));
+                                echo '</div>';
+                            echo'</div>';
+                            echo '<div class="col-xs-1">';
+                                echo'<a href="#" class="btn btn-danger btn-xs" data-toggle="popover" title="RGPD" data-trigger="hover" data-content="Acceptez vous que votre numéro de téléphone soit visible par tout le monde ?">  ?</a>';
+                            echo '</div>';
                         echo '</div>';
-                            // echo('</td></tr>');
-
-                            // echo('<tr><td>');
-                            // echo ('Mot de Passe: '); // creation d'un label devant la zone de saisie
-                            // echo('</td><td>');
                            
                         echo '<div class="form-group">';
-                        echo '<span style="color:#FF0000"/> * </span>';
+                        echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                         echo form_label('Mot De Passe : ', 'MDP');
                         echo form_password('mdp','',array('required'=>'required','placeholder'=>'Votre mot de passe','class'=>'form-control')).$message;
                         echo '</div>';
@@ -84,7 +106,7 @@
                             // echo('</td><td>');
                            
                         echo '<div class="form-group">';
-                        echo '<span style="color:#FF0000"/> * </span>';
+                        echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                         echo form_label('Confirmer mot de passe : ', 'ConfMDP');
                         echo form_password('confmdp','',array('required'=>'required','placeholder'=>'La confirmation de votre mot de passe','class'=>'form-control'));// VERIF si confirme == mdp
                         echo '</div>';
@@ -95,7 +117,7 @@
                             // echo('</td><td>');
                             
                         echo '<div class="form-group">';
-                        echo '<span style="color:#FF0000"/> * </span>';
+                        echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                         echo form_label('Question Secrète', 'Question'); 
                         echo form_dropdown('question', $Questions, 'default',array('required'=>'required','class'=>'form-control'));
                         echo '</div>';
@@ -105,7 +127,7 @@
                             // echo ('Reponse: '); 
                             // echo('</td><-group">';
                         echo '<div class="form-group">';
-                        echo '<span style="color:#FF0000"/> * </span>';
+                        echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                         echo form_label('Reponse : ', 'Rep');
                         echo form_input('reponse',$reponse,array('required'=>'required','placeholder'=>'La réponse à votre question secrète','pattern'=>'[A-Za-z0-9 ]{1,40}','class'=>'form-control'));
                         echo '</div>';
@@ -117,7 +139,7 @@
                         echo form_submit('valider', 'Valider l\'inscription',array('class'=>'btn btn-danger'));
                         echo '</div>';
                             //('</table>');
-                        echo '<br><h6><span style="color:#FF0000"/> *</span> Ces champs sont requis</h6> ';
+                        echo '<br><h6><span style="color:#FF0000"/> *</span> Ces champs sont obligatoires</h6> ';
                             //echo form_submit('retour', 'Retour');
                         echo form_close();
                     ?>
@@ -128,3 +150,8 @@
     </div>    
 </div>
 
+<script>
+$(document).ready(function(){
+$('[data-toggle="popover"]').popover();
+});
+</script>

@@ -45,7 +45,7 @@
                         
                         echo '<div class="form-group">';
                             echo form_label('Nom : ', 'Nom');
-                            echo form_input('nom',$Nom,array('placeholder'=>'Votre nom','pattern'=>'[a-zA-Z]{1,40}','class'=>'form-control')); 
+                            echo form_input('nom',$Nom,array('placeholder'=>'Votre nom','pattern'=>'[a-zA-Z ]{1,40}','class'=>'form-control')); 
                         echo '</div>';
                                 
                         echo '<div class="form-group">';

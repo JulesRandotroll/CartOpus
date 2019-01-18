@@ -14,6 +14,7 @@ class Acteur extends CI_Controller
         $this->load->library('session');
         $this->load->model('ModelActeur');
         $this->load->model('ModelAction');
+        $this->load->model('ModelCollaborateur');
         $this->load->library('upload');
  
         //var_dump($this->session->statut);
@@ -974,6 +975,9 @@ class Acteur extends CI_Controller
         $DonnéesTitre = array('TitreDeLaPage'=>'Ajout Collaborateur');
         $noActeur = $this->session->noActeur;
 
+        $Action=$this->ModelAction->getActionSimple($noAction);
+        //var_dump($Action);
+
         if ($this->input->post('valider'))
         {
             $Nom=$this->input->post('nom');
@@ -982,8 +986,6 @@ class Acteur extends CI_Controller
             $ConfMail=$this->input->post('confmail');
             $Role=$this->input->post('role');
 
-            //var_dump($Nom);
-            //echo 'plop';
             if ($Mail!=$ConfMail)
             {
                 $message='La confirmation de mail n\'est pas semblable au mail rentré ';
@@ -1011,10 +1013,13 @@ class Acteur extends CI_Controller
                 { 
                     $Acteur=$this->ModelActeur->GetActeur($noActeur);
                     //var_dump($Acteur);
-
-                    $SiteURL=site_url("Visiteur/SInscrire");
+                    //var_dump($noAction);
+                    
+                    //var_dump($Action);
+                    //$SiteURL=site_url('Visiteur/SInscrire');
+                    $SiteURL = "http://127.0.0.1/CartOpus/index.php/Visiteur/SInscrire";
                     $objet ='Demande d\inscription';
-                    $message = $Acteur[0]['NOMACTEUR'].' '.$Acteur[0]['PRENOMACTEUR'].' souhaiterai que vous soyez son collaborateur pour l\'évenement '.$noAction.' Et pour ceci il faut vous inscrire sur le site : '.$SiteURL;
+                    $message = $Acteur[0]['NOMACTEUR'].' '.$Acteur[0]['PRENOMACTEUR'].' souhaiterai que vous soyez son collaborateur pour l\'évenement '.$Action[0]['NOMACTION'].' Et pour ceci il faut vous inscrire sur le site : '.$SiteURL;
                     
                     $mail = $this->input->post('mail');
                     //var_dump($mail);
@@ -1028,10 +1033,36 @@ class Acteur extends CI_Controller
                     {
                         $this->email->print_debugger();
                     }
+                    else
+                    {
+                        redirect('Acteur/AccueilActeur');
+                    }
                 }
                 else
                 {
-                    echo' insert dans etrepartenaire avec le role du dropdown et l\'acteur choisi pour l\'action selectionnée';
+                   // echo' insert dans etrepartenaire (noAction,noActeur,noRole,DateD,DateF)
+                        //insert dans ProfilPourAction (noActeur,noAction,DateD,noProfil,DateF)';
+
+                    $donnéesEtrePartenaire=array(
+                        'noAction'=>$noAction,
+                        'noActeur'=>$noActeur,
+                        'noRole'=>$Role,
+                        'DateDebut'=>$Action[0]['DATEDEBUT'],
+                        'DateFin'=>$Action[0]['DATEFIN'],
+                    );
+
+                    //var_dump($donnéesEtrePartenaire);
+                    $donnéesProfilPourAction=array(
+                        'noActeur'=>$noActeur,
+                        'noAction'=>$noAction,
+                        'DateDebut'=>$Action[0]['DATEDEBUT'],
+                        'noProfil'=>2,
+                        'DateFin'=>$Action[0]['DATEFIN'],
+                    );  
+                   // var_dump($donnéesProfilPourAction);  
+                    $this->ModelCollaborateur->insertEtrePartenaire($donnéesEtrePartenaire);
+                    $this->ModelCollaborateur->insertProfilPourAction($donnéesProfilPourAction);  
+                    redirect('Acteur/AccueilActeur');
                 }
             }
         }
