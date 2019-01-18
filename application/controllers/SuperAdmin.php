@@ -110,11 +110,12 @@ class SuperAdmin extends CI_Controller {
             }
             elseif($this->session->flashdata('Attention')!=null)
             {
+                $Attention = $this->session->flashdata('Attention');
                 $Données=array(
                     'Thematique'=>$thematiques,
                     'Theme_SsTheme'=>$DpdThematiques,
                     'SsThemes'=>$SsThematique,
-                    'Danger'=>$Danger
+                    'Attention'=>$Attention
                 );
             }
             else
@@ -178,7 +179,7 @@ class SuperAdmin extends CI_Controller {
 
     public function CreerSsThematique($noThematique)
     {
-        var_dump($noThematique);
+        //var_dump($noThematique);
         if($noThematique != '0')
         {
             $SousThematque = $this->input->post('nouvellesousthematique');
@@ -187,7 +188,7 @@ class SuperAdmin extends CI_Controller {
             $Donnees = array('NOMTHEMATIQUE'=>$SousThematque);
             $Thematiques = $this->ModelThematique->getThematiquesExiste($Donnees);
 
-            var_dump($Donnees);
+            //var_dump($Donnees);
 
             if(empty($Thematiques))
             {
@@ -259,6 +260,9 @@ class SuperAdmin extends CI_Controller {
         if($noThematique != '0')
         {
             $Where = array('NoThematique'=>$noThematique);
+
+            $Existe = $this->ModelThematique6>getThematique_SousThematiqueExiste($Where);
+
             $this->ModelThematique->DeleteThematique($Where);
             
             $Message = 'Suppression de la thématique effectuée';

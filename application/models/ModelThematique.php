@@ -7,6 +7,43 @@
             /* chargement database.php (dans config), obligatoirement dans le constructeur */
         }
 
+        public function getThematiquesExiste($NomThematique)
+        {
+            $this->db->select('NomThematique');
+            $this->db->from('Thematique');
+            $this->db->where($NomThematique);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
+        public function getSousThematiqueExiste($Where)
+        {
+            $this->db->select('*');
+            $this->db->from('SousThematique');
+            $this->db->where($Where);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
+        public function getMotCleExiste($Donnees)
+        {
+            $this->db->select("MotCle");
+            $this->db->from("FaireReference");
+            $this->db->where($Donnees);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
+        public function getThematique_SousThematiqueExiste($Where)
+        {
+            $this->db->select('*');
+            $this->db->from('sousThematique');
+            $this->db->where($Where);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
+
 
         public function getSurThematiques()
         {
@@ -40,33 +77,6 @@
             $requete = $this->db->get();
             return $requete->result_array();
             
-        }
-
-        public function getThematiquesExiste($NomThematique)
-        {
-            $this->db->select('NomThematique');
-            $this->db->from('Thematique');
-            $this->db->where($NomThematique);
-            $requete = $this->db->get();
-            return $requete->result_array();
-        }
-
-        public function getSousThematiqueExiste($Where)
-        {
-            $this->db->select('*');
-            $this->db->from('SousThematique');
-            $this->db->where($Where);
-            $requete = $this->db->get();
-            return $requete->result_array();
-        }
-
-        public function getMotCleExiste($Donnees)
-        {
-            $this->db->select("MotCle");
-            $this->db->from("FaireReference");
-            $this->db->where($Donnees);
-            $requete = $this->db->get();
-            return $requete->result_array();
         }
 
         public function getTheme_SousTheme()

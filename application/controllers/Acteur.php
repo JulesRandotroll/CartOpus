@@ -34,17 +34,16 @@ class Acteur extends CI_Controller
         $Acteur = $this->ModelActeur->getActeur($noActeur);
         //On va chercher les information concernant l'acteur connecté dans la BDD 
         
-        //var_dump($Acteur); //=> sert à voir ce qui est contenu dans la variable (ici $Acteur)
-        
+       
         $Organisation = $this->ModelActeur->getOrganisation($noActeur);
         //on va chercher les information concernant l'organisation à laquelle appartient l'acteur connecté
         //il se peut que cette variable soit "null", auquel cas il faut mettre une condition dans la view
         // pour ne pas tenter de l'afficher s'l n'y a rien de dedans ^^ 
-        //echo 'orga : ';
-        //var_dump($Organisation);
+
         $Action = $this->ModelActeur->getActions($noActeur);
         //Même topo que pour $Organisation
-        //var_dump($Action);
+ 
+
         $Données = array(
             'Acteur'=>$Acteur[0],
             'Organisation'=> $Organisation,
@@ -251,23 +250,13 @@ class Acteur extends CI_Controller
 
         $Actions =$this->ModelAction->getSousAction($noAction,$DateDebut,$DateFin); 
         
-        //var_dump($Actions);
-         //var_dump($noAction);
-        //var_dump($dateDebut);
-        //str_split($dateDebut,'$20%');
-        //$DateDebut=str_replace('%20',' ',$dateDebut);
 
         $Donnees = array('a.noaction'=>$noAction,'datedebut'=>$DateDebut,);
         $Action = $this->ModelAction->getAction($Donnees);
-        //var_dump($Action);
 
-        // $Doonnes = array('a.noaction'=>$noAction,'datedebut'=>$DateDebut,);
-        // $Action = $this->ModelAction->getAction($Doonnes);
-        //var_dump($Action);
         $Donnes = array('NOACTION'=>$noAction,'DATEACTION'=>$DateDebut,);
-        //var_dump($Donnes);
         $Fichiers = $this->ModelAction->getFichersPourAction($Donnes);
-        //var_dump($Fichiers);
+
         if(empty($Fichiers))
         {
            
@@ -922,6 +911,7 @@ class Acteur extends CI_Controller
         //echo ($noAction);
 
     }
+
     public function ContacterAdmin()
     {
         $noActeur = $this->session->noActeur;
@@ -1057,6 +1047,7 @@ class Acteur extends CI_Controller
             $this->load->view('templates/PiedDePage');
         }
     }
+
     public function AjoutThematique($NomAction)
     {
         // sortir toutes les thématiques dans faire références puis recup le nom correspondant puis les injectées
@@ -1069,6 +1060,120 @@ class Acteur extends CI_Controller
         $this->load->view('templates/PiedDePage');
     }
 
-    
+    public function AjoutSousAction($noAction)
+    {
+        $Where = array('a.noAction'=>$noAction);
+        $Action =$this->ModelAction->getAction($Where);
+
+        if($this->input->post('Ajouter'))
+        {
+            $TitreAction = $this->input->post('TitreAction');
+            $Adresse = $this->input->post('Adresse');
+            $CP = $this->input->post('CP');
+            $Ville =     $this->input->post('Ville'); 
+            $DateD = $this->input->post('DateDebut');
+            $HeureD = $this->input->post('HeureDebut');
+            $DateF = $this->input->post('DateFin');
+            $HeureF = $this->input->post('HeureFin');
+            $Description = $this->input->post('Description');
+
+            // echo( $TitreAction );
+            // echo( $Adresse.' '.$CP.' - '.$Ville );
+            // echo( $DateD.' '.$HeureD);
+            // echo( $DateF.' '.$HeureF);
+            // echo( $Description );
+            
+            $DateDebut = $DateD.' '.$HeureD.':00';
+            $DateFin = $DateF.' '.$HeureF.':00';
+           if($DateFin < $DateDebut && $DateFin != ' :00')
+            {
+                
+                $Message = 'Erreur dans les dates : La date de fin saisie est inférieur à la date de début, votre évènement se termine avant d\'avoir commencé';
+
+                $DonneesInjectees = array(
+                    'Actions'=>$Action,
+                    'TitreAction'=>$TitreAction,
+                    'Adresse'=>$Adresse,
+                    'CP'=>$CP,
+                    'Ville'=>$Ville,
+                    'Description'=>$Description,
+                    'Message'=>$Message
+                );
+            }
+            elseif($DateDebut < $Action[0]['DATEDEBUT'] || $DateFin > $Action[0]['DATEFIN'] && $DateFin != ' ')
+            {
+                $Message = 'Les dates que vous avez saisie ne sont pas comprise dans la période définie par l\'action principale ';
+                
+                $DonneesInjectees = array(
+                    'Actions'=>$Action,
+                    'TitreAction'=>$TitreAction,
+                    'Adresse'=>$Adresse,
+                    'CP'=>$CP,
+                    'Ville'=>$Ville,
+                    'Description'=>$Description,
+                    'Message'=>$Message
+                );
+            }
+            else
+            {
+                $DonneeLieu = array(
+                    'Adresse'=>$Adresse,
+                    'CodePostal'=>$CP,
+                    'Ville'=>$Ville
+                );
+                $Lieu = $this->ModelAction->getLieu($DonneeLieu);
+                if(empty($Lieu))
+                {
+                    $noLieu = $this->ModelAction->insertLieu($DonneeLieu);
+                    var_dump($noLieu);
+                }
+                else{
+                    var_dump($Lieu);
+                    $noLieu = $Lieu[0]['nolieu'];
+                }
+                if($DateFin !=' :00')
+                {
+                    $DonneesAInserer=array(
+                        'noAction'=>$noAction,
+                        'DateDebut'=>$DateDebut,
+                        'TitreAction'=>$TitreAction,
+                        'DateFin'=>$DateFin,
+                        'description'=>$Description,
+                        'nolieu'=>$noLieu,
+                    );
+                }
+                else
+                {
+                    $DonneesAInserer=array(
+                        'noAction'=>$noAction,
+                        'DateDebut'=>$DateDebut,
+                        'TitreAction'=>$TitreAction,
+                        'DateFin'=>null,
+                        'description'=>$Description,
+                        'nolieu'=>$noLieu,
+                    );    
+                }
+                $this->ModelAction->insertAvoirLieu($DonneesAInserer);
+                redirect('Acteur/AfficherActionSelectionnee/'.$noAction.'/'.$Action[0]['DATEDEBUT'].'/'.$Action[0]['DATEFIN'],'refresh');
+            }
+        }
+        else
+        {
+            $DonneesInjectees = array(
+                'Actions'=>$Action,
+                'TitreAction'=>'',
+                'Adresse'=>'',
+                'CP'=>'',
+                'Ville'=>'',
+                'Description'=>'',
+            );
+
+        }
+        $DonnéesTitre = array('TitreDeLaPage'=>'Ajout Sous Action');
+        $this->load->view('templates/Entete',$DonnéesTitre);
+        $this->load->view('Acteur/AjoutSousAction',$DonneesInjectees);
+        $this->load->view('templates/PiedDePage');
+        
+    }
 }
 ?>

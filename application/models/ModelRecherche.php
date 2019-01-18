@@ -129,14 +129,6 @@
                 return $jeuEnr;
             }
             return FALSE;
-
-             /* 
-                SELECT * 
-                FROM thematique t, fairereference f, action a
-                WHERE t.nothematique = f.nothematique
-                AND f.noaction=a.noaction
-                AND nomthematique like '%Multimedia%'
-             */
         }
 
         public function nombreLieu($Recherche = FALSE)

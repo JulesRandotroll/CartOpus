@@ -4,7 +4,6 @@
                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:#FFFFFF ;background-color:#0E7896">Action
                        <span class="caret"></span></a>
                        <ul class="dropdown-menu" style="background-color:#139CBC">
-                       <li><a href="'.site_url('Acteur/AjoutSousAction').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter SousAction</a></li>
                        <li><a href="'.site_url('Acteur/ChoixAction/1').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-repeat"></span> Renouveler Action</a></li>
                        <li><a href="'.site_url('Acteur/ChoixAction/2').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-pencil"></span> Modifier Action</a></li>   
                        <li><a href="'.site_url('Acteur/ChoixAction/3').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-trash"></span> Supprimer Action</a></li>
@@ -45,13 +44,13 @@
                         echo '<div class="form-group">';
                         echo '<span style="color:#FF0000"/> * </span>';
                         echo form_label('Nom de l\'action : ', 'Name');
-                        echo form_input('NomAction',$NomAction, '', array("placeholder"=>"Nom de votre action",'required'=>'required',"class"=>"form-control"));
+                        echo form_input('NomAction',$NomAction, array("placeholder"=>"Nom de votre action",'required'=>'required',"class"=>"form-control"));
                     echo '</div>';
 
                     echo '<div class="col-xs-4">';
                         echo '<div class="form-group">';
                             echo form_label('Adresse : ', 'adresse');
-                            echo form_input('Adresse', $Adresse,'', Array("placeholder"=>"Adresse ex : 1 rue de la plomberie","class"=>"form-control"));
+                            echo form_input('Adresse', $Adresse, Array("placeholder"=>"Adresse ex : 1 rue de la plomberie","class"=>"form-control"));
                         echo '</div>';
                     echo'</div>';
 
@@ -59,7 +58,7 @@
                         echo '<div class="form-group">';
                             echo '<span style="color:#FF0000"/> * </span>';
                             echo form_label('Code Postale : ', 'CP');
-                            echo form_input('CodePostale', $CodePostale,'', Array('pattern'=>'([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}','placeholder'=>'Code postale ex : 22000','required'=>'required',"class"=>"form-control"));
+                            echo form_input('CodePostale', $CodePostale, Array('pattern'=>'([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}','placeholder'=>'Code postale ex : 22000','required'=>'required',"class"=>"form-control"));
                         echo '</div>';
                     echo '</div>';
 
@@ -67,7 +66,7 @@
                         echo '<div class="form-group">';
                             echo '<span style="color:#FF0000"/> * </span>';
                             echo form_label('Ville : ', 'ville');
-                            echo form_input('Ville', $Ville,'', Array("placeholder"=>"Ville ex : Saint Brieuc",'pattern="[a-zA-Z ]*"','required'=>'required',"class"=>"form-control"));
+                            echo form_input('Ville', $Ville, Array("placeholder"=>"Ville ex : Saint Brieuc",'pattern="[a-zA-Z ]*"','required'=>'required',"class"=>"form-control"));
                         echo '</div>';
                     echo '</div>';
 
@@ -119,7 +118,7 @@
 
                     echo '<div class="form-group">';
                         echo form_label('Description ', 'Desc');
-                        echo form_textarea('Description', $Description,'',Array("placeholder"=>"Ici, votre description","class"=>"form-control"));
+                        echo form_textarea('Description', $Description,Array("placeholder"=>"Ici, votre description","class"=>"form-control"));
                     echo '</div>';
 
                     echo '<div class="form-group">';

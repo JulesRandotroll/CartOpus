@@ -9,7 +9,7 @@
 
         public function getAction($DonnéesDeTest)
         {
-            var_dump($DonnéesDeTest);
+            //var_dump($DonnéesDeTest);
             $this->db->select('*');
             $this->db->from('Action a');
             $this->db->join('AvoirLieu al','al.noAction=a.noAction');
@@ -60,10 +60,10 @@
         
         public function UpdateEtrePartenaire($DonnéesDeTest,$DonneesAModifier)
         {
-            var_dump($DonnéesDeTest);
+            //var_dump($DonnéesDeTest);
             $Where=array('NOACTION'=>$DonnéesDeTest['NoAction'],'NOACTEUR'=>$DonnéesDeTest['NoActeur']);
             $Donnees=array('DATEDEBUT'=>$DonneesAModifier['DateDebut'],'DATEFIN'=>$DonneesAModifier['DateFin']);
-            var_dump($Donnees);
+            //var_dump($Donnees);
             $this->db->where($Where);
             $this->db->update('etrepartenaire',$Donnees);
         }

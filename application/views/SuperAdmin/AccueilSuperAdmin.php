@@ -21,7 +21,7 @@
                     petite page d'accueil
                 </div>
             </section>
-        <BR>
+            <BR>
         </div>
     </div>
 </div>

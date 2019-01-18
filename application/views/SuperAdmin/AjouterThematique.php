@@ -38,7 +38,7 @@
         }
         elseif(isset($Attention))
         {
-            echo"<div class='alert alert-attention alert-dismissible'>
+            echo"<div class='alert alert-warning alert-dismissible'>
                 <a href='#' class = 'close' data-dismiss='alert' aria-label='close'>&times;</a>
                 <strong> Attention </strong> ".$Attention."
             </div>";
