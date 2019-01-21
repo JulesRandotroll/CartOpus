@@ -328,7 +328,8 @@ class Visiteur extends CI_Controller
       (
         'mail'=>$this->input->post('mail'),
         //adresse mail saisie par l'utilisateur.
-        'mdp'=>$this->input->post('mdp'),
+        'motdepasse'=>$this->input->post('mdp'),
+        'finaliser'=>true,
       );
       $test = $this->ModelSeConnecter->Test_Inscrit($donneesATester);
       // echo'deja inscrit ?';
@@ -356,6 +357,7 @@ class Visiteur extends CI_Controller
 
         if ($this->session->statut==1)
         {
+          //var_dump($noActeur);
           redirect('Acteur/AccueilActeur');
         }
         if ($this->session->statut==4)

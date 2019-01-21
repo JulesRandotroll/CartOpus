@@ -33,6 +33,7 @@ class Acteur extends CI_Controller
         //On stocke dans une variable locale l'identifiant BDD de l'acteur connecté
 
         $Acteur = $this->ModelActeur->getActeur($noActeur);
+        //var_dump( $Acteur);
         //On va chercher les information concernant l'acteur connecté dans la BDD 
         
        
@@ -49,7 +50,6 @@ class Acteur extends CI_Controller
             'Acteur'=>$Acteur[0],
             'Organisation'=> $Organisation,
             'Action'=> $Action,
-            'message'=>'',
         );
         $DonnéesTitre = array('TitreDeLaPage'=>$Acteur[0]['NOMACTEUR'].' '.$Acteur[0]['PRENOMACTEUR']);
         
@@ -331,21 +331,28 @@ class Acteur extends CI_Controller
             $noAction=$this->input->post('Action');
             $this->SupprimerAction($noAction);
         }
-        if($this->input->post('Choix_Ajout_Collaborateur'))
+        if($this->input->post('Choix_Ajout_SousAction'))
         {
             $noAction=$this->input->post('Action');
-            redirect('Acteur/AjoutCollaborateur/'.$noAction); 
+            redirect('Acteur/AjoutSousAction/'.$noAction); 
+        }
+        if($this->input->post('Choix_Afficher'))
+        {
+            $noAction=$this->input->post('Action');
+            redirect('Acteur/AfficherActionSelectionnee/'.$noAction); 
         }
         else
         {
             //$noActeur = $this->session->noActeur;
             $this->load->model('ModelActeur'); // on charge le modele correspondant
             $action= $this->ModelActeur->getActions($noActeur);
-            if($action==null)
-            {
-                redirect('Acteur/AccueilActeur');
-                // message a calé
-            }
+
+           // var_dump($action);
+        
+           if ($action==null)
+           {
+               redirect('Acteur/AccueilActeur');
+           }
             $i=0;
             //var_dump($action);
             foreach($action as $uneAction)
