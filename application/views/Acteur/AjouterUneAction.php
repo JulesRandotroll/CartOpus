@@ -43,7 +43,7 @@
                             </div>';
                         }
                         echo '<div class="form-group">';
-                        echo '<span style="color:#FF0000"/> * </span>';
+                        echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                         echo form_label('Nom de l\'action : ', 'Name');
                         echo form_input('NomAction',$NomAction, '', array("placeholder"=>"Nom de votre action",'required'=>'required',"class"=>"form-control"));
                     echo '</div>';
@@ -57,7 +57,7 @@
 
                     echo '<div class="col-xs-4">';
                         echo '<div class="form-group">';
-                            echo '<span style="color:#FF0000"/> * </span>';
+                        echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                             echo form_label('Code Postale : ', 'CP');
                             echo form_input('CodePostale', $CodePostale,'', Array('pattern'=>'([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}','placeholder'=>'Code postale ex : 22000','required'=>'required',"class"=>"form-control"));
                         echo '</div>';
@@ -65,7 +65,7 @@
 
                     echo '<div class="col-xs-4">';
                         echo '<div class="form-group">';
-                            echo '<span style="color:#FF0000"/> * </span>';
+                        echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                             echo form_label('Ville : ', 'ville');
                             echo form_input('Ville', $Ville,'', Array("placeholder"=>"Ville ex : Saint Brieuc",'pattern="[a-zA-Z ]*"','required'=>'required',"class"=>"form-control"));
                         echo '</div>';
@@ -76,12 +76,12 @@
 
                     echo '<div class="col-xs-6">';
                         echo '<div class="form-group">';
-                            echo '<span style="color:#FF0000"/> * </span>';
+                        echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                             echo form_label('Date de debut : ', 'dd');
                             echo '<input class="form-control" name="DateDebut" id="date" type="date" value="'.$ToDay.'" required>';
                         echo '</div>';
                         echo '<div class="form-group">';
-                            echo '<span style="color:#FF0000"/> * </span>';
+                        echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                             echo form_label('Heure de debut : ', 'dd');
                             echo '<input class="form-control" name="HeureDebut" id="time" type="time" value="'.$ToDayH.'"required>';
                             //echo form_input('HeureDebut', '', Array("placeholder"=>"Heure ex : 14:14",'required'=>'required','class'=>'form-control'));
@@ -131,7 +131,7 @@
                             echo form_submit('Ajouter', 'Ajouter',array("class"=>"btn btn-danger btn-lg"));
                         echo '</div>';
                         
-                        echo '<br><h6><span style="color:#FF0000"/> *</span> Ces champs sont requis</h6> ';
+                        echo '<br><h6><span style="color:#FF0000"/> *</span> Ces champs sont obligatoires</h6> ';
                         echo form_close();
                         
                     ?>
@@ -141,3 +141,8 @@
     </div>    
 </div>
 
+<script>
+$(document).ready(function(){
+$('[data-toggle="popover"]').popover();
+});
+</script>

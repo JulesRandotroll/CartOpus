@@ -351,6 +351,11 @@ class Acteur extends CI_Controller
             //$noActeur = $this->session->noActeur;
             $this->load->model('ModelActeur'); // on charge le modele correspondant
             $action= $this->ModelActeur->getActions($noActeur);
+            if($action==null)
+            {
+                redirect('Acteur/AccueilActeur');
+                // message a calé
+            }
             $i=0;
             //var_dump($action);
             foreach($action as $uneAction)

@@ -87,6 +87,13 @@
             <section>
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                         <?php 
+                        if ($message!="")
+                        {
+                        echo'<div class="alert alert-danger alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong>Attention</strong> '.$message.'
+                            </div>';
+                        }
                             echo'<div class="table-responsive">';
                             $this->table->set_heading('Nom','Rôle de '.$Acteur['NOMACTEUR'].' '.$Acteur['PRENOMACTEUR'],'Site Internet','Date de debut','Description','');
                             //var_dump($Action);
