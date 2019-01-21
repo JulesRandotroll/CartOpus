@@ -132,6 +132,7 @@
         }
         
         //Sert aussi à supprimer une sousthematique 
+        //Et delier les sous thématiques associées à une thématique 
         public function updateSsThematique_To_Thematique($Where)
         {
             

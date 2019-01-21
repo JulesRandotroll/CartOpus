@@ -232,7 +232,67 @@ $(function()
         }
     });
     
+    //Dropdownn function délier thématiques
+    $('.delier_Thematique').on('click',function()
+    {
+        noSousThematique = $(this).val();
+        nomSousThematique = $(this).find("a").eq(0).html();
+        document.getElementById('Dropdown_Delier_Thematique').innerHTML=nomSousThematique; 
+        document.getElementById('Dropdown_Delier_Thematique').value=noSousThematique;
 
+    });
+    $('#btn_delier_thematique').confirm({
+        icon: 'glyphicon glyphicon-alert' ,
+        title: 'Attention : Irréversible' ,
+        content: 'Voulez-vous réellement déluier toutes les sous-thématiques liées à cette thématique ?',
+        type: 'red' ,
+        typeAnimated: true ,
+        autoClose: 'cancel|10000' , 
+        buttons: 
+        {
+            confirm:
+            { 
+                text:"Confirmer",
+                action: function () 
+                {
+                    if($('#Dropdown_Delier_Thematique').val())
+                    {
+                        noThematique=$('#Dropdown_Delier_Thematique').val();
+                    }
+                    else
+                    {
+                        noThematique ='0';
+                    }
+                    location.href = $('#form_DelierSousThematiques').attr('action')+'/'+noThematique;
+                    //alert($('#form_Migrer').attr('action'));   
+                }
+            },
+            cancel:
+            {
+                text:"Annuler",
+                btnClass: 'btn-red',
+                
+            }
+        }
+    });
     
-    
+    //Dropdown function délier sous thématique
+    $('.delier_SousThematique').on('click',function()
+    {
+        noSousThematique = $(this).val();
+        nomSousThematique = $(this).find("a").eq(0).html();
+        document.getElementById('Dropdown_Delier_SousThematique').innerHTML=nomSousThematique; 
+        document.getElementById('Dropdown_Delier_SousThematique').value=noSousThematique;
+
+    });
 });
+
+function getSousThematiques(noThematique)
+{
+    var requete = new XMLHttpRequest();
+    requete.open('GET','SelectSousThematique.php?noThematique='+noThematique,false);
+    requete.send(null)
+
+    var reponse = requete.responseText;
+    alert(reponse);
+}

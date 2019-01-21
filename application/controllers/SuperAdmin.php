@@ -3,17 +3,17 @@ class SuperAdmin extends CI_Controller {
 
     public function __construct()
     {
-       parent::__construct();
-       $this->load->helper('url');
-       $this->load->helper('assets'); // helper 'assets' ajouté a Application
-       $this->load->library("pagination");
-       $this->load->library('email');
-       $this->load->library('table');
-       $this->load->helper('form');
-       $this->load->model('ModelActeur');
-       $this->load->model('ModelThematique');
-       $this->load->library('session');
-       if ($this->session->statut!=5)
+        parent::__construct();
+        $this->load->helper('url');
+        $this->load->helper('assets'); // helper 'assets' ajouté a Application
+        $this->load->library("pagination");
+        $this->load->library('email');
+        $this->load->library('table');
+        $this->load->helper('form');
+        $this->load->model('ModelActeur');
+        $this->load->model('ModelThematique');
+        $this->load->library('session');
+        if ($this->session->statut!=5)
         {
             redirect('Visiteur/loadAccueil');
         };
@@ -129,7 +129,7 @@ class SuperAdmin extends CI_Controller {
             
             
             $this->load->view('templates/Entete',$DonnéesTitre);
-            $this->load->view('SuperAdmin/AjouterThematique',$Données);
+            $this->load->view('SuperAdmin/GererThematique',$Données);
             $this->load->view('templates/PiedDePage');
         
     }
@@ -261,13 +261,23 @@ class SuperAdmin extends CI_Controller {
         {
             $Where = array('NoThematique'=>$noThematique);
 
-            $Existe = $this->ModelThematique6>getThematique_SousThematiqueExiste($Where);
-
-            $this->ModelThematique->DeleteThematique($Where);
+            $Existe = $this->ModelThematique->getThematique_SousThematiqueExiste($Where);
+            var_dump($Existe);
+            if(empty($Existe))
+            {
+                $this->ModelThematique->DeleteThematique($Where);
+                
+                $Message = 'Suppression de la thématique effectuée';
+                $this->session->set_flashdata('Message',$Message);
+                redirect('SuperAdmin/AfficherThematique');
+            }
+            else
+            {
+                $Message = 'Cette thématique est liée à une ou plusieur sous thématique, veuillez supprimer ces liens avant svp';
+                $this->session->set_flashdata('Attention',$Message);
+                //redirect('SuperAdmin/AfficherThematique');
+            }
             
-            $Message = 'Suppression de la thématique effectuée';
-            $this->session->set_flashdata('Message',$Message);
-            redirect('SuperAdmin/AfficherThematique');
         }
         else
         {
@@ -296,6 +306,51 @@ class SuperAdmin extends CI_Controller {
         else
         {
             $Message = 'Veuillez sélectionner une thématique à suprimer, merci';
+            $this->session->set_flashdata('Danger',$Message);
+            redirect('SuperAdmin/AfficherThematique');
+        }
+    }
+
+    public function DelierSousThematiques($noThematique)
+    {
+        if($noThematique != '0')
+        {
+            $Where = array('noThematique'=>$noThematique);
+
+            $this->ModelThematique->updateSsThematique_To_Thematique($Where);
+            $this->ModelThematique->DeleteThematique($Where);
+        
+            $Message = 'Toutes les sous thématiques ont été délié de la thématique choisie';
+            $this->session->set_flashdata('Message',$Message);
+            redirect('SuperAdmin/AfficherThematique');
+        }
+        else
+        {
+            $Message = 'Veuillez sélectionner une thématique à laquelle délier toutes les sous thématiques, merci';
+            $this->session->set_flashdata('Danger',$Message);
+            redirect('SuperAdmin/AfficherThematique');
+        }
+        
+    }
+
+    public function DelierUneSousThematiques($noThematique, $noSousThematique)
+    {
+        if($noThematique != '0' && $noSousThematique != '0')
+        {
+            $Where = array(
+                'noThematique'=>$noThematique,
+                'noSousThematique'=>$noSousThematique
+            );
+
+            $this->ModelThematique->updateSsThematique_To_Thematique($Where);
+        
+            $Message = 'La sous thématique a été déliée de la thématique choisie';
+            $this->session->set_flashdata('Message',$Message);
+            redirect('SuperAdmin/AfficherThematique');
+        }
+        else
+        {
+            $Message = 'Veuillez selectionner une thematique et / ou une sous thematique, merci';
             $this->session->set_flashdata('Danger',$Message);
             redirect('SuperAdmin/AfficherThematique');
         }

@@ -46,7 +46,7 @@
                         echo form_open('Acteur/AjoutSousAction/'.$Actions[0]['NOACTION']);
                     ?>
                         <div class='form-group'>
-                        <span style="color:#FF0000"/> * </span>
+                            <span style="color:#FF0000"/> * </span>
                             <?php 
                                 echo form_label('Nom de la sous action : ','lbl_TitreAction');
                                 echo form_input('TitreAction',$TitreAction,array('class'=>'form-control','required'=>'required','placeholder'=>'Veuillez saisir le nom de votre sous action'));
@@ -55,6 +55,7 @@
                         <div class='row'>
                             <div class='col-xs-4'>
                                 <div class='form-group'>
+                                    <span style="color:#FF0000"/> * </span>
                                     <?php 
                                         echo form_label('Adresse : ', 'lbl_Adresse');    
                                         echo form_input('Adresse',$Adresse,array('class'=>'form-control','required'=>'required','placeholder'=>'Veuillez saisir l\'adresse de votre sous action'));
@@ -63,6 +64,7 @@
                             </div>
                             <div class='col-xs-4'>
                                 <div class='form-group'>
+                                    <span style="color:#FF0000"/> * </span>
                                     <?php 
                                         echo form_label('Code Postale : ', 'lbl_CP');    
                                         echo form_input('CP',$CP,array('class'=>'form-control','required'=>'required','placeholder'=>'Veuillez saisir le code postale de votre sous action'));
@@ -71,6 +73,7 @@
                             </div>
                             <div class='col-xs-4'>
                                 <div class='form-group'>
+                                    <span style="color:#FF0000"/> * </span>
                                     <?php 
                                         echo form_label('Ville : ', 'lbl_Ville');    
                                         echo form_input('Ville',$Ville,array('class'=>'form-control','required'=>'required','placeholder'=>'Veuillez saisir la ville de votre sous action'));
@@ -81,12 +84,14 @@
                         <div class='row'>
                             <div class='col-xs-6'>
                                 <div class='form-group'>
+                                    <span style="color:#FF0000"/> * </span>
                                     <?php
                                         echo form_label('Date de debut : ', 'dd');
                                         echo '<input class="form-control" name="DateDebut" id="dd" type="date" value="" required>'; 
                                     ?>
                                 </div>
                                 <div class='form-group'>
+                                    <span style="color:#FF0000"/> * </span>
                                     <?php
                                         echo form_label('Heure de debut : ', 'hd');
                                         echo '<input class="form-control" name="HeureDebut" id="hd" type="time" value="" required>'; 

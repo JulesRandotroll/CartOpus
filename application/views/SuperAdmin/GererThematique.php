@@ -1,4 +1,4 @@
-<ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav navbar-right">
                         <?php 
                             echo'<li><a href="'.site_url('SuperAdmin/AccueilSuperAdmin').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-user"></span> Page Perso</a></li>';
                             echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se Déconnecter</a></li>';
@@ -16,7 +16,7 @@
 
 
 
-<!--  Affichage de toute les thematiques et sous thematiques  -->
+<!-- Messages affichés en cas d'erreur ou d'insertion correcte dans la BDD !-->
 <div class="row" style="background-color:#15B7D1">
     <div class='col-sm-1'>
     </div>
@@ -46,6 +46,9 @@
         ?>
     </div>
 </div>
+
+
+<!--  Affichage de toute les thematiques et sous thematiques  -->
 <div class="row" style="background-color:#15B7D1">
     <div class="col-sm-3">
     </div>
@@ -54,7 +57,6 @@
         <H1 align = "center" style="color:#FFFFFF">Liste des thématiques et sous thématiques</H1>
             <section >
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
-                    
                     <?php
 
                         echo '<div class="form-group">';
@@ -75,8 +77,6 @@
 
 <!--  Creation thematique et sous thematique  -->
 <div class="row" style="background-color:#15B7D1"> 
-
-
     <div class="col-sm-1"></div>
     <!-- Ajout Thématique -->
     <div class="col-sm-5">
@@ -165,6 +165,7 @@
 <div class="row" style="background-color:#15B7D1">
     <div class='col-sm-1'>
     </div>
+    <!-- Lier sous-thématique à Thématique -->
     <div class='col-sm-5'>
         <div class='text-center'>
             <H1 align = "center" style="color:#FFFFFF">Lier thématique et sous-thématique</H1>
@@ -227,6 +228,7 @@
             </section>
         </div> 
     </div>
+    <!-- Migration sous-thématique vers Thématique -->
     <div class="col-sm-5">
         <div class='text-center'>
             <H1 align = "center" style="color:#FFFFFF">Migration de sous-thématiques vers thématique</H1>
@@ -277,13 +279,14 @@
     <div class='col-sm-1'></div>
 </div>
 
-<!--  PLOP -->
+<!--  Supprimer Thématique et supprimer sous thématique -->
 <div class="row" style="background-color:#15B7D1">
     <div class='col-sm-1'>
     </div>
+    <!-- Supprimer une thématique -->
     <div class='col-sm-5'>
         <div class='text-center'>
-            <H1 align = "center" style="color:#FFFFFF">Supprimmer une thématique</H1>
+            <H1 align = "center" style="color:#FFFFFF">Supprimer une thématique</H1>
             <section>
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <?php 
@@ -317,6 +320,7 @@
             </section>
         </div>
     </div>
+    <!-- Supprimer une sous-thématique -->
     <div class='col-sm-5'>
         <div class='text-center'>
             <H1 align = "center" style="color:#FFFFFF">Supprimer une sous-thématique</H1>
@@ -355,8 +359,87 @@
     </div>
     <div class='col-sm-1'>
     </div>
-    <BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
 </div>
 
+<div class='row' style="background-color:#15B7D1">
+    <div class='col-sm-1'>
+    </div>
+    <div class='col-sm-5'>
+        <div class='text-center'>
+            <H1 align = "center" style="color:#FFFFFF">Délier une sous-thématique d'une thématique</H1>
+            <section>
+                <div class = "section-inner" style="background-color:#139CBC;padding:20px">
+                <?php 
+                       echo form_open('SuperAdmin/DelierUneSousThematiques',array("id"=>"form_Delier_SousThematiques"));
+                       echo '<div class="form-group">';
+                       echo form_label('Thématique à delier : ', 'NewTheme'); 
+                    ?>
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle form-control" type="button" data-toggle="dropdown" value='0'>
+                            <span id='Dropdown_Delier_SousThematique'>Selectionnez une thématique</span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <input class="form-control myInput" type="text" placeholder="Recherche">
+                            <li class="divider"></li>
+                            <?php 
+                                foreach ($Thematique as $uneThematique)
+                                {
+                                    echo '<li class="delier_SousThematique" value = "'.$uneThematique['NOTHEMATIQUE'].'"><a>'.$uneThematique['NOMTHEMATIQUE'].'</a></li>';
+                                }
+                            ?>
+                        </ul> 
+                    </div>
+                    <?php
+                        echo '</div>';
+                        echo form_submit('DelierSousThematique', 'Délier',array('class'=>'btn btn-danger','id'=>'btn_delier_SousThematique'));
+                        echo form_close();
+                    ?>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class='col-sm-5'>
+        <div class='text-center'>
+            <H1 align = "center" style="color:#FFFFFF">Délier toutes les sous-thématiques d'une thématique </H1>
+            <section>
+                <div class = "section-inner" style="background-color:#139CBC;padding:20px">
+                    <?php 
+                       echo form_open('SuperAdmin/DelierSousThematiques',array("id"=>"form_DelierSousThematiques"));
+                       echo '<div class="form-group">';
+                       echo form_label('Thématique à delier : ', 'NewTheme'); 
+                    ?>
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle form-control" type="button" data-toggle="dropdown" value='0'>
+                            <span id='Dropdown_Delier_Thematique'>Selectionnez une thématique</span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <input class="form-control myInput" type="text" placeholder="Recherche">
+                            <li class="divider"></li>
+                            <?php 
+                                foreach ($Thematique as $uneThematique)
+                                {
+                                    echo '<li class="delier_Thematique" value = "'.$uneThematique['NOTHEMATIQUE'].'"><a>'.$uneThematique['NOMTHEMATIQUE'].'</a></li>';
+                                }
+                            ?>
+                        </ul> 
+                    </div>
+                    <?php
+                        echo '</div>';
+                        
+                        echo form_submit('DelierThematique', 'Délier',array('class'=>'btn btn-danger','id'=>'btn_delier_thematique'));
+                        echo form_close();
+                    ?>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+<div class='row' style="background-color:#15B7D1">
+
+<BR><BR><BR>
+
+</div>
 
 <script src=<?php echo('"'.js_url("JavaScript_AjouterThematique").'"') ?>></script>
