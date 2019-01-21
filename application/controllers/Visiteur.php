@@ -13,6 +13,7 @@ class Visiteur extends CI_Controller
       $this->load->library('table');
       $this->load->helper('form');
       $this->load->model('ModelSeConnecter');
+      $this->load->model('ModelAction');
       $this->load->library('session');
 
       $this->load->model('ModelRecherche');
@@ -25,12 +26,18 @@ class Visiteur extends CI_Controller
     {
       $this->session->statut = 0;
     }
+
+    $Where = array(
+      'a.Favoris'=>true,
+    );
   
     $DonneesTitre = array('TitreDeLaPage'=>'Cart\'Opus');
-    
+
+    $DonneesInjectees['lesFavoris'] = $this->ModelAction->getActionFavorite($Where);
+
     $this->load->view('templates/Entete',$DonneesTitre);
     $this->load->view('Visiteur/BarreRecherche',$this->session->statut);
-    $this->load->view('Visiteur/FilActualite');
+    $this->load->view('Visiteur/FilActualite', $DonneesInjectees);
     $this->load->view('templates/PiedDePage');
   
   } //fin loadAccueil

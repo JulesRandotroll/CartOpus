@@ -65,7 +65,6 @@ if(!empty($lesActeurs))
         </div>
     </div>
 </div>
-
 <?php 
 }
 
@@ -97,8 +96,7 @@ if(!empty($lesOrganisations))
                                     echo '</tr>';
                                 endforeach ;
                             ?>
-                        </table>
-                        
+                        </table>        
                     </div>
                 </section>
             </div>
