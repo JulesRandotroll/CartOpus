@@ -49,6 +49,7 @@ class Acteur extends CI_Controller
             'Acteur'=>$Acteur[0],
             'Organisation'=> $Organisation,
             'Action'=> $Action,
+            'message'=>'',
         );
         $DonnéesTitre = array('TitreDeLaPage'=>$Acteur[0]['NOMACTEUR'].' '.$Acteur[0]['PRENOMACTEUR']);
         

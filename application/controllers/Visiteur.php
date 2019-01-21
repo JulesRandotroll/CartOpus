@@ -42,7 +42,8 @@ class Visiteur extends CI_Controller
       );
 
       $this->load->view('templates/Entete',$DonneesTitre);
-      $this->load->view('Visiteur/Accueil',$DonneesInjectees);
+      $this->load->view('Visiteur/BarreRecherche',$this->session->statut);
+      $this->load->view('Visiteur/FilActualite', $DonneesInjectees);
       $this->load->view('templates/PiedDePage');
     
     }
