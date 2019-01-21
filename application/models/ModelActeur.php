@@ -183,8 +183,8 @@
 
         public function UpdateActeur($Donnees,$noActeur)
         {
-           // var_dump($Donnees['nom']);
-            $Donnees = array('nomacteur' => $Donnees['nom'],'prenomacteur'=>$Donnees['prenom'],'mail'=>$Donnees['mail'],'notel'=>$Donnees['notel'],'noQuestion'=>$Donnees['noquestion'],'Reponse'=>$Donnees['reponse']);
+            //var_dump($Donnees);
+            $Donnees = array('nomacteur' => $Donnees['nom'],'prenomacteur'=>$Donnees['prenom'],'mail'=>$Donnees['mail'],'notel'=>$Donnees['notel'],'noQuestion'=>$Donnees['noquestion'],'Reponse'=>$Donnees['reponse'],'MailVisible'=>$Donnees['mailvisible'],'NoTelVisible'=>$Donnees['notelvisible']);
             $this->db->where('noActeur',$noActeur);
             $this->db->update('acteur',$Donnees);
         }

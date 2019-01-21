@@ -37,82 +37,106 @@
                             <H4>
                                 <?php
                                     echo validation_errors(); // mise en place de la validation
-                                    echo form_open('Acteur/AccueilActeur');
-                                    echo('<table style="width:100%"');
-                                    echo('<tr><td width=73%>');
-                                    // echo('Modifier nom: ');
-                                    // echo '</td><td>';
-                                    echo '<div class="form-group">';
-                                    echo form_label('Modifier nom :','ModNom');
-                                    echo form_input('nom',$nom,array('pattern'=>'[a-zA-Z ]{1,40}','class'=>'form-control')); 
+                                    echo form_open('Acteur/GestionProfil');
+                                    
+                                    echo '<div class="row">';
+                                        echo '<div class="text-center">';
+                                            //echo '<div class="form-group">';
+                                                echo'<a href="'.site_url('Acteur/GestionPhoto/'.($Acteur[0]['PhotoProfil'])).'">'.img($Acteur[0]['PhotoProfil']).'</a>';
+                                               
+                                          //  echo '</div>';
+                                        echo '</div>';
                                     echo '</div>';
-                                    // echo('</td><td>');
-                                    //var_dump($Acteur);
-                                    //$ratio='150';
-                                    
-                                    
-                                   //echo (img($Acteur[0]['PhotoProfil']));
-                                    // echo('</td></tr>');
-
-                                    // echo('<tr><td>');
-                                    // echo ('Modifier prénom: ');
-                                    // echo('</td><td>');
-                                    echo '<div class="form-group">';
-                                    echo form_label('Modifier prenom :','ModPrenom');
-                                    echo form_input('prenom',$prenom,array('pattern'=>'[a-zA-Z ]{1,20}','class'=>'form-control'));                          
-                                    echo'</div> </td><td width = 1%></td> <td>';
-                                    // echo('</td></tr>');
-                                    echo '   ';
-                                    
-                                    echo'<a href="'.site_url('Acteur/GestionPhoto/'.($Acteur[0]['PhotoProfil'])).'">'.img($Acteur[0]['PhotoProfil']).'</a>';
-                                    
-                                    echo('</td></tr></table>');
-                                    // echo ('Modifier email d\'identification: '); // creation d'un label devant la zone de saisie
-                                    // echo('</td><td>');
-                                    echo '<div class="form-group">';
-                                    echo form_label('Modifier email:','ModEmail');
-                                    echo form_input('mail',$mail,array('pattern'=>'[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})','class'=>'form-control'));
+                                    echo'<br>';
+                                    echo '<div class="row">';
+                                    echo '<div class="text-center">';
+                                    echo'<a href="'.site_url('Acteur/GestionPhoto/'.($Acteur[0]['PhotoProfil'])).'">'."<div class='btn btn-danger btn-md'>Modifier la Photo</div>".'</a>';
                                     echo '</div>';
-                                    // echo('</td></tr>');
+                                    echo '</div>';
 
-                                    // echo('<tr><td>');
-                                    // echo ('Modifier téléphone : '); // creation d'un label devant la zone de saisie
-                                    // echo('</td><td>');
+                                    echo '<div class="row">';
+                                        echo '<div class="col-sm-12">';
+                                            echo '<div class="form-group">';
+                                                echo form_label('Modifier nom :','ModNom');
+                                                echo form_input('nom',$nom,array('pattern'=>'[a-zA-Z ]{1,40}','class'=>'form-control')); 
+                                            echo '</div>';
+                                            echo '<div class="form-group">';
+                                                echo form_label('Modifier prenom :','ModPrenom');
+                                                echo form_input('prenom',$prenom,array('pattern'=>'[a-zA-Z ]{1,20}','class'=>'form-control'));                          
+                                            echo'</div>';
+                                        echo '</div>';
+                                    echo '</div>'; 
+
+
+                                    echo '<div class="row">';
+                                        echo '<div class="col-xs-8">';
+                                            echo '<div class="form-group">';
+                                                echo form_label('Modifier email:','ModEmail');
+                                                echo form_input('mail',$mail,array('pattern'=>'[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})','class'=>'form-control'));
+                                            echo '</div>';
+                                        echo '</div>';
+                                        echo '<div class="col-xs-3">';
+                                            echo '<div class="form-group">';
+                                                echo form_label('Visible par tous', 'visible'); 
+                                                if($mailvisible)
+                                                {
+                                                    echo form_checkbox('checkmail',$mailvisible,true,array('class'=>'form-control input-sm', "id"=>'mailvisible'));
+                                                }
+                                                else
+                                                {
+                                                    echo form_checkbox('checkmail',$mailvisible,false,array('class'=>'form-control input-sm', "id"=>'mailvisible'));
+                                                }
+                                                
+                                            echo '</div>';
+                                        echo'</div>';
+                                        echo '<div class="col-xs-1">';
+                                            echo'<a href="#" class="btn btn-danger btn-xs" data-toggle="popover" title="RGPD" data-trigger="hover" data-content="Acceptez vous que votre mail soit visible par tout le monde ?">  ?</a>';
+                                        echo '</div>';
+                                    echo '</div>';
+
+                                    echo '<div class="row">';
+                                    echo '<div class="col-xs-8">';
                                     echo '<div class="form-group">';
                                     echo form_label('Modifier téléphone :','ModTel');
                                     echo form_input('notel',$notel,array('pattern'=>'[0-9]{10}','class'=>'form-control'));
                                     echo '</div>';
-                                    // echo('</td></tr>');
-
-                                  
-
-                                    // echo('<tr><td>');
-                                    // echo ('Modifier question Secrète: '); // creation d'un label devant la zone de saisie
-                                    // echo('</td><td>');
+                                    echo '</div>';
+                                    echo '<div class="col-xs-3">';
+                                            echo '<div class="form-group">';
+                                                echo form_label('Visible par tous', 'visible'); 
+                                                if($notelvisible)
+                                                {
+                                                    echo form_checkbox('checktel',$notelvisible,true,array('class'=>'form-control input-sm', "id"=>'telvisible'));
+                                                }
+                                                else
+                                                {
+                                                    echo form_checkbox('checktel',$notelvisible,false,array('class'=>'form-control input-sm', "id"=>'telvisible'));
+                                                }
+                                                
+                                                
+                                            echo '</div>';
+                                        echo'</div>';
+                                        echo '<div class="col-xs-1">';
+                                            echo'<a href="#" class="btn btn-danger btn-xs" data-toggle="popover" title="RGPD" data-trigger="hover" data-content="Acceptez vous que votre mail soit visible par tout le monde ?">  ?</a>';
+                                        echo '</div>';
+                                    echo '</div>';
+                       
                                     echo '<div class="form-group">';
                                     echo form_label('Modifier Question:','ModQuest');
                                     echo form_dropdown('Question', $Question, $noQuestion,array('class'=>'form-control'));
                                     echo '</div>';
-                                    // echo('</td></tr>');
-                                    // echo('<tr><td>');
-                                    // echo ('Reponse: '); 
-                                    // echo('</td><td>');
+                           
                                     echo '<div class="form-group">';
                                     echo form_label('Nouvelle réponse :','ModReponse');
                                     echo form_input('reponse',$reponse,array('required'=>'required','pattern'=>'[A-Za-z0-9 ]{1,40}','class'=>'form-control'));
                                     echo '</div>';
-                                    // echo('</td></tr>');
-
-                                    // echo('<tr><td>');
-                                    // echo('</td><td>');
-
+                           
                                     echo '<div class="text-center">'.form_submit('modif', 'Modifier',array("class"=>"btn btn-danger btn-lg")).'</div>';
-                                    // echo('</td></tr>');
-                                    // echo('</table>');
+               
                                     echo '<div class="text-right">';
                                     echo '<a style="color:#FFFFFF" href="'.site_url('Acteur/ModifierMDP').'">Modifier son mot de passe ? </a>';
                                     echo '</div>';  
-                                    //echo form_submit('retour', 'Retour');
+   
                                     echo form_close();
                                 ?>
                                 </H4>
@@ -124,3 +148,8 @@
         </div>
     </div>
 </div>
+<script>
+$(document).ready(function(){
+$('[data-toggle="popover"]').popover();
+});
+</script>

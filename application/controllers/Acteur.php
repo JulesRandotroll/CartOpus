@@ -66,6 +66,27 @@ class Acteur extends CI_Controller
         
         if ( $this->input->post('modif'))
         {
+
+            $checktest=$this->input->post('checkmail');
+            
+            if (isset($checktest))
+            {
+              $visibleMail=true;
+            }
+            else
+            {
+              $visibleMail=false;
+            }
+
+            $checktest=$this->input->post('checktel');
+            if (isset($checktest))
+            {
+              $visibleTel=true;
+            }
+            else
+            {
+              $visibleTel=false;
+            }
             $DonneesAModifier=array
             (
                 'nom'=>$this->input->post('nom'),
@@ -74,31 +95,33 @@ class Acteur extends CI_Controller
                 'notel'=>$this->input->post('notel'),
                 'noquestion'=>$this->input->post('Question'),
                 'reponse'=>$this->input->post('reponse'),
-                'message'=>'plop is good plop is life',
+                'notelvisible'=>$visibleTel,
+                'mailvisible'=>$visibleMail,
             );
             // var_dump( $DonneesAModifier['noquestion']);
-            // var_dump($DonneesAModifier);
+            //var_dump($DonneesAModifier);
             $this->ModelActeur->UpdateActeur($DonneesAModifier,$noActeur);
+            redirect('Acteur/AccueilActeur');
         }
         else
         {
-            //$Acteur = $this->ModelActeur->getActeur($noActeur);
-            //On va chercher les information concernant l'acteur connecté dans la BDD 
             $DonnéesTitre = array('TitreDeLaPage'=>'Gestion du compte');
+            //On va chercher les information concernant l'acteur connecté dans la BDD 
+
             $this->load->model('ModelSInscrire'); // on charge le modele correspondant
             $question = $this->ModelSInscrire->QuestionSecrete();
             $i=0;
             foreach($question as $uneQuestion)
             {
-            if(empty($Options))
-            {
-                $Options = array($uneQuestion['noQuestion']=>$uneQuestion['nomQuestion']);
-            }
-            else
-            {
-                $temporaire = array($uneQuestion['noQuestion']=>$uneQuestion['nomQuestion']);
-                $Options = $Options + $temporaire;
-            }
+                if(empty($Options))
+                {
+                    $Options = array($uneQuestion['noQuestion']=>$uneQuestion['nomQuestion']);
+                }
+                else
+                {
+                    $temporaire = array($uneQuestion['noQuestion']=>$uneQuestion['nomQuestion']);
+                    $Options = $Options + $temporaire;
+                }
             }
 
             $Acteur=$this->ModelActeur->getActeur($noActeur);
@@ -113,10 +136,11 @@ class Acteur extends CI_Controller
                 'Question'=>$Options,
                 'noQuestion'=>$Acteur[0]['noQuestion'],
                 'reponse'=>$Acteur[0]['Reponse'],
-                'message'=>'plop is good plop is life',
+                'notelvisible'=> $Acteur[0]['NoTelVisible'],
+                'mailvisible'=>$Acteur[0]['MailVisible'],
                 'Acteur'=>$Acteur,
             );
-            //var_dump($DonneesAInjectees);
+           // var_dump($DonneesAInjectees);
         
             $this->load->view('templates/Entete',$DonnéesTitre);
             $this->load->view('Acteur/GestionProfil', $DonneesAInjectees);

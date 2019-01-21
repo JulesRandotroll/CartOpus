@@ -28,7 +28,13 @@
                             // echo('<tr><td>');
                             // echo('Nom: ');
                             // echo('</td><td>');
-                            
+                        if ($message!="")
+                        {
+                            echo'<div class="alert alert-danger alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <strong>Attention</strong> '.$message.'
+                                </div>';
+                        } 
                         echo '<div class="form-group">';
                         echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                         echo form_label('Nom : ', 'Nom');
@@ -97,7 +103,7 @@
                         echo '<div class="form-group">';
                         echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                         echo form_label('Mot De Passe : ', 'MDP');
-                        echo form_password('mdp','',array('required'=>'required','placeholder'=>'Votre mot de passe','class'=>'form-control')).$message;
+                        echo form_password('mdp','',array('required'=>'required','placeholder'=>'Votre mot de passe','class'=>'form-control'));
                         echo '</div>';
                             // echo('</td></tr>');
 
