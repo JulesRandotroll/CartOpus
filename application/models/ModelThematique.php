@@ -7,6 +7,43 @@
             /* chargement database.php (dans config), obligatoirement dans le constructeur */
         }
 
+        public function getThematiquesExiste($NomThematique)
+        {
+            $this->db->select('NomThematique');
+            $this->db->from('Thematique');
+            $this->db->where($NomThematique);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
+        public function getSousThematiqueExiste($Where)
+        {
+            $this->db->select('*');
+            $this->db->from('SousThematique');
+            $this->db->where($Where);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
+        public function getMotCleExiste($Donnees)
+        {
+            $this->db->select("MotCle");
+            $this->db->from("FaireReference");
+            $this->db->where($Donnees);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
+        public function getThematique_SousThematiqueExiste($Where)
+        {
+            $this->db->select('*');
+            $this->db->from('sousThematique');
+            $this->db->where($Where);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
+
 
         public function getSurThematiques()
         {
@@ -15,7 +52,8 @@
                 FROM thematique 
                 WHERE nothematique NOT IN ( 
                     SELECT NoSousThematique FROM SousThematique 
-                    );
+                    )
+                ORDER BY NOMTHEMATIQUE ASC
             '); 
            return $requete->result_array();
         }
@@ -32,31 +70,13 @@
 
         public function getSousThemes()
         {
-            $this->db->select('s.NOSOUSTHEMATIQUE,t.NOMTHEMATIQUE');
+            $this->db->select('DISTINCT(NOMTHEMATIQUE), NOSOUSTHEMATIQUE');
             $this->db->from('sousthematique s');
             $this->db->join('thematique t','t.nothematique=s.nosousthematique');
             $this->db->order_by('t.NOMTHEMATIQUE','ASC');
             $requete = $this->db->get();
             return $requete->result_array();
             
-        }
-
-        public function getThematiquesExiste($NomThematique)
-        {
-            $this->db->select('NomThematique');
-            $this->db->from('Thematique');
-            $this->db->where($NomThematique);
-            $requete = $this->db->get();
-            return $requete->result_array();
-        }
-
-        public function getMotCleExiste($Donnees)
-        {
-            $this->db->select("MotCle");
-            $this->db->from("FaireReference");
-            $this->db->where($Donnees);
-            $requete = $this->db->get();
-            return $requete->result_array();
         }
 
         public function getTheme_SousTheme()
@@ -111,11 +131,19 @@
             return $final;
         }
         
+        //Sert aussi à supprimer une sousthematique 
+        //Et delier les sous thématiques associées à une thématique 
         public function updateSsThematique_To_Thematique($Where)
         {
             
             $this->db->where($Where);
             $this->db->delete('sousThematique');
+        }
+
+        public function DeleteThematique($Where)
+        {
+            $this->db->where($Where);
+            $this->db->delete('Thematique');
         }
 
         public function InsererThematique($Donnees)

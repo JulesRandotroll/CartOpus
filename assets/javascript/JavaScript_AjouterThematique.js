@@ -1,9 +1,20 @@
-$(document).ready(function(){
-    $(".myInput").on("keyup", function() {
+$(document).ready(function()
+{
+    $(".myInput").on("keyup", function() 
+    {
         var value = $(this).val().toLowerCase();
-        $(".dropdown-menu li").filter(function() {
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        $(".dropdown-menu li").filter(function() 
+        {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
+    });
+
+    $(".dropdown-toggle").on('click',function(){
+        
+        $(".myInput").val("");
+
+        $('.myInput').trigger(jQuery.Event('keyup', { keycode: 46 }));
+        //alert('done');
     });
 });
 
@@ -79,7 +90,7 @@ $(function()
             noThematique = '0';
         }
 
-        alert(noSsThematique + "/" + noThematique );
+        //alert(noSsThematique + "/" + noThematique );
         $("#form_lier_Thematiques").attr('action',$("#form_lier_Thematiques").attr('action')+"/"+noSsThematique + "/" + noThematique);
     });
 
@@ -129,9 +140,159 @@ $(function()
             }
         }
     });
-    
-    
 
+    // Dropdown function supprimer Thematique
+    $(".supprimer_Thematique").on('click',function()
+    {
+        // alert('nomSousThematique');
+        noThematique = $(this).val();
+        nomThematique = $(this).find("a").eq(0).html();
+        document.getElementById('Dropdown_Supprimer_Thematique').innerHTML=nomThematique; 
+        document.getElementById('Dropdown_Supprimer_Thematique').value=noThematique;
+
+    });
+    $('#btn_suppr_Thematique').confirm({
+        icon: 'glyphicon glyphicon-alert' ,
+        title: 'Attention : Irréversible' ,
+        content: 'Voulez-vous réellement supprimer cette thématique définitivement ?',
+        type: 'red' ,
+        typeAnimated: true ,
+        autoClose: 'cancel|10000' , 
+        buttons: 
+        {
+            confirm:
+            { 
+                text:"Confirmer",
+                action: function () 
+                {
+                    if($('#Dropdown_Supprimer_Thematique').val())
+                    {
+                        noThematique = $('#Dropdown_Supprimer_Thematique').val();
+                    }
+                    else
+                    {
+                        noThematique ='0';
+                    }
+                    location.href = $('#form_SupprimerThematique').attr('action')+'/'+noThematique;
+                    //alert($('#form_Migrer').attr('action'));   
+                }
+            },
+            cancel:
+            {
+                text:"Annuler",
+                btnClass: 'btn-red',
+                
+            }
+        }
+    });
+
+
+    //Dropdown function supprmier sousthmematique
+    $(".supprimer_SsThematique").on('click',function()
+    {
+        // alert('nomSousThematique');
+        noSousThematique = $(this).val();
+        nomSousThematique = $(this).find("a").eq(0).html();
+        document.getElementById('Dropdown_Supprimer_SousThematique').innerHTML=nomSousThematique; 
+        document.getElementById('Dropdown_Supprimer_SousThematique').value=noSousThematique;
+
+    });
+    $('#btn_suppr_SousThematique').confirm({
+        icon: 'glyphicon glyphicon-alert' ,
+        title: 'Attention : Irréversible' ,
+        content: 'Voulez-vous réellement supprimer cette sous-thématique définitivement ?',
+        type: 'red' ,
+        typeAnimated: true ,
+        autoClose: 'cancel|10000' , 
+        buttons: 
+        {
+            confirm:
+            { 
+                text:"Confirmer",
+                action: function () 
+                {
+                    if($('#Dropdown_Supprimer_SousThematique').val())
+                    {
+                        noThematique = $('#Dropdown_Supprimer_SousThematique').val();
+                    }
+                    else
+                    {
+                        noThematique ='0';
+                    }
+                    location.href = $('#form_SupprimerSousThematique').attr('action')+'/'+noThematique;
+                    //alert($('#form_Migrer').attr('action'));   
+                }
+            },
+            cancel:
+            {
+                text:"Annuler",
+                btnClass: 'btn-red',
+                
+            }
+        }
+    });
     
+    //Dropdownn function délier thématiques
+    $('.delier_Thematique').on('click',function()
+    {
+        noSousThematique = $(this).val();
+        nomSousThematique = $(this).find("a").eq(0).html();
+        document.getElementById('Dropdown_Delier_Thematique').innerHTML=nomSousThematique; 
+        document.getElementById('Dropdown_Delier_Thematique').value=noSousThematique;
+
+    });
+    $('#btn_delier_thematique').confirm({
+        icon: 'glyphicon glyphicon-alert' ,
+        title: 'Attention : Irréversible' ,
+        content: 'Voulez-vous réellement déluier toutes les sous-thématiques liées à cette thématique ?',
+        type: 'red' ,
+        typeAnimated: true ,
+        autoClose: 'cancel|10000' , 
+        buttons: 
+        {
+            confirm:
+            { 
+                text:"Confirmer",
+                action: function () 
+                {
+                    if($('#Dropdown_Delier_Thematique').val())
+                    {
+                        noThematique=$('#Dropdown_Delier_Thematique').val();
+                    }
+                    else
+                    {
+                        noThematique ='0';
+                    }
+                    location.href = $('#form_DelierSousThematiques').attr('action')+'/'+noThematique;
+                    //alert($('#form_Migrer').attr('action'));   
+                }
+            },
+            cancel:
+            {
+                text:"Annuler",
+                btnClass: 'btn-red',
+                
+            }
+        }
+    });
     
+    //Dropdown function délier sous thématique
+    $('.delier_SousThematique').on('click',function()
+    {
+        noSousThematique = $(this).val();
+        nomSousThematique = $(this).find("a").eq(0).html();
+        document.getElementById('Dropdown_Delier_SousThematique').innerHTML=nomSousThematique; 
+        document.getElementById('Dropdown_Delier_SousThematique').value=noSousThematique;
+
+    });
 });
+
+function getSousThematiques(noThematique)
+{
+    var requete = new XMLHttpRequest();
+    requete.open('GET','SelectSousThematique.php?noThematique='+noThematique,false);
+    requete.send(null)
+
+    var reponse = requete.responseText;
+    alert(reponse);
+}

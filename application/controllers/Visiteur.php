@@ -14,6 +14,7 @@ class Visiteur extends CI_Controller
       $this->load->helper('form');
       $this->load->model('ModelSeConnecter');
       $this->load->model('ModelSInscrire'); // on charge le modele correspondant
+      $this->load->model('ModelAction');
       $this->load->library('session');
 
       $this->load->model('ModelRecherche');
@@ -22,19 +23,24 @@ class Visiteur extends CI_Controller
 
   public function loadAccueil()
   {
+    $DonneesTitre = array('TitreDeLaPage'=>'Cart\'Opus');
+
     if ($this->session->statut==null)
     {
       $this->session->statut = 0;
     }
+
+    $Where = array(
+      'a.Favoris'=>true,
+    );
   
     if($this->session->flashdata('message')!=null)
     {
       $DonneesInjectees=array(
         'message'=>$this->session->flashdata('message'),
+        'lesFavoris'=> $this->ModelAction->getActionFavorite($Where),
       );
 
-      $DonneesTitre = array('TitreDeLaPage'=>'Cart\'Opus');
-    
       $this->load->view('templates/Entete',$DonneesTitre);
       $this->load->view('Visiteur/Accueil',$DonneesInjectees);
       $this->load->view('templates/PiedDePage');
@@ -42,14 +48,20 @@ class Visiteur extends CI_Controller
     }
     else
     {
-      $DonneesTitre = array('TitreDeLaPage'=>'Cart\'Opus');
     
-      $this->load->view('templates/Entete',$DonneesTitre);
-      $this->load->view('Visiteur/Accueil',$this->session->statut);
-      $this->load->view('templates/PiedDePage');
+      $DonneesInjectees['lesFavoris'] = $this->ModelAction->getActionFavorite($Where);
+
+    $this->load->view('templates/Entete',$DonneesTitre);
+    $this->load->view('Visiteur/BarreRecherche',$this->session->statut);
+    $this->load->view('Visiteur/FilActualite', $DonneesInjectees);
+    $this->load->view('templates/PiedDePage');
     
     }
  
+    //$DonneesTitre = array('TitreDeLaPage'=>'Cart\'Opus');
+
+    
+  
   } //fin loadAccueil
 
   public function GenererMotDePasse()
@@ -432,7 +444,8 @@ class Visiteur extends CI_Controller
             {
             
               $this->load->view('templates/Entete',$DonnéesTitre);
-              $this->load->view('Visiteur/Accueil'); // accueil Acteur
+              $this->load->view('Visiteur/BarreRecherche');
+              $this->load->view('Visiteur/FilActualite'); // accueil Acteur
               $this->load->view('templates/PiedDePage');
             }
           }
@@ -499,13 +512,13 @@ class Visiteur extends CI_Controller
       $DonneesInjectees['lesActions'] = $this->ModelRecherche->actionRecherche($Recherche, $config['per_page'], $noPage);
       $DonneesInjectees['lesActeurs'] = $this->ModelRecherche->acteurRecherche($Recherche, $config['per_page'], $noPage);
       $DonneesInjectees['lesOrganisations'] = $this->ModelRecherche->organisationRecherche($Recherche, $config['per_page'], $noPage);
-      $DonneesInjectees['lesThematiques'] = $this->ModelRecherche->thematiqueRecherche($Recherche, $config['per_page'], $noPage);
-      $DonneesInjectees['lesMotsCles'] = $this->ModelRecherche->motCleRecherche($Recherche, $config['per_page'], $noPage);
+      $lesThematiques = $this->ModelRecherche->thematiqueRecherche($Recherche, $config['per_page'], $noPage);
+      $lesMotsCles = $this->ModelRecherche->motCleRecherche($Recherche, $config['per_page'], $noPage);
       $DonneesInjectees['lienPagination'] = $this->pagination->create_links();
 
-      if(!empty($DonneesInjectees['lesThematiques']))
+      if(!empty($lesThematiques))
       {
-        foreach($DonneesInjectees['lesThematiques'] as $uneThematique):
+        foreach($lesThematiques as $uneThematique):
           $exist = FALSE;
           $noAction = $uneThematique['NOACTION'];
   
@@ -530,9 +543,9 @@ class Visiteur extends CI_Controller
         endforeach;
       }
   
-      if(!empty($DonneesInjectees['lesMotsCles']))
+      if(!empty($lesMotsCles))
       {
-        foreach($DonneesInjectees['lesMotsCles'] as $unMotCle):
+        foreach($lesMotsCles as $unMotCle):
           $exist = FALSE;
           $noAction = $unMotCle['NOACTION'];
   
@@ -558,13 +571,15 @@ class Visiteur extends CI_Controller
       }
 
       $this->load->view('templates/Entete',$DonneesTitre);
-      $this->load->view('Visiteur/Accueil', $DonneesInjectees);
+      $this->load->view('Visiteur/BarreRecherche');
+      $this->load->view('Visiteur/Recherche', $DonneesInjectees);
       $this->load->view('templates/PiedDePage');
     }
     else 
     {
       $this->load->view('templates/Entete',$DonneesTitre);
-      $this->load->view('Visiteur/Accueil');
+      $this->load->view('Visiteur/BarreRecherche');
+      $this->load->view('Visiteur/FilActualite');
       $this->load->view('templates/PiedDePage');
     }
   } // fin BarreRecherche
@@ -590,14 +605,14 @@ class Visiteur extends CI_Controller
 
       $noPage = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
-      $DonneesInjectees['lesLieux'] = $this->ModelRecherche->lieuRecherche($Recherche, $config['per_page'], $noPage);
+      $lesLieux = $this->ModelRecherche->lieuRecherche($Recherche, $config['per_page'], $noPage);
       
       $DonneesInjectees['lienPagination'] = $this->pagination->create_links();
 
       //gestion des doublons dans les lieux)
-      if(!empty($DonneesInjectees['lesLieux']['actions']))
+      if(!empty($lesLieux['actions']))
       {
-        foreach($DonneesInjectees['lesLieux']['actions'] as $Action):
+        foreach($lesLieux['actions'] as $Action):
           $exist = FALSE;
           $noAction = $Action['NOACTION'];
   
@@ -622,9 +637,9 @@ class Visiteur extends CI_Controller
         endforeach;
       }
   
-      if(!empty($DonneesInjectees['lesLieux']['organisations']))
+      if(!empty($lesLieux['organisations']))
       {
-        foreach($DonneesInjectees['lesLieux']['actions'] as $Organisation):
+        foreach($lesLieux['actions'] as $Organisation):
           $exist = FALSE;
           $noAction = $Organisation['NOACTION'];
   
@@ -651,13 +666,15 @@ class Visiteur extends CI_Controller
 
 
       $this->load->view('templates/Entete',$DonneesTitre);
-      $this->load->view('Visiteur/Accueil', $DonneesInjectees);
+      $this->load->view('Visiteur/BarreRecherche');
+      $this->load->view('Visiteur/Recherche', $DonneesInjectees);
       $this->load->view('templates/PiedDePage');
     }
     else 
     {
       $this->load->view('templates/Entete',$DonneesTitre);
-      $this->load->view('Visiteur/Accueil');
+      $this->load->view('Visiteur/BarreRecherche');
+      $this->load->view('Visiteur/FilActualite');
       $this->load->view('templates/PiedDePage');
     }
   }
@@ -670,8 +687,6 @@ class Visiteur extends CI_Controller
 
     $RechercheMotCle = $this->input->post('MotCle');
     $RechercheLieu = $this->input->post('Lieu');
-
-
 
     $config = array();
     $config["Base_url"] = site_url('Visiteur/Rechercher');
@@ -687,13 +702,11 @@ class Visiteur extends CI_Controller
     $this->pagination->initialize($config);
 
     $noPage = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-
     
     $DonneesInjectees['lienPagination'] = $this->pagination->create_links();
 
     if(!empty($RechercheMotCle))
     {
-      //Copie / colle du test sur la BarreRecherch()
 
       $config["total_rows"] = $this->ModelRecherche->nombreRecherche($RechercheMotCle);
       $config["total_rows"] = $this->ModelRecherche->nombreActeur($RechercheMotCle);
@@ -704,26 +717,22 @@ class Visiteur extends CI_Controller
       $DonneesInjectees['lesActions'] = $this->ModelRecherche->actionRecherche($RechercheMotCle, $config['per_page'], $noPage);
       $DonneesInjectees['lesActeurs'] = $this->ModelRecherche->acteurRecherche($RechercheMotCle, $config['per_page'], $noPage);
       $DonneesInjectees['lesOrganisations'] = $this->ModelRecherche->organisationRecherche($RechercheMotCle, $config['per_page'], $noPage);
-      $DonneesInjectees['lesThematiques'] = $this->ModelRecherche->thematiqueRecherche($RechercheMotCle, $config['per_page'], $noPage);
-      $DonneesInjectees['lesMotsCles'] = $this->ModelRecherche->motCleRecherche($RechercheMotCle, $config['per_page'], $noPage);
+      $lesThematiques = $this->ModelRecherche->thematiqueRecherche($RechercheMotCle, $config['per_page'], $noPage);
+      $lesMotsCles = $this->ModelRecherche->motCleRecherche($RechercheMotCle, $config['per_page'], $noPage);
 
-      $recherche = true;
     }
 
     if(!empty($RechercheLieu))
     {
       $config["total_rows"] = $this->ModelRecherche->nombreLieu($RechercheLieu);
       
-      $DonneesInjectees['lesLieux'] = $this->ModelRecherche->lieuRecherche($RechercheLieu, $config['per_page'], $noPage);
-
-      $recherche = true;
+      $lesLieux = $this->ModelRecherche->lieuRecherche($RechercheLieu, $config['per_page'], $noPage);
     }
 
-    //tests des doublons et création des 3 Tableaux finaux
-
-    if(!empty($DonneesInjectees['lesThematiques']))
+    //tests des doublons et création des 3 Tableaux finaux ET vérification de l'existence de résultats
+    if(!empty($lesThematiques))
     {
-      foreach($DonneesInjectees['lesThematiques'] as $uneThematique):
+      foreach($lesThematiques as $uneThematique):
         $exist = FALSE;
         $noAction = $uneThematique['NOACTION'];
 
@@ -746,11 +755,13 @@ class Visiteur extends CI_Controller
           $DonneesInjectees['lesActions'] = array(0=>$uneThematique);
         } 
       endforeach;
+      $recherche = true;
     }
 
-    if(!empty($DonneesInjectees['lesMotsCles']))
+    if(!empty($lesMotsCles))
     {
-      foreach($DonneesInjectees['lesMotsCles'] as $unMotCle):
+      var_dump($lesMotsCles);
+      foreach($lesMotsCles as $unMotCle):
         $exist = FALSE;
         $noAction = $unMotCle['NOACTION'];
 
@@ -773,62 +784,68 @@ class Visiteur extends CI_Controller
           $DonneesInjectees['lesActions'] = array(0=>$unMotCle);
         } 
       endforeach;
+      $recherche = true;
     }
 
-    if(!empty($DonneesInjectees['lesLieux']['actions']))
+    if(!empty($lesLieux) || $lesLieux != null)
     {
-      foreach($DonneesInjectees['lesLieux']['actions'] as $Action):
-        $exist = FALSE;
-        $noAction = $Action['NOACTION'];
+      if(!empty($lesLieux['actions']))
+      {
+        foreach($lesLieux['actions'] as $Action):
+          $exist = FALSE;
+          $noAction = $Action['NOACTION'];
 
-        if(!empty($DonneesInjectees['lesActions']))
-        {
-          foreach($DonneesInjectees['lesActions'] as $uneAction):
-            // faire test sur les dates de debut
-            if ($uneAction['NOACTION']==$noAction)
-            {
-              $exist = TRUE;
-            }
-          endforeach;
-          if ($exist==FALSE)
+          if(!empty($DonneesInjectees['lesActions']))
           {
-            array_push($DonneesInjectees['lesActions'],$Action);
-          }
-        }
-        else
-        {
-          $DonneesInjectees['lesActions'] = array(0=>$Action);
-        } 
-      endforeach;
-    }
-
-    if(!empty($DonneesInjectees['lesLieux']['organisations']))
-    {
-      foreach($DonneesInjectees['lesLieux']['organisations'] as $Organisation):
-        $exist = FALSE;
-        $noOrganisation = $Organisation['NO_ORGANISATION'];
-
-        if(!empty($DonneesInjectees['lesOrganisations']))
-        {
-          foreach($DonneesInjectees['lesOrganisations'] as $uneOrganisation):
-            // faire test sur les dates de debut
-            if ($uneOrganisation['NO_ORGANISATION']== $noOrganisation)
+            foreach($DonneesInjectees['lesActions'] as $uneAction):
+              // faire test sur les dates de debut
+              if ($uneAction['NOACTION']==$noAction)
+              {
+                $exist = TRUE;
+              }
+            endforeach;
+            if ($exist==FALSE)
             {
-              $exist = TRUE;
+              array_push($DonneesInjectees['lesActions'],$Action);
             }
-          endforeach;
-          if ($exist==FALSE)
-          {
-            array_push($DonneesInjectees['lesOrganisations'],$Organisation);
           }
-        }
-        else
-        {
-          $DonneesInjectees['lesOrganisations'] = array(0=>$Organisation);
-        } 
-      endforeach;
+          else
+          {
+            $DonneesInjectees['lesActions'] = array(0=>$Action);
+          } 
+        endforeach;
+        $recherche = true;
+      }
 
+      if(!empty($lesLieux['organisations']))
+      {
+        foreach($lesLieux['organisations'] as $Organisation):
+          $exist = FALSE;
+          $noOrganisation = $Organisation['NO_ORGANISATION'];
+
+          if(!empty($DonneesInjectees['lesOrganisations']))
+          {
+            foreach($DonneesInjectees['lesOrganisations'] as $uneOrganisation):
+              // faire test sur les dates de debut
+              if ($uneOrganisation['NO_ORGANISATION']== $noOrganisation)
+              {
+                $exist = TRUE;
+              }
+            endforeach;
+            if ($exist==FALSE)
+            {
+              array_push($DonneesInjectees['lesOrganisations'],$Organisation);
+            }
+          }
+          else
+          {
+            $DonneesInjectees['lesOrganisations'] = array(0=>$Organisation);
+          } 
+        endforeach;
+        $recherche = true;
+      }
     }
+    
 
     if($recherche == false)
     {
@@ -837,10 +854,13 @@ class Visiteur extends CI_Controller
     else
     {
       $this->load->view('templates/Entete',$DonneesTitre);
-      $this->load->view('Visiteur/Accueil', $DonneesInjectees);
+      $this->load->view('Visiteur/BarreRecherche');
+      $this->load->view('Visiteur/Recherche', $DonneesInjectees);
       $this->load->view('templates/PiedDePage');
     }
   }
+
+  //Penser à refaire "Afficher Acteur" 
 
 }//Fin Visiteur
 

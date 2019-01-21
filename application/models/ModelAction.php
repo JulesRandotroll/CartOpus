@@ -21,11 +21,26 @@
         }
         public function getAction($DonnéesDeTest)
         {
-           // var_dump($DonnéesDeTest);
+            //reutiliser pour les favoris
             $this->db->select('*');
             $this->db->from('Action a');
             $this->db->join('AvoirLieu al','al.noAction=a.noAction');
             $this->db->join('Lieu l','l.nolieu=al.nolieu');
+            $this->db->where($DonnéesDeTest);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
+        public function getActionFavorite($DonnéesDeTest)
+        {
+            //reutiliser pour les favoris
+
+            //$chocobo = array();
+
+            $this->db->select('*');
+            $this->db->from('Action a');
+            $this->db->join('AvoirLieu al','al.noAction=a.noAction');
+            $this->db->where('TitreAction = nomAction');
             $this->db->where($DonnéesDeTest);
             $requete = $this->db->get();
             return $requete->result_array();
@@ -75,7 +90,7 @@
             //var_dump($DonnéesDeTest);
             $Where=array('NOACTION'=>$DonnéesDeTest['NoAction'],'NOACTEUR'=>$DonnéesDeTest['NoActeur']);
             $Donnees=array('DATEDEBUT'=>$DonneesAModifier['DateDebut'],'DATEFIN'=>$DonneesAModifier['DateFin']);
-           // var_dump($Donnees);
+            //var_dump($Donnees);
             $this->db->where($Where);
             $this->db->update('etrepartenaire',$Donnees);
         }
