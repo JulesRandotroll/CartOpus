@@ -28,6 +28,8 @@ class Acteur extends CI_Controller
     public function AccueilActeur()
     {
 
+       
+      
         $this->session->statut = 1;
         $noActeur = $this->session->noActeur;
         //On stocke dans une variable locale l'identifiant BDD de l'acteur connecté
@@ -44,7 +46,15 @@ class Acteur extends CI_Controller
 
         $Action = $this->ModelActeur->getActions($noActeur);
         //Même topo que pour $Organisation
- 
+
+        if ($Action==null)
+        {
+            $this->session->nbaction=0;
+        }
+        else
+        {
+            $this->session->nbaction=1;
+        }
 
         $Données = array(
             'Acteur'=>$Acteur[0],
@@ -61,7 +71,6 @@ class Acteur extends CI_Controller
     
     public function GestionProfil()
     {
-        
         $noActeur = $this->session->noActeur;
         
         if ( $this->input->post('modif'))
