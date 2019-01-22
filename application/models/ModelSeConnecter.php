@@ -43,7 +43,7 @@
             $array = array('mail' => $donneesATester['mail'], 'motdepasse' => $donneesATester['motdepasse']);
             $this->db->select('count(*)');
             $this->db->from('acteur ');
-            $this->db->where($array);
+            $this->db->where($donneesATester);
 
             $requete = $this->db->get();
             return $requete->row_array();

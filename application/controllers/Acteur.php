@@ -28,11 +28,14 @@ class Acteur extends CI_Controller
     public function AccueilActeur()
     {
 
+       
+      
         $this->session->statut = 1;
         $noActeur = $this->session->noActeur;
         //On stocke dans une variable locale l'identifiant BDD de l'acteur connecté
 
         $Acteur = $this->ModelActeur->getActeur($noActeur);
+        //var_dump( $Acteur);
         //On va chercher les information concernant l'acteur connecté dans la BDD 
         
        
@@ -43,7 +46,15 @@ class Acteur extends CI_Controller
 
         $Action = $this->ModelActeur->getActions($noActeur);
         //Même topo que pour $Organisation
- 
+
+        if ($Action==null)
+        {
+            $this->session->nbaction=0;
+        }
+        else
+        {
+            $this->session->nbaction=1;
+        }
 
         $Données = array(
             'Acteur'=>$Acteur[0],
@@ -60,7 +71,6 @@ class Acteur extends CI_Controller
     
     public function GestionProfil()
     {
-        
         $noActeur = $this->session->noActeur;
         
         if ( $this->input->post('modif'))
@@ -327,21 +337,28 @@ class Acteur extends CI_Controller
             $noAction=$this->input->post('Action');
             $this->SupprimerAction($noAction);
         }
-        if($this->input->post('Choix_Ajout_Collaborateur'))
+        if($this->input->post('Choix_Ajout_SousAction'))
         {
             $noAction=$this->input->post('Action');
-            redirect('Acteur/AjoutCollaborateur/'.$noAction); 
+            redirect('Acteur/AjoutSousAction/'.$noAction); 
+        }
+        if($this->input->post('Choix_Afficher'))
+        {
+            $noAction=$this->input->post('Action');
+            redirect('Acteur/AfficherActionSelectionnee/'.$noAction); 
         }
         else
         {
             //$noActeur = $this->session->noActeur;
             $this->load->model('ModelActeur'); // on charge le modele correspondant
             $action= $this->ModelActeur->getActions($noActeur);
-            if($action==null)
-            {
-                redirect('Acteur/AccueilActeur');
-                // message a calé
-            }
+
+           // var_dump($action);
+        
+           if ($action==null)
+           {
+               redirect('Acteur/AccueilActeur');
+           }
             $i=0;
             //var_dump($action);
             foreach($action as $uneAction)

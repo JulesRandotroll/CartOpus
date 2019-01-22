@@ -358,6 +358,7 @@ class Visiteur extends CI_Controller
 
         if ($this->session->statut==1)
         {
+          //var_dump($noActeur);
           redirect('Acteur/AccueilActeur');
         }
         if ($this->session->statut==4)
