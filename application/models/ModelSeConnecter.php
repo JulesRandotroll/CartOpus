@@ -40,7 +40,7 @@
         public function Test_Inscrit($donneesATester)
         {
             //var_dump($donneesATester);
-            $array = array('mail' => $donneesATester['mail'], 'motdepasse' => $donneesATester['mdp']);
+            $array = array('mail' => $donneesATester['mail'], 'motdepasse' => $donneesATester['motdepasse']);
             $this->db->select('count(*)');
             $this->db->from('acteur ');
             $this->db->where($array);
@@ -51,7 +51,7 @@
 
         public function GetNoProfil($donneesATester)
         {
-            $array = array('mail' => $donneesATester['mail'], 'motdepasse' => $donneesATester['mdp']);
+            $array = array('mail' => $donneesATester['mail'], 'motdepasse' => $donneesATester['motdepasse']);
             $this->db->select('NoProfil');
             $this->db->from('acteur ');
             $this->db->where($array);
@@ -62,7 +62,7 @@
 
         public function GetNoActeur($donneesATester)
         {
-            $array = array('mail' => $donneesATester['mail'], 'motdepasse' => $donneesATester['mdp']);
+            $array = array('mail' => $donneesATester['mail'], 'motdepasse' => $donneesATester['motdepasse']);
             $this->db->select('NoActeur');
             $this->db->from('acteur ');
             $this->db->where($array);

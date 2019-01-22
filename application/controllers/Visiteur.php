@@ -42,7 +42,8 @@ class Visiteur extends CI_Controller
       );
 
       $this->load->view('templates/Entete',$DonneesTitre);
-      $this->load->view('Visiteur/Accueil',$DonneesInjectees);
+      $this->load->view('Visiteur/BarreRecherche',$this->session->statut);
+      $this->load->view('Visiteur/FilActualite', $DonneesInjectees);
       $this->load->view('templates/PiedDePage');
     
     }
@@ -216,6 +217,7 @@ class Visiteur extends CI_Controller
     if($this->input->post('annule'))
     {
       //echo('tes la ?');
+      //
       //var_dump($mail);
       $this->ModelSInscrire->deleteTempo($mail);
       redirect('Visiteur/loadAccueil');
@@ -223,7 +225,7 @@ class Visiteur extends CI_Controller
     else
     {
       //var_dump($mail);
-      $SiteURL="http://127.0.0.1/CartOpus/index.php/Visiteur/finaliser/".$code; 
+      $SiteURL="http://127.0.0.1/SIO1/CartOpus/index.php/Visiteur/finaliser/".$code; 
       $message="Vous vous inscrivez actuellement sur le site de CartOpus, veuillez cliquer sur ce lien pour finaliser l'inscription: ".$SiteURL;
       $objet="Validation d'inscription";
       $this->email->from('cartopus22@gmail.com');
@@ -326,9 +328,10 @@ class Visiteur extends CI_Controller
       $donneesATester=array
       (
         'mail'=>$this->input->post('mail'),
-        //adresse mail saisie par l'utilisateur.
-        'mdp'=>$this->input->post('mdp'),
+        'motdepasse'=>$this->input->post('mdp'),
+        'Finaliser'=>true,
       );
+      
       $test = $this->ModelSeConnecter->Test_Inscrit($donneesATester);
       // echo'deja inscrit ?';
       // var_dump($test);

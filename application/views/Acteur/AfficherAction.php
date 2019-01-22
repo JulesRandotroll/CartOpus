@@ -35,8 +35,10 @@
                         // echo '<H1>'.$Actions[0]['NOMACTION'].'</H1>';
                         // echo '<H4>'.$Actions[0]['Description'].'</H4>';
                         $i = 0;
+                        $AffichageAction="";
                         foreach($Actions as $uneAction)
                         {   
+                            //var_dump($uneAction);
                             if ($i == 0)
                             {
                                 echo '<H1>'.$uneAction['TitreAction'].'</H1>';
@@ -80,82 +82,89 @@
                             }// ==0
                             else
                             {
-                                if($i== 1)
-                                {
-                                    echo'<div class="table-responsive">';
-                                    //$this->table->set_heading('Jour  ', 'Horraires ');
-                                }//== 1
-                                if($uneAction['DATEFIN']==null){$uneAction['DATEFIN']=0;}
-                                $Action = '<a href="'.site_url('Acteur/AfficherActionSelectionnee/'.($uneAction['NOACTION']).'/'.($uneAction['DATEDEBUT']).'/'.($uneAction['DATEFIN'])).'" style="color:FFFFFF">'.'<H4>'.$uneAction['TitreAction'].'</H4></a>';
-
-                                date_default_timezone_set('Europe/Paris');
-                                // --- La setlocale() fonctionnne pour strftime mais pas pour DateTime->format()
-                                setlocale(LC_TIME, 'fr_FR.utf8','fra');// OK
-                                // strftime("jourEnLettres jour moisEnLettres annee") de la date courante
-                            
-                                $DateDebut = date_create($uneAction['DATEDEBUT']);
-                                $DD = date_timestamp_get($DateDebut);
-
-                                if($uneAction['DATEFIN'] != null)
-                                {
-                                    $DateFin = date_create($uneAction['DATEFIN']);
-                                    $DF = date_timestamp_get($DateFin);
-
-                                    //echo 'Test : '.(($DF-$DD)/60/60/24).'<BR><BR><BR>';
-                                    if(($DF-$DD)/60/60/24 >= 1)
+                                //Remplissage du tableau : 
+                                    if($i== 1)
                                     {
-                                        
-                                        $Horaire = "Du :".strftime("%A %d %B %Y %H h %M",$DD).'<BR> Au : '.strftime("%A %d %B %Y %H h %M",$DF).'<BR>';
-                                        
+                                        echo'<div class="table-responsive">';
+                                        //$this->table->set_heading('Jour  ', 'Horraires ');
+                                    }//== 1
+                                    if($uneAction['DATEFIN']==null)
+                                    {
+                                        $uneAction['DATEFIN']=0;
                                     }
-                                    else
-                                    {
-                                       
-                                        $Horaire = "De : ".strftime("%H h %M",$DD).' à '.strftime("%H h %M",$DF);
-                                       
-                                    } // >= 1
+
+                                    $Action = '<a href="#action'.$i.'" style="color:FFFFFF">'.'<H4>'.$uneAction['TitreAction'].'</H4></a>';
                                     
-                                } // != numm
-                                else
-                                {
-                                    
-                                    $Horaire = 'A partir du : '.strftime("%A %d %B %Y %H h %M",$DD).'<BR>';
-                                } // != null
+                                    date_default_timezone_set('Europe/Paris');
+                                    // --- La setlocale() fonctionnne pour strftime mais pas pour DateTime->format()
+                                    setlocale(LC_TIME, 'fr_FR.utf8','fra');// OK
+                                    // strftime("jourEnLettres jour moisEnLettres annee") de la date courante
                                 
-                                $jourTest = strftime('%A',$DD);
-                                if($Jour == $jourTest)
-                                {
-                                    //$Horaire = ' joli petit teste samère !';
-                                    if (empty($Array))
+                                    $DateDebut = date_create($uneAction['DATEDEBUT']);
+                                    $DD = date_timestamp_get($DateDebut);
+
+                                    if($uneAction['DATEFIN'] != null)
                                     {
-                                        $Array = array(strftime("%A %d %B %Y",$DD),$Action.$Horaire);
+                                        $DateFin = date_create($uneAction['DATEFIN']);
+                                        $DF = date_timestamp_get($DateFin);
+                                        //echo 'Test : '.(($DF-$DD)/60/60/24).'<BR><BR><BR>';
+                                        if(($DF-$DD)/60/60/24 >= 1)
+                                        {
+                                            $Horaire = "Du :".strftime("%A %d %B %Y %H h %M",$DD).'<BR> Au : '.strftime("%A %d %B %Y %H h %M",$DF).'<BR>';   
+                                        }
+                                        else
+                                        {
+                                            $Horaire = "De : ".strftime("%Hh%M",$DD).' à '.strftime("%Hh%M",$DF);  
+                                        } // >= 1
+                                    } // != numm
+                                    else
+                                    {  
+                                        $Horaire = 'A partir du : '.strftime("%A %d %B %Y %H h %M",$DD).'<BR>';
+                                    } // != null
+                                    
+                                    $jourTest = strftime('%A',$DD);
+                                    if($Jour == $jourTest)
+                                    {
+                                        //$Horaire = ' joli petit teste samère !';
+                                        if (empty($Array))
+                                        {
+                                            $Array = array(strftime("%A %d %B %Y",$DD),$Action.$Horaire);
+                                        }
+                                        else
+                                        {
+                                            $temp = array($Action.$Horaire=>$Action.$Horaire);
+                                            $Array = $Array + $temp;
+                                        }
+                                        
                                     }
                                     else
                                     {
-                                        $temp = array($Action.$Horaire=>$Action.$Horaire);
-                                        $Array = $Array + $temp;
+                                        $this->table->add_row($Array);
+                                        $Jour = $jourTest;
+                                        $Array = array(strftime("%A %d %B %Y",$DD),$Action.$Horaire);                                   
                                     }
-                                }
-                                else
-                                {
-                                    $Jour = $jourTest;
-                                    $Array = array(strftime("%A %d %B %Y",$DD),$Action.$Horaire);
+                                //Remplissage du tableau
+                                
+                                $entete = '
+                                <div class="row" style="background-color:#15B7D1;padding:20px" id="action'.$i.'">
+                                    <div class="col-sm-2">
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class = "text-center">
+                                            <section>
+                                                <div class = "section-inner" style="background-color:#139CBC;padding:20px">';
 
-                                    $this->table->add_row($Array);
-                                   
-                                }
-
-
-
-
-
-
+                                        $pied = '</div>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>';
+                                
+                                $AffichageAction = $AffichageAction.$entete.'<H1 style="color:FFFFFF">'.$uneAction['TitreAction'].'</H1>'.$Horaire.'<H4>'.$uneAction['Description'].'</H4>'.$pied;
                                 
                             } // ==0
                             $i +=1;
-                            
-
-                            
+ 
                         }//EndForEach
                         if($i != 1)
                         {
@@ -176,8 +185,7 @@
                             {
                                 echo '<BR>'.img($unFichier['FICHIER']).'<BR>';
                             }
-                                
-                                //var_dump($Fichiers);
+
                         }
                         echo form_open('Acteur/SupprimerAction/'.$Actions[0]['NOACTION'].'',array("id"=>"form_suppr"));
                         
@@ -197,6 +205,10 @@
         </div>
     </div>
 </div>
+<?php 
+ echo $AffichageAction;
+
+?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script src=<?php echo('"'.js_url("js_supprimerAction").'"')?>></script>
