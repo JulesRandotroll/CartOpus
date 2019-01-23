@@ -1169,7 +1169,7 @@ class Acteur extends CI_Controller
             // echo( $DateF.' '.$HeureF);
             // echo( $Description );
             
-            $DateDebut = $DateD.' '.$HeureD.':00';
+            $DateDebut = $DateD.' '.$HeureD.':01';
             $DateFin = $DateF.' '.$HeureF.':00';
            if($DateFin < $DateDebut && $DateFin != ' :00')
             {
