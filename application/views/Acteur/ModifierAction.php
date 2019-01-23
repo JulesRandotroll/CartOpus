@@ -21,7 +21,13 @@
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <?php
                         echo form_open('Acteur/ModifierAction/'.$noAction);
-    
+                        if ($message!="")
+                        {
+                        echo'<div class="alert alert-danger alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong>Attention</strong> '.$message.'
+                            </div>';
+                        }
                         echo '<div class="form-group">';
                         echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                             echo form_label('Nom de l\'action : ', 'Name');
