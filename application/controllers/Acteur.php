@@ -277,18 +277,15 @@ class Acteur extends CI_Controller
         return $Image;
     }
 
-    public function AfficherActionSelectionnee($noAction,$dateDebut,$dateFin)
+    public function AfficherActionSelectionnee($noAction)
     {
 
-        $DateFin = str_replace('%20',' ',$dateFin);
-        $DateDebut=str_replace('%20',' ',$dateDebut);
+        $Where = array('a.noAction'=>$noAction);
+        $Actions = $this->ModelAction->getAction($Where);
 
-        $Actions =$this->ModelAction->getSousAction($noAction,$DateDebut,$DateFin); 
+        $DateDebut=$Actions[0]['DATEDEBUT'];
+        //var_dump($Actions);
         
-
-        $Donnees = array('a.noaction'=>$noAction,'datedebut'=>$DateDebut,);
-        $Action = $this->ModelAction->getAction($Donnees);
-
         $Donnes = array('NOACTION'=>$noAction,'DATEACTION'=>$DateDebut,);
         $Fichiers = $this->ModelAction->getFichersPourAction($Donnes);
 
@@ -1175,7 +1172,7 @@ class Acteur extends CI_Controller
             // echo( $DateF.' '.$HeureF);
             // echo( $Description );
             
-            $DateDebut = $DateD.' '.$HeureD.':00';
+            $DateDebut = $DateD.' '.$HeureD.':01';
             $DateFin = $DateF.' '.$HeureF.':00';
            if($DateFin < $DateDebut && $DateFin != ' :00')
             {

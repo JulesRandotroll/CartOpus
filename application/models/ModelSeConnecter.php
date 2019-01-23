@@ -40,7 +40,7 @@
         public function Test_Inscrit($donneesATester)
         {
             //var_dump($donneesATester);
-         //$array = array('mail' => $donneesATester['mail'], 'motdepasse' => $donneesATester['mdp']);
+            $array = array('mail' => $donneesATester['mail'], 'motdepasse' => $donneesATester['motdepasse']);
             $this->db->select('count(*)');
             $this->db->from('acteur ');
             $this->db->where($donneesATester);

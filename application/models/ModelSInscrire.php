@@ -23,7 +23,7 @@
           
            $this->db->select('count(*)');
            $this->db->from('acteur');
-           $this->db->where('mail',$donneeATester);
+           $this->db->where($donneeATester);
            $requete = $this->db->get();
            return $requete->row_array();
            // Select

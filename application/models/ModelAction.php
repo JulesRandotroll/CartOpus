@@ -114,7 +114,7 @@
             return $requete->result_array();
         }
 
-        public function getSousAction($noAction,$DateDebut,$DateFin)
+        public function getSousAction($noAction)
         {
            //echo $noAction;
             if($DateFin != 0)
@@ -124,9 +124,7 @@
                     FROM Action a, AvoirLieu al, Lieu l
                     WHERE al.noAction=a.noAction 
                     AND l.nolieu=al.nolieu
-                    AND a.noaction = ".$noAction.
-                    " HAVING `DATEDEBUT` BETWEEN '".$DateDebut."' 
-                    AND '".$DateFin."'"
+                    AND a.noaction = ".$noAction
                 );
             }
             else 
