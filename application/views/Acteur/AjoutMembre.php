@@ -15,12 +15,12 @@
     </div>
     <div class="col-sm-8" style="padding:20px">
         <div style="padding:20px">
-        <H1 style="color:#FFFFFF" class="text-center">Ajout Collaborateur</H1>
+        <H1 style="color:#FFFFFF" class="text-center">Ajout Membre</H1>
             </div>
             <section >
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <?php
-                        echo form_open('Acteur/AjoutCollaborateur/'.$noAction);
+                        echo form_open('Acteur/AjoutMembre/'.$noAction);
 
                         //var_dump($Prenom);
                        if ($message!="")

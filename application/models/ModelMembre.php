@@ -1,5 +1,5 @@
 <?php
-    class ModelCollaborateur extends CI_Model {
+    class ModelMembre extends CI_Model {
 
         public function __construct()
         {

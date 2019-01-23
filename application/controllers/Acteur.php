@@ -14,7 +14,7 @@ class Acteur extends CI_Controller
         $this->load->library('session');
         $this->load->model('ModelActeur');
         $this->load->model('ModelAction');
-        $this->load->model('ModelCollaborateur');
+        $this->load->model('ModelMembre');
         $this->load->library('upload');
  
         //var_dump($this->session->statut);
@@ -325,7 +325,7 @@ class Acteur extends CI_Controller
         {
             $noAction=$this->input->post('Action');
             //var_dump($noAction);
-            redirect('Acteur/ReitererAction/'.$noAction);
+            redirect('Acteur/RenouvelerAction/'.$noAction);
                          
         }
         if($this->input->post('Choix_Modifier'))
@@ -390,7 +390,7 @@ class Acteur extends CI_Controller
             $this->load->view('templates/PiedDePage');     
         }
     }
-    public function ReitererAction($noAction)
+    public function RenouvelerAction($noAction)
     {
         $noActeur = $this->session->noActeur;
         //var_dump($noAction);
@@ -433,7 +433,7 @@ class Acteur extends CI_Controller
                 );
                 $DonnéesTitre = array('TitreDeLaPage'=>'Renouveler');
                 $this->load->view('templates/Entete',$DonnéesTitre);
-                $this->load->view('Acteur/ReitererAction',$DonneesAInjectees);
+                $this->load->view('Acteur/RenouvelerAction',$DonneesAInjectees);
                 $this->load->view('templates/PiedDePage');
             }
             else
@@ -499,7 +499,7 @@ class Acteur extends CI_Controller
             );
             $DonnéesTitre = array('TitreDeLaPage'=>'Renouveler');
             $this->load->view('templates/Entete',$DonnéesTitre);
-            $this->load->view('Acteur/ReitererAction',$DonneesAInjectees);
+            $this->load->view('Acteur/RenouvelerAction',$DonneesAInjectees);
             $this->load->view('templates/PiedDePage');
         }
         
@@ -1006,9 +1006,9 @@ class Acteur extends CI_Controller
         }
     }
     
-    public function AjoutCollaborateur($noAction)
+    public function AjoutMembre($noAction)
     {
-        $DonnéesTitre = array('TitreDeLaPage'=>'Ajout Collaborateur');
+        $DonnéesTitre = array('TitreDeLaPage'=>'Ajout Membre');
         $noActeur = $this->session->noActeur;
 
         $Action=$this->ModelAction->getActionSimple($noAction);
@@ -1037,14 +1037,18 @@ class Acteur extends CI_Controller
                );
    
                $this->load->view('templates/Entete',$DonnéesTitre);
-               $this->load->view('Acteur/AjoutCollaborateur',$DonneesAInjecter);
+               $this->load->view('Acteur/AjoutMembre',$DonneesAInjecter);
                $this->load->view('templates/PiedDePage');
   
             }
             else
             {
-                $test=$this->ModelActeur->GetMail($Mail);
-                //var_dump($test);
+                $DonnéesDeTest=array(
+                    'Mail'=>$this->input->post('mail'),
+                    'nom'=>$this->input->post('nom')
+                );
+                $test=$this->ModelActeur->GetMail($DonnéesDeTest);
+                var_dump($test);
                 if ($test==null)
                 { 
                     $Acteur=$this->ModelActeur->GetActeur($noActeur);
@@ -1055,7 +1059,7 @@ class Acteur extends CI_Controller
                     //$SiteURL=site_url('Visiteur/SInscrire');
                     $SiteURL = "http://127.0.0.1/CartOpus/index.php/Visiteur/SInscrire";
                     $objet ='Demande d\inscription';
-                    $message = $Acteur[0]['NOMACTEUR'].' '.$Acteur[0]['PRENOMACTEUR'].' souhaiterai que vous soyez son collaborateur pour l\'évenement '.$Action[0]['NOMACTION'].' Et pour ceci il faut vous inscrire sur le site : '.$SiteURL;
+                    $message = $Acteur[0]['NOMACTEUR'].' '.$Acteur[0]['PRENOMACTEUR'].' souhaiterai que vous soyez son Membre pour l\'évenement '.$Action[0]['NOMACTION'].' Et pour ceci il faut vous inscrire sur le site : '.$SiteURL;
                     
                     $mail = $this->input->post('mail');
                     //var_dump($mail);
@@ -1071,34 +1075,33 @@ class Acteur extends CI_Controller
                     }
                     else
                     {
-                        redirect('Acteur/AccueilActeur');
+                        //redirect('Acteur/AccueilActeur');
                     }
                 }
                 else
                 {
-                   // echo' insert dans etrepartenaire (noAction,noActeur,noRole,DateD,DateF)
-                        //insert dans ProfilPourAction (noActeur,noAction,DateD,noProfil,DateF)';
-
-                    $donnéesEtrePartenaire=array(
-                        'noAction'=>$noAction,
-                        'noActeur'=>$noActeur,
-                        'noRole'=>$Role,
-                        'DateDebut'=>$Action[0]['DATEDEBUT'],
-                        'DateFin'=>$Action[0]['DATEFIN'],
-                    );
-
-                    //var_dump($donnéesEtrePartenaire);
-                    $donnéesProfilPourAction=array(
-                        'noActeur'=>$noActeur,
-                        'noAction'=>$noAction,
-                        'DateDebut'=>$Action[0]['DATEDEBUT'],
-                        'noProfil'=>2,
-                        'DateFin'=>$Action[0]['DATEFIN'],
-                    );  
-                   // var_dump($donnéesProfilPourAction);  
-                    $this->ModelCollaborateur->insertEtrePartenaire($donnéesEtrePartenaire);
-                    $this->ModelCollaborateur->insertProfilPourAction($donnéesProfilPourAction);  
-                    redirect('Acteur/AccueilActeur');
+                    // si le nom correspond bien au mail
+                        $donnéesEtrePartenaire=array(
+                            'noAction'=>$noAction,
+                            'noActeur'=>$noActeur,
+                            'noRole'=>$Role,
+                            'DateDebut'=>$Action[0]['DATEDEBUT'],
+                            'DateFin'=>$Action[0]['DATEFIN'],
+                        );
+    
+                        //var_dump($donnéesEtrePartenaire);
+                        $donnéesProfilPourAction=array(
+                            'noActeur'=>$noActeur,
+                            'noAction'=>$noAction,
+                            'DateDebut'=>$Action[0]['DATEDEBUT'],
+                            'noProfil'=>2,
+                            'DateFin'=>$Action[0]['DATEFIN'],
+                        );  
+                       // var_dump($donnéesProfilPourAction);  
+                       //$this->ModelMembre->insertEtrePartenaire($donnéesEtrePartenaire);
+                      // $this->ModelMembre->insertProfilPourAction($donnéesProfilPourAction);  
+                        //redirect('Acteur/AccueilActeur');
+                   
                 }
             }
         }
@@ -1132,7 +1135,7 @@ class Acteur extends CI_Controller
             );
 
             $this->load->view('templates/Entete',$DonnéesTitre);
-            $this->load->view('Acteur/AjoutCollaborateur',$DonneesAInjecter);
+            $this->load->view('Acteur/AjoutMembre',$DonneesAInjecter);
             $this->load->view('templates/PiedDePage');
         }
     }
