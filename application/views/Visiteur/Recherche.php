@@ -53,9 +53,9 @@ if(!empty($lesActeurs))
                             <?php
                                 foreach ($lesActeurs As $unActeur):
                                     echo '<tr>';
-                                    echo '<td><img src="'.img_url($unActeur['PhotoProfil']).'"></td>';
-                                    echo '<td><h4>'.$unActeur['NOMACTEUR'].'</h4>';
-                                    echo '<h5>'.$unActeur['PRENOMACTEUR'].'</h5></td>';
+                                    echo '<td><a href="'.site_url('Visiteur/AfficherActeurAction/'.($unActeur['NOACTEUR'])).'"><img src="'.img_url($unActeur['PhotoProfil']).'"></a></td>';
+                                    echo '<td><a href="'.site_url('Visiteur/AfficherActeurAction/'.($unActeur['NOACTEUR'])).'" style="color:#000000"><h4>'.$unActeur['NOMACTEUR'].'</h4>';
+                                    echo '<h5>'.$unActeur['PRENOMACTEUR'].'</h5></a></td>';
                                     echo '</tr>';
                                 endforeach ;
                             ?>
