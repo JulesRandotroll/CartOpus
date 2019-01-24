@@ -233,6 +233,11 @@
             $this->db->where('noAction', $DonneesASupprimer);
             $this->db->delete('profilpouraction');
         }
-    
+        public function SousActionSuppr_AvoirLieu($DonneesASupprimer)
+        {
+           // var_dump($DonneesASupprimer);
+            $this->db->where($DonneesASupprimer);
+            $this->db->delete('avoirlieu');
+        }
     }
 ?>

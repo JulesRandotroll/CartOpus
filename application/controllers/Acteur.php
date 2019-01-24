@@ -1298,11 +1298,186 @@ class Acteur extends CI_Controller
 
     public function ModifierSousAction()
     {
+        $noActeur = $this->session->noActeur;
+        //var_dump($noAction);
+             
+        $DonnéesDeTest= array(
+            'a.NoAction' => $noAction,
+            //'datedebut'=>$dateDebut,
+        );
+        $Action=$this->ModelAction->getAction($DonnéesDeTest);
+        //var_dump($Action);
 
+        $message="";
+        $DonneesAInjectees=array
+        (
+            'noAction'=>$Action[0]['NOACTION'],
+            'NomAction'=>$Action[0]['NOMACTION'],
+            'Adresse'=>$Action[0]['ADRESSE'],
+            'CodePostale'=>$Action[0]['CodePostal'],
+            'Ville'=>$Action[0]['Ville'],
+            'DateDebut'=>$Action[0]['DATEDEBUT'],
+            'DateFin'=>$Action[0]['DATEFIN'],
+            // 'HeureDebut'=>$Action[0]['HeureDebut'],
+            // 'HeureFin'=>$Action[0]['HeureFin'],
+            'Public'=>$Action[0]['PublicCible'],
+            'Description'=>$Action[0]['Description'],
+            'SiteURL'=>$Action[0]['SiteURLAction'],
+            'message'=>$message,
+
+        );
+        //var_dump($DonneesAInjectees);
+    
+        if ($this->input->post('Modifier'))
+        { 
+            $NewDonnees=array(     
+                $noAction=>$Action[0]['NOACTION'],
+                'NomAction'=>$this->input->post('NomAction'),
+                'Adresse'=>$this->input->post('Adresse'),
+                'CodePostale'=>$this->input->post('CodePostale'),
+                'Ville'=>$this->input->post('Ville'),
+                'DateDebut' => $this->input->post('DateDebut'),
+                'HeureDebut' =>$this->input->post('HeureDebut'),
+                'DateFin' => $this->input->post('DateFin'),
+                'HeureFin' => $this->input->post('HeureFin'),
+                'PublicCible'=>$this->input->post('Public'),
+                'Description'=>$this->input->post('Description'),
+                'SiteURL'=>$this->input->post('SiteURL'),
+            );
+            //var_dump($NewDonnees);
+
+             $DateD = $NewDonnees['DateDebut'].' '.$NewDonnees['HeureDebut'];
+             $DateF = $NewDonnees['DateFin'].' '.$NewDonnees['HeureFin'];
+
+
+            if($DateF<$DateD)
+            {
+                $message="dates incorrectes";
+                //echo("date incorrecte");
+                $DonneesAInjectees=array
+                (
+                    'noAction'=>$noAction,
+                    'NomAction'=>$NewDonnees['NomAction'],
+                    'Adresse'=>$NewDonnees['Adresse'],
+                    'CodePostale'=>$NewDonnees['CodePostale'],
+                    'Ville'=>$NewDonnees['Ville'],
+                    'DateDebut'=>'',
+                    'DateFin'=>'',
+                    'HeureDebut'=>'',
+                    'HeureFin'=>'',
+                    'Public'=>$NewDonnees['PublicCible'],
+                    'Description'=>$NewDonnees['Description'],
+                    'SiteURL'=>$NewDonnees['SiteURL'],
+                    'message'=>$message,
+                );
+                $DonnéesTitre = array('TitreDeLaPage'=>'Modifier');
+                $this->load->view('templates/Entete',$DonnéesTitre);
+                $this->load->view('Acteur/ModifierAction',$DonneesAInjectees);
+                $this->load->view('templates/PiedDePage');
+            }
+            else
+            {
+                $DonneesAModifierAction=array(
+                    'NomAction'=>$this->input->post('NomAction'),
+                    'PublicCible'=>$this->input->post('Public'),
+                    'SiteURLAction'=>$this->input->post('SiteURL'),
+                );
+               //echo'Action';
+                //var_dump($DonneesAModifierAction);
+                $Action=$this->ModelAction->UpdateAction($noAction,$DonneesAModifierAction);
+                
+          ////////////////////////////////////////////////////////////////////////////////////////////////
+                $DonneesAModifierLieu=array(
+                    'Adresse'=>$this->input->post('Adresse'),
+                    'CodePostal'=>$this->input->post('CodePostale'),
+                    'Ville'=>$this->input->post('Ville'),
+                );
+                //echo'Lieu';
+                //var_dump($DonneesAModifierLieu);
+                $noLieu=$this->ModelAction->getLieu($DonneesAModifierLieu);
+              
+                if ($noLieu==null){
+                    $Lieu=$this->ModelAction->insertLieu($DonneesAModifierLieu);
+                    $noLieu=$Lieu['noLieu'];
+                }
+                
+                // var_dump($noLieu);              
+         /////////////////////////////////////////////////////////////////////////////////////////////////
+                $DonneesAModifierEtrePartenaire=array(
+                    'DateDebut'=>$DateD,
+                    'DateFin'=>$DateF,
+                );
+                $DonnéesDeTest=array(
+                    'NoAction'=>$noAction,
+                    'NoActeur'=>$noActeur,
+                );
+                $EtrePartenaire=$this->ModelAction->UpdateEtrePartenaire($DonnéesDeTest,$DonneesAModifierEtrePartenaire);
+            /////////////////////////////////////////////////////////////////////////////////////////////////
+            $DonneesAModifierProfilAction=array(
+                'DateDebut'=>$DateD,
+                'DateFin'=>$DateF,
+            );
+            $DonnéesDeTest=array(
+                'NoAction'=>$noAction,
+                'NoActeur'=>$noActeur,
+            );
+            $ProfilAction=$this->ModelAction->UpdateProfilAction($DonnéesDeTest,$DonneesAModifierProfilAction);
+                /////////////////////////////////////////////////////////////////////////////////////////////////
+                $DonneesAModifierAvoirLieu=array(
+                    'DateDebut'=>$DateD,
+                    'NOLIEU'=> $noLieu[0]['nolieu'],
+                    'DateFin'=>$DateF,
+                    'TitreAction'=>$this->input->post('NomAction'),
+                    'Description'=>$this->input->post('Description'),
+                );
+                //var_dump($DonneesAModifierAvoirLieu);
+                $DonneesLieu=array(
+                    'Adresse'=>$DonneesAInjectees['Adresse'],
+                    'CodePostal'=>$DonneesAInjectees['CodePostale'],
+                    'Ville'=>$DonneesAInjectees['Ville'],
+                );
+                $AncienLieu=$this->ModelAction->getLieu($DonneesLieu);
+                //var_dump($AncienLieu);
+                $DonnéesDeTest=array(
+                            'NOLIEU'=>$AncienLieu[0]['nolieu'],
+                            'NOACTION'=>$noAction,
+                            'DATEDEBUT'=>$DonneesAInjectees['DateDebut'],
+                            'DATEFIN'=>$DonneesAInjectees['DateFin'],
+                            'TitreAction'=>$DonneesAInjectees['NomAction'],
+                );
+                //var_dump($DonnéesDeTest);
+             
+                
+                $AvoirLieu=$this->ModelAction->UpdateAvoirLieu($DonnéesDeTest,$DonneesAModifierAvoirLieu);
+    
+                redirect ('Acteur/AccueilActeur/'.$noActeur);
+            }
+        }
+        else
+        {
+            //var_dump($Action);
+            $DonnéesTitre = array('TitreDeLaPage'=>'Modification Action');
+
+            //var_dump($DonneesAInjectees['options'][2]);
+            $this->load->view('templates/Entete',$DonnéesTitre);
+            $this->load->view('Acteur/ModifierAction',$DonneesAInjectees);
+            $this->load->view('templates/PiedDePage');
+        }
+        
     }
     public function SupprimerSousAction()
     {
-        
+        $donneesAsupprimer=array (
+            'NOACTION'=>$noAction,
+            'DATEDEBUT'=>$DateDebut,
+            'TitreAction'=>$NomAction,
+            'NOLIEU'=>$noLieu,
+        );
+
+        $this->ModelAction->SousActionSuppr_AvoirLieu($donneesAsupprimer); 
+
+        redirect('Acteur/AccueilActeur/'.$noActeur);
+     
     }
 }
 ?>
