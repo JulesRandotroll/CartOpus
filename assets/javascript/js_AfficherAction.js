@@ -37,4 +37,19 @@ $(function()
             },
         }   
     });
+
+    $('.option').hover(
+        function()
+        {
+            
+            $(this).attr('class','option active');
+            $(this).attr('style','background-color:#139CBC;border-radius: 10px;padding:20px');
+            //glyph = $(this).find('span').eq(0).html();
+            //alert(glyph);
+        },
+        function()
+        {
+            $(this).attr('style','background-color:#B64F53;border-radius: 10px');
+        }
+    );
 });

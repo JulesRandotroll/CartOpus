@@ -46,7 +46,7 @@ class Acteur extends CI_Controller
 
         $Action = $this->ModelActeur->getActions($noActeur);
         //Même topo que pour $Organisation
-
+        //var_dump($Action);
         if ($Action==null)
         {
             $this->session->nbaction=0;

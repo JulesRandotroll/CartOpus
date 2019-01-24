@@ -54,6 +54,12 @@
                                                         echo '<div class="col-sm-8">';
                                                             echo '<h5 class="center">'.$unFavoris['Description'].'</H5>';
                                                         echo '</div>';
+                                                        echo '</br>';
+                                                        echo '<a href="../Acteur/AfficherActionSelectionnee/'.$unFavoris['NOACTION'].'" class="btn btn-danger">En savoir plus</a>';
+                                                        echo '</br></br>';
+                                                        echo '</br></br>';
+                                                        echo '</br></br>';
+                                                        echo'';
                                                     echo '</div>';
                                                     echo '</br>';
                                                     echo '<a href="../Acteur/AfficherAction" class="btn btn-danger">En savoir plus</a>';
