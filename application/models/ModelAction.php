@@ -89,6 +89,16 @@
             $this->db->where($Where);
             $this->db->update('etrepartenaire',$Donnees);
         }
+
+        public function UpdateProfilAction($DonnéesDeTest,$DonneesAModifier)
+        {
+            //var_dump($DonnéesDeTest);
+            $Where=array('NOACTION'=>$DonnéesDeTest['NoAction'],'NOACTEUR'=>$DonnéesDeTest['NoActeur']);
+            $Donnees=array('DATEDEBUT'=>$DonneesAModifier['DateDebut'],'DATEFIN'=>$DonneesAModifier['DateFin']);
+            //var_dump($Donnees);
+            $this->db->where($Where);
+            $this->db->update('profilpouraction',$Donnees);
+        }
         public function getFichersPourAction($DonnéesDeTest)
         {   
             

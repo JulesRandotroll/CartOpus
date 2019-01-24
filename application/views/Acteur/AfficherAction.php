@@ -7,7 +7,7 @@
                             <li><a href="'.site_url('Acteur/ModifierAction/'.$Actions[0]['NOACTION'].'').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-pencil"></span> Modifier Action</a></li>
                             <li><a href="'.site_url('Acteur/AjoutSousAction/'.$Actions[0]['NOACTION'].'').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter SousAction</a></li>
                             <li><a href="'.site_url('Acteur/ReitererAction/'.$Actions[0]['NOACTION'].'').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-repeat"></span> Renouveler Action</a></li>
-                            <li><a href="'.site_url('Acteur/SupprimerAction/'.$Actions[0]['NOACTION'].'').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-trash"></span> Supprimer Action</a></li>
+                            <li><a href="'.site_url('Acteur/ChoixAction/'.$Actions[0]['NOACTION'].'').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-trash"></span> Supprimer Action</a></li>
                           </ul>
                   </li>';
                   echo'<li><a href="'.site_url('Acteur/AccueilActeur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso </a></li>';    

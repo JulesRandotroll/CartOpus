@@ -915,7 +915,17 @@ class Acteur extends CI_Controller
                     'NoActeur'=>$noActeur,
                 );
                 $EtrePartenaire=$this->ModelAction->UpdateEtrePartenaire($DonnéesDeTest,$DonneesAModifierEtrePartenaire);
-        /////////////////////////////////////////////////////////////////////////////////////////////////
+            /////////////////////////////////////////////////////////////////////////////////////////////////
+            $DonneesAModifierProfilAction=array(
+                'DateDebut'=>$DateD,
+                'DateFin'=>$DateF,
+            );
+            $DonnéesDeTest=array(
+                'NoAction'=>$noAction,
+                'NoActeur'=>$noActeur,
+            );
+            $ProfilAction=$this->ModelAction->UpdateProfilAction($DonnéesDeTest,$DonneesAModifierProfilAction);
+                /////////////////////////////////////////////////////////////////////////////////////////////////
                 $DonneesAModifierAvoirLieu=array(
                     'DateDebut'=>$DateD,
                     'NOLIEU'=> $noLieu[0]['nolieu'],
@@ -1283,6 +1293,15 @@ class Acteur extends CI_Controller
         $this->load->view('templates/Entete',$DonnéesTitre);
         $this->load->view('Acteur/AjoutSousAction',$DonneesInjectees);
         $this->load->view('templates/PiedDePage');
+        
+    }
+
+    public function ModifierSousAction()
+    {
+
+    }
+    public function SupprimerSousAction()
+    {
         
     }
 }

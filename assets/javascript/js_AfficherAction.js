@@ -14,7 +14,7 @@ $(function()
         $('.sousAction').hide();
     });
 
-    $('#trash_Supprimer').confirm(
+    $('.trash_Supprimer').confirm(
     {
         icon: 'glyphicon glyphicon-alert',
         title: 'Attention',
