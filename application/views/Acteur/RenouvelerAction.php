@@ -1,19 +1,8 @@
 <ul class="nav navbar-nav navbar-right">
                         <?php 
-                        echo '<li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:#FFFFFF ;background-color:#0E7896">Action
-                        <span class="caret"></span></a>
-                        <ul class="dropdown-menu" style="background-color:#139CBC">
-                            
-                        <li><a href="'.site_url('Acteur/AjoutSousAction/'.$noAction).'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter SousAction</a></li><li><a href="'.site_url('Acteur/NouvelleAction/0').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-plus"></span> Ajouter Action</a></li>
-                                    <li><a href="'.site_url('Acteur/ChoixAction/2').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-pencil"></span> Modifier Action</a></li>   
-                                    <li><a href="'.site_url('Acteur/ChoixAction/3').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-trash"></span> Supprimer Action</a></li>
-                        </ul>
-                </li>';
-                echo'<li><a href="'.site_url('Acteur/AjoutCollaborateur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-user"></span> Ajout Collaborateur</a></li>';
-                    echo'<li><a href="#" style="color:#FFFFFF"><span class="glyphicon glyphicon-plus"></span> Ajout Thématique</a></li>';//'.site_url('Acteur/AjoutThematique/'.$NomAction).'
-                             echo'<li><a href="'.site_url('Acteur/AccueilActeur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso </a></li>';    
-                            echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se Déconnecter</a></li>';
+                       echo'<li><a href="'.site_url('Acteur/ChoixAction/1').'" style="color:#FFFFFF"><span class="glyphicon list-alt"></span> Afficher Action</a></li>';
+                       echo'<li><a href="'.site_url('Acteur/AccueilActeur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso </a></li>';    
+                       echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se Déconnecter</a></li>';
                         ?> 
                     </ul>
                 </div>
@@ -27,7 +16,7 @@
     <div class="col-sm-8" style="padding:20px">
         <div style="padding:20px">
             <div class = "text-center">
-                <H1 style="color:#FFFFFF">Réitérer une action</H1>
+                <H1 style="color:#FFFFFF">Renouveler une action</H1>
             </div>
             <section >
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
@@ -42,7 +31,7 @@
                             </div>';
                         }
                         echo '<div class="form-group">';
-                            echo '<span style="color:#FF0000"/> * </span>';
+                        echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                             echo form_label('Nom de l\'action : ', 'Name');
                             echo form_input('NomAction',$NomAction, array("placeholder"=>"Nom de votre action",'required'=>'required',"class"=>"form-control"));
                         echo '</div>';
@@ -57,7 +46,7 @@
 
                             echo '<div class="col-xs-4">';
                                 echo '<div class="form-group">';
-                                    echo '<span style="color:#FF0000"/> * </span>';
+                                echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                                     echo form_label('Code Postale : ', 'CP');
                                     echo form_input('CodePostale', $CodePostale, Array('pattern'=>'([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}','placeholder'=>'Code postale ex : 22000','required'=>'required',"class"=>"form-control"));
                                 echo '</div>';
@@ -65,7 +54,6 @@
 
                             echo '<div class="col-xs-4">';
                                 echo '<div class="form-group">';
-                                    echo '<span style="color:#FF0000"/> * </span>';
                                     echo form_label('Ville : ', 'ville');
                                     echo form_input('Ville', $Ville, Array("placeholder"=>"Ville ex : Saint Brieuc",'pattern="[a-zA-Z ]*"','required'=>'required',"class"=>"form-control"));
                                 echo '</div>';
@@ -77,12 +65,12 @@
                         echo '<div class="row">';
                             echo '<div class="col-xs-6">';
                                 echo '<div class="form-group">';
-                                    echo '<span style="color:#FF0000"/> * </span>';
+                                echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                                     echo form_label('Date de debut : ', 'dd');
                                     echo '<input class="form-control" name="DateDebut" id="date" type="date" value="'.$ToDay.'" required>';
                                 echo '</div>';
                                 echo '<div class="form-group">';
-                                    echo '<span style="color:#FF0000"/> * </span>';
+                                echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                                     echo form_label('Heure de debut : ', 'dd');
                                     echo '<input class="form-control" name="HeureDebut" id="time" type="time" value="'.$ToDayH.'"required>';
                                     //echo form_input('HeureDebut', '', Array("placeholder"=>"Heure ex : 14:14",'required'=>'required','class'=>'form-control'));
@@ -133,7 +121,7 @@
                             echo form_submit('Renouveler', 'Renouveler',array("class"=>"btn btn-danger btn-lg"));
                         echo '</div>';
                         
-                        echo '<br><h6><span style="color:#FF0000"/> *</span> Ces champs sont requis</h6> ';
+                        echo '<br><h6><span style="color:#FF0000"/> *</span> Ces champs sont obligatoires</h6> ';
                         echo form_close();
                      
                     ?>
@@ -142,4 +130,8 @@
         </div>
     </div>    
 </div>
-
+<script>
+$(document).ready(function(){
+$('[data-toggle="popover"]').popover();
+});
+</script>

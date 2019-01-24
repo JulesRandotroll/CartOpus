@@ -16,11 +16,12 @@
             return $requete->result_array();
         }
 
-        public function getMail($Mail)
+        public function getMail($DonneesTest)
         {
+            $Wheres=array('MAIL'=>$DonneesTest['Mail'],'NOMACTEUR'=>$DonneesTest['nom']);
             $this->db->select('*');
             $this->db->from('Acteur');
-            $this->db->where('mail',$Mail);
+            $this->db->where($Wheres);
             $requete = $this->db->get();
             return $requete->row_array();
         }
