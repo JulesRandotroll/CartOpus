@@ -16,7 +16,7 @@ class Visiteur extends CI_Controller
       $this->load->model('ModelSInscrire'); // on charge le modele correspondant
       $this->load->model('ModelAction');
       $this->load->library('session');
-
+      $this->load->model('ModelOrga');
       $this->load->model('ModelRecherche');
       $this->load->library("pagination");
   } // __construct
@@ -49,14 +49,12 @@ class Visiteur extends CI_Controller
     }
     else
     {
-    
       $DonneesInjectees['lesFavoris'] = $this->ModelAction->getActionFavorite($Where);
 
-    $this->load->view('templates/Entete',$DonneesTitre);
-    $this->load->view('Visiteur/BarreRecherche',$this->session->statut);
-    $this->load->view('Visiteur/FilActualite', $DonneesInjectees);
-    $this->load->view('templates/PiedDePage');
-    
+      $this->load->view('templates/Entete',$DonneesTitre);
+      $this->load->view('Visiteur/BarreRecherche',$this->session->statut);
+      $this->load->view('Visiteur/FilActualite', $DonneesInjectees);
+      $this->load->view('templates/PiedDePage');
     }
  
     //$DonneesTitre = array('TitreDeLaPage'=>'Cart\'Opus');
@@ -383,8 +381,6 @@ class Visiteur extends CI_Controller
     }
   } // fin SeConnecter
 
-
-  
   public function RecupMDP()
   {
     $DonnéesTitre = array('TitreDeLaPage'=>'Récupération Mot de Passe');
@@ -761,7 +757,7 @@ class Visiteur extends CI_Controller
 
     if(!empty($lesMotsCles))
     {
-      var_dump($lesMotsCles);
+      //var_dump($lesMotsCles);
       foreach($lesMotsCles as $unMotCle):
         $exist = FALSE;
         $noAction = $unMotCle['NOACTION'];
@@ -859,6 +855,22 @@ class Visiteur extends CI_Controller
       $this->load->view('Visiteur/Recherche', $DonneesInjectees);
       $this->load->view('templates/PiedDePage');
     }
+  }
+
+  public function AfficherOrga($noOrganisation)
+  {
+    $DonneesTitre = array('TitreDeLaPage'=>'Cart\'Opus');
+
+    if(!empty($noOrganisation))
+    {
+      $DonneesInjectees['lesOrganisations'] = $this->ModelOrga->getOrgaSimple($noOrganisation);
+      $DonneesInjectees['lesSecteurs'] = $this->ModelOrga->getSecteur($noOrganisation);
+      $DonneesInjectees['lesActeurs'] = $this->ModelOrga->getSecteur($noOrganisation);
+    }
+    
+    $this->load->view('templates/Entete', $DonneesTitre);
+    $this->load->view('Visiteur/AfficherOrga', $DonneesInjectees);
+    $this->load->view('templates/PiedDePage');
   }
 
   //Penser à refaire "Afficher Acteur" 

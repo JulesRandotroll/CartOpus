@@ -37,34 +37,34 @@ if(!empty($lesActions))
 if(!empty($lesActeurs))  
 {
 ?>
-<div class="row" style="background-color:#15B7D1">
-    <div class="col-sm-4" style="padding:20px">
-    </div>
-    <div class="col-sm-4" style="padding:20px">
-        <div class = "text-center">
-            <section >
-                <div class = "section-inner" style="background-color:#139CBC;padding:20px">
-                    <H1 style="color:#FFFFFF">Les Acteurs</H1>
-                    <table class='table'>
-                        <tr>
-                            <th></th>
-                            <th>Nom Acteur</th>
-                        </tr>
-                        <?php
-                            foreach ($lesActeurs As $unActeur):
-                                echo '<tr>';
-                                echo '<td><img src="'.img_url($unActeur['PhotoProfil']).'"></td>';
-                                echo '<td><h4>'.$unActeur['NOMACTEUR'].'</h4>';
-                                echo '<h5>'.$unActeur['PRENOMACTEUR'].'</h5></td>';
-                                echo '</tr>';
-                            endforeach ;
-                        ?>
-                    </table>
-                </div>
-            </section>
+    <div class="row" style="background-color:#15B7D1">
+        <div class="col-sm-4" style="padding:20px">
+        </div>
+        <div class="col-sm-4" style="padding:20px">
+            <div class = "text-center">
+                <section >
+                    <div class = "section-inner" style="background-color:#139CBC;padding:20px">
+                        <H1 style="color:#FFFFFF">Les Acteurs</H1>
+                        <table class='table'>
+                            <tr>
+                                <th></th>
+                                <th>Nom Acteur</th>
+                            </tr>
+                            <?php
+                                foreach ($lesActeurs As $unActeur):
+                                    echo '<tr>';
+                                    echo '<td><img src="'.img_url($unActeur['PhotoProfil']).'"></td>';
+                                    echo '<td><h4>'.$unActeur['NOMACTEUR'].'</h4>';
+                                    echo '<h5>'.$unActeur['PRENOMACTEUR'].'</h5></td>';
+                                    echo '</tr>';
+                                endforeach ;
+                            ?>
+                        </table>
+                    </div>
+                </section>
+            </div>
         </div>
     </div>
-</div>
 <?php 
 }
 
@@ -89,10 +89,10 @@ if(!empty($lesOrganisations))
                             <?php        
                                 foreach ($lesOrganisations As $uneOrganisation):
                                     echo '<tr>';
-                                    echo '<td><h4>'.$uneOrganisation['NOMORGANISATION'].'</h4></td>';
+                                    echo '<td><a href="'.site_url('Visiteur/AfficherOrga/'.$uneOrganisation['NO_ORGANISATION']).'" style="color:#000000"><h4>'.$uneOrganisation['NOMORGANISATION'].'</h4></a></td>';
                                     echo '<td><h4>'.$uneOrganisation['NOTELORGA'].'</h4></td>';
                                     echo '<td><h4>'.$uneOrganisation['NOFAXORGA'].'</h4></td>';
-                                    echo '<td><h4>'.$uneOrganisation['SITEURL'].'</h4></td>';
+                                    echo '<td><a href="#" style="color:#000000"><h4>'.$uneOrganisation['SITEURL'].'</h4></a></td>';
                                     echo '</tr>';
                                 endforeach ;
                             ?>

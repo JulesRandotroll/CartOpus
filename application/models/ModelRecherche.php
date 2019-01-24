@@ -156,7 +156,7 @@
             $this->db->or_like('nomLieu', $Recherche);
             $query = $this->db->get();
             $test = $query->result_array();
-            var_dump($test);
+            //var_dump($test);
             
             if(!empty($test))
             {

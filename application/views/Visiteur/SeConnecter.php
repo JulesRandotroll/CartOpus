@@ -24,6 +24,14 @@
                                 /* set_value : en cas de non validation les données déjà
                                 saisies sont réinjectées dans le formulaire */
                             
+                            if ($message!="")
+                            {
+                            echo'<div class="alert alert-danger alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <strong>Attention</strong> '.$message.'
+                                </div>';
+                            }
+
                             echo form_open('Visiteur/seConnecter');
                             
                             echo '<div class="form-group">';
@@ -50,8 +58,6 @@
                             
                             echo form_close();
                            
-                            echo $message;
-                            
                             echo '<br>';
                             echo '<a style="color:#FFFFFF" href="'.site_url('Visiteur/sInscrire').'">S\'inscrire ? </a>';
                             echo '<br><h6><span style="color:#FF0000"/> *</span> Ces champs sont requis</h6> ';
