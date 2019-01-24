@@ -27,8 +27,6 @@ class Acteur extends CI_Controller
 
     public function AccueilActeur()
     {
-
-       
       
         $this->session->statut = 1;
         $noActeur = $this->session->noActeur;
@@ -1494,5 +1492,7 @@ class Acteur extends CI_Controller
         redirect('Acteur/AccueilActeur/'.$noActeur);
      
     }
+
+    
 }
 ?>
