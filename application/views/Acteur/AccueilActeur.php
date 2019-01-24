@@ -110,11 +110,11 @@
                                     if($uneAction['DATEFIN']==null){$uneAction['DATEFIN']=0;}
                                     if(empty($uneAction['SiteURLAction']))
                                     {
-                                        $this->table->add_row($uneAction['NOMACTION'],$uneAction['NOMROLE'],$uneAction['SiteURLAction'],$uneAction['DATEDEBUT'],$uneAction['Description'],'<a href="'.site_url('Acteur/AfficherActionSelectionnee/'.($uneAction['NOACTION'])).'" class="btn btn-danger" >Accès</a>','<a href="'.site_url('Acteur/AjoutCollaborateur/'.($uneAction['NOACTION']).'/'.($uneAction['DATEDEBUT']).'/'.($uneAction['DATEFIN'])).'" class="btn btn-danger" >Ajout Collaborateur</a>');  
+                                        $this->table->add_row($uneAction['NOMACTION'],$uneAction['NOMROLE'],$uneAction['SiteURLAction'],$uneAction['DATEDEBUT'],$uneAction['Description'],'<a href="'.site_url('Acteur/AfficherActionSelectionnee/'.($uneAction['NOACTION'])).'" class="btn btn-danger" >Accès</a>','<a href="'.site_url('Acteur/AjoutMembre/'.($uneAction['NOACTION']).'/'.($uneAction['DATEDEBUT']).'/'.($uneAction['DATEFIN'])).'" class="btn btn-danger" >Ajouter Membre à l\'équipe</a>');  
                                     }
                                     else
                                     {
-                                        $this->table->add_row($uneAction['NOMACTION'],$uneAction['NOMROLE'],'<a href="'.$uneAction['SiteURLAction'].'" style="color:FFFFFF">Cliquer Ici</a>',$uneAction['DATEDEBUT'],$uneAction['Description'],'<a href="'.site_url('Acteur/AfficherActionSelectionnee/'.($uneAction['NOACTION'])).'" class="btn btn-danger" >Accès</a>','<a href="'.site_url('Acteur/AjoutCollaborateur/'.($uneAction['NOACTION']).'/'.($uneAction['DATEDEBUT']).'/'.($uneAction['DATEFIN'])).'" class="btn btn-danger" >Ajout Collaborateur</a>');
+                                        $this->table->add_row($uneAction['NOMACTION'],$uneAction['NOMROLE'],'<a href="'.$uneAction['SiteURLAction'].'" style="color:FFFFFF">Cliquer Ici</a>',$uneAction['DATEDEBUT'],$uneAction['Description'],'<a href="'.site_url('Acteur/AfficherActionSelectionnee/'.($uneAction['NOACTION'])).'" class="btn btn-danger" >Accès</a>','<a href="'.site_url('Acteur/AjoutMembre/'.($uneAction['NOACTION']).'/'.($uneAction['DATEDEBUT']).'/'.($uneAction['DATEFIN'])).'" class="btn btn-danger" >Ajouter Membre à l\'équipe</a>');
                                     }
                                     
                                 }

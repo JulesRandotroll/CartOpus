@@ -1041,6 +1041,20 @@ class Acteur extends CI_Controller
 
         $Action=$this->ModelAction->getActionSimple($noAction);
         //var_dump($Action);
+        $Role = $this->ModelActeur->GetRole();
+        $i=0;
+        foreach($Role as $unRole)
+        {
+            if(empty($Options))
+            {
+                $Options = array($unRole['NOROLE']=>$unRole['NOMROLE']);
+            }
+            else
+            {
+                $temporaire = array($unRole['NOROLE']=>$unRole['NOMROLE']);
+                $Options = $Options + $temporaire;
+            }
+        }
 
         if ($this->input->post('valider'))
         {
@@ -1060,7 +1074,7 @@ class Acteur extends CI_Controller
                     'Prenom'=>$Prenom,
                     'Mail'=>$Mail,
                     'ConfMail'=>"",
-                    'Role'=>$Role,
+                    'Role'=>$Options,
                     'message'=>$message,
                );
    
@@ -1071,47 +1085,64 @@ class Acteur extends CI_Controller
             }
             else
             {
-                $DonnéesDeTest=array(
+                $DonnéesDeTest=array
+                (
                     'Mail'=>$this->input->post('mail'),
-                    'nom'=>$this->input->post('nom')
                 );
                 $test=$this->ModelActeur->GetMail($DonnéesDeTest);
-                var_dump($test);
+                //var_dump($test);
                 if ($test==null)
                 { 
                     $Acteur=$this->ModelActeur->GetActeur($noActeur);
                     //var_dump($Acteur);
-                    //var_dump($noAction);
-                    
-                    //var_dump($Action);
-                    //$SiteURL=site_url('Visiteur/SInscrire');
-                    $SiteURL = "http://127.0.0.1/CartOpus/index.php/Visiteur/SInscrire";
-                    $objet ='Demande d\inscription';
-                    $message = $Acteur[0]['NOMACTEUR'].' '.$Acteur[0]['PRENOMACTEUR'].' souhaiterai que vous soyez son Membre pour l\'évenement '.$Action[0]['NOMACTION'].' Et pour ceci il faut vous inscrire sur le site : '.$SiteURL;
-                    
-                    $mail = $this->input->post('mail');
-                    //var_dump($mail);
-
-                    $this->email->from('cartopus22@gmail.com');
-                    $this->email->to($mail); 
-                    $this->email->subject($objet);
-                    $this->email->message($message);
-
-                    if (!$this->email->send())
-                    {
-                        $this->email->print_debugger();
-                    }
-                    else
-                    {
-                        //redirect('Acteur/AccueilActeur');
-                    }
+                    $message="Vous ne pouvez ajouter qu'une personne déjà inscrite.";
+                    $DonneesAInjecter=array(
+                        'noAction'=>$noAction,
+                        'Nom'=>'',
+                        'Prenom'=>'',
+                        'Mail'=>'',
+                        'ConfMail'=>"",
+                        'Role'=>$Options,
+                        'message'=>$message,
+                    );
+   
+                    $this->load->view('templates/Entete',$DonnéesTitre);
+                    $this->load->view('Acteur/AjoutMembre',$DonneesAInjecter);
+                    $this->load->view('templates/PiedDePage');
                 }
                 else
                 {
-                    // si le nom correspond bien au mail
+                    $DonnéesDeTest=array
+                    (
+                        'NomActeur'=>$this->input->post('nom'),
+                        'Mail'=>$this->input->post('mail'),
+                    );
+                    //var_dump($DonnéesDeTest);
+                    $test=$this->ModelActeur->TestDoublon($DonnéesDeTest);
+                    if($test==null)
+                    {
+                        $message="Cette adresse mail correspond à quelqu'un d'autre";
+                        $DonneesAInjecter=array(
+                            'noAction'=>$noAction,
+                            'Nom'=>'',
+                            'Prenom'=>'',
+                            'Mail'=>'',
+                            'ConfMail'=>"",
+                            'Role'=>$Options,
+                            'message'=>$message,
+                        );
+       
+                        $this->load->view('templates/Entete',$DonnéesTitre);
+                        $this->load->view('Acteur/AjoutMembre',$DonneesAInjecter);
+                        $this->load->view('templates/PiedDePage');
+                    }
+                    else
+                    {
+                        $NoActeurAjout=$this->ModelActeur->getNoActeur($Mail);
+                        var_dump($NoActeurAjout);
                         $donnéesEtrePartenaire=array(
                             'noAction'=>$noAction,
-                            'noActeur'=>$noActeur,
+                            'noActeur'=> $NoActeurAjout[0]['NOACTEUR'],
                             'noRole'=>$Role,
                             'DateDebut'=>$Action[0]['DATEDEBUT'],
                             'DateFin'=>$Action[0]['DATEFIN'],
@@ -1119,38 +1150,22 @@ class Acteur extends CI_Controller
     
                         //var_dump($donnéesEtrePartenaire);
                         $donnéesProfilPourAction=array(
-                            'noActeur'=>$noActeur,
+                            'noActeur'=> $NoActeurAjout[0]['NOACTEUR'],
                             'noAction'=>$noAction,
                             'DateDebut'=>$Action[0]['DATEDEBUT'],
                             'noProfil'=>2,
                             'DateFin'=>$Action[0]['DATEFIN'],
                         );  
-                       // var_dump($donnéesProfilPourAction);  
-                       //$this->ModelMembre->insertEtrePartenaire($donnéesEtrePartenaire);
-                      // $this->ModelMembre->insertProfilPourAction($donnéesProfilPourAction);  
-                        //redirect('Acteur/AccueilActeur');
-                   
+                        // var_dump($donnéesProfilPourAction);  
+                        $this->ModelMembre->insertEtrePartenaire($donnéesEtrePartenaire);
+                        $this->ModelMembre->insertProfilPourAction($donnéesProfilPourAction);  
+                        redirect('Acteur/AccueilActeur');
+                    }                                
                 }
             }
         }
         else
         {
-            $this->load->model('ModelActeur'); // on charge le modele correspondant
-            $Role = $this->ModelActeur->GetRole();
-            $i=0;
-            foreach($Role as $unRole)
-            {
-                if(empty($Options))
-                {
-                    $Options = array($unRole['NOROLE']=>$unRole['NOMROLE']);
-                }
-                else
-                {
-                    $temporaire = array($unRole['NOROLE']=>$unRole['NOMROLE']);
-                    $Options = $Options + $temporaire;
-                }
-            }
-
             $message="";
             $DonneesAInjecter=array(
                 'noAction'=>$noAction,

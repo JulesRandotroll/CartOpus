@@ -38,6 +38,32 @@ $(function()
         }   
     });
 
+    $('.trash_SupprimerSousAction').confirm(
+        {
+            icon: 'glyphicon glyphicon-alert',
+            title: 'Attention',
+            content: 'Voulez vous vraiment supprimer cette action',
+            type: 'red',
+            typeAnimated: true,
+            autoClose:"non|10000",
+            buttons: 
+            {
+                oui:
+                {
+                    action: function () 
+                    {
+                        index=$(this).attr('id');
+                        alert(index);
+                        //location.href = $('#form_supprSousAction'+i).attr('action');
+                    }
+                },
+                non: 
+                {
+                    btnClass:"btn-red",
+                },
+            }   
+        });
+
     $('.option').hover(
         function()
         {

@@ -149,20 +149,28 @@
                                 }
 
                             
-                                $entete = '
+                               // var_dump($uneAction);
+                                
+                                $entete =
+                                form_open('Acteur/SupprimerSousAction/'.$uneAction['NOACTION'].'/'.$uneAction['NOMACTION'].'/'.$uneAction['DATEDEBUT'].'/'.$uneAction['NOLIEU'],array("id"=>"form_supprSousAction".$i)). '
                                 <div class="row sousAction" style="background-color:#15B7D1;padding:20px" id="action'.$i.'">
                                     <div class="col-sm-3">
                                     </div>
                                     <div class="col-sm-6">
                                         <div class = "text-center">
                                             <section>
-                                                <div class = "section-inner" style="background-color:#139CBC;padding:20px">';
-
+                                                <div class = "section-inner" style="background-color:#139CBC;padding:20px">
+                                                <div class="text-right">
+                                                <a  href="'.site_url('Acteur/ModifierSousActionAction/'.$Actions[0]['NOACTION']).'" style="color:#FFFFFF"><span class="glyphicon glyphicon-pencil"></span>  </a>
+                                                <a id="'.$i.'" href="#action'.$i.'" class="trash_SupprimerSousAction" style="color:#FFFFFF"><span class="glyphicon glyphicon-trash" ></span>  </a>
+                                                </div>';
                                         $pied = '</div>
                                             </section>
                                         </div>
                                     </div>
-                                </div>';
+                                </div>'.
+                                form_close();
+                                
                                 
                                 $AffichageAction = $AffichageAction.
                                     $entete.'<H1 style="color:FFFFFF">'.
@@ -202,11 +210,7 @@
                         echo '<div class="text-left">';
                         echo'<a  href="'.site_url('Acteur/AccueilActeur/').'" style="color:#000000"><button type="button" class="btn btn-danger">Retour</button> </a>';
                         echo '</div>';
-                        echo '<div class="text-right">';
-                        //echo'<a  href="'.site_url('Acteur/ReitererAction/'.$Actions[0]['NOACTION']).'" style="color:#000000"><span class="glyphicon glyphicon-repeat"></span>  </a>';
-                        //echo'<a  href="'.site_url('Acteur/ModifierAction/'.$Actions[0]['NOACTION']).'" style="color:#000000"><span class="glyphicon glyphicon-pencil"></span>  </a>';
-                        //echo'<a  id="trash_Supprimer" style="color:#000000"><span class="glyphicon glyphicon-trash" ></span>  </a>';
-                        echo '</div>';
+                       
                         echo form_close();
                         
                     ?>
