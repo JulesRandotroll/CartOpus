@@ -18,6 +18,7 @@ class Visiteur extends CI_Controller
       $this->load->library('session');
       $this->load->model('ModelOrga');
       $this->load->model('ModelRecherche');
+      $this->load->model('ModelActeur');
       $this->load->library("pagination");
   } // __construct
 
@@ -674,7 +675,7 @@ class Visiteur extends CI_Controller
   public function Rechercher()
   {
     $recherche = false;
-    
+    $lesLieux = null;
     $DonneesTitre = array('TitreDeLaPage'=>'Cart\'Opus');
 
     $RechercheMotCle = $this->input->post('MotCle');
@@ -711,6 +712,8 @@ class Visiteur extends CI_Controller
       $DonneesInjectees['lesOrganisations'] = $this->ModelRecherche->organisationRecherche($RechercheMotCle, $config['per_page'], $noPage);
       $lesThematiques = $this->ModelRecherche->thematiqueRecherche($RechercheMotCle, $config['per_page'], $noPage);
       $lesMotsCles = $this->ModelRecherche->motCleRecherche($RechercheMotCle, $config['per_page'], $noPage);
+
+      $recherche = true;
 
     }
 
@@ -867,6 +870,76 @@ class Visiteur extends CI_Controller
     $this->load->view('Visiteur/AfficherOrga', $DonneesInjectees);
     $this->load->view('templates/PiedDePage');
   }
+
+  public function AfficherAction($noAction)
+  {
+      $Where = array('a.noAction'=>$noAction);
+      $Actions = $this->ModelAction->getAction($Where);
+
+      $DateDebut=$Actions[0]['DATEDEBUT'];
+      
+      $Donnes = array('NOACTION'=>$noAction,'DATEACTION'=>$DateDebut,);
+      $Fichiers = $this->ModelAction->getFichersPourAction($Donnes);
+
+      if(empty($Fichiers))
+      {
+          
+          $Données = array(
+              'Actions'=>$Actions,
+          );
+      }
+      else
+      {
+          $Données = array(
+              'Actions'=>$Actions,
+              'Fichiers'=>$Fichiers,
+          );
+      }
+      
+      $DonnéesTitre = array('TitreDeLaPage'=>$Actions[0]['NOMACTION']);
+      
+      $this->load->view('templates/Entete',$DonnéesTitre);
+      $this->load->view('Visiteur/AfficherAction',$Données);
+      $this->load->view('templates/PiedDePage');
+  }
+
+  public function AfficherActeurAction($noActeur)
+  {
+    
+      $Acteur = $this->ModelActeur->getActeur($noActeur);
+      //var_dump( $Acteur);
+      //On va chercher les information concernant l'acteur connecté dans la BDD 
+      
+      $Organisation = $this->ModelActeur->getOrganisation($noActeur);
+      //on va chercher les information concernant l'organisation à laquelle appartient l'acteur connecté
+      //il se peut que cette variable soit "null", auquel cas il faut mettre une condition dans la view
+      // pour ne pas tenter de l'afficher s'l n'y a rien de dedans ^^ 
+
+      $Action = $this->ModelActeur->getActions($noActeur);
+      //Même topo que pour $Organisation
+      //var_dump($Action);
+      if ($Action==null)
+      {
+          $this->session->nbaction=0;
+      }
+      else
+      {
+          $this->session->nbaction=1;
+      }
+
+      $Données = array(
+          'Acteur'=>$Acteur[0],
+          'Organisation'=> $Organisation,
+          'Action'=> $Action,
+      );
+      $DonnéesTitre = array('TitreDeLaPage'=>'Cart\'Opus');
+      
+      $this->load->view('templates/Entete',$DonnéesTitre);
+      $this->load->view('Visiteur/AfficherActeurAction',$Données);
+      $this->load->view('templates/PiedDePage');
+
+  }
+
 
   //Penser à refaire "Afficher Acteur" 
 

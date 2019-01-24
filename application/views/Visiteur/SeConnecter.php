@@ -14,7 +14,7 @@
     </div> 
     <div class="col-sm-8">
         <div class = "text-center">
-            <H1 align = "center" style="color:#FFFFFF">Connexion</H1><BR>;
+            <H1 align = "center" style="color:#FFFFFF">Connexion</H1><BR>
             <section >
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <div class="form-inline">

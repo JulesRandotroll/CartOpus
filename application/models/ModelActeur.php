@@ -16,9 +16,27 @@
             return $requete->result_array();
         }
 
+        public function getNoActeur($mail)
+        {
+            $this->db->select('NOACTEUR');
+            $this->db->from('Acteur');
+            $this->db->where('MAIL',$mail);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
         public function getMail($DonneesTest)
         {
-            $Wheres=array('MAIL'=>$DonneesTest['Mail'],'NOMACTEUR'=>$DonneesTest['nom']);
+            $Wheres=array('MAIL'=>$DonneesTest['Mail']);
+            $this->db->select('*');
+            $this->db->from('Acteur');
+            $this->db->where($Wheres);
+            $requete = $this->db->get();
+            return $requete->row_array();
+        }
+        
+        public function TestDoublon($DonneesTest)
+        {
+            $Wheres=array('MAIL'=>$DonneesTest['Mail'],'NOMACTEUR'=>$DonneesTest['NomActeur']);
             $this->db->select('*');
             $this->db->from('Acteur');
             $this->db->where($Wheres);
