@@ -16,7 +16,7 @@
     <div class="col-sm-8" style="padding:20px">
         <div style="padding:20px">
             <div class = "text-center">
-                <H1 style="color:#FFFFFF">Réitérer une action</H1>
+                <H1 style="color:#FFFFFF">Renouveler une action</H1>
             </div>
             <section >
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">

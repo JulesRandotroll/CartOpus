@@ -67,21 +67,16 @@
             $this->db->update('lieu',$Donnees);
         }
         
-        public function UpdateAvoirLieu($NoAction,$NoLieu,$DonneesAModifier)
+        public function UpdateAvoirLieu($DonnéesDeTest,$DonneesAModifier)
         { 
-            //var_dump($NoLieu);
-            //var_dump($NoAction);
+            //echo("ddt");
+            //var_dump($DonnéesDeTest);
+            //echo("dam");
             //var_dump($DonneesAModifier);
-            $Where = array(
-                'NOLIEU'=> $NoLieu,
-                'NOACTION'=>$NoAction ,
-            );
 
-            //'NOLIEU',$NoLieu,'NOACTION',$NoAction,'DATEDEBUT','2019-01-12 11:55:00'
-
-            $Donnees = array('DATEDEBUT'=>$DonneesAModifier['DateDebut'],'DATEFIN'=>$DonneesAModifier['DateFin'],'TitreAction'=>$DonneesAModifier['TitreAction'],'Description'=>$DonneesAModifier['Description']);
-           // var_dump($Donnees);
-            $this->db->where($Where);
+            $Donnees = array('DATEDEBUT'=>$DonneesAModifier['DateDebut'],'DATEFIN'=>$DonneesAModifier['DateFin'],'TitreAction'=>$DonneesAModifier['TitreAction'],'Description'=>$DonneesAModifier['Description'],'NOLIEU'=>$DonneesAModifier['NOLIEU']);
+            //var_dump($Donnees);
+            $this->db->where($DonnéesDeTest);
             $this->db->update('avoirlieu',$Donnees);
         }
         
@@ -93,6 +88,16 @@
             //var_dump($Donnees);
             $this->db->where($Where);
             $this->db->update('etrepartenaire',$Donnees);
+        }
+
+        public function UpdateProfilAction($DonnéesDeTest,$DonneesAModifier)
+        {
+            //var_dump($DonnéesDeTest);
+            $Where=array('NOACTION'=>$DonnéesDeTest['NoAction'],'NOACTEUR'=>$DonnéesDeTest['NoActeur']);
+            $Donnees=array('DATEDEBUT'=>$DonneesAModifier['DateDebut'],'DATEFIN'=>$DonneesAModifier['DateFin']);
+            //var_dump($Donnees);
+            $this->db->where($Where);
+            $this->db->update('profilpouraction',$Donnees);
         }
         public function getFichersPourAction($DonnéesDeTest)
         {   
