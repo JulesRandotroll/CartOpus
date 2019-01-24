@@ -152,18 +152,19 @@
                                // var_dump($uneAction);
                                 
                                 $entete =
-                                form_open('Acteur/SupprimerSousAction/'.$uneAction['NOACTION'].'/'.$uneAction['NOMACTION'].'/'.$uneAction['DATEDEBUT'].'/'.$uneAction['NOLIEU'],array("id"=>"form_supprSousAction".$i)). '
-                                <div class="row sousAction" style="background-color:#15B7D1;padding:20px" id="action'.$i.'">
+                                
+                                '<div class="row sousAction" style="background-color:#15B7D1;padding:20px" id="action'.$i.'">
+                                    '.form_open('Acteur/SupprimerSousAction/'.$uneAction['NOACTION'].'/'.$uneAction['NOMACTION'].'/'.$uneAction['DATEDEBUT'].'/'.$uneAction['NOLIEU'],array("id"=>"form_supprSousAction".$i)). '
                                     <div class="col-sm-3">
                                     </div>
                                     <div class="col-sm-6">
                                         <div class = "text-center">
                                             <section>
                                                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
-                                                <div class="text-right">
-                                                <a  href="'.site_url('Acteur/ModifierSousActionAction/'.$Actions[0]['NOACTION']).'" style="color:#FFFFFF"><span class="glyphicon glyphicon-pencil"></span>  </a>
-                                                <a id="'.$i.'" href="#action'.$i.'" class="trash_SupprimerSousAction" style="color:#FFFFFF"><span class="glyphicon glyphicon-trash" ></span>  </a>
-                                                </div>';
+                                                    <div class="text-right">
+                                                        <a  href="'.site_url('Acteur/ModifierSousActionAction/'.$Actions[0]['NOACTION']).'" style="color:#FFFFFF"><span class="glyphicon glyphicon-pencil"></span>  </a>
+                                                        <a id="'.$i.'" href="#action'.$i.'" class="trash_SupprimerSousAction" style="color:#FFFFFF"><span class="glyphicon glyphicon-trash" ></span>  </a>
+                                                    </div>';
                                         $pied = '</div>
                                             </section>
                                         </div>
@@ -177,7 +178,9 @@
                                         $uneAction['TitreAction'].'</H1>'.
                                         $Horaire.
                                         '<H4>'.$Description.'</H4>'.
-                                        '<div class="text-right"><a href="#action" style="color:FFFFFF" class="HautPage">Haut de page</a></div>'.
+                                        '<div class="text-right">
+                                            <a href="#action" style="color:FFFFFF" class="HautPage">Haut de page</a>
+                                        </div>'.
                                     $pied
                                 ;
                                 
