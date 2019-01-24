@@ -59,7 +59,7 @@
                                                             echo '</div>';
                                                         echo '</div>';
                                                         echo '</br>';
-                                                        echo '<a href="../Acteur/AfficherAction" class="btn btn-danger">En savoir plus</a>';
+                                                        echo '<a href="../Acteur/AfficherActionSelectionnee/'.$unFavoris['NOACTION'].'" class="btn btn-danger">En savoir plus</a>';
                                                         echo '</br></br>';
                                                         echo '</br></br>';
                                                         echo '</br></br>';

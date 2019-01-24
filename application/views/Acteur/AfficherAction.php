@@ -4,10 +4,10 @@
                           <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:#FFFFFF ;background-color:#0E7896">Action
                           <span class="caret"></span></a>
                           <ul class="dropdown-menu" style="background-color:#139CBC">
-                            <li><a href="'.site_url('Acteur/ModifierAction/'.$Actions[0]['NOACTION'].'').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-pencil"></span> Modifier Action</a></li>
-                            <li><a href="'.site_url('Acteur/AjoutSousAction/'.$Actions[0]['NOACTION'].'').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter SousAction</a></li>
-                            <li><a href="'.site_url('Acteur/ReitererAction/'.$Actions[0]['NOACTION'].'').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-repeat"></span> Renouveler Action</a></li>
-                            <li><a href="'.site_url('Acteur/SupprimerAction/'.$Actions[0]['NOACTION'].'').'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-trash"></span> Supprimer Action</a></li>
+                            <li><a href="'.site_url('Acteur/ModifierAction/'.$Actions[0]['NOACTION']).'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-pencil"></span> Modifier Action</a></li>
+                            <li><a href="'.site_url('Acteur/AjoutSousAction/'.$Actions[0]['NOACTION']).'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter SousAction</a></li>
+                            <li><a href="'.site_url('Acteur/ReitererAction/'.$Actions[0]['NOACTION']).'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-repeat"></span> Renouveler Action</a></li>
+                            <li><a href="'.site_url('Acteur/SupprimerAction/'.$Actions[0]['NOACTION']).'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-trash"></span> Supprimer Action</a></li>
                           </ul>
                   </li>';
                   echo'<li><a href="'.site_url('Acteur/AccueilActeur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso </a></li>';    
@@ -25,15 +25,17 @@
 <script src="<?php echo js_url('js_AfficherAction'); ?>"></script>
 
 <div class="row" style="background-color:#15B7D1;padding:20px" id="action">
-    <div class="col-sm-1">
+    <div class="col-lg-2">
     </div>
-    <div class="col-sm-10">
+    <div class="col-xs-8">
         <div class = "text-center">
             <section>
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <?php
+
                         $i = 0;
                         $AffichageAction="";
+                        //var_dump($Action);
                         foreach($Actions as $uneAction)
                         {   
                             $Description = str_replace("\n",'<BR>', $uneAction['Description']);
@@ -138,7 +140,10 @@
                                 }
                                 else
                                 {
-                                    $this->table->add_row($Array);
+                                    if(!empty($Array))
+                                    {
+                                        $this->table->add_row($Array);
+                                    }
                                     $Jour = $jourTest;
                                     $Array = array(strftime("%A %d %B %Y",$DD),$Action.$Horaire);                                   
                                 }
@@ -146,9 +151,9 @@
                             
                                 $entete = '
                                 <div class="row sousAction" style="background-color:#15B7D1;padding:20px" id="action'.$i.'">
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                     </div>
-                                    <div class="col-sm-8">
+                                    <div class="col-sm-6">
                                         <div class = "text-center">
                                             <section>
                                                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">';
@@ -198,26 +203,27 @@
                         echo'<a  href="'.site_url('Acteur/AccueilActeur/').'" style="color:#000000"><button type="button" class="btn btn-danger">Retour</button> </a>';
                         echo '</div>';
                         echo '<div class="text-right">';
-                        echo'<a  href="'.site_url('Acteur/ReitererAction/'.$Actions[0]['NOACTION'].'').'" style="color:#000000"><span class="glyphicon glyphicon-repeat"></span>  </a>';
-                        echo'<a  href="'.site_url('Acteur/ModifierAction/'.$Actions[0]['NOACTION'].'').'" style="color:#000000"><span class="glyphicon glyphicon-pencil"></span>  </a>';
-                        echo'<a  id="trash_Supprimer" style="color:#000000"><span class="glyphicon glyphicon-trash" ></span>  </a>';
+                        //echo'<a  href="'.site_url('Acteur/ReitererAction/'.$Actions[0]['NOACTION']).'" style="color:#000000"><span class="glyphicon glyphicon-repeat"></span>  </a>';
+                        //echo'<a  href="'.site_url('Acteur/ModifierAction/'.$Actions[0]['NOACTION']).'" style="color:#000000"><span class="glyphicon glyphicon-pencil"></span>  </a>';
+                        //echo'<a  id="trash_Supprimer" style="color:#000000"><span class="glyphicon glyphicon-trash" ></span>  </a>';
                         echo '</div>';
                         echo form_close();
                         
                     ?>
-                    
                 </div>
             </section>
         </div>
     </div>
-    <nav class="col-sm-1">
-        <ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="205" style="background-color:#B64F53;border-radius: 10px;">
-            <li><a href="#section1"><span class="glyphicon glyphicon-pencil" style="color:#FFFFFF"></span></a></li>
-            <li><a href="#section2"><span class="glyphicon glyphicon-plus-sign" style="color:#FFFFFF"></span></a></li>
-            <li><a href="#section3"><span class="glyphicon glyphicon-repeat" style="color:#FFFFFF"></span></a></li>
-            <li><a href="#section3"><span class="glyphicon glyphicon-trash" style="color:#FFFFFF"></span></a></li>
-        </ul>
-    </nav>
+    <div class='col-xs-2'>
+        <nav class="navbar navbar-inverse nav-pills nav-stacked" data-spy="affix" style="background-color:#B64F53;border-radius: 10px;">
+            <ul class="nav navbar-nav">
+                <li><a href="<?php echo site_url('Acteur/ModifierAction/'.$Actions[0]['NOACTION']); ?>" class="option"><H4><span class="glyphicon glyphicon-pencil" style="color:#FFFFFF"></span></H4></strong></a></li>
+                <li><a href="<?php echo site_url('Acteur/AjoutSousAction/'.$Actions[0]['NOACTION']); ?>" class="option"><H4><span class="glyphicon glyphicon-plus-sign" style="color:#FFFFFF"></span></H4></a></li>
+                <li><a href="<?php echo site_url('Acteur/ReitererAction/'.$Actions[0]['NOACTION']); ?>" class="option"><H4><span class="glyphicon glyphicon-repeat" style="color:#FFFFFF"></span></H4></a></li>
+                <li><a id="trash_Supprimer" href="#section3" class="option"><H4><span class="glyphicon glyphicon-trash" style="color:#FFFFFF"></span></H4></a></li>
+            </ul>
+        </nav>
+    </div>
 </div>
 
 <?php 
