@@ -19,7 +19,7 @@ if(!empty($lesActions))
                             <?php
                                 foreach ($lesActions As $uneAction):
                                     echo '<tr>';
-                                    echo '<td><h4>'.$uneAction['NOMACTION'].'</h4></td>';
+                                    echo '<td><a href="'.site_url('Visiteur/AfficherAction/'.($uneAction['NOACTION'])).'" style="color:#000000"><h4>'.$uneAction['NOMACTION'].'</h4></a></td>';
                                     echo '<td><h4>'.$uneAction['PublicCible'].'</h4></td>';
                                     echo '<td><h4>'.$uneAction['SiteURLAction'].' </h4></td>';
                                     echo '</tr>';

@@ -152,18 +152,19 @@
                                // var_dump($uneAction);
                                 
                                 $entete =
-                                form_open('Acteur/SupprimerSousAction/'.$uneAction['NOACTION'].'/'.$uneAction['NOMACTION'].'/'.$uneAction['DATEDEBUT'].'/'.$uneAction['NOLIEU'],array("id"=>"form_supprSousAction".$i)). '
-                                <div class="row sousAction" style="background-color:#15B7D1;padding:20px" id="action'.$i.'">
+                                
+                                '<div class="row sousAction" style="background-color:#15B7D1;padding:20px" id="action'.$i.'">
+                                    '.form_open('Acteur/SupprimerSousAction/'.$uneAction['NOACTION'].'/'.$uneAction['NOMACTION'].'/'.$uneAction['DATEDEBUT'].'/'.$uneAction['NOLIEU'],array("id"=>"form_supprSousAction".$i)). '
                                     <div class="col-sm-3">
                                     </div>
                                     <div class="col-sm-6">
                                         <div class = "text-center">
                                             <section>
                                                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
-                                                <div class="text-right">
-                                                <a  href="'.site_url('Acteur/ModifierSousActionAction/'.$Actions[0]['NOACTION']).'" style="color:#FFFFFF"><span class="glyphicon glyphicon-pencil"></span>  </a>
-                                                <a id="'.$i.'" href="#action'.$i.'" class="trash_SupprimerSousAction" style="color:#FFFFFF"><span class="glyphicon glyphicon-trash" ></span>  </a>
-                                                </div>';
+                                                    <div class="text-right">
+                                                        <a  href="'.site_url('Acteur/ModifierSousActionAction/'.$Actions[0]['NOACTION']).'" style="color:#FFFFFF"><span class="glyphicon glyphicon-pencil"></span>  </a>
+                                                        <a id="'.$i.'" href="#action'.$i.'" class="trash_SupprimerSousAction" style="color:#FFFFFF"><span class="glyphicon glyphicon-trash" ></span>  </a>
+                                                    </div>';
                                         $pied = '</div>
                                             </section>
                                         </div>
@@ -177,7 +178,9 @@
                                         $uneAction['TitreAction'].'</H1>'.
                                         $Horaire.
                                         '<H4>'.$Description.'</H4>'.
-                                        '<div class="text-right"><a href="#action" style="color:FFFFFF" class="HautPage">Haut de page</a></div>'.
+                                        '<div class="text-right">
+                                            <a href="#action" style="color:FFFFFF" class="HautPage">Haut de page</a>
+                                        </div>'.
                                     $pied
                                 ;
                                 
@@ -220,18 +223,50 @@
         </div>
     </div>
     <div class='col-xs-2'>
-        <nav class="navbar navbar-inverse nav-pills nav-stacked" data-spy="affix" style="background-color:#B64F53;border-radius: 10px;">
-            <ul class="nav navbar-nav">
-                <li><a href="<?php echo site_url('Acteur/ModifierAction/'.$Actions[0]['NOACTION']); ?>" class="option"><H4><span class="glyphicon glyphicon-pencil" style="color:#FFFFFF"></span></H4></strong></a></li>
-                <li><a href="<?php echo site_url('Acteur/AjoutSousAction/'.$Actions[0]['NOACTION']); ?>" class="option"><H4><span class="glyphicon glyphicon-plus-sign" style="color:#FFFFFF"></span></H4></a></li>
-                <li><a href="<?php echo site_url('Acteur/ReitererAction/'.$Actions[0]['NOACTION']); ?>" class="option"><H4><span class="glyphicon glyphicon-repeat" style="color:#FFFFFF"></span></H4></a></li>
-                <li><a id="trash_Supprimer" href="#section3" class="option"><H4><span class="glyphicon glyphicon-trash" style="color:#FFFFFF"></span></H4></a></li>
+        <nav class="navbar" data-spy="affix">
+            <ul class="nav nav-pills nav-stacked" style="background-color:#B64F53;border-radius:10px;">
+                <li>
+                    <a href="<?php echo site_url('Acteur/ModifierAction/'.$Actions[0]['NOACTION']); ?>" class="option" id='Modifier'>
+                        <H4>
+                            <span class="glyphicon glyphicon-pencil" style="color:#FFFFFF" >
+                            </span>
+                            <p id='txt_Modifier' style="color:#FFFFFF">Modifier</p>
+                        </H4>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo site_url('Acteur/AjoutSousAction/'.$Actions[0]['NOACTION']); ?>" class="option" id='AjouterSousAction'>
+                        <H4>
+                            <span class="glyphicon glyphicon-plus-sign" style="color:#FFFFFF">
+                            </span>
+                            <p id='txt_AjouterSousAction' style="color:#FFFFFF">Ajouter sous-action</p>
+                        </H4>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo site_url('Acteur/RenouvelerAction/'.$Actions[0]['NOACTION']); ?>" class="option" id='Renouveler'>
+                        <H4>
+                            <span class="glyphicon glyphicon-repeat" style="color:#FFFFFF">
+                            </span>
+                            <p id='txt_Renouveler' style="color:#FFFFFF">Renouveler</p>
+                        </H4>
+                    </a>
+                </li>
+                <li>
+                    <a href="#section3" class="option trash_Supprimer" id='Supprimer'>
+                        <H4>
+                            <span class="glyphicon glyphicon-trash" style="color:#FFFFFF">
+                            </span>
+                            <p id='txt_Supprimer' style="color:#FFFFFF">Supprimer</p>
+                        </H4>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
 </div>
 
 <?php 
-    echo $AffichageAction;
+    echo $AffichageAction; 
 ?>
 
