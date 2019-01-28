@@ -6,7 +6,6 @@
             <section >
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <H1 style="color:#FFFFFF">Actualités</H1>
-                
                     <div class="container-fluid">
                         <div id="myCarousel" class="carousel slide" data-ride="carousel">
 
@@ -110,6 +109,7 @@
                         </div>
                     </div>
             </section>
+            <BR>
         </div>
     </div>
 </div>

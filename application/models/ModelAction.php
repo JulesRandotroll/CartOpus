@@ -7,6 +7,16 @@
             /* chargement database.php (dans config), obligatoirement dans le constructeur */
         }
 
+        public function getActions()
+        {
+            $this->db->select('*');
+            $this->db->from('action a');
+            $this->db->join('AvoirLieu al','al.noAction=a.noAction');
+            $this->db->where('nomaction=titreaction');
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
         public function getActionSimple($noAction)
         {
             //var_dump($noAction);
@@ -19,9 +29,9 @@
             $requete = $this->db->get();
             return $requete->result_array();
         }
+
         public function getAction($DonnéesDeTest)
         {
-            //reutiliser pour les favoris
             $this->db->select('*');
             $this->db->from('Action a');
             $this->db->join('AvoirLieu al','al.noAction=a.noAction');
@@ -33,10 +43,6 @@
 
         public function getActionFavorite($DonnéesDeTest)
         {
-            //reutiliser pour les favoris
-
-            //$chocobo = array();
-
             $this->db->select('*');
             $this->db->from('Action a');
             $this->db->join('AvoirLieu al','al.noAction=a.noAction');
@@ -44,50 +50,6 @@
             $this->db->where($DonnéesDeTest);
             $requete = $this->db->get();
             return $requete->result_array();
-        }
-        
-        public function UpdateAction($NoAction,$DonneesAModifier)
-        { 
-            
-            //var_dump($DonneesAModifier);
-            $NoAction=array('NOACTION' =>$NoAction);
-            //var_dump($NoAction);
-            $Donnees = array('NomAction'=>$DonneesAModifier['NomAction'],'PublicCible'=>$DonneesAModifier['PublicCible'],'SiteURLAction'=>$DonneesAModifier['SiteURLAction']);
-            $this->db->where('NOACTION',$NoAction['NOACTION']);
-            $this->db->update('action',$Donnees);
-        }
-
-        public function UpdateLieu($NoLieu,$DonneesAModifier)
-        { 
-            //var_dump($DonneesAModifier);
-            $NoLieu=array('NoLieu' =>$NoLieu);
-            //var_dump($NoLieu);
-            $Donnees = array('Adresse'=>$DonneesAModifier['Adresse'],'CodePostal'=>$DonneesAModifier['CodePostal'],'Ville'=>$DonneesAModifier['Ville']);
-            $this->db->where('NOLIEU',$NoLieu['NoLieu'][0]['nolieu']);
-            $this->db->update('lieu',$Donnees);
-        }
-        
-        public function UpdateAvoirLieu($DonnéesDeTest,$DonneesAModifier)
-        { 
-            //echo("ddt");
-            //var_dump($DonnéesDeTest);
-            //echo("dam");
-            //var_dump($DonneesAModifier);
-
-            $Donnees = array('DATEDEBUT'=>$DonneesAModifier['DateDebut'],'DATEFIN'=>$DonneesAModifier['DateFin'],'TitreAction'=>$DonneesAModifier['TitreAction'],'Description'=>$DonneesAModifier['Description'],'NOLIEU'=>$DonneesAModifier['NOLIEU']);
-            //var_dump($Donnees);
-            $this->db->where($DonnéesDeTest);
-            $this->db->update('avoirlieu',$Donnees);
-        }
-        
-        public function UpdateEtrePartenaire($DonnéesDeTest,$DonneesAModifier)
-        {
-            //var_dump($DonnéesDeTest);
-            $Where=array('NOACTION'=>$DonnéesDeTest['NoAction'],'NOACTEUR'=>$DonnéesDeTest['NoActeur']);
-            $Donnees=array('DATEDEBUT'=>$DonneesAModifier['DateDebut'],'DATEFIN'=>$DonneesAModifier['DateFin']);
-            //var_dump($Donnees);
-            $this->db->where($Where);
-            $this->db->update('etrepartenaire',$Donnees);
         }
 
         public function UpdateProfilAction($DonnéesDeTest,$DonneesAModifier)
@@ -99,6 +61,7 @@
             $this->db->where($Where);
             $this->db->update('profilpouraction',$Donnees);
         }
+
         public function getFichersPourAction($DonnéesDeTest)
         {   
             
@@ -171,12 +134,6 @@
                 AND '2018-06-11 00:00:00' 
             */
         }
-        
-        public function insertAction($InsertAction)//,$InsertLieu,$InsertAvoirLieu,$InsertEtrePartenaire)
-        {
-            $this->db->insert('Action',$InsertAction);
-            return $this->db->insert_id();
-        }
 
         public function getLieu($DonnéesLieu)
         {    
@@ -187,6 +144,67 @@
             return $requete->result_array();
         }
     
+
+
+        public function UpdateAction($NoAction,$DonneesAModifier)
+        { 
+            
+            //var_dump($DonneesAModifier);
+            $NoAction=array('NOACTION' =>$NoAction);
+            //var_dump($NoAction);
+            $Donnees = array('NomAction'=>$DonneesAModifier['NomAction'],'PublicCible'=>$DonneesAModifier['PublicCible'],'SiteURLAction'=>$DonneesAModifier['SiteURLAction']);
+            $this->db->where('NOACTION',$NoAction['NOACTION']);
+            $this->db->update('action',$Donnees);
+        }
+
+        public function UpdateLieu($NoLieu,$DonneesAModifier)
+        { 
+            //var_dump($DonneesAModifier);
+            $NoLieu=array('NoLieu' =>$NoLieu);
+            //var_dump($NoLieu);
+            $Donnees = array('Adresse'=>$DonneesAModifier['Adresse'],'CodePostal'=>$DonneesAModifier['CodePostal'],'Ville'=>$DonneesAModifier['Ville']);
+            $this->db->where('NOLIEU',$NoLieu['NoLieu'][0]['nolieu']);
+            $this->db->update('lieu',$Donnees);
+        }
+        
+        public function UpdateAvoirLieu($DonnéesDeTest,$DonneesAModifier)
+        { 
+            //echo("ddt");
+            //var_dump($DonnéesDeTest);
+            //echo("dam");
+            //var_dump($DonneesAModifier);
+
+            $Donnees = array('DATEDEBUT'=>$DonneesAModifier['DateDebut'],'DATEFIN'=>$DonneesAModifier['DateFin'],'TitreAction'=>$DonneesAModifier['TitreAction'],'Description'=>$DonneesAModifier['Description'],'NOLIEU'=>$DonneesAModifier['NOLIEU']);
+            //var_dump($Donnees);
+            $this->db->where($DonnéesDeTest);
+            $this->db->update('avoirlieu',$Donnees);
+        }
+        
+        public function UpdateEtrePartenaire($DonnéesDeTest,$DonneesAModifier)
+        {
+            //var_dump($DonnéesDeTest);
+            $Where=array('NOACTION'=>$DonnéesDeTest['NoAction'],'NOACTEUR'=>$DonnéesDeTest['NoActeur']);
+            $Donnees=array('DATEDEBUT'=>$DonneesAModifier['DateDebut'],'DATEFIN'=>$DonneesAModifier['DateFin']);
+            //var_dump($Donnees);
+            $this->db->where($Where);
+            $this->db->update('etrepartenaire',$Donnees);
+        }
+
+        public function setFavoris($Where,$Set)
+        {
+            $this->db->Where($Where);
+            $this->db->update('action',$Set);
+        }
+
+
+
+
+        public function insertAction($InsertAction)//,$InsertLieu,$InsertAvoirLieu,$InsertEtrePartenaire)
+        {
+            $this->db->insert('Action',$InsertAction);
+            return $this->db->insert_id();
+        }
+
         public function insertLieu($DonnéesLieu)
         {
             $this->db->insert('Lieu',$DonnéesLieu);
@@ -209,35 +227,45 @@
             return $this->db->insert_id();
         }
 
+
+
+
+
+
         public function Suppr_Action($DonneesASupprimer)
         {
            // var_dump($DonneesASupprimer);
             $this->db->where('noAction', $DonneesASupprimer);
             $this->db->delete('action');
         }
+
         public function Suppr_AvoirLieu($DonneesASupprimer)
         {
            // var_dump($DonneesASupprimer);
             $this->db->where('noAction', $DonneesASupprimer);
             $this->db->delete('avoirlieu');
         }
+
         public function Suppr_EtrePartenaire($DonneesASupprimer)
         {
            // var_dump($DonneesASupprimer);
             $this->db->where('noAction', $DonneesASupprimer);
             $this->db->delete('etrepartenaire');
         }
+
         public function Suppr_ProfilPourAction($DonneesASupprimer)
         {
            // var_dump($DonneesASupprimer);
             $this->db->where('noAction', $DonneesASupprimer);
             $this->db->delete('profilpouraction');
         }
+
         public function SousActionSuppr_AvoirLieu($DonneesASupprimer)
         {
            // var_dump($DonneesASupprimer);
             $this->db->where($DonneesASupprimer);
             $this->db->delete('avoirlieu');
         }
+
     }
 ?>
