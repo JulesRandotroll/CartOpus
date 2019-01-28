@@ -79,7 +79,7 @@ class Visiteur extends CI_Controller
     {
       if (($this->input->post('mdp'))==($this->input->post('confmdp')))// si ce que l'utilisateur a rentré dans la case mdp est égale a ce qu'il a rentré dans la case confmdp ...
       {
-        $donneeATester=$this->input->post('mail');// dans la variable donneeATester on met le mail rentré par l'utilisateur
+        $donneeATester=array('mail'=>$this->input->post('mail'));// dans la variable donneeATester on met le mail rentré par l'utilisateur
         $test = $this->ModelSInscrire->Test_Inscrit($donneeATester);// on appelle la fonction Test de ce modele et on passe la variable a tester en paramètre
   
         if($test['count(*)']!=0) // si la fonction nous retourne un résultat différent de 0 ( si ce mail existe déjà dans la bdd ...)
@@ -355,7 +355,7 @@ class Visiteur extends CI_Controller
         }
         if ($this->session->statut==4)
         {
-          echo'admin valider';
+          redirect('AdminValider/AccueilAdminValider');
         }
         if ($this->session->statut==5)
         {
