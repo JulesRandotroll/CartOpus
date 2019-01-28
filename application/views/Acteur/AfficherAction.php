@@ -208,6 +208,7 @@
                         echo form_open('Acteur/SupprimerAction/'.$Actions[0]['NOACTION'].'',array("id"=>"form_suppr"));
                         
                         echo '<div class="text-left">';
+                        echo'<a  href="'.site_url('Acteur/AfficherMembre/'.$Actions[0]['NOACTION']).'" style="color:#000000"><button type="button" class="btn btn-danger">Afficher Membre</button> </a>';
                         echo'<a  href="'.site_url('Acteur/AccueilActeur/').'" style="color:#000000"><button type="button" class="btn btn-danger">Retour</button> </a>';
                         echo '</div>';
                        

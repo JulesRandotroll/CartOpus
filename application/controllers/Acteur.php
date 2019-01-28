@@ -385,6 +385,38 @@ class Acteur extends CI_Controller
             $this->load->view('templates/PiedDePage');     
         }
     }
+
+    public function AfficherMembre($noAction)
+    {
+        $DonnéesTitre = array('TitreDeLaPage'=>'Afficher les membres de l\'équipe');
+
+        $DonneesAInjectees=array
+        (
+            'noAction'=>$noAction,
+        );
+        $this->load->view('templates/Entete',$DonnéesTitre);
+        $this->load->view('Acteur/AfficherMembre',$DonneesAInjectees);
+        $this->load->view('templates/PiedDePage');  
+    }
+
+    public function ModifierMembre($noActeur)
+    {
+        $DonnéesTitre = array('TitreDeLaPage'=>'Modifier un membre de l\'équipe');
+
+        $Acteur= $this->ModelActeur->getActeur($noActeur);
+        var_dump($Acteur);
+        $DonneesAInjectees=array
+        (
+            'noActeur'=>$noActeur,
+            'nom'=>$Acteur[0]['NOMACTEUR'],
+            'prenom'=>$Acteur[0]['PRENOMACTEUR'],
+            'mail'=>$Acteur[0]['MAIL'],
+            'role'=>$options,
+        );
+        $this->load->view('templates/Entete',$DonnéesTitre);
+        $this->load->view('Acteur/ModifierMembre',$DonneesAInjectees);
+        $this->load->view('templates/PiedDePage');  
+    }
     public function RenouvelerAction($noAction)
     {
         $noActeur = $this->session->noActeur;
