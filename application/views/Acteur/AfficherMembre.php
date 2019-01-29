@@ -30,6 +30,7 @@
             <section>
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <?php
+               
                         if (isset($message))
                         {
                            echo'<div class="alert alert-danger alert-dismissible">
@@ -37,13 +38,21 @@
                                    <strong>Attention</strong> '.$message.'
                                </div>';
                         }
-                        echo form_open('Acteur/SupprimerMembre/'.$noAction.'',array("id"=>"form_suppr"));
-                       
+
                             echo'<div class="table-responsive">';
                                 $this->table->set_heading('Nom','Prenom','Mail','Responsable');
                                 foreach($Membres as $unMembre)
                                 {
-                                    $this->table->add_row($unMembre['NOMACTEUR'],$unMembre['PRENOMACTEUR'],$unMembre['MAIL'],'<input type="checkbox" id="cbx_'.$unMembre["NOACTEUR"].'">','<a href="'.site_url('Acteur/ModifierMembre/'.$unMembre['NOACTEUR'].'/'.$noAction).'" class="btn btn-danger" ><span class="glyphicon glyphicon-pencil"></a> <a href="#" class="btn btn-danger trash_Supprimer" id="'.$unMembre["NOACTEUR"].'" ><span class="glyphicon glyphicon-trash"></a>'); 
+                                    //var_dump($unMembre['NOPROFIL']);
+                                    if ($unMembre['NOPROFIL']==3)
+                                    {
+                                       $cbx=form_checkbox('',$unMembre["NOACTEUR"], TRUE,array("class"=>"checkbox")); // 
+                                    }
+                                    else
+                                    {
+                                        $cbx=form_checkbox('', $unMembre["NOACTEUR"], FALSE,array("class"=>"checkbox"));  
+                                    }
+                                    $this->table->add_row($unMembre['NOMACTEUR'],$unMembre['PRENOMACTEUR'],$unMembre['MAIL'],$cbx,'<a href="'.site_url('Acteur/ModifierMembre/'.$unMembre['NOACTEUR'].'/'.$noAction).'" class="btn btn-danger" ><span class="glyphicon glyphicon-pencil"></a> <a href="#" class="btn btn-danger trash_Supprimer" id="'.$unMembre["NOACTEUR"].'" ><span class="glyphicon glyphicon-trash"></a>'); 
                                 }
                                 $Style = array('table_open' => '<table class="table" >');
                                 $this->table->set_template($Style);
@@ -53,13 +62,15 @@
                             echo '<div class="text-left">';
                             echo'<a href="'.site_url('Acteur/AfficherActionSelectionnee/'.$noAction).'" style="color:#000000"><button type="button" class="btn btn-danger">Retour</button> </a>';
                             echo '</div>';
-                        echo form_close();
+                            echo form_open('Acteur/SupprimerMembre/'.$noAction.'',array("id"=>"form_suppr"));
+                            echo form_close();
+                            echo form_open('Acteur/ModifProfil/'.$noAction.'',array("id"=>"form_modifP"));
+                            echo form_close();
                     ?>
                 </div>
             </section>
         </div>
     </div>
-
     <div class='col-xs-2'>
         <nav class="navbar" data-spy="affix">
             <ul class="nav nav-pills nav-stacked" style="background-color:#B64F53;border-radius:10px;">

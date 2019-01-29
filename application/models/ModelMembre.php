@@ -29,11 +29,14 @@
         }
         public function GetMembre($noAction)
         {
-            $this->db->select('*');
-            $this->db->from('etrepartenaire');
-            $this->db->join('acteur','etrepartenaire.noActeur=acteur.noActeur');
-            $this->db->where('etrepartenaire.noAction =',$noAction);
-            $requete = $this->db->get();
+
+           $this->db->select('*');  
+           $this->db->from('etrepartenaire');
+           $this->db->join('acteur','etrepartenaire.noActeur=acteur.noActeur');
+           $this->db->join('profilpouraction','etrepartenaire.noActeur=profilpouraction.noActeur');
+           $this->db->where('profilpouraction.NOACTION',$noAction);
+           $this->db->group_by('etrepartenaire.noacteur'); 
+           $requete = $this->db->get();
             return $requete->result_array();
         }
 
@@ -67,13 +70,20 @@
 
         public function TestExiste($noActeur)
         {
-            echo('miou?');
-            var_dump($noActeur);
+            //var_dump($noActeur);
             $this->db->select('*');
             $this->db->from('etrepartenaire');
             $this->db->where('NOACTEUR=',$noActeur[0]['NOACTEUR']);
             $requete = $this->db->get();
             return $requete->result_array();
+        }
+
+        public function UpdateProfil($DonnéesDeTest,$DonnéesAUpdate)
+        {
+            //var_dump($DonnéesDeTest);
+            //var_dump($DonnéesAUpdate);
+            $this->db->where($DonnéesDeTest);
+            $this->db->update('profilpouraction',$DonnéesAUpdate);
         }
     }
 ?>

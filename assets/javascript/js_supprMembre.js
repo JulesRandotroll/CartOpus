@@ -30,6 +30,22 @@ $(function()
 
     });
 
+    $('.checkbox').on('click',function()
+    {
+        noActeur = $(this).val();
+        
+        if($(this).prop('checked'))
+        {
+            profil = 3;
+        }
+        else
+        {
+            profil = 2;
+        }
+        //alert(profil);
+        location.href = $('#form_modifP').attr('action')+'/'+noActeur+'/'+profil;
+    });
+
     $('p').hide();
 
 

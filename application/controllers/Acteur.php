@@ -388,8 +388,10 @@ class Acteur extends CI_Controller
 
     public function AfficherMembre($noAction)
     {
+        //var_dump($noAction);
         $DonnéesTitre = array('TitreDeLaPage'=>'Afficher les membres de l\'équipe');
         $Membres=$this->ModelMembre->GetMembre($noAction);
+        //var_dump($Membres);
         if($this->session->flashdata('message')!=null)
         {
             $DonneesInjectees=array(
@@ -1273,7 +1275,7 @@ class Acteur extends CI_Controller
                             // var_dump($donnéesProfilPourAction);  
                             $this->ModelMembre->insertEtrePartenaire($donnéesEtrePartenaire);
                             $this->ModelMembre->insertProfilPourAction($donnéesProfilPourAction);  
-                            //redirect('Acteur/AfficherMembre/'.$noAction);
+                            redirect('Acteur/AfficherMembre/'.$noAction);
                         }
                         else
                         {
@@ -1316,6 +1318,19 @@ class Acteur extends CI_Controller
         }
     }
 
+    public function ModifProfil($noAction,$noActeur,$profil)
+    {
+        $DateD=$this->ModelAction->getDate($noAction);
+        $DonnéesDeTest=array(
+            'NOACTEUR'=>$noActeur,
+            'NOACTION'=>$noAction,
+            'DATEDEBUT'=>$DateD['0']['DATEDEBUT'],
+        );
+        $DonnéesAUpdate=array('NOPROFIL'=>$profil);
+        $Action=$this->ModelMembre->UpdateProfil($DonnéesDeTest,$DonnéesAUpdate);
+    
+        redirect('Acteur/AfficherMembre/'.$noAction);
+    }
     public function AjoutThematique($NomAction)
     {
         // sortir toutes les thématiques dans faire références puis recup le nom correspondant puis les injectées
