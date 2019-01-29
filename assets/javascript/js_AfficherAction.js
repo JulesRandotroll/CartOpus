@@ -44,45 +44,45 @@ $(function()
     });
 
     $('.trash_SupprimerSousAction').confirm(
+    {
+        icon: 'glyphicon glyphicon-alert',
+        title: 'Attention',
+        content: 'Voulez vous vraiment supprimer cette action',
+        type: 'red',
+        typeAnimated: true,
+        autoClose:"non|10000",
+        buttons: 
         {
-            icon: 'glyphicon glyphicon-alert',
-            title: 'Attention',
-            content: 'Voulez vous vraiment supprimer cette action',
-            type: 'red',
-            typeAnimated: true,
-            autoClose:"non|10000",
-            buttons: 
+            oui:
             {
-                oui:
+                action: function () 
                 {
-                    action: function () 
-                    {
-                        index=$(this).attr('id');
-                        alert(index);
-                        //location.href = $('#form_supprSousAction'+i).attr('action');
-                    }
-                },
-                non: 
-                {
-                    btnClass:"btn-red",
-                },
-            }   
-        });
+                    index=$(this).attr('id');
+                    alert(index);
+                    //location.href = $('#form_supprSousAction'+i).attr('action');
+                }
+            },
+            non: 
+            {
+                btnClass:"btn-red",
+            },
+        }   
+    });
 
+    
     $('.option').hover(
-        function()
-        {
-            //$(this).attr('class','option active');
-            $(this).attr('style','background-color:#139CBC;border-radius: 10px;');
-            id=this.id;
-            $(this).find('span').eq(0).hide();
-            $('#txt_'+id).show();
-        },
-        function()
-        {
-            $(this).find('span').eq(0).show();
-            $(this).attr('style','background-color:#B64F53;border-radius: 10px');
-            $('p').hide();
-        }
-    );
+    function()
+    {
+        //$(this).attr('class','option active');
+        $(this).attr('style','background-color:#139CBC;border-radius: 10px;');
+        id=this.id;
+        $(this).find('span').eq(0).hide();
+        $('#txt_'+id).show();
+    },
+    function()
+    {
+        $(this).find('span').eq(0).show();
+        $(this).attr('style','background-color:#B64F53;border-radius: 10px');
+        $('p').hide();
+    });
 });

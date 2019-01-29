@@ -139,10 +139,12 @@
         public function getActions($noActeur)
         {
             // echo $noActeur;
-            $this->db->select('noAction, datedebut');
+            $this->db->select('p.noAction, p.datedebut');
             $this->db->from('EtrePartenaire p');
             $this->db->join('Role r','p.noRole=r.noRole');
-            $this->db->where('noActeur',$noActeur);
+            $this->db->join('profilpouraction ppa','ppa.noActeur=p.noActeur');
+            $this->db->where('p.noActeur',$noActeur);
+            $this->db->group_by('p.noAction');
             $this->db->order_by("datedebut", "desc");
             $requete = $this->db->get();
             $noActions = $requete->result_array();
@@ -246,6 +248,17 @@
             return $requete->result_array();
         }
 
+        public function getUnProfil($noActeur,$noAction)
+        {
+            $Wheres=array('NOACTEUR'=>$noActeur,
+                'NOACTION'=>$noAction);
+
+            $this->db->select('noprofil');
+            $this->db->from('profilpouraction');
+            $this->db->where($Wheres);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
         public function getProfils()
         {
             $this->db->select('*');
@@ -264,13 +277,15 @@
             $this->db->update('Acteur',$données);
         }
 
-        public function GetRole()
+        public function GetRoles()
         {
             $this->db->select('*');
             $this->db->from('Role');
+            $this->db->not_like('NOROLE', '2147483642');
             $requete = $this->db->get();
             return $requete->result_array();
         }
+
     }
 
 ?>
