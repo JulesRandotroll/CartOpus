@@ -45,6 +45,7 @@
         }
         public function getOrganisation($noActeur)
         {
+            $this->db->distinct();
             $this->db->select('No_Organisation');
             $this->db->from('TravaillerDans');
             $this->db->where('noActeur',$noActeur);
@@ -272,6 +273,5 @@
             return $requete->result_array();
         }
     }
-
 
 ?>

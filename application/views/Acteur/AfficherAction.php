@@ -197,17 +197,7 @@
                             echo $this->table->generate();
                             echo'</div>';
                         }
-                        
-                        if (isset($Fichiers))
-                        {
-                            echo '<H1>Images</H1>';
 
-                            foreach($Fichiers as $unFichier)
-                            {
-                                echo '<BR>'.img($unFichier['FICHIER']).'<BR>';
-                            }
-
-                        }
                         echo form_open('Acteur/SupprimerAction/'.$Actions[0]['NOACTION'].'',array("id"=>"form_suppr"));
                         
                         echo '<div class="text-left">';
@@ -263,6 +253,97 @@
                 </li>
             </ul>
         </nav>
+    </div>
+</div>
+
+<?php
+    $i=0;
+    $j=0;
+    if(!empty($Fichiers))
+    {
+        echo '<div class="row" style="background-color:#15B7D1">
+        <div class="col-sm-2" style="padding:20px">
+        </div>
+        <div class="col-sm-8" style="padding:20px">
+            <div class = "text-center">
+                <section >
+                    <div class = "section-inner" style="background-color:#139CBC;padding:20px">
+            
+                        <div class="container-fluid">
+                            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+                                <ol class="carousel-indicators">';
+                                
+                                if(isset($Fichiers))
+                                {
+                                    echo '';
+                                    foreach($Fichiers As $unFichier)
+                                    {                                            
+                                        if($j == 0)
+                                        {
+                                            echo '<li data-target="#myCarousel" data-slide-to="'.$j.'" class="active"></li>';
+                                        }
+                                        else
+                                        {
+                                            echo '<li data-target="#myCarousel" data-slide-to="'.$j.'"></li>';
+                                        }
+                                        $j++;
+                                    }
+                                }
+                              
+                                echo '</ol>
+                                <!-- Wrapper for slides -->
+                                <?php //var_dump($Fichiers); ?>
+                                <div class="carousel-inner">';
+                                
+                                if (isset($Fichiers))
+                                {
+                                    foreach($Fichiers As $unFichier)
+                                    {
+                                        $class="item";
+
+                                        if($i == 0)
+                                        {
+                                            $class = "item active";
+                                            //echo $class;
+                                        }
+                                        echo '<div class="'.$class.'">';
+
+                                        echo '<div class="row">';
+                                            echo '<div class="col-sm-2">';
+                                            echo '</div>';
+                                            echo '<div class="col-sm-8">';
+                                                echo img($unFichier['FICHIER']);
+                                                echo '</br></br>';
+                                                echo '</br></br>';
+                                                echo '</br></br>';
+                                            echo '</div>';
+                                        echo '</div>';
+                                        echo'</div>';
+
+                                        $i++;
+                                    }
+                                    
+
+                                    echo '<a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                    <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                                    <span class="glyphicon glyphicon-chevron-right"></span>
+                                    <span class="sr-only">Next</span>
+                                    </a>';
+
+                                }
+
+                            echo '</div>
+                            
+                        </div>
+                    </div>
+                </section>';
+            }
+            ?>
+        </div>
     </div>
 </div>
 

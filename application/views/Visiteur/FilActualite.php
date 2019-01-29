@@ -37,6 +37,34 @@
                                     {
                                         $class="item";
                                         
+                                        date_default_timezone_set('Europe/Paris');
+                                        // --- La setlocale() fonctionnne pour strftime mais pas pour DateTime->format()
+                                        setlocale(LC_TIME, 'fr_FR.utf8','fra');// OK
+                                        // strftime("jourEnLettres jour moisEnLettres annee") de la date courante
+                                    
+                                        $DateDebut = date_create($unFavoris['DATEDEBUT']);
+                                        $DD = date_timestamp_get($DateDebut);
+        
+                                        if($unFavoris['DATEFIN'] != null)
+                                        {
+                                            $DateFin = date_create($unFavoris['DATEFIN']);
+                                            $DF = date_timestamp_get($DateFin);
+                                            //echo 'Test : '.(($DF-$DD)/60/60/24).'<BR><BR><BR>';
+                                            if(($DF-$DD)/60/60/24 >= 1)
+                                            {
+                                                $Horaire = "Du :".strftime("%A %d %B %Y %H h %M",$DD).'<BR> Au : '.strftime("%A %d %B %Y %H h %M",$DF).'<BR>';   
+                                            }
+                                            else
+                                            {
+                                                $Horaire = "De : ".strftime("%Hh%M",$DD).' à '.strftime("%Hh%M",$DF);  
+                                            } // >= 1
+                                        } // != numm
+                                        else
+                                        {  
+                                            $Horaire = 'A partir du : '.strftime("%A %d %B %Y %H h %M",$DD).'<BR>';
+                                        } // != null
+
+
                                         if($i == 0)
                                         {
                                             $class = "item active";
@@ -44,8 +72,7 @@
                                         }
                                                 echo '<div class="'.$class.'">';
                                                     echo '<h1>'.$unFavoris['NOMACTION'].'</H1>';
-                                                    echo '<h5>'.$unFavoris['DATEDEBUT'].'</H5>';
-                                                    echo '<h5>'.$unFavoris['DATEFIN'].'</H5>';
+                                                    echo '<h5>'.$Horaire.'</H5>';
                                                     echo'<br>';
                                                     echo '<div class="row">';
                                                         echo '<div class="col-sm-2">';

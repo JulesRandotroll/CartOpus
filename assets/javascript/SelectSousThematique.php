@@ -17,7 +17,8 @@
     while($res=mysqli_fetch_array($req))
 	{
 		$msgRetour = $msgRetour . "<option value=".$res["ca_id"].">".$res["ca_id"].'/ '.$res['ca_libelle']."</option>";
-	}
+    }
+    echo $msgRetour;
 
 
 ?>

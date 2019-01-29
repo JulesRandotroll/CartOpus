@@ -44,7 +44,7 @@
 </div>
 <div class="row" style="background-color:#15B7D1;padding:20px">
     <?php 
-        // var_dump($Acteur);
+        var_dump($Acteur);
         // var_dump($Organisation);
         //var_dump($Action);
         //var_dump($_FILES);
@@ -58,13 +58,17 @@
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <table class="table">
                         <?php
+                        
                             echo '<tr><td>';
                             echo (img($Acteur['PhotoProfil']));
                             echo '</td><td>';
                             echo $Acteur['NOMACTEUR'].'<BR>';
                             echo $Acteur['PRENOMACTEUR'].'<BR>';
+                            
+                           
                             echo '</td></tr>
                             <tr><td colspan="2">';
+
                             if(!empty($Organisation))
                             {
                                 foreach($Organisation as $uneOrga)
