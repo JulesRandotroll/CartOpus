@@ -44,6 +44,7 @@ class AdminValider extends CI_Controller
 
         $DonneesInjectees = array(
             'lesActions'=> $this->ModelAction->getActions(),
+            'lesFavoris'=> $this->ModelAction->getActionFavorite($Where)
         );
 
         $DonneesTitre = array('TitreDeLaPage'=>'Gérer Fil Actu');

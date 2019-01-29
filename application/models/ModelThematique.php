@@ -135,7 +135,6 @@
         //Et delier les sous thématiques associées à une thématique 
         public function updateSsThematique_To_Thematique($Where)
         {
-            
             $this->db->where($Where);
             $this->db->delete('sousThematique');
         }
@@ -156,6 +155,40 @@
         {
             $this->db->insert('SousThematique',$Donnees);
         }
+
+        public function delierSousthematique($Where)
+        {
+            $this->db->select('noSousThematique');
+            $this->db->from('sousThematique');
+            $this->db->where($Where);
+            $requete = $this->db->get();
+            $SousThematiques = $requete->result_array();
+
+            var_dump($SousThematiques);
+
+            $this->updateSsThematique_To_Thematique($Where);
+            //$this->DeleteThematique($Where);
+
+            foreach($SousThematiques as $uneSousThematique)
+            {
+                $this->db->from('sousThematique');
+                $this->db->where($uneSousThematique);
+                $nb = $this->db->count_all_results();
+
+                var_dump($uneSousThematique);
+                Var_dump($nb);
+
+                if($nb==0)
+                {
+                    $uneThematique = array('noThematique'=>$uneSousThematique['noSousThematique']);
+                    var_dump($uneThematique);
+                    $this->DeleteThematique($uneThematique);
+                }
+            }
+        }
+
+
+        
     }   
 
 

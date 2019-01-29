@@ -13,3 +13,10 @@ ALTER TABLE `action` ADD `Description` VARCHAR(10000) NOT NULL AFTER `SiteURLAct
 ALTER TABLE `action` ADD `Favoris` BOOLEAN NOT NULL AFTER `Description`;
 
 CREATE TABLE `cartopus`.`encoursinscription` ( `Code` VARCHAR(9) NOT NULL , `Mail` VARCHAR(64) NOT NULL , `DateJour` DATETIME NOT NULL , PRIMARY KEY (`Code`)) ENGINE = MyISAM;
+
+
+
+
+pour les commentaires : 
+
+https://www.w3schools.com/bootstrap/bootstrap_media_objects.asp
