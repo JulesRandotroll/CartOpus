@@ -1,24 +1,46 @@
 <?php 
     $cnx=mysqli_connect('localhost','root','','cartopus');
 
-    $msgRetour=
-    '<div class="dropdown">'+
-        '<button class="btn btn-default dropdown-toggle form-control" type="button" data-toggle="dropdown" value="0">'+
-            '<span id="Dropdown_Supprimer_Thematique">Selectionnez une sous-thématique</span>'+
-            '<span class="caret"></span>'+
-        '</button>'+
-        '<ul class="dropdown-menu">'+
-            '<input class="form-control myInput" type="text" placeholder="Recherche">'+
-            '<li class="divider"></li>'
-    ;
 
-    $req=$cnx->query("SELECT t.nothematique, t.nomthematique FROM sousthematique s, thematique t WHERE s.noSousThematique = t.noThematique AND s.noThematique = "+$noThematique);
-		
+    $noThematique = $_REQUEST['noThematique'];
+
+    //echo $noThematique.'<BR>';
+    
+
+    $msgEntete='<input class="form-control myInput" type="text" placeholder="Recherche"><li class="divider"></li>';
+    echo $msgEntete;
+
+    $req=$cnx->query("SELECT t.nothematique, t.nomthematique FROM sousthematique s, thematique t WHERE s.noSousThematique = t.noThematique AND s.noThematique =". $noThematique);
+        
+    
+    
     while($res=mysqli_fetch_array($req))
 	{
-		$msgRetour = $msgRetour . "<option value=".$res["ca_id"].">".$res["ca_id"].'/ '.$res['ca_libelle']."</option>";
+        if(isset($msgRetour))
+        {
+            $msgRetour = $msgRetour . "<li class='delier_uneSousThematique' value=".$res['nothematique']."><a>".$res['nomthematique']."</a></li>";
+        }
+        else
+        {
+            $msgRetour =  "<li class='delier_uneSousThematique' value=".$res['nothematique']."><a>".$res['nomthematique']."</a></li>";
+        }
+		
     }
-    echo $msgRetour;
 
+    //echo $msgRetour;
+
+    //var_dump($msgRetour);
+    if(isset($msgRetour))
+    {
+        echo $msgRetour;
+    }
+    else
+    {
+
+        echo '<li class="delier_uneSousThematique" value="0"><a>Aucune Sous Thematique</a></li>' ;
+    }
+    //return $msgRetour;
+
+    mysqli_close($cnx);
 
 ?>
