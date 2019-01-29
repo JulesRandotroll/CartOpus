@@ -277,6 +277,11 @@ class Acteur extends CI_Controller
 
     public function AfficherActionSelectionnee($noAction)
     {
+        $noActeur = $this->session->noActeur;
+        //var_dump($noActeur);
+        $Profil = $this->ModelActeur->getUnProfil($noActeur,$noAction);
+        //var_dump($Profil);
+        $this->session->statut=$Profil[0]['noprofil'];
 
         $Where = array('a.noAction'=>$noAction);
         $Actions = $this->ModelAction->getAction($Where);
@@ -284,8 +289,8 @@ class Acteur extends CI_Controller
         $DateDebut=$Actions[0]['DATEDEBUT'];
         //var_dump($Actions);
         
-        $Donnes = array('NOACTION'=>$noAction,'DATEACTION'=>$DateDebut,);
-        $Fichiers = $this->ModelAction->getFichersPourAction($Donnes);
+        $Donnees = array('NOACTION'=>$noAction,'DATEACTION'=>$DateDebut,);
+        $Fichiers = $this->ModelAction->getFichersPourAction($Donnees);
 
         if(empty($Fichiers))
         {
@@ -389,6 +394,12 @@ class Acteur extends CI_Controller
     public function AfficherMembre($noAction)
     {
         //var_dump($noAction);
+        $noActeur = $this->session->noActeur;
+        //var_dump($noActeur);
+        $Profil = $this->ModelActeur->getUnProfil($noActeur,$noAction);
+        //var_dump($Profil);
+        $this->session->statut=$Profil[0]['noprofil'];
+
         $DonnéesTitre = array('TitreDeLaPage'=>'Afficher les membres de l\'équipe');
         $Membres=$this->ModelMembre->GetMembre($noAction);
         //var_dump($Membres);
@@ -423,17 +434,30 @@ class Acteur extends CI_Controller
 
     public function ModifierMembre($noActeur,$noAction)
     {
+        
         if($this->input->post('modif'))
         {
-            $DonnéesDeTest=array(
-                'noAction'=>$noAction,
-                'noActeur'=>$noActeur,
-            );
-            $DonnéesAUpdate=array(
-                'norole'=>$this->input->post('role'),
-            );
-            //var_dump($DonnéesAUpdate);
-            $this->ModelMembre->UpdateRoleMembre($DonnéesDeTest,$DonnéesAUpdate);
+            $DateD=$this->ModelAction->getDate($noAction);
+            $noRole=$this->ModelMembre->GetRoles($noActeur,$noAction,$DateD[0]);
+            //var_dump($noRole);
+            if($noRole[0]['norole']==2147483642)
+            {
+                $message='Cette personne est la créatrice de cette action, elle ne peut pas être modifiée';
+                $this->session->set_flashdata('message',$message);
+                redirect('Acteur/AfficherMembre/'.$noAction);
+            }
+            else
+            {
+                $DonnéesDeTest=array(
+                    'noAction'=>$noAction,
+                    'noActeur'=>$noActeur,
+                );
+                $DonnéesAUpdate=array(
+                    'norole'=>$this->input->post('role'),
+                );
+                //var_dump($DonnéesAUpdate);
+                $this->ModelMembre->UpdateRoleMembre($DonnéesDeTest,$DonnéesAUpdate);
+            }
         }
         else
         {
@@ -442,7 +466,7 @@ class Acteur extends CI_Controller
             $Acteur= $this->ModelActeur->getActeur($noActeur);
             //var_dump($Acteur);
     
-            $Role = $this->ModelActeur->GetRole();
+            $Role = $this->ModelActeur->GetRoles();
             $i=0;
             foreach($Role as $unRole)
             {
@@ -477,7 +501,7 @@ class Acteur extends CI_Controller
     {
         $DateD=$this->ModelAction->getDate($noAction);
         //var_dump($DateD);
-        $noRole=$this->ModelMembre->GetRole($noActeur,$noAction,$DateD[0]);
+        $noRole=$this->ModelMembre->GetRoles($noActeur,$noAction,$DateD[0]);
         //var_dump($noRole);
          if($noRole[0]['norole']==2147483642)
         {
@@ -1151,7 +1175,7 @@ class Acteur extends CI_Controller
 
         $Action=$this->ModelAction->getActionSimple($noAction);
         //var_dump($Action);
-        $Role = $this->ModelActeur->GetRole();
+        $Role = $this->ModelActeur->GetRoles();
         $i=0;
         foreach($Role as $unRole)
         {
@@ -1328,7 +1352,7 @@ class Acteur extends CI_Controller
         );
         $DonnéesAUpdate=array('NOPROFIL'=>$profil);
         $Action=$this->ModelMembre->UpdateProfil($DonnéesDeTest,$DonnéesAUpdate);
-    
+        $this->session->statut=array('NOPROFIL'=>$profil);
         redirect('Acteur/AfficherMembre/'.$noAction);
     }
     public function AjoutThematique($NomAction)

@@ -55,7 +55,7 @@
         }
 
         
-        public function GetRole($noActeur,$noAction,$DateD)
+        public function GetRoles($noActeur,$noAction,$DateD)
         {
             $Wheres=array('NOACTEUR'=>$noActeur,
             'NOACTION'=>$noAction,

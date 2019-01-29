@@ -8,6 +8,7 @@
                             }
                             else
                             {
+                                //var_dump($this->session->statut);
                                 echo '<li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:#FFFFFF ;background-color:#0E7896">Action
                                 <span class="caret"></span></a>
