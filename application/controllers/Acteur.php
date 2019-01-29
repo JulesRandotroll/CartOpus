@@ -389,33 +389,111 @@ class Acteur extends CI_Controller
     public function AfficherMembre($noAction)
     {
         $DonnéesTitre = array('TitreDeLaPage'=>'Afficher les membres de l\'équipe');
+        $Membres=$this->ModelMembre->GetMembre($noAction);
+        if($this->session->flashdata('message')!=null)
+        {
+            $DonneesInjectees=array(
+                'noAction'=>$noAction,
+                'Membres'=>$Membres,
+                'message'=>$this->session->flashdata('message'),
+            );
+            $this->load->view('templates/Entete',$DonnéesTitre);
+            $this->load->view('Acteur/AfficherMembre',$DonneesInjectees);
+            $this->load->view('templates/PiedDePage');
+        }
+        else
+        {
+           
+            $DonneesAInjectees=array
+            (
+                'noAction'=>$noAction,
+                'Membres'=>$Membres,
+            );
+            
+            //var_dump($Membres);
 
-        $DonneesAInjectees=array
-        (
-            'noAction'=>$noAction,
-        );
-        $this->load->view('templates/Entete',$DonnéesTitre);
-        $this->load->view('Acteur/AfficherMembre',$DonneesAInjectees);
-        $this->load->view('templates/PiedDePage');  
+            $this->load->view('templates/Entete',$DonnéesTitre);
+            $this->load->view('Acteur/AfficherMembre',$DonneesAInjectees);
+            $this->load->view('templates/PiedDePage');  
+
+        }
     }
 
-    public function ModifierMembre($noActeur)
+    public function ModifierMembre($noActeur,$noAction)
     {
-        $DonnéesTitre = array('TitreDeLaPage'=>'Modifier un membre de l\'équipe');
+        if($this->input->post('modif'))
+        {
+            $DonnéesDeTest=array(
+                'noAction'=>$noAction,
+                'noActeur'=>$noActeur,
+            );
+            $DonnéesAUpdate=array(
+                'norole'=>$this->input->post('role'),
+            );
+            //var_dump($DonnéesAUpdate);
+            $this->ModelMembre->UpdateRoleMembre($DonnéesDeTest,$DonnéesAUpdate);
+        }
+        else
+        {
+            $DonnéesTitre = array('TitreDeLaPage'=>'Modifier un membre de l\'équipe');
 
-        $Acteur= $this->ModelActeur->getActeur($noActeur);
-        var_dump($Acteur);
-        $DonneesAInjectees=array
-        (
-            'noActeur'=>$noActeur,
-            'nom'=>$Acteur[0]['NOMACTEUR'],
-            'prenom'=>$Acteur[0]['PRENOMACTEUR'],
-            'mail'=>$Acteur[0]['MAIL'],
-            'role'=>$options,
-        );
-        $this->load->view('templates/Entete',$DonnéesTitre);
-        $this->load->view('Acteur/ModifierMembre',$DonneesAInjectees);
-        $this->load->view('templates/PiedDePage');  
+            $Acteur= $this->ModelActeur->getActeur($noActeur);
+            //var_dump($Acteur);
+    
+            $Role = $this->ModelActeur->GetRole();
+            $i=0;
+            foreach($Role as $unRole)
+            {
+                if(empty($Options))
+                {
+                    $Options = array($unRole['NOROLE']=>$unRole['NOMROLE']);
+                }
+                else
+                {
+                    $temporaire = array($unRole['NOROLE']=>$unRole['NOMROLE']);
+                    $Options = $Options + $temporaire;
+                }
+            }
+    
+            $DonneesAInjectees=array
+            (
+                'noActeur'=>$noActeur,
+                'noAction'=>$noAction,
+                'nom'=>$Acteur[0]['NOMACTEUR'],
+                'prenom'=>$Acteur[0]['PRENOMACTEUR'],
+                'mail'=>$Acteur[0]['MAIL'],
+                'Role'=>$Options,
+            );
+            $this->load->view('templates/Entete',$DonnéesTitre);
+            $this->load->view('Acteur/ModifierMembre',$DonneesAInjectees);
+            $this->load->view('templates/PiedDePage');  
+        }
+        
+    }
+
+    public function SupprimerMembre($noAction,$noActeur)
+    {
+        $DateD=$this->ModelAction->getDate($noAction);
+        //var_dump($DateD);
+        $noRole=$this->ModelMembre->GetRole($noActeur,$noAction,$DateD[0]);
+        //var_dump($noRole);
+         if($noRole[0]['norole']==2147483642)
+        {
+            $message='Cette personne est la créatrice de cette action, elle ne peut pas être supprimée';
+            $this->session->set_flashdata('message',$message);
+            redirect('Acteur/AfficherMembre/'.$noAction);
+        }
+        else
+        {
+            $DonneesASupprimer=array(
+                'NOACTEUR'=>$noActeur,
+                'NOACTION'=>$noAction,
+                'DATEDEBUT'=>$DateD[0],
+            );
+            //var_dump($DonneesASupprimer);
+            $this->ModelMembre->Suppr_Membre($DonneesASupprimer);
+            redirect('Acteur/AfficherMembre/'.$noAction);
+        }
     }
     public function RenouvelerAction($noAction)
     {
@@ -1168,28 +1246,53 @@ class Acteur extends CI_Controller
                     }
                     else
                     {
+                        //TEST DOUBLON
                         $NoActeurAjout=$this->ModelActeur->getNoActeur($Mail);
-                        var_dump($NoActeurAjout);
-                        $donnéesEtrePartenaire=array(
-                            'noAction'=>$noAction,
-                            'noActeur'=> $NoActeurAjout[0]['NOACTEUR'],
-                            'noRole'=>$Role,
-                            'DateDebut'=>$Action[0]['DATEDEBUT'],
-                            'DateFin'=>$Action[0]['DATEFIN'],
-                        );
-    
-                        //var_dump($donnéesEtrePartenaire);
-                        $donnéesProfilPourAction=array(
-                            'noActeur'=> $NoActeurAjout[0]['NOACTEUR'],
-                            'noAction'=>$noAction,
-                            'DateDebut'=>$Action[0]['DATEDEBUT'],
-                            'noProfil'=>2,
-                            'DateFin'=>$Action[0]['DATEFIN'],
-                        );  
-                        // var_dump($donnéesProfilPourAction);  
-                        $this->ModelMembre->insertEtrePartenaire($donnéesEtrePartenaire);
-                        $this->ModelMembre->insertProfilPourAction($donnéesProfilPourAction);  
-                        redirect('Acteur/AccueilActeur');
+                        //var_dump($NoActeurAjout);
+
+                        $test=$this->ModelMembre->TestExiste($NoActeurAjout);
+                        //echo ('plop?');
+                        //var_dump($test);
+                        if($test==null)
+                        {
+                            $donnéesEtrePartenaire=array(
+                                'noAction'=>$noAction,
+                                'noActeur'=> $NoActeurAjout[0]['NOACTEUR'],
+                                'noRole'=>$Role,
+                                'DateDebut'=>$Action[0]['DATEDEBUT'],
+                                'DateFin'=>$Action[0]['DATEFIN'],
+                            );
+        
+                            $donnéesProfilPourAction=array(
+                                'noActeur'=> $NoActeurAjout[0]['NOACTEUR'],
+                                'noAction'=>$noAction,
+                                'DateDebut'=>$Action[0]['DATEDEBUT'],
+                                'noProfil'=>2,
+                                'DateFin'=>$Action[0]['DATEFIN'],
+                            );  
+                            // var_dump($donnéesProfilPourAction);  
+                            $this->ModelMembre->insertEtrePartenaire($donnéesEtrePartenaire);
+                            $this->ModelMembre->insertProfilPourAction($donnéesProfilPourAction);  
+                            //redirect('Acteur/AfficherMembre/'.$noAction);
+                        }
+                        else
+                        {
+                            $message="Cette personne est déjà inscrite.";
+                            $DonneesAInjecter=array(
+                                'noAction'=>$noAction,
+                                'Nom'=>'',
+                                'Prenom'=>'',
+                                'Mail'=>'',
+                                'ConfMail'=>"",
+                                'Role'=>$Options,
+                                'message'=>$message,
+                            );
+                            $this->load->view('templates/Entete',$DonnéesTitre);
+                            $this->load->view('Acteur/AjoutMembre',$DonneesAInjecter);
+                            $this->load->view('templates/PiedDePage');
+                        
+                        }
+                       
                     }                                
                 }
             }

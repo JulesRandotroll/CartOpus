@@ -227,11 +227,6 @@
             return $this->db->insert_id();
         }
 
-
-
-
-
-
         public function Suppr_Action($DonneesASupprimer)
         {
            // var_dump($DonneesASupprimer);
@@ -267,5 +262,15 @@
             $this->db->delete('avoirlieu');
         }
 
+        public function getDate($noAction)
+        {    
+           // var_dump($noAction);
+            $this->db->select('DATEDEBUT');
+            $this->db->from('avoirlieu');
+            $this->db->where('NOACTION',$noAction);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+    
     }
 ?>

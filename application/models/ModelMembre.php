@@ -19,6 +19,61 @@
             $this->db->insert('profilpouraction',$DonneesProfil);
             return $this->db->insert_id();
         }
+        public function UpdateRoleMembre($DonnéesDeTest,$DonnéesAUpdate)
+        { 
+            var_dump($DonnéesDeTest);
+            var_dump($DonnéesAUpdate);
+            $this->db->where($DonnéesDeTest);
+            $this->db->update('etrepartenaire',$DonnéesAUpdate);
 
+        }
+        public function GetMembre($noAction)
+        {
+            $this->db->select('*');
+            $this->db->from('etrepartenaire');
+            $this->db->join('acteur','etrepartenaire.noActeur=acteur.noActeur');
+            $this->db->where('etrepartenaire.noAction =',$noAction);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
+        public function Suppr_Membre($DonneesASupprimer)
+        {
+            //var_dump($DonneesASupprimer);
+            $DonneesASupprimer=array(
+                'NOACTEUR'=>$DonneesASupprimer['NOACTEUR'],
+                'NOACTION'=>$DonneesASupprimer['NOACTION'],
+                'DATEDEBUT'=>$DonneesASupprimer['DATEDEBUT']['DATEDEBUT'],
+            );
+            //var_dump($DonneesASupprimer);
+            $tables=array('profilpouraction','etrepartenaire');
+            $this->db->where($DonneesASupprimer);
+            $this->db->delete($tables);
+        }
+
+        
+        public function GetRole($noActeur,$noAction,$DateD)
+        {
+            $Wheres=array('NOACTEUR'=>$noActeur,
+            'NOACTION'=>$noAction,
+            'DATEDEBUT'=>$DateD['DATEDEBUT']);
+            //var_dump($Wheres);
+            $this->db->select('norole');
+            $this->db->from('etrepartenaire');
+            $this->db->where($Wheres);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
+        public function TestExiste($noActeur)
+        {
+            echo('miou?');
+            var_dump($noActeur);
+            $this->db->select('*');
+            $this->db->from('etrepartenaire');
+            $this->db->where('NOACTEUR=',$noActeur[0]['NOACTEUR']);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
     }
 ?>

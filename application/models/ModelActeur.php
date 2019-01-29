@@ -267,6 +267,7 @@
         {
             $this->db->select('*');
             $this->db->from('Role');
+            $this->db->not_like('NOROLE', '2147483642');
             $requete = $this->db->get();
             return $requete->result_array();
         }

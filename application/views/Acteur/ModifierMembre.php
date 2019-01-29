@@ -1,7 +1,8 @@
 <ul class="nav navbar-nav navbar-right">
                         <?php
                   echo'<li><a href="'.site_url('Acteur/AccueilActeur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso </a></li>';    
-              echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se Déconnecter</a></li>';
+                  echo'<li><a href="'.site_url('Acteur/ChoixAction/1').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-list-alt"></span> Afficher Action</a></li>';
+                  echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se Déconnecter</a></li>';
                         ?>
                     </ul>
                 </div>
@@ -28,52 +29,51 @@
             <section>
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                 <?php
-                        echo form_open('Acteur/ModifierMembre/'.$noActeur);
+                        echo form_open('Acteur/ModifierMembre/'.$noActeur.'/'.$noAction);
 
-                        //var_dump($Prenom);
-                    //    if ($message!="")
-                    //     {
-                    //     echo'<div class="alert alert-danger alert-dismissible">
-                    //     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    //             <strong>Attention</strong> '.$message.'
-                    //         </div>';
-                    //     }
+                        //var_dump($noAction);
                         
                         echo '<div class="form-group">';
                             echo form_label('Nom : ', 'Nom');
-                            echo form_input('nom',$nom,array('placeholder'=>'Votre nom','pattern'=>'[a-zA-Z ]{1,40}','class'=>'form-control')); 
+                            echo form_input('nom',$nom,array('disabled'=>"disabled",'class'=>'form-control')); 
                         echo '</div>';
                                 
                         echo '<div class="form-group">';
                             echo form_label('Prenom : ', 'Prenom');
-                            echo form_input('prenom',$prenom,array('placeholder'=>'Votre prénom (facultatif)','pattern'=>'[a-zA-Z ]{1,20}','class'=>'form-control'));                          
+                            echo form_input('prenom',$prenom,array('disabled'=>"disabled",'class'=>'form-control'));                          
                         echo '</div>';
                             
                         echo '<div class="form-group">';
-                            echo '<span style="color:#FF0000"/> * </span>';
                             echo form_label('Mail : ', 'Mail');  
-                            echo form_input('mail',$mail,array('required'=>'required','placeholder'=>'Votre mail. Exemple : abc@exemple.com','pattern'=>'[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})','class'=>'form-control'));
+                            echo form_input('mail',$mail,array('disabled'=>"disabled",'class'=>'form-control'));
                         echo '</div>';                           
                         
                         echo '<div class="form-group">';
-                            echo '<span style="color:#FF0000"/> * </span>';
+                        echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                             echo form_label('Rôle', 'Role'); 
                             echo form_dropdown('role', $Role, 'default',array('required'=>'required','class'=>'form-control'));
                         echo '</div>';
 
                         echo '<div class="text-center">';
-                          echo form_submit('valider', 'Valider l\'ajout',array('class'=>'btn btn-danger'));
+                          echo form_submit('modif', 'Modifier',array('class'=>'btn btn-danger'));
                         echo '</div>';
-                        
-                        echo '<br><h6><span style="color:#FF0000"/> *</span> Ces champs sont requis</h6> ';
+                        echo '<div class="text-right">';
+                        echo '<a style="color:#FFFFFF" href="'.site_url('Acteur/ContacterAdmin').'"><span class="glyphicon glyphicon-plus"></span>Ajouter un nouveau rôle ?</a>';
+                        echo '</div>';
+                        echo '<br><h6><span style="color:#FF0000"/> *</span> Ces champs sont obligatoires</h6> ';
                       
                         echo form_close();
                     ?>    
                 </div>
             </section>
         </div>
+        </div>
     </div>
-    
 </div>
 
+<script>
+$(document).ready(function(){
+$('[data-toggle="popover"]').popover();
+});
+</script>
 

@@ -70,6 +70,7 @@
 
                         $options=array(
                             'Ajout Thématique'=>'Ajout Thematique',
+                            'Ajout Rôle'=>'Ajout Role',
                             'Recuperer Donnees BDD'=>'Droit d\'acces aux données personnelles',
                             'Supprimer Donnees BDD'=>'Droit de suppression aux données personnelles',
                             'Modifier Donnees BDD'=>'Droit de modification aux données personnelles',
