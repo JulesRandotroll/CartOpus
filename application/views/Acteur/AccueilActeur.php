@@ -58,9 +58,33 @@
                             echo (img($Acteur['PhotoProfil']));
                             echo '</td><td>';
                             echo $Acteur['NOMACTEUR'].'<BR>';
-                            echo $Acteur['PRENOMACTEUR'].'<BR>';
+                            echo $Acteur['PRENOMACTEUR'].'<BR><BR>';
+                            if($Acteur['NoTelVisible'] == 0)
+                            {
+                                echo '<div style="color:#ccccb3" data-toggle="popover" title="LE NUMERO DE TELPHONE EST NON VISIBLE PAR TOUS LE MONDE" data-trigger="hover" data-content="LE NUMERO DE TELPHONE EST NON VISIBLE PAR TOUS LE MONDE">'.$Acteur['NOTEL'].'</div>';
+                            }
+                            else 
+                            {
+                                echo '<div style="color:#000000" data-toggle="popover" title="LE NUMERO DE TELPHONE EST VISIBLE PAR TOUS LE MONDE" data-trigger="hover" data-content="LE NUMERO DE TELPHONE EST VISIBLE PAR TOUS LE MONDE">'.$Acteur['NOTEL'].'</div>';
+                            }
+                            if($Acteur['MailVisible'] == 0)
+                            {
+                                echo '<div style="color:#ccccb3" data-toggle="popover" title="LE MAIL EST NON VISIBLE PAR TOUS LE MONDE" data-trigger="hover" data-content="LE MAIL EST NON VISIBLE PAR TOUS LE MONDE">'.$Acteur['MAIL'].'</div><BR>';
+                            }
+                            else 
+                            {
+                                echo '<div style="color:#000000" data-toggle="popover" title="LE MAIL EST VISIBLE PAR TOUS LE MONDE" data-trigger="hover" data-content="LE MAIL EST VISIBLE PAR TOUS LE MONDE">'.$Acteur['MAIL'].'</div><BR>';
+                            }
+
                             echo '</td></tr>
                             <tr><td colspan="2">';
+
+                            echo '<script>
+                            $(document).ready(function(){
+                            $("[data-toggle="popover"]").popover(); 
+                            });
+                            </script>';
+
                             if(!empty($Organisation))
                             {
                                 foreach($Organisation as $uneOrga)
