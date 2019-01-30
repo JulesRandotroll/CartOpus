@@ -1493,6 +1493,5 @@ class Acteur extends CI_Controller
      
     }
 
-    
 }
 ?>

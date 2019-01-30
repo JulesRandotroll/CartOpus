@@ -19,6 +19,7 @@
             $requete = $this->db->count_all_results();
             return $requete;
         }
+
         public function actionRecherche($nomAction, $nbLignesRetournees, $PremiereLigneRetournee)
         {
             $this->db->limit($nbLignesRetournees, $PremiereLigneRetournee);
@@ -51,12 +52,14 @@
             $requete = $this->db->count_all_results();
             return $requete;
         }
+
         public function acteurRecherche($nomActeur, $nbLignesRetournees, $PremiereLigneRetournee)
         {
             $this->db->limit($nbLignesRetournees, $PremiereLigneRetournee);
             $this->db->select('*');
             $this->db->from('acteur');
             $this->db->like('NOMACTEUR', $nomActeur);
+            $this->db->or_like('PRENOMACTEUR', $nomActeur);
             $query = $this->db->get();
             if($query->num_rows()>0)
             {
@@ -221,5 +224,96 @@
             }
             return FALSE;
         }
+
+        public function nombreDateDebut($Recherche = FALSE)
+        {
+            echo 'date recherche';
+            var_dump($Recherche);
+            if($Recherche===false)
+            {
+                return $this->db->count_all('avoirlieu');
+            }
+            $this->db->from('avoirlieu');
+            $this->db->like('DateDebut', $Recherche);
+            $requete = $this->db->count_all_results();
+            return $requete;
+        }
+
+        public function dateDebutRecherche($date, $nbLignesRetournees, $PremiereLigneRetournee)
+        {
+            $this->db->limit($nbLignesRetournees, $PremiereLigneRetournee);
+            $this->db->select('*');
+            $this->db->from('avoirlieu al');
+            $this->db->join('action a', 'al.noaction=a.noaction');
+            $this->db->like('DATEDEBUT', $date);
+            //$this->db->like($date);
+            $query = $this->db->get();
+            if($query->num_rows()>0)
+            {
+                foreach ($query->result_array() as $ligne) 
+                {
+                    $jeuEnr[] = $ligne;
+                }
+                return $jeuEnr;
+            }
+            
+            return FALSE;
+            
+        }
+
+        public function nombreDateFin($Recherche = FALSE)
+        {
+            echo 'date recherche';
+            var_dump($Recherche);
+            if($Recherche===false)
+            {
+                return $this->db->count_all('avoirlieu');
+            }
+            $this->db->from('avoirlieu');
+            $this->db->like('DateFin', $Recherche);
+            $requete = $this->db->count_all_results();
+            return $requete;
+        }
+
+        public function dateFinRecherche($date, $nbLignesRetournees, $PremiereLigneRetournee)
+        {
+            $this->db->limit($nbLignesRetournees, $PremiereLigneRetournee);
+            $this->db->select('*');
+            $this->db->from('avoirlieu al');
+            $this->db->join('action a', 'al.noaction=a.noaction');
+            $this->db->like('DATEFIN', $date);
+            //$this->db->like($date);
+            $query = $this->db->get();
+            if($query->num_rows()>0)
+            {
+                foreach ($query->result_array() as $ligne) 
+                {
+                    $jeuEnr[] = $ligne;
+                }
+                return $jeuEnr;
+            }
+            return FALSE;
+        }
+
+        public function nombrePeriode($Recherche = FALSE)
+        {
+            if($Recherche===false)
+            {
+                return $this->db->count_all('avoirlieu');
+            }
+            $this->db->from('avoirlieu');
+            $this->db->like('DateDebut', 'DateFin', $Recherche);
+            $requete = $this->db->count_all_results();
+            return $requete;
+        }
+
+        public function periodeRecherche($DateDebut, $DateFin, $nbLignesRetournees, $PremiereLigneRetournee)
+        {
+            $this->db->limit($nbLignesRetournees, $PremiereLigneRetournee);
+            $requete = $this->db->query("SELECT * FROM action, avoirlieu WHERE action.noaction = avoirlieu.noaction AND DATEDEBUT BETWEEN '".$DateDebut."' AND '".$DateFin."'");
+            
+            return $requete->result_array();
+        }
+
     }
 ?>
