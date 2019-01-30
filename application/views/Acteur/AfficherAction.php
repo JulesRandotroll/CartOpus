@@ -1,17 +1,36 @@
                     <ul class="nav navbar-nav navbar-right">
                         <?php
-                          echo '<li class="dropdown">
-                          <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:#FFFFFF ;background-color:#0E7896">Action
-                          <span class="caret"></span></a>
-                          <ul class="dropdown-menu" style="background-color:#139CBC">
-                            <li><a href="'.site_url('Acteur/ModifierAction/'.$Actions[0]['NOACTION']).'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-pencil"></span> Modifier Action</a></li>
-                            <li><a href="'.site_url('Acteur/AjoutSousAction/'.$Actions[0]['NOACTION']).'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter SousAction</a></li>
-                            <li><a href="'.site_url('Acteur/ReitererAction/'.$Actions[0]['NOACTION']).'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-repeat"></span> Renouveler Action</a></li>
-                            <li><a href="'.site_url('Acteur/SupprimerAction/'.$Actions[0]['NOACTION']).'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-trash"></span> Supprimer Action</a></li>
-                          </ul>
-                  </li>';
-                  echo'<li><a href="'.site_url('Acteur/AccueilActeur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso </a></li>';    
-              echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se Déconnecter</a></li>';
+                        //var_dump($this->session->statut);
+                        if (($this->session->statut)==3)
+                        {
+                            echo '<li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:#FFFFFF ;background-color:#0E7896">Action
+                                    <span class="caret"></span></a>
+                                    <ul class="dropdown-menu" style="background-color:#139CBC">
+                                        <li><a href="'.site_url('Acteur/ModifierAction/'.$Actions[0]['NOACTION']).'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-pencil"></span> Modifier Action</a></li>
+                                        <li><a href="'.site_url('Acteur/AjoutSousAction/'.$Actions[0]['NOACTION']).'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter SousAction</a></li>
+                                        <li><a href="'.site_url('Acteur/ReitererAction/'.$Actions[0]['NOACTION']).'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-repeat"></span> Renouveler Action</a></li>
+                                        <li><a href="'.site_url('Acteur/SupprimerAction/'.$Actions[0]['NOACTION']).'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-trash"></span> Supprimer Action</a></li>
+                                    </ul>
+                                </li>';
+                            echo'<li><a href="'.site_url('Acteur/AccueilActeur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso </a></li>';    
+                            echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se Déconnecter</a></li>';
+                        }
+                        else
+                        {
+                            echo '<li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:#FFFFFF ;background-color:#0E7896">Action
+                                    <span class="caret"></span></a>
+                                    <ul class="dropdown-menu" style="background-color:#139CBC">
+                                        <li><a href="'.site_url('Acteur/ModifierAction/'.$Actions[0]['NOACTION']).'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-pencil"></span> Modifier Action</a></li>
+                                        <li><a href="'.site_url('Acteur/AjoutSousAction/'.$Actions[0]['NOACTION']).'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter SousAction</a></li>
+                                        <li><a href="'.site_url('Acteur/ReitererAction/'.$Actions[0]['NOACTION']).'" style="color:#FFFFFF ;background-color:#139CBC"><span class="glyphicon glyphicon-repeat"></span> Renouveler Action</a></li>
+                                    </ul>
+                            </li>';
+                            echo'<li><a href="'.site_url('Acteur/AccueilActeur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso </a></li>';    
+                            echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se Déconnecter</a></li>';
+                        }
+                         
                         ?>
                     </ul>
                 </div>
@@ -201,6 +220,7 @@
                         echo form_open('Acteur/SupprimerAction/'.$Actions[0]['NOACTION'].'',array("id"=>"form_suppr"));
                         
                         echo '<div class="text-left">';
+                        echo'<a  href="'.site_url('Acteur/AfficherMembre/'.$Actions[0]['NOACTION']).'" style="color:#000000"><button type="button" class="btn btn-danger">Afficher Membre</button> </a>';
                         echo'<a  href="'.site_url('Acteur/AccueilActeur/').'" style="color:#000000"><button type="button" class="btn btn-danger">Retour</button> </a>';
                         echo '</div>';
                        
@@ -241,15 +261,21 @@
                         </H4>
                     </a>
                 </li>
-                <li>
-                    <a href="#section3" class="option trash_Supprimer" id='Supprimer'>
-                        <H4>
-                            <span class="glyphicon glyphicon-trash" style="color:#FFFFFF">
-                            </span>
-                            <p id='txt_Supprimer' style="color:#FFFFFF">Supprimer</p>
-                        </H4>
-                    </a>
-                </li>
+                <?php 
+                    if($this->session->statut==3)
+                    {
+                        echo'<li>
+                        <a href="#section3" class="option trash_Supprimer" id="Supprimer">
+                            <H4>
+                                <span class="glyphicon glyphicon-trash" style="color:#FFFFFF">
+                                </span>
+                                <p id="txt_Supprimer" style="color:#FFFFFF">Supprimer</p>
+                            </H4>
+                        </a>
+                    </li>';
+                    }
+                ?>
+                
             </ul>
         </nav>
     </div>

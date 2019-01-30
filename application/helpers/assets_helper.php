@@ -16,6 +16,14 @@ if ( ! function_exists('js_url'))
   }
 }
 
+if( ! function_exists('js_php'))
+{
+  function js_php($nom)
+  {
+    return base_url() . 'assets/javascript' . $nom . '.php';
+  }
+}
+
 if ( ! function_exists('img_url'))
 {
   function img_url($nom)

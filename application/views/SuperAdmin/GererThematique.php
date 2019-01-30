@@ -369,10 +369,10 @@
             <H1 align = "center" style="color:#FFFFFF">Délier une sous-thématique d'une thématique</H1>
             <section>
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
-                <?php 
-                       echo form_open('SuperAdmin/DelierUneSousThematiques',array("id"=>"form_Delier_SousThematiques"));
-                       echo '<div class="form-group">';
-                       echo form_label('Thématique à delier : ', 'NewTheme'); 
+                    <?php 
+                        echo form_open('SuperAdmin/DelierUneSousThematiques',array("id"=>"form_Delier_SousThematiques"));
+                        echo '<div class="form-group">';
+                        echo form_label('Thématique à delier : ', 'NewTheme'); 
                     ?>
                     <div class="dropdown">
                         <button class="btn btn-default dropdown-toggle form-control" type="button" data-toggle="dropdown" value='0'>
@@ -390,13 +390,31 @@
                             ?>
                         </ul> 
                     </div>
+                    
+                    <br>
+
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle form-control" type="button" data-toggle="dropdown" value="0">
+                            <span id="Dropdown_Delier_uneSousThematique">Selectionnez une sous-thématique</span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" id="ici">
+                            <input class="form-control myInput" type="text" placeholder="Recherche">
+                            <li class="divider"></li>
+                            <li class="delier_uneSousThematique"><a>Selectionnez une thématique</a></li>
+                        </ul>
+                    </div>
+
+                    <BR>
                     <?php
-                        echo '</div>';
                         echo form_submit('DelierSousThematique', 'Délier',array('class'=>'btn btn-danger','id'=>'btn_delier_SousThematique'));
                         echo form_close();
                     ?>
                 </div>
             </section>
+            <?php 
+                
+            ?>
         </div>
     </div>
     <div class='col-sm-5'>
@@ -436,6 +454,7 @@
         </div>
     </div>
 </div>
+
 <div class='row' style="background-color:#15B7D1">
 
 <BR><BR><BR>
