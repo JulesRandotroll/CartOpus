@@ -680,7 +680,6 @@ class Visiteur extends CI_Controller
 
     $RechercheMotCle = $this->input->post('MotCle');
     $RechercheLieu = $this->input->post('MotCle');
-    //$RechercheDate = $this->input->post('DateDebut');
 
     $config = array();
     $config["Base_url"] = site_url('Visiteur/Rechercher');
@@ -701,8 +700,8 @@ class Visiteur extends CI_Controller
 
     if($this->input->post('RechercheAvancee'))
     {
-      $DateDebut = $this->input->post('DateD');
-      $DateFin = $this->input->post('DateF');
+      $DateDebut = $this->input->post('DateD').' '.$this->input->post('HeureD');
+      $DateFin = $this->input->post('DateF').' '.$this->input->post('HeureF');
 
       if($DateDebut != null && $DateFin != null)
       {
@@ -722,6 +721,7 @@ class Visiteur extends CI_Controller
 
         $lesDates = $this->ModelRecherche->dateFinRecherche($DateFin, $config['per_page'], $noPage);
       }
+
     }
 
     if(!empty($RechercheMotCle))
@@ -779,7 +779,6 @@ class Visiteur extends CI_Controller
 
     if(!empty($lesMotsCles))
     {
-      //var_dump($lesMotsCles);
       foreach($lesMotsCles as $unMotCle):
         $exist = FALSE;
         $noAction = $unMotCle['NOACTION'];

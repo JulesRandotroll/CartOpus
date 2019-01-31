@@ -88,14 +88,38 @@
                             echo form_label('Date Début :', 'lbl_DateDebut');
                             echo '  ';
                         
-                            $ToDay = date('d/m/Y');
+                            //$ToDay = date('d/m/Y');
+                            $ToDay = date('Y-m-d');
+                            //var_dump($ToDay);
                             echo '<input class="form-control" name="DateD" id="dateD" type="date" value="'.$ToDay.'">';
 
                             echo form_label('Date Fin :', 'lbl_DateFin');
                             echo '  ';
                         
-                            $ToDay = date('d/m/Y');
-                            echo '<input class="form-control" name="DateF" id="dateF" type="date" value="'.$ToDay.'">';
+                            echo '<input class="form-control" name="DateF" id="dateF" type="date">';
+
+                        ?>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="col-sm-2" style="padding:10px">
+        <div class = "text-center">
+            <section>
+                <div class = "section-inner" style="padding:10px">
+                    <div class="form-group">
+                        <?php
+                            echo form_label('Heure Début :', 'lbl_HeureDebut');
+                            echo '  ';
+                        
+                            echo '<input class="form-control" name="HeureD" id="heureD" type="time">';
+
+                            echo form_label('Heure Fin :', 'lbl_HeureFin');
+                            echo '  ';
+                        
+                            echo '<input class="form-control" name="HeureF" id="heureF" type="time">';
 
                         ?>
                     </div>

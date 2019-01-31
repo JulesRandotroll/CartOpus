@@ -14,6 +14,7 @@ if(!empty($lesActions))
                             <tr>
                                 <th>Nom Action</th>
                                 <th>Public Cible</th>
+                                <th>Adresse</th>
                                 <th>Site URL</th>
                             </tr>
                             <?php
@@ -21,7 +22,11 @@ if(!empty($lesActions))
                                     echo '<tr>';
                                     echo '<td><a href="'.site_url('Visiteur/AfficherAction/'.($uneAction['NOACTION'])).'" style="color:#000000"><h4>'.$uneAction['NOMACTION'].'</h4></a></td>';
                                     echo '<td><h4>'.$uneAction['PublicCible'].'</h4></td>';
+                                    
+                                    echo '<td><h4>'.$uneAction['ADRESSE'].' </h4>';
+                                    echo '<h4>'.$uneAction['Ville'].' </h4></td>';
                                     echo '<td><h4>'.$uneAction['SiteURLAction'].' </h4></td>';
+                                    
                                     echo '</tr>';
                                 endforeach ;
                             ?>
@@ -92,7 +97,7 @@ if(!empty($lesOrganisations))
                                     echo '<td><a href="'.site_url('Visiteur/AfficherOrga/'.$uneOrganisation['NO_ORGANISATION']).'" style="color:#000000"><h4>'.$uneOrganisation['NOMORGANISATION'].'</h4></a></td>';
                                     echo '<td><h4>'.$uneOrganisation['NOTELORGA'].'</h4></td>';
                                     echo '<td><h4>'.$uneOrganisation['NOFAXORGA'].'</h4></td>';
-                                    echo '<td><a href="#" style="color:#000000"><h4>'.$uneOrganisation['SITEURL'].'</h4></a></td>';
+                                    echo '<td><a href="'.$uneOrganisation['SITEURL'].'" style="color:#000000"><h4>'.$uneOrganisation['SITEURL'].'</h4></a></td>';
                                     echo '</tr>';
                                 endforeach ;
                             ?>
