@@ -68,7 +68,7 @@
                 <div class = "section-inner" style="padding:10px">
                     <label>Recherche : </label>
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" name="MotCle">
+                        <input type="text" class="form-control" placeholder="Recherche" name="MotCle">
                         <div class="input-group-btn">
                         <button class="btn btn-default form-control" type="submit" name="Recherche">
                             <i class="glyphicon glyphicon-search"></i>
