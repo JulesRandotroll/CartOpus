@@ -348,6 +348,7 @@ class SuperAdmin extends CI_Controller {
             $Message = 'La sous thématique a été déliée de la thématique choisie';
             $this->session->set_flashdata('Message',$Message);
             
+            
             redirect('SuperAdmin/GererThematique');
         }
         else

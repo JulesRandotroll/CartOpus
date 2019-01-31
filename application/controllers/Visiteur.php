@@ -314,7 +314,7 @@ class Visiteur extends CI_Controller
       'message'=>'',
     );
     $DonneesInjectees['Titre de la page']='Connexion';
-    if ( $this->input->post('submit'))
+    if($this->input->post('submit'))
     {
       $donneesATester=array
       (
@@ -348,6 +348,14 @@ class Visiteur extends CI_Controller
         $noActeur = $this->ModelSeConnecter->GetNoActeur($donneesATester);
         $this->session->noActeur=$noActeur[0]['NoActeur'];
 
+        if($this->session->statut==0)
+        {
+          $message="Vous avez été destitué(e) de vos droits en tant qu'acteur. Pour de plus amples informations veuillez consulter votre boite mail.";
+          $this->session->set_flashdata('message',$message);
+          
+          redirect('Visiteur/loadAccueil');
+          
+        }
         if ($this->session->statut==1)
         {
           //var_dump($noActeur);
