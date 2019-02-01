@@ -1,3 +1,8 @@
+
+<?php 
+    $tailleDescription = 500;
+?>
+
 <div class="row" style="background-color:#15B7D1">
     <div class="col-sm-2" style="padding:20px">
     </div>
@@ -53,31 +58,42 @@
                                             //echo 'Test : '.(($DF-$DD)/60/60/24).'<BR><BR><BR>';
                                             if(($DF-$DD)/60/60/24 >= 1)
                                             {
-                                                $Horaire = "Du :".strftime("%A %d %B %Y %H h %M",$DD).'<BR> Au : '.strftime("%A %d %B %Y %H h %M",$DF).'<BR>';   
+                                                $Horaire = "Du : ".strftime("%A %d %B %Y %H h %M",$DD).'<BR> Au : '.strftime("%A %d %B %Y %H h %M",$DF).'<BR>';   
                                             }
                                             else
                                             {
-                                                $Horaire = "De : ".strftime("%Hh%M",$DD).' à '.strftime("%Hh%M",$DF);  
+                                                $Horaire = "De : ".strftime("%Hh%M",$DD).' à '.strftime("%Hh%M",$DF).'<BR><BR>';  
                                             } // >= 1
                                         } // != numm
                                         else
                                         {  
-                                            $Horaire = 'A partir du : '.strftime("%A %d %B %Y %H h %M",$DD).'<BR>';
+                                            $Horaire = 'A partir du : '.strftime("%A %d %B %Y %H h %M",$DD).'<BR><BR>';
                                         } // != null
 
                                         if($i == 0)
                                         {
                                             $class = "item active";
                                         }
+
+
+                                        if(strlen($unFavoris['Description'])>$tailleDescription)
+                                        {
+                                            $Description = substr($unFavoris['Description'],0,$tailleDescription).' [...]';
+                                        }
+                                        else
+                                        {
+                                            $Description = $unFavoris['Description'];
+                                        }
+
                                                 echo '<div class="'.$class.'">';
                                                     echo '<h1>'.$unFavoris['NOMACTION'].'</H1>';
-                                                    echo '<h5>'.$Horaire.'</H5>';
+                                                    echo '<H4><em>'.$Horaire.'</em></H4>';
                                                     echo'<br>';
                                                     echo '<div class="row">';
                                                         echo '<div class="col-sm-2">';
                                                         echo '</div>';
                                                         echo '<div class="col-sm-8">';
-                                                            echo '<h5 class="center">'.$unFavoris['Description'].'</H5>';
+                                                            echo '<h4 class="center">'.$Description.'</H4>';
                                                         echo '</div>';
                                                         echo '</br>';
                                                         echo '</br></br>';

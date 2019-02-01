@@ -26,11 +26,10 @@
             return $requete->result_array();
         }
 
-        public function getMotCleExiste($Donnees)
+        public function getMotCle()
         {
-            $this->db->select("MotCle");
-            $this->db->from("FaireReference");
-            $this->db->where($Donnees);
+            $this->db->select("DISTINCT(MotCle)");
+            $this->db->from("EtreTagge");
             $requete = $this->db->get();
             return $requete->result_array();
         }

@@ -1,3 +1,52 @@
+
+
+
+
+
+
+
+MISE A JOUR DE LA BDD !!!!!!!!
+
+
+CREATE TABLE IF NOT EXISTS `etretagge` (
+  `noAction` int(11) NOT NULL,
+  `MotCle` varchar(64) NOT NULL,
+  PRIMARY KEY (`noAction`,`MotCle`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contraintes pour les tables exportées
+--
+
+--
+-- Contraintes pour la table `etretagge`
+--
+ALTER TABLE `etretagge`
+  ADD CONSTRAINT `cstrnt_action` FOREIGN KEY (`noAction`) REFERENCES `action` (`NOACTION`);
+
+
+ALTER TABLE `fairereference` DROP `MOTCLE`;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 insertion
 
 ALTER TABLE acteur 
@@ -13,6 +62,20 @@ ALTER TABLE `action` ADD `Description` VARCHAR(10000) NOT NULL AFTER `SiteURLAct
 ALTER TABLE `action` ADD `Favoris` BOOLEAN NOT NULL AFTER `Description`;
 
 CREATE TABLE `cartopus`.`encoursinscription` ( `Code` VARCHAR(9) NOT NULL , `Mail` VARCHAR(64) NOT NULL , `DateJour` DATETIME NOT NULL , PRIMARY KEY (`Code`)) ENGINE = MyISAM;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

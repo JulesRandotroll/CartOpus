@@ -44,10 +44,9 @@
 </div>
 <div class="row" style="background-color:#15B7D1;padding:20px">
     <?php 
-        var_dump($Acteur);
-        // var_dump($Organisation);
-        //var_dump($Action);
-        //var_dump($_FILES);
+        // var_dump($Acteur);
+
+        $tailleDescription = 250;
     ?>
     
     <div class="col-sm-4">
@@ -113,14 +112,25 @@
                             {
                                 foreach($Action as $uneAction)
                                 {
-                                    if($uneAction['DATEFIN']==null){$uneAction['DATEFIN']=0;}
-                                    if(empty($uneAction['SiteURLAction']))
+
+                                    if(strlen($uneAction['Description'])>$tailleDescription)
                                     {
-                                        $this->table->add_row($uneAction['NOMACTION'],$uneAction['NOMROLE'],$uneAction['SiteURLAction'],$uneAction['DATEDEBUT'],$uneAction['Description'],'<a href="'.site_url('Acteur/AfficherActionSelectionnee/'.($uneAction['NOACTION']).'/'.($uneAction['DATEDEBUT']).'/'.($uneAction['DATEFIN'])).'" class="btn btn-danger" >Accès</a>');  
+                                        $Description = substr($uneAction['Description'],0,$tailleDescription).' [...]';
                                     }
                                     else
                                     {
-                                        $this->table->add_row($uneAction['NOMACTION'],$uneAction['NOMROLE'],'<a href="'.$uneAction['SiteURLAction'].'" style="color:FFFFFF">Cliquer Ici</a>',$uneAction['DATEDEBUT'],$uneAction['Description'],'<a href="'.site_url('Acteur/AfficherActionSelectionnee/'.($uneAction['NOACTION']).'/'.($uneAction['DATEDEBUT']).'/'.($uneAction['DATEFIN'])).'" class="btn btn-danger" >Accès</a>');
+                                        $Description = $uneAction['Description'];
+                                    }
+
+
+                                    if($uneAction['DATEFIN']==null){$uneAction['DATEFIN']=0;}
+                                    if(empty($uneAction['SiteURLAction']))
+                                    {
+                                        $this->table->add_row($uneAction['NOMACTION'],$uneAction['NOMROLE'],$uneAction['SiteURLAction'],$uneAction['DATEDEBUT'],$Description,'<a href="'.site_url('Acteur/AfficherActionSelectionnee/'.($uneAction['NOACTION']).'/'.($uneAction['DATEDEBUT']).'/'.($uneAction['DATEFIN'])).'" class="btn btn-danger" >Accès</a>');  
+                                    }
+                                    else
+                                    {
+                                        $this->table->add_row($uneAction['NOMACTION'],$uneAction['NOMROLE'],'<a href="'.$uneAction['SiteURLAction'].'" style="color:FFFFFF">Cliquer Ici</a>',$uneAction['DATEDEBUT'],$Description,'<a href="'.site_url('Acteur/AfficherActionSelectionnee/'.($uneAction['NOACTION']).'/'.($uneAction['DATEDEBUT']).'/'.($uneAction['DATEFIN'])).'" class="btn btn-danger" >Accès</a>');
                                     }
                                     
                                 }

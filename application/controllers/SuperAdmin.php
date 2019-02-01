@@ -71,12 +71,69 @@ class SuperAdmin extends CI_Controller {
     {
         if($this->input->post('Modifier'))
         {
-            $noProfil = $this->input->post('Profil').'<BR>';
+            $noProfil = $this->input->post('Profil');
             $noActeur = $this->input->post('noActeur');
-            $this->ModelActeur->setProfil($noActeur,$noProfil);
+            if($noProfil == 0)
+            {
+                
+                redirect('SuperAdmin/MailDebouter/'.$noActeur,'refresh');
+                
+            }
+            else
+            {
+                $this->ModelActeur->setProfil($noActeur,$noProfil);
+            }
+            
         }
         
         $this->AffecterProfil(0);  
+    }
+
+    public function MailDebouter($noActeur)
+    {
+        $Acteur = $this->ModelActeur->getActeur($noActeur);
+        if($this->input->post('Envoyer'))
+        {
+            $mail = $Acteur[0]['MAIL'];
+            $objet = $this->input->post('objet');
+            $message = $this->input->post('Message');
+
+            $this->email->from('cartopus22@gmail.com');
+            $this->email->to($mail); 
+            $this->email->subject($objet);
+            $this->email->message($message."\r\n\r\n".'Ce message a été envoyé par : CartOpus. Contact: cartopus22@gmail.com');
+            if (!$this->email->send())
+            {
+                $this->email->print_debugger();
+            }
+
+            $this->ModelActeur->setProfil($noActeur,'0');
+            redirect('SuperAdmin/AffecterProfil/0');
+        }
+        else
+        {
+            
+            $proposition = 
+                "Ceci est un message de l'administration de Cart'Opus \n"
+                ."Nous vous envoyons ce message car vous n'avez pas respecté les codes de Cart'Opus"
+            ;
+            $Donnees = array(
+                "Mail"=>$Acteur[0]['MAIL'],
+                "No"=>$noActeur,
+                'proposition'=>$proposition,
+            );
+
+            $DonnéesTitre=array('TitreDeLaPage'=>'Explication destitution');
+
+            $this->load->view('templates/Entete',$DonnéesTitre);
+            $this->load->view('SuperAdmin/MailingDestitue',$Donnees);
+            $this->load->view('templates/PiedDePage');
+
+
+        }
+        
+
+
     }
 
     public Function GererThematique()
@@ -347,6 +404,7 @@ class SuperAdmin extends CI_Controller {
 
             $Message = 'La sous thématique a été déliée de la thématique choisie';
             $this->session->set_flashdata('Message',$Message);
+            
             
             redirect('SuperAdmin/GererThematique');
         }
