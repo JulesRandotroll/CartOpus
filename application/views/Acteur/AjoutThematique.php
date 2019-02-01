@@ -17,60 +17,74 @@
         <div style="padding:20px">
             <div class = "text-center">
                 <?php
-                    $NomAction = str_replace('%20',' ',$NomAction);
-                    $NomAction= str_replace('%C3%A9','é',$NomAction);
-                    $NomAction= str_replace('%C3%BB','û',$NomAction);
-                    $NomAction= str_replace('%C3%A0','à',$NomAction);
-                    $NomAction= str_replace('%C3%BC','ü',$NomAction);
-                    $NomAction= str_replace('%C3%B9','ù',$NomAction);
-                    $NomAction= str_replace('%C3%AE','î',$NomAction);
-                    $NomAction= str_replace('%C3%AF','ï',$NomAction);
-                    $NomAction= str_replace('%C3%AB','ë',$NomAction);
-                    $NomAction= str_replace('%C3%A8','è',$NomAction);
+                    // $NomAction = str_replace('%20',' ',$NomAction);
+                    // $NomAction= str_replace('%C3%A9','é',$NomAction);
+                    // $NomAction= str_replace('%C3%BB','û',$NomAction);
+                    // $NomAction= str_replace('%C3%A0','à',$NomAction);
+                    // $NomAction= str_replace('%C3%BC','ü',$NomAction);
+                    // $NomAction= str_replace('%C3%B9','ù',$NomAction);
+                    // $NomAction= str_replace('%C3%AE','î',$NomAction);
+                    // $NomAction= str_replace('%C3%AF','ï',$NomAction);
+                    // $NomAction= str_replace('%C3%AB','ë',$NomAction);
+                    // $NomAction= str_replace('%C3%A8','è',$NomAction);
                     
 
-                    $ActionSelect=$NomAction; // faire passer le nom choisie en paramètre
-                    echo '<H1 style="color:#FFFFFF">Ajouter une thématique pour '.$ActionSelect.'</H1>';
+                   // $ActionSelect=$NomAction; // faire passer le nom choisie en paramètre
+                    echo '<H1 style="color:#FFFFFF">Liée une thématique à une action</H1>';
                 ?>
             </div>
             <section >
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <?php
-                        echo form_open('Acteur/AjoutThematique'.$NomAction);
-                        echo '<div class="text-left">';
+                        echo form_open('Acteur/AjoutThematique');
+                        
+                        echo '<div class="text-center">';
+                            echo form_label('Actions :', 'lbl_Action');
+                            echo ' ';
+                    
+                            echo form_dropdown('action', $action, 'default');
+                        echo '</div>';
+                        echo '<br><br>';
+                        echo '<div class="text-center">';
                             echo '<table class="table">';
                                 echo '
                                 <thead>
                                     <tr>
                                         <th>Thématique</th>
-                                        <th ><button type="button" style="color:black; font-size:100%" class="btn btn-link btn-sm pull-right "><strong>+</strong></button></th> 
+                                        <th>Mot Clé</th> 
                                     </tr>
                                 </thead> ';
                                 echo'
                                 <tbody>
                                     <tr>
-                                        <td>';
-                                        foreach ($uneThematique as $uneThematique)
+                                        <td>
+                                        ';
+                                        //var_dump($theme);
+                                        
+                                        foreach($theme as $untheme)
                                         {
-                                            echo $uneThematique['NOMTHEMATIQUE'];
-                                        };
-                                echo'
+                                            //var_dump($untheme);
+                                            foreach($untheme as $soustheme)
+                                            {
+                                                //var_dump($soustheme);
+                                                echo form_label($soustheme, 'theme'); 
+                                                echo form_checkbox('cbx_theme','', TRUE);
+                                                
+                                                echo'<br>';  
+                                            }
+                                           // echo form_label($untheme, 'theme');   
+                                        }
+                                        
+                                        echo'
+                                        </td>
+                                        <td>
+                                        plop
                                         </td>
                                     </tr>
                                 </tbody>
                                 ';
                                 // tableau des thématiques deja associées 
                             echo '</table>';
-                        echo '</div>';
-                        echo '<div class="text-center">';
-                            echo form_label('Thématique :', 'lbl_Thematique');
-                            echo ' ';
-                            $option = array(
-                                'Musique'=>array('Musique','Rock','Jazz','Blues'),
-                                'Sport'=>array('Sport','Kayak','Karate')
-                            );
-                    
-                            echo form_dropdown('thematique', $option, 'default');
                         echo '</div>';
                 ?>
                     <!-- <form action="AjoutThematique.php" method="post">

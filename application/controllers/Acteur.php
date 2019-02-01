@@ -15,6 +15,7 @@ class Acteur extends CI_Controller
         $this->load->model('ModelActeur');
         $this->load->model('ModelAction');
         $this->load->model('ModelMembre');
+        $this->load->model('ModelThematique');
         $this->load->library('upload');
  
         //var_dump($this->session->statut);
@@ -1360,13 +1361,46 @@ class Acteur extends CI_Controller
         $this->session->statut=array('NOPROFIL'=>$profil);
         redirect('Acteur/AfficherMembre/'.$noAction);
     }
-    public function AjoutThematique($NomAction)
+    public function AjoutThematique()
     {
         // sortir toutes les thématiques dans faire références puis recup le nom correspondant puis les injectées
-        $DonnéesAInjecter=array(
-            'NomAction'=>$NomAction,
-        );
+        $noActeur = $this->session->noActeur;
+
+        $Action =$this->ModelAction->getActionsActeur($noActeur);
+        foreach($Action as $uneAction)
+        {
+            if(empty($Actions))
+            {
+                $Actions = array($uneAction['NOACTION']=>$uneAction['NOMACTION']);
+            }
+            else
+            {
+                $temporaire = array($uneAction['NOACTION']=>$uneAction['NOMACTION']);
+                $Actions = $Actions + $temporaire;
+            }
+        }
+
+        $Thematique=$this->ModelThematique->getTheme_SousTheme();
+        var_dump($Thematique);
+        // foreach($Theme as $unTheme)
+        // {
+        //     if(empty($Themes))
+        //     {
+        //         $Themes = array($unTheme['NOACTION']=>$uneAction['NOMACTION']);
+        //     }
+        //     else
+        //     {
+        //         $temporaire = array($uneAction['NOACTION']=>$uneAction['NOMACTION']);
+        //         $Options = $Options + $temporaire;
+        //     }
+        // }
+        //var_dump($Options);
         $DonnéesTitre = array('TitreDeLaPage'=>'Ajout Thématique');
+        $DonnéesAInjecter=array(
+            'action'=>$Actions,
+            'theme'=>$Thematique,
+        );
+
         $this->load->view('templates/Entete',$DonnéesTitre);
         $this->load->view('Acteur/AjoutThematique',$DonnéesAInjecter);
         $this->load->view('templates/PiedDePage');

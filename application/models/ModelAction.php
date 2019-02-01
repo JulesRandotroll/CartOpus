@@ -16,6 +16,15 @@
             $requete = $this->db->get();
             return $requete->result_array();
         }
+        public function getActionsActeur($noActeur)
+        {
+            $this->db->select('*');
+            $this->db->from('action a');
+            $this->db->join('etrepartenaire ep','ep.noAction=a.noAction');
+            $this->db->where('NOACTEUR',$noActeur);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
 
         public function getActionSimple($noAction)
         {
