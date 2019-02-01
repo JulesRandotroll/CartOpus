@@ -9,7 +9,7 @@
         </nav>
     </div>
 </div>
-
+<script src="<?php echo js_url('js_AffecterProfil'); ?>"></script>
 <div class='row' style="background-color:#15B7D1">
     <div class="col-sm-2">
     </div>
@@ -18,9 +18,11 @@
             <div class = "text-center">
                 <H1 style="color:#FFFFFF">Affecter un profil à un utilisateur</H1>
             </div>
-            <section >
+            <section>
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <div class="panel-group" id="accordion">
+                        
+                        <!-- Destitués -->
                         <div class="panel panel-default" style="border:black">
                             <div class="panel-heading" style="background-color:#B64F53">
                                 <h4 class="panel-title">
@@ -42,6 +44,8 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Acteurs -->
                         <div class="panel panel-default" style="border:black">
                             <div class="panel-heading" style="background-color:#B64F53">
                                 <h4 class="panel-title">
@@ -52,7 +56,11 @@
                             </div>
                             <div id="collapse2" class="panel-collapse collapse in" style="background-color:#15B7D1">
                                 <div class="panel-body" style="border:black;">
-                                    <table class="table">
+                                    <div class='form-group'>
+                                        <label> Rechercher : </label>
+                                        <input class="form-control" id="myInput" type="text" placeholder="Rechercher...">
+                                    </div>
+                                    <table class="table" id="myTable">
                                         <?php
                                             foreach ($Acteur as $unActeur)
                                             {
@@ -63,6 +71,8 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Admin Valider -->
                         <div class="panel panel-default" style="border:black">
                             <div class="panel-heading" style="background-color:#B64F53">
                                 <h4 class="panel-title">
@@ -85,6 +95,8 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        <!-- Super Admin -->
                         <div class="panel panel-default" style="border:black">
                             <div class="panel-heading" style="background-color:#B64F53">
                                 <h4 class="panel-title">
@@ -113,6 +125,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>     
                 </div>
             </section>

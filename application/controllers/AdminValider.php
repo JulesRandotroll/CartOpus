@@ -72,6 +72,14 @@ class AdminValider extends CI_Controller
         redirect('AdminValider/GererFilActu');
     }
 
+    public function GererMotCles()
+    {
+        $DonneesTitre = array('TitreDeLaPage'=>'Gérer mots cles');
+        $this->load->view('templates/Entete',$DonneesTitre);
+        $this->load->view('AdminValider/GererMotCles');
+        //$this->load->view('Visiteur/FilActualite', $DonneesInjectees);
+        $this->load->view('templates/PiedDePage');
+    }
 
 }
 

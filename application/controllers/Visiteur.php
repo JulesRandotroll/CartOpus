@@ -37,13 +37,13 @@ class Visiteur extends CI_Controller
   
     if($this->session->flashdata('message')!=null)
     {
-      $DonneesInjectees=array(
-        'message'=>$this->session->flashdata('message'),
-        'lesFavoris'=> $this->ModelAction->getActionFavorite($Where),
-      );
+      $DonneesMessage= array('message'=>$this->session->flashdata('message'));
+      $DonneesInjectees=array('lesFavoris'=> $this->ModelAction->getActionFavorite($Where));
 
+
+     // var_dump($DonneesInjectees);
       $this->load->view('templates/Entete',$DonneesTitre);
-      $this->load->view('Visiteur/BarreRecherche',$this->session->statut);
+      $this->load->view('Visiteur/BarreRecherche',$DonneesMessage);
       $this->load->view('Visiteur/FilActualite', $DonneesInjectees);
       $this->load->view('templates/PiedDePage');
     
@@ -351,8 +351,9 @@ class Visiteur extends CI_Controller
         if($this->session->statut==0)
         {
           $message="Vous avez été destitué(e) de vos droits en tant qu'acteur. Pour de plus amples informations veuillez consulter votre boite mail.";
-          $this->session->set_flashdata('message',$message);
           
+          $this->session->set_flashdata('message',$message);
+          //echo($this->session->flashdata('message'));
           redirect('Visiteur/loadAccueil');
           
         }
