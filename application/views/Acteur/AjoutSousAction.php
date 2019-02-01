@@ -53,8 +53,8 @@
                                 <div class='form-group'>
                                 <span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>
                                     <?php 
-                                        echo form_label('Code Postale : ', 'lbl_CP');    
-                                        echo form_input('CP',$CP,array('class'=>'form-control','required'=>'required','placeholder'=>'Veuillez saisir le code postale de votre sous action'));
+                                        echo form_label('Code Postal : ', 'lbl_CP');    
+                                        echo form_input('CP',$CP,array('class'=>'form-control','required'=>'required','placeholder'=>'Veuillez saisir le code postal de votre sous action'));
                                     ?>
                                 </div>
                             </div>

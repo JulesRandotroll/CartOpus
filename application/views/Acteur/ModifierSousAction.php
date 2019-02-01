@@ -15,12 +15,12 @@
     <div class="col-sm-8" style="padding:20px">
         <div style="padding:20px">
             <div class = "text-center">
-                <H1 style="color:#FFFFFF">Modifier une action</H1>
+                <H1 style="color:#FFFFFF">Modifier une Sous Action</H1>
             </div>
             <section >
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <?php
-                        echo form_open('Acteur/ModifierAction/'.$noAction);
+                        echo form_open('Acteur/ModifierSousAction/'.$NOACTION.'/'.$TitreAction.'/'.$DateDebut.'/'.$NOLIEU);
                         if ($message!="")
                         {
                         echo'<div class="alert alert-danger alert-dismissible">
@@ -30,8 +30,8 @@
                         }
                         echo '<div class="form-group">';
                         echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
-                            echo form_label('Nom de l\'action : ', 'Name');
-                            echo form_input('NomAction',$NomAction, array("placeholder"=>"Nom de votre action",'required'=>'required','class'=>'form-control'));
+                            echo form_label('Titre de l\'action : ', 'Name');
+                            echo form_input('TitreAction',$TitreAction, array("placeholder"=>"Nom de votre action",'required'=>'required','class'=>'form-control'));
                         echo '</div>';
                         
                         echo '<div class="row">';
@@ -59,14 +59,14 @@
                         echo '</div>';
                         // $ToDay = date('d/m/Y');
                         $ToDayH = date('H:i');
-                        //$ToDay = date('d/m/Y');
+                        $ToDay = date('d/m/Y');
 
                         echo '<div class="row">';
                             echo '<div class="col-xs-6">';
                                 echo '<div class="form-group">';
                                 echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                                     echo form_label('Date de debut : ', 'dd');
-                                    echo '<input class="form-control" name="DateDebut" id="date" type="date" value="'.$DateDebut.'">';//$ToDay
+                                    echo '<input class="form-control" name="DateDebut" id="date" type="date" value="'.$DateDebutA.'">';//$ToDay
                                 echo '</div>';
                                 echo '<div class="form-group">';
                                 echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
@@ -79,7 +79,7 @@
                             echo '<div class="col-xs-6">';
                                 echo '<div class="form-group">';
                                     echo form_label('Date de fin : ', 'df');
-                                    echo '<input class="form-control" name="DateFin" id="date" type="date" value="'.$DateFin.'">';//$ToDay
+                                    echo '<input class="form-control" name="DateFin" id="date" type="date" value="'.$DateFinA.'" >';//$ToDay
                                     //echo form_input('DateFin', '', Array("placeholder"=>"Date ex : 12-12-2012",'pattern'=>'(0[1-9]|[12][0-9]|3[01])[\/](0[1-9]|1[012])[\/](19|20)\d\d','required'=>'required','class'=>'form-control'));
                                 echo '</div>';
                                 echo '<div class="form-group">';
@@ -90,29 +90,9 @@
                             echo '</div>';
                         echo '</div>';
 
-                        $options = array(
-                            "Tout Public"=>"Tout Public",
-                            "Enfants"=>"Enfants",
-                            "Jeunes"=>"Jeunes",
-                            "Adultes"=>"Adultes",
-                            "3eme Age"=>"3eme Age",
-                            "Familiale"=>"Familiale",
-                            "Professionnels"=>"Professionnels",
-                        );
-                                                
-                        echo '<div class="form-group">';
-                            echo form_label('Public ciblé : ', 'Public');
-                            echo form_dropdown('Public', $options,'' ,Array('class'=>'form-control',$Public));
-                        echo '</div>';
-
                         echo '<div class="form-group">';
                             echo form_label('Description ', 'Desc');
                             echo form_textarea('Description', $Description,Array("placeholder"=>"Ici, votre description",'class'=>'form-control'));
-                        echo '</div>';
-
-                        echo '<div class="form-group">';
-                            echo form_label('Site de l\'action : ',$SiteURL, 'site');
-                            echo form_input('SiteURL',$SiteURL, Array("placeholder"=>"https://www.exemple.fr",'class'=>'form-control'));//,'pattern'=>'(((ht|f)tp(s?))\:\/\/)?(([a-zA-Z0-9]+([@\-\.]?[a-zA-Z0-9]+)*)(\:[a-zA-Z0-9\-\.]+)?@)?(www.|ftp.|[a-zA-Z]+.)?[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,})(\:[0-9]+)'
                         echo '</div>';
                         
                          echo '<br><h6><span style="color:#FF0000"/> *</span> Ces champs sont obligatoires</h6> ';

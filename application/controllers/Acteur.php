@@ -541,17 +541,17 @@ class Acteur extends CI_Controller
             $DateD = $DateDebut.' '.$HeureDebut;
             $DateF = $DateFin.' '.$HeureFin;
             //var_dump($DateD);
-
-            if ($Action[0]['DATEFIN']>$DateD||$DateF<$DateD)
+            
+            if ($Action[0]['DATEFIN']>$DateD||($DateF<$DateD&&$DateF != ''))
             {
                 $message="dates incorrectes";
-                //echo("date incorrecte");
+                echo("date incorrecte");
                 $DonneesAInjectees=array
                 (
                     'noAction'=>$Action[0]['NOACTION'],
                     'NomAction'=>$Action[0]['NOMACTION'],
                     'Adresse'=>$Action[0]['ADRESSE'],
-                    'CodePostale'=>$Action[0]['CodePostal'],
+                    'CodePostal'=>$Action[0]['CodePostal'],
                     'Ville'=>$Action[0]['Ville'],
                     'DateDebut'=>'',
                     'DateFin'=>'',
@@ -569,12 +569,11 @@ class Acteur extends CI_Controller
             }
             else
             {
-                //echo("ok ! ^^");
                 $message="";
 
                 $NomAction = $this->input->post('NomAction');
                 $Adresse = $this->input->post('Adresse');
-                $CP = $this->input->post('CodePostale');
+                $CP = $this->input->post('CodePostal');
                 $Ville = $this->input->post('Ville');
                 $DateDebut = $this->input->post('DateDebut');
                 $HeureDebut = $this->input->post('HeureDebut');
@@ -589,7 +588,7 @@ class Acteur extends CI_Controller
                     'noAction'=>$Action[0]['NOACTION'],
                     'NomAction'=>$NomAction,
                     'Adresse'=>$Adresse,
-                    'CodePostale'=>$CP,
+                    'CodePostal'=>$CP,
                     'Ville'=>$Ville,
                     'DateDebut'=>$DateDebut,
                     'DateFin'=>$DateFin,
@@ -605,22 +604,27 @@ class Acteur extends CI_Controller
                 $noAction=$Action[0]['NOACTION'];
                 $Action=$this->NouvelleAction($noAction);
                 //var_dump($noActeur);
-                redirect ('Acteur/AccueilActeur/'.$message);
+                //redirect ('Acteur/AccueilActeur/'.$message);
             }               
         }
         else
         {
+             $DateD = explode(" ", $Action[0]['DATEDEBUT']);
+             $DateF = explode(" ", $Action[0]['DATEFIN']);
+            // $DateDTest = $NewDonnees['DateDebut'].' '.$NewDonnees['HeureDebut'];
+            // $DateFTest = $NewDonnees['DateFin'].' '.$NewDonnees['HeureFin'];
             $message="";
-            //var_dump($Action);
+           // var_dump($Action);
+            //var_dump($DateD);
             $DonneesAInjectees=array
             (
                 'noAction'=>$Action[0]['NOACTION'],
                 'NomAction'=>$Action[0]['NOMACTION'],
                 'Adresse'=>$Action[0]['ADRESSE'],
-                'CodePostale'=>$Action[0]['CodePostal'],
+                'CodePostal'=>$Action[0]['CodePostal'],
                 'Ville'=>$Action[0]['Ville'],
-                'DateDebut'=>'',
-                'DateFin'=>'',
+                'DateDebut'=>$DateD[0],
+                'DateFin'=>$DateF[0],
                 'HeureDebut'=>'',
                 'HeureFin'=>'',
                 'Public'=>$Action[0]['PublicCible'],
@@ -739,7 +743,7 @@ class Acteur extends CI_Controller
         {
             $NomAction = $this->input->post('NomAction');
             $Adresse = $this->input->post('Adresse');
-            $CP = $this->input->post('CodePostale');
+            $CP = $this->input->post('CodePostal');
             $Ville = $this->input->post('Ville');
             $DateDebut = $this->input->post('DateDebut');
             $HeureDebut = $this->input->post('HeureDebut');
@@ -752,7 +756,7 @@ class Acteur extends CI_Controller
             $DateD = $DateDebut.' '.$HeureDebut;
             $DateF = $DateFin.' '.$HeureFin;
 
-            if ($DateF<$DateD)
+            if ($DateF<$DateD&&$DateF != '')
             {
                 $message="dates incorrectes";
                 //echo("date incorrecte");
@@ -760,7 +764,7 @@ class Acteur extends CI_Controller
                 (
                     'NomAction'=>$NomAction,
                     'Adresse'=>$Adresse,
-                    'CodePostale'=>$CP,
+                    'CodePostal'=>$CP,
                     'Ville'=>$Ville,
                     'DateDebut'=>'',
                     'DateFin'=>'',
@@ -915,7 +919,7 @@ class Acteur extends CI_Controller
             (
                 'NomAction'=>'',
                 'Adresse'=>'',
-                'CodePostale'=>'',
+                'CodePostal'=>'',
                 'Ville'=>'',
                 'DateDebut'=>'',
                 'DateFin'=>'',
@@ -944,24 +948,23 @@ class Acteur extends CI_Controller
         );
         $Action=$this->ModelAction->getAction($DonnéesDeTest);
         //var_dump($Action);
-
-        $message="";
+        $DateD = explode(" ", $Action[0]['DATEDEBUT']);
+        $DateF = explode(" ", $Action[0]['DATEFIN']);
+        //var_dump($DateD[0]);
+       $message="";
         $DonneesAInjectees=array
         (
             'noAction'=>$Action[0]['NOACTION'],
             'NomAction'=>$Action[0]['NOMACTION'],
             'Adresse'=>$Action[0]['ADRESSE'],
-            'CodePostale'=>$Action[0]['CodePostal'],
+            'CodePostal'=>$Action[0]['CodePostal'],
             'Ville'=>$Action[0]['Ville'],
-            'DateDebut'=>$Action[0]['DATEDEBUT'],
-            'DateFin'=>$Action[0]['DATEFIN'],
-            // 'HeureDebut'=>$Action[0]['HeureDebut'],
-            // 'HeureFin'=>$Action[0]['HeureFin'],
+            'DateDebut'=>$DateD[0],
+            'DateFin'=>$DateF[0],
             'Public'=>$Action[0]['PublicCible'],
             'Description'=>$Action[0]['Description'],
             'SiteURL'=>$Action[0]['SiteURLAction'],
             'message'=>$message,
-
         );
         //var_dump($DonneesAInjectees);
     
@@ -971,7 +974,7 @@ class Acteur extends CI_Controller
                 $noAction=>$Action[0]['NOACTION'],
                 'NomAction'=>$this->input->post('NomAction'),
                 'Adresse'=>$this->input->post('Adresse'),
-                'CodePostale'=>$this->input->post('CodePostale'),
+                'CodePostal'=>$this->input->post('CodePostal'),
                 'Ville'=>$this->input->post('Ville'),
                 'DateDebut' => $this->input->post('DateDebut'),
                 'HeureDebut' =>$this->input->post('HeureDebut'),
@@ -983,11 +986,12 @@ class Acteur extends CI_Controller
             );
             //var_dump($NewDonnees);
 
-             $DateD = $NewDonnees['DateDebut'].' '.$NewDonnees['HeureDebut'];
-             $DateF = $NewDonnees['DateFin'].' '.$NewDonnees['HeureFin'];
+             $DateDTest = $NewDonnees['DateDebut'].' '.$NewDonnees['HeureDebut'];
+             $DateFTest = $NewDonnees['DateFin'].' '.$NewDonnees['HeureFin'];
 
-
-            if($DateF<$DateD)
+            //var_dump($DateDTest);
+            //var_dump($DateFTest);
+            if($DateFTest<$DateDTest && $DateFTest != '')
             {
                 $message="dates incorrectes";
                 //echo("date incorrecte");
@@ -996,10 +1000,10 @@ class Acteur extends CI_Controller
                     'noAction'=>$noAction,
                     'NomAction'=>$NewDonnees['NomAction'],
                     'Adresse'=>$NewDonnees['Adresse'],
-                    'CodePostale'=>$NewDonnees['CodePostale'],
+                    'CodePostal'=>$NewDonnees['CodePostal'],
                     'Ville'=>$NewDonnees['Ville'],
-                    'DateDebut'=>'',
-                    'DateFin'=>'',
+                    'DateDebut'=>$DateD[0],
+                    'DateFin'=>$DateF[0],
                     'HeureDebut'=>'',
                     'HeureFin'=>'',
                     'Public'=>$NewDonnees['PublicCible'],
@@ -1021,12 +1025,12 @@ class Acteur extends CI_Controller
                 );
                //echo'Action';
                 //var_dump($DonneesAModifierAction);
-                $Action=$this->ModelAction->UpdateAction($noAction,$DonneesAModifierAction);
+                $this->ModelAction->UpdateAction($noAction,$DonneesAModifierAction);
                 
           ////////////////////////////////////////////////////////////////////////////////////////////////
                 $DonneesAModifierLieu=array(
                     'Adresse'=>$this->input->post('Adresse'),
-                    'CodePostal'=>$this->input->post('CodePostale'),
+                    'CodePostal'=>$this->input->post('CodePostal'),
                     'Ville'=>$this->input->post('Ville'),
                 );
                 //echo'Lieu';
@@ -1041,36 +1045,37 @@ class Acteur extends CI_Controller
                 // var_dump($noLieu);              
          /////////////////////////////////////////////////////////////////////////////////////////////////
                 $DonneesAModifierEtrePartenaire=array(
-                    'DateDebut'=>$DateD,
-                    'DateFin'=>$DateF,
+                    'DateDebut'=>$DateDTest,
+                    'DateFin'=>$DateFTest,
                 );
                 $DonnéesDeTest=array(
                     'NoAction'=>$noAction,
                     'NoActeur'=>$noActeur,
                 );
-                $EtrePartenaire=$this->ModelAction->UpdateEtrePartenaire($DonnéesDeTest,$DonneesAModifierEtrePartenaire);
+                $this->ModelAction->UpdateEtrePartenaire($DonnéesDeTest,$DonneesAModifierEtrePartenaire);
             /////////////////////////////////////////////////////////////////////////////////////////////////
             $DonneesAModifierProfilAction=array(
-                'DateDebut'=>$DateD,
-                'DateFin'=>$DateF,
+                'DateDebut'=>$DateDTest,
+                'DateFin'=>$DateFTest,
             );
             $DonnéesDeTest=array(
                 'NoAction'=>$noAction,
                 'NoActeur'=>$noActeur,
             );
-            $ProfilAction=$this->ModelAction->UpdateProfilAction($DonnéesDeTest,$DonneesAModifierProfilAction);
+            //var_dump($DonneesAModifierProfilAction);
+            $this->ModelAction->UpdateProfilAction($DonnéesDeTest,$DonneesAModifierProfilAction);
                 /////////////////////////////////////////////////////////////////////////////////////////////////
                 $DonneesAModifierAvoirLieu=array(
-                    'DateDebut'=>$DateD,
+                    'DateDebut'=>$DateDTest,
                     'NOLIEU'=> $noLieu[0]['nolieu'],
-                    'DateFin'=>$DateF,
+                    'DateFin'=>$DateFTest,
                     'TitreAction'=>$this->input->post('NomAction'),
                     'Description'=>$this->input->post('Description'),
                 );
                 //var_dump($DonneesAModifierAvoirLieu);
                 $DonneesLieu=array(
                     'Adresse'=>$DonneesAInjectees['Adresse'],
-                    'CodePostal'=>$DonneesAInjectees['CodePostale'],
+                    'CodePostal'=>$DonneesAInjectees['CodePostal'],
                     'Ville'=>$DonneesAInjectees['Ville'],
                 );
                 $AncienLieu=$this->ModelAction->getLieu($DonneesLieu);
@@ -1078,8 +1083,8 @@ class Acteur extends CI_Controller
                 $DonnéesDeTest=array(
                             'NOLIEU'=>$AncienLieu[0]['nolieu'],
                             'NOACTION'=>$noAction,
-                            'DATEDEBUT'=>$DonneesAInjectees['DateDebut'],
-                            'DATEFIN'=>$DonneesAInjectees['DateFin'],
+                            'DATEDEBUT'=>$Action[0]['DATEDEBUT'],
+                            'DATEFIN'=>$Action[0]['DATEFIN'],
                             'TitreAction'=>$DonneesAInjectees['NomAction'],
                 );
                 //var_dump($DonnéesDeTest);
@@ -1383,16 +1388,11 @@ class Acteur extends CI_Controller
             $DateF = $this->input->post('DateFin');
             $HeureF = $this->input->post('HeureFin');
             $Description = $this->input->post('Description');
-
-            // echo( $TitreAction );
-            // echo( $Adresse.' '.$CP.' - '.$Ville );
-            // echo( $DateD.' '.$HeureD);
-            // echo( $DateF.' '.$HeureF);
-            // echo( $Description );
             
-            $DateDebut = $DateD.' '.$HeureD.':01';
+            $DateDebut = $DateD.' '.$HeureD.':00';
             $DateFin = $DateF.' '.$HeureF.':00';
-           if($DateFin < $DateDebut && $DateFin != ' :00')
+
+            if($DateFin < $DateDebut && $DateFin != ' :00')
             {
                 
                 $Message = 'Erreur dans les dates : La date de fin saisie est inférieur à la date de début, votre évènement se termine avant d\'avoir commencé';
@@ -1432,36 +1432,75 @@ class Acteur extends CI_Controller
                 if(empty($Lieu))
                 {
                     $noLieu = $this->ModelAction->insertLieu($DonneeLieu);
-                    var_dump($noLieu);
+                    //var_dump($noLieu);
                 }
-                else{
-                    var_dump($Lieu);
+                else
+                {
+                    //var_dump($Lieu);
                     $noLieu = $Lieu[0]['nolieu'];
                 }
-                if($DateFin !=' :00')
+
+              
+                $DonnéesDeTest=array(
+                    'NOACTION'=>$noAction,
+                    'TitreAction'=>$TitreAction,
+                    'NOLIEU'=>$noLieu,
+                );
+                $DateDebutTest=$DateD.' '.$HeureD;
+                //var_dump($DateDebutTest);
+                //var_dump($DonnéesDeTest);
+                $SousAction = $this->ModelAction->Test($DonnéesDeTest,$DateDebutTest);
+                $test=$SousAction[0]['count(*)'];
+                //var_dump($test);
+                if($test!='0')
                 {
-                    $DonneesAInserer=array(
-                        'noAction'=>$noAction,
-                        'DateDebut'=>$DateDebut,
+                    $message="Cette sous action existe déjà";
+                    //echo($message);
+                    $DonneesInjectees = array(
+                        'Actions'=>$Action,
                         'TitreAction'=>$TitreAction,
-                        'DateFin'=>$DateFin,
-                        'description'=>$Description,
-                        'nolieu'=>$noLieu,
+                        'Adresse'=>$Adresse,
+                        'CP'=>$CP,
+                        'Ville'=>$Ville,
+                        'Description'=>$Description,
+                        'Message'=>$message
                     );
                 }
                 else
                 {
-                    $DonneesAInserer=array(
-                        'noAction'=>$noAction,
-                        'DateDebut'=>$DateDebut,
-                        'TitreAction'=>$TitreAction,
-                        'DateFin'=>null,
-                        'description'=>$Description,
-                        'nolieu'=>$noLieu,
-                    );    
+                    //echo'plop';
+                    $DateDMax=$this->ModelAction->GetMaxDate($noAction);
+                    //var_dump($DateDMax);
+                    $dateValable = date('Y-m-d H:i:s',strtotime('+1 second',strtotime($DateDMax[0]['DATEDEBUT'])));
+                    //var_dump($dateValable);
+
+                    if($DateFin !=' :00')
+                    {
+                        $DonneesAInserer=array(
+                            'noAction'=>$noAction,
+                            'DateDebut'=>$dateValable,
+                            'TitreAction'=>$TitreAction,
+                            'DateFin'=>$DateFin,
+                            'description'=>$Description,
+                            'nolieu'=>$noLieu,
+                        );
+                    }
+                    else
+                    {
+                        $DonneesAInserer=array(
+                            'noAction'=>$noAction,
+                            'DateDebut'=>$dateValable,
+                            'TitreAction'=>$TitreAction,
+                            'DateFin'=>null,
+                            'description'=>$Description,
+                            'nolieu'=>$noLieu,
+                        );    
+                    }
+                    $this->ModelAction->insertAvoirLieu($DonneesAInserer);
+                    redirect('Acteur/AfficherActionSelectionnee/'.$noAction.'/'.$Action[0]['DATEDEBUT'].'/'.$Action[0]['DATEFIN'],'refresh');
                 }
-                $this->ModelAction->insertAvoirLieu($DonneesAInserer);
-                redirect('Acteur/AfficherActionSelectionnee/'.$noAction.'/'.$Action[0]['DATEDEBUT'].'/'.$Action[0]['DATEFIN'],'refresh');
+
+              
             }
         }
         else
@@ -1476,107 +1515,169 @@ class Acteur extends CI_Controller
             );
 
         }
-        $DonnéesTitre = array('TitreDeLaPage'=>'Ajout Sous Action');
-        $this->load->view('templates/Entete',$DonnéesTitre);
-        $this->load->view('Acteur/AjoutSousAction',$DonneesInjectees);
-        $this->load->view('templates/PiedDePage');
+            $DonnéesTitre = array('TitreDeLaPage'=>'Ajout Sous Action');
+            $this->load->view('templates/Entete',$DonnéesTitre);
+            $this->load->view('Acteur/AjoutSousAction',$DonneesInjectees);
+            $this->load->view('templates/PiedDePage');
         
     }
 
-    public function ModifierSousAction()
+    public function ModifierSousAction($noAction,$TitreAction,$DateDebut,$noLieu)
     {
         $noActeur = $this->session->noActeur;
+
+        $Where = array('a.noAction'=>$noAction);
+        $ActionGenerale =$this->ModelAction->getAction($Where);
+        //var_dump($ActionGenerale);
         //var_dump($noAction);
              
         $DonnéesDeTest= array(
-            'a.NoAction' => $noAction,
-            //'datedebut'=>$dateDebut,
+            'NOACTION' => $noAction,
+            'DATEDEBUT'=>$DateDebut,
+            'TitreAction'=>$TitreAction,
+            'NOLIEU'=>$noLieu,
         );
-        $Action=$this->ModelAction->getAction($DonnéesDeTest);
-        //var_dump($Action);
 
+       // var_dump($DonnéesDeTest);
+ 
+        $DonnéesDeTest=str_replace("%20"," ",$DonnéesDeTest);
+        $Action=$this->ModelAction->getUneSousAction($DonnéesDeTest);
+        //var_dump($Action);
+        //var_dump($DonnéesDeTest);
+        $Lieu=$this->ModelAction->getUnLieu($DonnéesDeTest['NOLIEU']);
+        //var_dump($Lieu);
+        $DateD = explode(" ", $Action[0]['DATEDEBUT']);
+        $DateF = explode(" ", $Action[0]['DATEFIN']);
+        
+
+        //var_dump($DateF);
         $message="";
         $DonneesAInjectees=array
         (
-            'noAction'=>$Action[0]['NOACTION'],
-            'NomAction'=>$Action[0]['NOMACTION'],
-            'Adresse'=>$Action[0]['ADRESSE'],
-            'CodePostale'=>$Action[0]['CodePostal'],
-            'Ville'=>$Action[0]['Ville'],
-            'DateDebut'=>$Action[0]['DATEDEBUT'],
-            'DateFin'=>$Action[0]['DATEFIN'],
-            // 'HeureDebut'=>$Action[0]['HeureDebut'],
-            // 'HeureFin'=>$Action[0]['HeureFin'],
-            'Public'=>$Action[0]['PublicCible'],
+            'NOACTION'=>$Action[0]['NOACTION'],
+            'TitreAction'=>$Action[0]['TitreAction'],
+            'Adresse'=>$Lieu[0]['ADRESSE'],
+            'CodePostal'=>$Lieu[0]['CodePostal'],
+            'Ville'=>$Lieu[0]['Ville'],
+            'DateDebutA'=>$DateD[0],
+            'DateFinA'=>$DateF[0],
             'Description'=>$Action[0]['Description'],
-            'SiteURL'=>$Action[0]['SiteURLAction'],
             'message'=>$message,
-
+            'NOLIEU'=>$DonnéesDeTest['NOLIEU'],
+            'DateDebut'=>$DateDebut,
         );
         //var_dump($DonneesAInjectees);
-    
         if ($this->input->post('Modifier'))
         { 
             $NewDonnees=array(     
                 $noAction=>$Action[0]['NOACTION'],
-                'NomAction'=>$this->input->post('NomAction'),
+                'TitreAction'=>$this->input->post('TitreAction'),
                 'Adresse'=>$this->input->post('Adresse'),
-                'CodePostale'=>$this->input->post('CodePostale'),
+                'CodePostal'=>$this->input->post('CodePostal'),
                 'Ville'=>$this->input->post('Ville'),
                 'DateDebut' => $this->input->post('DateDebut'),
                 'HeureDebut' =>$this->input->post('HeureDebut'),
                 'DateFin' => $this->input->post('DateFin'),
                 'HeureFin' => $this->input->post('HeureFin'),
-                'PublicCible'=>$this->input->post('Public'),
                 'Description'=>$this->input->post('Description'),
-                'SiteURL'=>$this->input->post('SiteURL'),
             );
-            //var_dump($NewDonnees);
 
-             $DateD = $NewDonnees['DateDebut'].' '.$NewDonnees['HeureDebut'];
-             $DateF = $NewDonnees['DateFin'].' '.$NewDonnees['HeureFin'];
+          // var_dump($NewDonnees);
+
+            $DateD = $NewDonnees['DateDebut'].' '.$NewDonnees['HeureDebut'].':00';
+            $DateF = $NewDonnees['DateFin'].' '.$NewDonnees['HeureFin'].':00';
+            //var_dump($NewDonnees['DateDebut']);
+            // echo'données de test date début';
+            // var_dump($DonnéesDeTest['DATEDEBUT']);
 
 
-            if($DateF<$DateD)
+            // echo'données de test date fin';
+            // var_dump($ActionGenerale[0]['DATEFIN'] );
+
+            //  echo'datef';
+             //var_dump($DateF);
+            if($DateF==' :00' )
             {
-                $message="dates incorrectes";
-                //echo("date incorrecte");
-                $DonneesAInjectees=array
-                (
-                    'noAction'=>$noAction,
-                    'NomAction'=>$NewDonnees['NomAction'],
+                $DateFinIntermediaire=$NewDonnees['DateDebut']; 
+               // echo('coucou');
+            }
+            if($NewDonnees['HeureFin']=='')
+            {
+                //str_replace("%body%", "black", "<body text='%body%'>")
+                $DateFinIntermediaire=str_replace(':00','00:00:00',$DateF);
+                //$DateFinIntermediaire=$DateFinIntermediaire ." 00:00:00";
+            }
+            else
+            {
+                $DateFinIntermediaire=$DateF;
+            }
+            echo' date fin intermediaire';
+             var_dump($DateFinIntermediaire.' '.$NewDonnees['HeureFin'] );
+
+            echo'dated';
+              var_dump($DateD);
+
+             echo ' données de test date debut';
+             var_dump($ActionGenerale[0]['DATEDEBUT']);
+
+             echo 'action générale date fin';
+             var_dump($ActionGenerale[0]['DATEFIN']);
+            if($DateFinIntermediaire.' '.$NewDonnees['HeureFin'] < $DateD )
+            {
+
+                $message = 'Erreur dans les dates : La date de fin saisie est inférieur à la date de début, votre évènement se termine avant d\'avoir commencé';
+
+                $DonneesAInjecter = array(
+                    'NOACTION'=>$noAction,
+                    'TitreAction'=>$NewDonnees['TitreAction'],
                     'Adresse'=>$NewDonnees['Adresse'],
-                    'CodePostale'=>$NewDonnees['CodePostale'],
+                    'CodePostal'=>$NewDonnees['CodePostal'],
                     'Ville'=>$NewDonnees['Ville'],
-                    'DateDebut'=>'',
-                    'DateFin'=>'',
-                    'HeureDebut'=>'',
-                    'HeureFin'=>'',
-                    'Public'=>$NewDonnees['PublicCible'],
+                    'DateDebutA'=>$NewDonnees['DateDebut'],
+                    'DateFinA'=>$NewDonnees['DateFin'],
+                    //'HeureDebut'=>'',
+                    //'HeureFin'=>'',
                     'Description'=>$NewDonnees['Description'],
-                    'SiteURL'=>$NewDonnees['SiteURL'],
                     'message'=>$message,
+                    'NOLIEU'=>$DonnéesDeTest['NOLIEU'],
+                    'DateDebut'=>$DateDebut,
+                );
+
+                //var_dump($DonneesAInjecter);
+                $DonnéesTitre = array('TitreDeLaPage'=>'Modifier');
+                $this->load->view('templates/Entete',$DonnéesTitre);
+                $this->load->view('Acteur/ModifierSousAction',$DonneesAInjecter);
+                $this->load->view('templates/PiedDePage');
+            }
+            elseif($DateD < $ActionGenerale[0]['DATEDEBUT'] || $DateFinIntermediaire > $ActionGenerale[0]['DATEFIN'])
+            {
+                $message = 'Les dates que vous avez saisie ne sont pas comprise dans la période définie par l\'action principale ';
+                
+                $DonneesAInjecter = array(
+                    'NOACTION'=>$noAction,
+                    'TitreAction'=>$NewDonnees['TitreAction'],
+                    'Adresse'=>$NewDonnees['Adresse'],
+                    'CodePostal'=>$NewDonnees['CodePostal'],
+                    'Ville'=>$NewDonnees['Ville'],
+                    'DateDebutA'=>$NewDonnees['DateDebut'],
+                    'DateFinA'=>$NewDonnees['DateFin'],
+                    //'HeureDebut'=>'',
+                    //'HeureFin'=>'',
+                    'Description'=>$NewDonnees['Description'],
+                    'message'=>$message,
+                    'NOLIEU'=>$DonnéesDeTest['NOLIEU'],
+                    'DateDebut'=>$DateDebut,
                 );
                 $DonnéesTitre = array('TitreDeLaPage'=>'Modifier');
                 $this->load->view('templates/Entete',$DonnéesTitre);
-                $this->load->view('Acteur/ModifierAction',$DonneesAInjectees);
+                $this->load->view('Acteur/ModifierSousAction',$DonneesAInjecter);
                 $this->load->view('templates/PiedDePage');
             }
             else
             {
-                $DonneesAModifierAction=array(
-                    'NomAction'=>$this->input->post('NomAction'),
-                    'PublicCible'=>$this->input->post('Public'),
-                    'SiteURLAction'=>$this->input->post('SiteURL'),
-                );
-               //echo'Action';
-                //var_dump($DonneesAModifierAction);
-                $Action=$this->ModelAction->UpdateAction($noAction,$DonneesAModifierAction);
-                
-          ////////////////////////////////////////////////////////////////////////////////////////////////
                 $DonneesAModifierLieu=array(
                     'Adresse'=>$this->input->post('Adresse'),
-                    'CodePostal'=>$this->input->post('CodePostale'),
+                    'CodePostal'=>$this->input->post('CodePostal'),
                     'Ville'=>$this->input->post('Ville'),
                 );
                 //echo'Lieu';
@@ -1588,57 +1689,101 @@ class Acteur extends CI_Controller
                     $noLieu=$Lieu['noLieu'];
                 }
                 
-                // var_dump($noLieu);              
-         /////////////////////////////////////////////////////////////////////////////////////////////////
-                $DonneesAModifierEtrePartenaire=array(
-                    'DateDebut'=>$DateD,
-                    'DateFin'=>$DateF,
-                );
+                // var_dump($noLieu);  
+                //////////////////////////////////////////////////////////////////////
                 $DonnéesDeTest=array(
-                    'NoAction'=>$noAction,
-                    'NoActeur'=>$noActeur,
+                    'NOACTION'=>$noAction,
+                    'TitreAction'=>$NewDonnees['TitreAction'],
+                    'NOLIEU'=>$noLieu[0]['nolieu'],
                 );
-                $EtrePartenaire=$this->ModelAction->UpdateEtrePartenaire($DonnéesDeTest,$DonneesAModifierEtrePartenaire);
-            /////////////////////////////////////////////////////////////////////////////////////////////////
-            $DonneesAModifierProfilAction=array(
-                'DateDebut'=>$DateD,
-                'DateFin'=>$DateF,
-            );
-            $DonnéesDeTest=array(
-                'NoAction'=>$noAction,
-                'NoActeur'=>$noActeur,
-            );
-            $ProfilAction=$this->ModelAction->UpdateProfilAction($DonnéesDeTest,$DonneesAModifierProfilAction);
-                /////////////////////////////////////////////////////////////////////////////////////////////////
-                $DonneesAModifierAvoirLieu=array(
-                    'DateDebut'=>$DateD,
-                    'NOLIEU'=> $noLieu[0]['nolieu'],
-                    'DateFin'=>$DateF,
-                    'TitreAction'=>$this->input->post('NomAction'),
-                    'Description'=>$this->input->post('Description'),
-                );
-                //var_dump($DonneesAModifierAvoirLieu);
-                $DonneesLieu=array(
-                    'Adresse'=>$DonneesAInjectees['Adresse'],
-                    'CodePostal'=>$DonneesAInjectees['CodePostale'],
-                    'Ville'=>$DonneesAInjectees['Ville'],
-                );
-                $AncienLieu=$this->ModelAction->getLieu($DonneesLieu);
-                //var_dump($AncienLieu);
-                $DonnéesDeTest=array(
-                            'NOLIEU'=>$AncienLieu[0]['nolieu'],
-                            'NOACTION'=>$noAction,
-                            'DATEDEBUT'=>$DonneesAInjectees['DateDebut'],
-                            'DATEFIN'=>$DonneesAInjectees['DateFin'],
-                            'TitreAction'=>$DonneesAInjectees['NomAction'],
-                );
-                //var_dump($DonnéesDeTest);
-             
+                //var_dump($NewDonnees['DateDebut'].' '.$NewDonnees['HeureDebut']);
                 
-                $AvoirLieu=$this->ModelAction->UpdateAvoirLieu($DonnéesDeTest,$DonneesAModifierAvoirLieu);
+                //var_dump($DonnéesDeTest);
+                $SousAction = $this->ModelAction->Test($DonnéesDeTest,$NewDonnees['DateDebut'].' '.$NewDonnees['HeureDebut']);
+                $test=$SousAction[0]['count(*)'];
+                var_dump($test);
+                if($test!='0')
+                {
+                    $message="Cette sous action existe déjà";
+                    $DateD = explode(" ", $DateD);
+                    $DateF = explode(" ", $DateF);
+                    //echo($message);
+                    $DonneesInjectees = array(
+                        'NOACTION'=>$Action[0]['NOACTION'],
+                        'TitreAction'=>$Action[0]['TitreAction'],
+                        'Adresse'=>$Lieu[0]['ADRESSE'],
+                        'CodePostal'=>$Lieu[0]['CodePostal'],
+                        'Ville'=>$Lieu[0]['Ville'],
+                        'DateDebutA'=>$DateD[0],
+                        'DateFinA'=>$DateF[0],
+                        'Description'=>$Action[0]['Description'],
+                        'message'=>$message,
+                        'NOLIEU'=>$DonnéesDeTest['NOLIEU'],
+                        'DateDebut'=>$DateDebut,
+                    );
+                    $DonnéesTitre = array('TitreDeLaPage'=>'Modification Action');
+
+     
+                    $this->load->view('templates/Entete',$DonnéesTitre);
+                    $this->load->view('Acteur/ModifierSousAction',$DonneesInjectees);
+                    $this->load->view('templates/PiedDePage');
+                }
+                else
+                {
+                    $DateDMax=$this->ModelAction->GetMaxDate($noAction);
+                    //var_dump($DateDMax);
+                    $DateDebutIntermediaire=$NewDonnees['DateDebut'].' '.$NewDonnees['HeureDebut'];
+                    if ($DateDebutIntermediaire>$DateDMax[0]['DATEDEBUT'])
+                    {
+                        $dateValable = date('Y-m-d H:i:s',strtotime('+1 second',strtotime($DateDebutIntermediaire)));
+                        //var_dump($dateValable);
+                    }
+                    else
+                    {
+                        $dateValable=$DateDebutIntermediaire;
+                    }
+                   
+       
+                /////////////////////////////////////////////////////////////////////////////////////////////////
+                
+                    //var_dump($DateFinIntermediaire);
+                   // $DateDébut=$DateD[0].' '.$DateD[1];
+                    $DonneesAModifierAvoirLieu=array(
+                        'DateDebut'=>$dateValable,
+                        'NOLIEU'=> $noLieu[0]['nolieu'],
+                        'DateFin'=>$DateFinIntermediaire,
+                        'TitreAction'=>$this->input->post('TitreAction'),
+                        'Description'=>$this->input->post('Description'),
+                    );
+                    // echo 'données a modifier avoir lieu';
+                    //var_dump($DonneesAModifierAvoirLieu);
+
+                    $DonneesLieu=array(
+                        'Adresse'=>$DonneesAInjectees['Adresse'],
+                        'CodePostal'=>$DonneesAInjectees['CodePostal'],
+                        'Ville'=>$DonneesAInjectees['Ville'],
+                    );
+                    $AncienLieu=$this->ModelAction->getLieu($DonneesLieu);
+                    //var_dump($AncienLieu);
+                    $DateDebut=str_replace('%20',' ',$DonneesAInjectees['DateDebut']);
+                    $DonnéesDeTest=array(
+                        'NOLIEU'=>$AncienLieu[0]['nolieu'],
+                        'NOACTION'=>$noAction,
+                        'DATEDEBUT'=>$DateDebut,
+                        //'DATEFIN'=>$DonneesAInjectees['DateFinA'],
+                        'TitreAction'=>$DonneesAInjectees['TitreAction'],
+                    );
+                    //echo'données de test';
+                
+                    //var_dump($DonnéesDeTest);
+                    //var_dump($DonneesAInjectees);
+                
+                    $AvoirLieu=$this->ModelAction->UpdateAvoirLieu($DonnéesDeTest,$DonneesAModifierAvoirLieu);
     
-                redirect ('Acteur/AccueilActeur/'.$noActeur);
+                    redirect('Acteur/AfficherActionSelectionnee/'.$noAction);
+                }
             }
+            
         }
         else
         {
@@ -1647,23 +1792,25 @@ class Acteur extends CI_Controller
 
             //var_dump($DonneesAInjectees['options'][2]);
             $this->load->view('templates/Entete',$DonnéesTitre);
-            $this->load->view('Acteur/ModifierAction',$DonneesAInjectees);
+            $this->load->view('Acteur/ModifierSousAction',$DonneesAInjectees);
             $this->load->view('templates/PiedDePage');
         }
         
     }
-    public function SupprimerSousAction()
+    public function SupprimerSousAction($noAction,$TitreAction,$DateDebut,$noLieu)
     {
         $donneesAsupprimer=array (
             'NOACTION'=>$noAction,
             'DATEDEBUT'=>$DateDebut,
-            'TitreAction'=>$NomAction,
+            'TitreAction'=>$TitreAction,
             'NOLIEU'=>$noLieu,
         );
+        //str_replace("\n",'<BR>', $uneAction['Description']);
+        $DonnéesASupprimer=str_replace("%20"," ",$donneesAsupprimer);
+        //var_dump($DonnéesASupprimer);
+        $this->ModelAction->SousActionSuppr_AvoirLieu($DonnéesASupprimer); 
 
-        $this->ModelAction->SousActionSuppr_AvoirLieu($donneesAsupprimer); 
-
-        redirect('Acteur/AccueilActeur/'.$noActeur);
+        redirect('Acteur/AfficherActionSelectionnee/'.$noAction);
      
     }
 

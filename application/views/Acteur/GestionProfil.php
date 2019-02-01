@@ -126,7 +126,7 @@
                                             echo '</div>';
                                         echo'</div>';
                                         echo '<div class="col-xs-1">';
-                                            echo'<a href="#" class="btn btn-danger btn-xs" data-toggle="popover" title="RGPD" data-trigger="hover" data-content="Acceptez vous que votre mail soit visible par tout le monde ?">  ?</a>';
+                                            echo'<a href="#" class="btn btn-danger btn-xs" data-toggle="popover" title="RGPD" data-trigger="hover" data-content="Acceptez vous que votre numéro de téléphone soit visible par tout le monde ?">  ?</a>';
                                         echo '</div>';
                                     echo '</div>';
                        

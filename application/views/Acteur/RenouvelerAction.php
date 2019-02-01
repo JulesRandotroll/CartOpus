@@ -21,7 +21,7 @@
             <section >
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <?php
-                        echo form_open('Acteur/ReitererAction/'.$noAction);
+                        echo form_open('Acteur/RenouvelerAction/'.$noAction);
 
                         if ($message!="")
                         {
@@ -47,8 +47,8 @@
                             echo '<div class="col-xs-4">';
                                 echo '<div class="form-group">';
                                 echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
-                                    echo form_label('Code Postale : ', 'CP');
-                                    echo form_input('CodePostale', $CodePostale, Array('pattern'=>'([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}','placeholder'=>'Code postale ex : 22000','required'=>'required',"class"=>"form-control"));
+                                    echo form_label('Code Postal : ', 'CP');
+                                    echo form_input('CodePostal', $CodePostal, Array('pattern'=>'([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}','placeholder'=>'Code postal ex : 22000','required'=>'required',"class"=>"form-control"));
                                 echo '</div>';
                             echo '</div>';
 
@@ -67,7 +67,7 @@
                                 echo '<div class="form-group">';
                                 echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                                     echo form_label('Date de debut : ', 'dd');
-                                    echo '<input class="form-control" name="DateDebut" id="date" type="date" value="'.$ToDay.'" required>';
+                                    echo '<input class="form-control" name="DateDebut" id="date" type="date" value="'.$DateDebut.'" required>';
                                 echo '</div>';
                                 echo '<div class="form-group">';
                                 echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
@@ -80,7 +80,7 @@
                             echo '<div class="col-xs-6">';
                                 echo '<div class="form-group">';
                                     echo form_label('Date de fin : ', 'df');
-                                    echo '<input class="form-control" name="DateFin" id="date" type="date">';
+                                    echo '<input class="form-control" name="DateFin" id="date" type="date" value="'.$DateFin.'">';
                                     //echo form_input('DateFin', '', Array("placeholder"=>"Date ex : 12-12-2012",'pattern'=>'(0[1-9]|[12][0-9]|3[01])[\/](0[1-9]|1[012])[\/](19|20)\d\d','required'=>'required','class'=>'form-control'));
                                 echo '</div>';
                                 echo '<div class="form-group">';

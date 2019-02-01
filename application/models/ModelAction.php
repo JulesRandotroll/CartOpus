@@ -41,6 +41,35 @@
             return $requete->result_array();
         }
 
+        public function getUneSousAction($DonnéesDeTest)
+        {
+            //var_dump($DonnéesDeTest);
+            //var_dump($DateD);
+            $this->db->select('*');
+            $this->db->from('Avoirlieu');
+            $this->db->where($DonnéesDeTest);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+        public function Test($DonnéesDeTest,$DateD)
+        {
+            //var_dump($DateD);
+            //var_dump($DonnéesDeTest);
+            $this->db->select('count(*)');
+            $this->db->from('Avoirlieu');
+            $this->db->where($DonnéesDeTest);
+            $this->db->like('DATEDEBUT',$DateD);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+        public function GetMaxDate($noAction)
+        {
+            $this->db->select_max('DATEDEBUT');
+            $this->db->from('Avoirlieu');
+            $this->db->where('NOACTION',$noAction);
+            $requete = $this->db->get();
+            return $requete->result_array(); 
+        }
         public function getActionFavorite($DonnéesDeTest)
         {
             $this->db->select('*');
@@ -144,6 +173,15 @@
             return $requete->result_array();
         }
     
+        public function getUnLieu($nolieu)
+        {
+            //var_dump($nolieu);
+            $this->db->select('*');
+            $this->db->from('lieu');
+            $this->db->where('NOLIEU',$nolieu);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
 
 
         public function UpdateAction($NoAction,$DonneesAModifier)
@@ -171,8 +209,8 @@
         { 
             //echo("ddt");
             //var_dump($DonnéesDeTest);
-            //echo("dam");
-            //var_dump($DonneesAModifier);
+            echo("dam");
+            var_dump($DonneesAModifier);
 
             $Donnees = array('DATEDEBUT'=>$DonneesAModifier['DateDebut'],'DATEFIN'=>$DonneesAModifier['DateFin'],'TitreAction'=>$DonneesAModifier['TitreAction'],'Description'=>$DonneesAModifier['Description'],'NOLIEU'=>$DonneesAModifier['NOLIEU']);
             //var_dump($Donnees);
