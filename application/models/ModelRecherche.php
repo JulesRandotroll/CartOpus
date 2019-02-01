@@ -203,9 +203,9 @@
         {
             if($Recherche===false)
             {
-                return $this->db->count_all('fairereference');
+                return $this->db->count_all('etretagge');
             }
-            $this->db->from('fairereference');
+            $this->db->from('etretagge');
             $this->db->like('MOTCLE', $Recherche);
             $requete = $this->db->count_all_results();
             return $requete;
@@ -215,8 +215,8 @@
         {
             $this->db->limit($nbLignesRetournees, $PremiereLigneRetournee);
             $this->db->select('*');
-            $this->db->from('fairereference f');
-            $this->db->join('action a', 'f.noaction=a.noaction');
+            $this->db->from('etretagge e');
+            $this->db->join('action a', 'e.noaction=a.noaction');
             $this->db->join('avoirlieu al', 'al.noaction=a.noaction');
             $this->db->join('lieu l', 'al.nolieu=l.nolieu');
             $this->db->like('MOTCLE', $nomMotCle);
