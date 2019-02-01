@@ -33,7 +33,7 @@
                         echo '<div class="form-group">';
                         echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                         echo form_label('Nom de l\'action : ', 'Name');
-                        echo form_input('NomAction',$NomAction, array("placeholder"=>"Nom de votre action",'required'=>'required',"class"=>"form-control"));
+                        echo form_input('NomAction',$NomAction, array("placeholder"=>"Nom de votre action",'pattern'=>'[a-zA-Z0-9" éèëïùàäüô\'-.#+=?:€!%<>@*~,&/çµ()[]]','required'=>'required',"class"=>"form-control"));
                     echo '</div>';
 
                     echo '<div class="col-xs-4">';
@@ -46,8 +46,8 @@
                     echo '<div class="col-xs-4">';
                         echo '<div class="form-group">';
                         echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
-                            echo form_label('Code Postale : ', 'CP');
-                            echo form_input('CodePostale', $CodePostale, Array('pattern'=>'([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}','placeholder'=>'Code postale ex : 22000','required'=>'required',"class"=>"form-control"));
+                            echo form_label('Code Postal : ', 'CP');
+                            echo form_input('CodePostal', $CodePostal, Array('pattern'=>'([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}','placeholder'=>'Code postal ex : 22000','required'=>'required',"class"=>"form-control"));
                         echo '</div>';
                     echo '</div>';
 

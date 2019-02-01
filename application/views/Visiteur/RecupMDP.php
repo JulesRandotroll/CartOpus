@@ -34,7 +34,7 @@
                     echo'<div class="form-group">';
                     echo '<span style="color:#FF0000"/> * </span>';
                     echo form_label('Reponse : ', 'Rep');
-                    echo form_input('reponse',$reponse,array('required'=>'required','placeholder'=>'La réponse à votre question secrète','pattern'=>'[A-Za-z0-9 ]{1,40}','class'=>'form-control'));
+                    echo form_input('reponse',$reponse,array('required'=>'required','placeholder'=>'La réponse à votre question secrète','pattern'=>'[a-zA-Z éèëïùàäüô]{1,40}','class'=>'form-control'));
                     echo '</div>';
 
                     echo ($message);

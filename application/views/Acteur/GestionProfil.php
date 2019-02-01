@@ -67,11 +67,11 @@
                                         echo '<div class="col-sm-12">';
                                             echo '<div class="form-group">';
                                                 echo form_label('Modifier nom :','ModNom');
-                                                echo form_input('nom',$nom,array('pattern'=>'[a-zA-Z ]{1,40}','class'=>'form-control')); 
+                                                echo form_input('nom',$nom,array('pattern'=>'[a-zA-Z0-9" éèëïùàäüô]{1,40}','class'=>'form-control')); 
                                             echo '</div>';
                                             echo '<div class="form-group">';
                                                 echo form_label('Modifier prenom :','ModPrenom');
-                                                echo form_input('prenom',$prenom,array('pattern'=>'[a-zA-Z ]{1,20}','class'=>'form-control'));                          
+                                                echo form_input('prenom',$prenom,array('pattern'=>'[a-zA-Z0-9" éèëïùàäüô]{1,20}','class'=>'form-control'));                          
                                             echo'</div>';
                                         echo '</div>';
                                     echo '</div>'; 
@@ -126,7 +126,7 @@
                                             echo '</div>';
                                         echo'</div>';
                                         echo '<div class="col-xs-1">';
-                                            echo'<a href="#" class="btn btn-danger btn-xs" data-toggle="popover" title="RGPD" data-trigger="hover" data-content="Acceptez vous que votre mail soit visible par tout le monde ?">  ?</a>';
+                                            echo'<a href="#" class="btn btn-danger btn-xs" data-toggle="popover" title="RGPD" data-trigger="hover" data-content="Acceptez vous que votre numéro de téléphone soit visible par tout le monde ?">  ?</a>';
                                         echo '</div>';
                                     echo '</div>';
                        
@@ -137,7 +137,7 @@
                            
                                     echo '<div class="form-group">';
                                     echo form_label('Nouvelle réponse :','ModReponse');
-                                    echo form_input('reponse',$reponse,array('required'=>'required','pattern'=>'[A-Za-z0-9 ]{1,40}','class'=>'form-control'));
+                                    echo form_input('reponse',$reponse,array('required'=>'required','pattern'=>'[a-zA-Z0-9" éèëïùàäüô]{1,40}','class'=>'form-control'));
                                     echo '</div>';
                            
                                     echo '<div class="text-center">'.form_submit('modif', 'Modifier',array("class"=>"btn btn-danger btn-lg")).'</div>';

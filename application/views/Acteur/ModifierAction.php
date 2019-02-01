@@ -31,7 +31,7 @@
                         echo '<div class="form-group">';
                         echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                             echo form_label('Nom de l\'action : ', 'Name');
-                            echo form_input('NomAction',$NomAction, array("placeholder"=>"Nom de votre action",'required'=>'required','class'=>'form-control'));
+                            echo form_input('NomAction',$NomAction, array("placeholder"=>"Nom de votre action",'required'=>'required','class'=>'form-control','pattern'=>'[a-zA-Z0-9" éèëïùàäüô]'));
                         echo '</div>';
                         
                         echo '<div class="row">';
@@ -45,8 +45,8 @@
                             echo '<div class="col-xs-4">';
                                 echo '<div class="form-group">';
                                 echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
-                                    echo form_label('Code Postale : ', 'CP');
-                                    echo form_input('CodePostale', $CodePostale, Array('pattern'=>'([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}','placeholder'=>'Code postale ex : 22000','required'=>'required','class'=>'form-control'));
+                                    echo form_label('Code Postal : ', 'CP');
+                                    echo form_input('CodePostal', $CodePostal, Array('pattern'=>'([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}','placeholder'=>'Code postale ex : 22000','required'=>'required','class'=>'form-control'));
                                 echo '</div>';
                             echo '</div>';
 
@@ -59,7 +59,7 @@
                         echo '</div>';
                         // $ToDay = date('d/m/Y');
                         $ToDayH = date('H:i');
-                        $ToDay = date('d/m/Y');
+                        //$ToDay = date('d/m/Y');
 
                         echo '<div class="row">';
                             echo '<div class="col-xs-6">';
@@ -78,8 +78,8 @@
 
                             echo '<div class="col-xs-6">';
                                 echo '<div class="form-group">';
-                                    echo form_label('Date de fin : ',$DateFin, 'df');
-                                    echo '<input class="form-control" name="DateFin" id="date" type="date" >';//$ToDay
+                                    echo form_label('Date de fin : ', 'df');
+                                    echo '<input class="form-control" name="DateFin" id="date" type="date" value="'.$DateFin.'">';//$ToDay
                                     //echo form_input('DateFin', '', Array("placeholder"=>"Date ex : 12-12-2012",'pattern'=>'(0[1-9]|[12][0-9]|3[01])[\/](0[1-9]|1[012])[\/](19|20)\d\d','required'=>'required','class'=>'form-control'));
                                 echo '</div>';
                                 echo '<div class="form-group">';
@@ -107,7 +107,7 @@
 
                         echo '<div class="form-group">';
                             echo form_label('Description ', 'Desc');
-                            echo form_textarea('Description', $Description,Array("placeholder"=>"Ici, votre description",'class'=>'form-control'));
+                            echo form_textarea('Description', $Description,Array("placeholder"=>"Ici, votre description",'class'=>'form-control','pattern'=>'[a-zA-Z0-9" éèëïùàäüô]'));
                         echo '</div>';
 
                         echo '<div class="form-group">';

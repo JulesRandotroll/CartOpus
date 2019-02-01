@@ -144,6 +144,7 @@
             $this->db->join('Role r','p.noRole=r.noRole');
             $this->db->join('profilpouraction ppa','ppa.noActeur=p.noActeur');
             $this->db->where('p.noActeur',$noActeur);
+            $this->db->where('ppa.noProfil',3);
             $this->db->group_by('p.noAction');
             $this->db->order_by("datedebut", "desc");
             $requete = $this->db->get();
