@@ -1,6 +1,8 @@
 $(document).ready(function()
 {
-    $(".myInput").on("keyup", function() 
+    
+    
+    $(".dropdown-menu").on("keyup",'.myInput', function() 
     {
         var value = $(this).val().toLowerCase();
         $(".dropdown-menu li").filter(function() 
@@ -16,11 +18,6 @@ $(document).ready(function()
         $('.myInput').trigger(jQuery.Event('keyup', { keycode: 46 }));
         //alert('done');
     });
-});
-
-$(function() 
-{
-    var txt_Dropdown_Migrer = 'Selectionnez une sous-thématique';
 
     // dropdown function création ssthematique
     $(".ajouter_SsThematique").on('click',function()
@@ -244,7 +241,7 @@ $(function()
     $('#btn_delier_thematique').confirm({
         icon: 'glyphicon glyphicon-alert' ,
         title: 'Attention : Irréversible' ,
-        content: 'Voulez-vous réellement déluier toutes les sous-thématiques liées à cette thématique ?',
+        content: 'Voulez-vous réellement délier toutes les sous-thématiques liées à cette thématique ?',
         type: 'red' ,
         typeAnimated: true ,
         autoClose: 'cancel|10000' , 
@@ -279,20 +276,93 @@ $(function()
     //Dropdown function délier sous thématique
     $('.delier_SousThematique').on('click',function()
     {
-        noSousThematique = $(this).val();
-        nomSousThematique = $(this).find("a").eq(0).html();
-        document.getElementById('Dropdown_Delier_SousThematique').innerHTML=nomSousThematique; 
-        document.getElementById('Dropdown_Delier_SousThematique').value=noSousThematique;
+        noThematique = $(this).val();
+        nomThematique = $(this).find("a").eq(0).html();
+        document.getElementById('Dropdown_Delier_SousThematique').innerHTML=nomThematique; 
+        document.getElementById('Dropdown_Delier_SousThematique').value=noThematique;
 
+        document.getElementById('Dropdown_Delier_uneSousThematique').innerHTML='Selectionnez une sous-thématique'; 
+        document.getElementById('Dropdown_Delier_uneSousThematique').value=0;
+
+        getSousThematiques(noThematique);
     });
+    $('#ici').on('click','.delier_uneSousThematique',function()
+    {
+        //alert('coucou');
+        noSousThematique = $(this).val();
+        //alert(noSousThematique);
+        nomSousThematique = $(this).find("a").eq(0).html();
+        //alert(noSousThematique);
+        document.getElementById('Dropdown_Delier_uneSousThematique').innerHTML=nomSousThematique; 
+        document.getElementById('Dropdown_Delier_uneSousThematique').value=noSousThematique;
+            
+    });
+    $('#btn_delier_SousThematique').confirm({
+        icon: 'glyphicon glyphicon-alert' ,
+        title: 'Attention : Irréversible' ,
+        content: 'Voulez-vous réellement délier cette thématique et cette sous-thématique ?',
+        type: 'red' ,
+        typeAnimated: true ,
+        autoClose: 'cancel|10000' , 
+        buttons: 
+        {
+            confirm:
+            { 
+                text:"Confirmer",
+                action: function () 
+                {
+                    if($('#Dropdown_Delier_Thematique').val() && $('#Dropdown_Delier_uneSousThematique').val())
+                    {
+                        noThematique=$('#Dropdown_Delier_Thematique').val();
+                        noSousThematique=$('#Dropdown_Delier_uneSousThematique').val();
+
+                    }
+                    else
+                    {
+                        noThematique ='0';
+                        nosousThematique='0';
+                    }
+                    location.href = $('#form_Delier_SousThematiques').attr('action')+'/'+noThematique+'/'+noSousThematique;
+                    //alert($('#form_Migrer').attr('action'));   
+                }
+            },
+            cancel:
+            {
+                text:"Annuler",
+                btnClass: 'btn-red',
+                
+            }
+        }
+    });
+    
+
 });
+
+
 
 function getSousThematiques(noThematique)
 {
+    //Rendu
+        //http://localhost/SIO1/CartOpus/assets/javascript/SelectSousThematique.php?noThematique=1
+    // /Rendu
+
+    var origin = window.location.origin;
+
+    Folder = '/SIO1';
+    //Folder = '';
+
+    path = origin + Folder + '/CartOpus/assets/javascript/SelectSousThematique.php?noThematique=' + noThematique; 
+
+    //alert(path);
+    
     var requete = new XMLHttpRequest();
-    requete.open('GET','SelectSousThematique.php?noThematique='+noThematique,false);
+    requete.open('GET',path,false);
     requete.send(null)
 
     var reponse = requete.responseText;
-    alert(reponse);
-}
+   
+    
+    //alert(reponse);
+    document.getElementById('ici').innerHTML=reponse;
+};
+

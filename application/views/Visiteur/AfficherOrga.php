@@ -146,7 +146,7 @@
                                             echo '<table class="table" style="background-color:#15B7D1">';
                                                     echo '<tr>';
                                                         echo '<td>';
-                                                            echo '<div class="panel-body">'.img($unSecteur['PhotoProfil']);
+                                                            echo '<div class="panel-body" style="border:black">'.img($unSecteur['PhotoProfil']);
                                                         echo '</td>';
                                                         echo '<td>';
                                                             echo '<h5>'.$unSecteur['NOMACTEUR'].'</br></br>';

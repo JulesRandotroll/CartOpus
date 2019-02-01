@@ -679,7 +679,7 @@ class Visiteur extends CI_Controller
     $DonneesTitre = array('TitreDeLaPage'=>'Cart\'Opus');
 
     $RechercheMotCle = $this->input->post('MotCle');
-    $RechercheLieu = $this->input->post('Lieu');
+    $RechercheLieu = $this->input->post('MotCle');
 
     $config = array();
     $config["Base_url"] = site_url('Visiteur/Rechercher');
@@ -698,9 +698,34 @@ class Visiteur extends CI_Controller
     
     $DonneesInjectees['lienPagination'] = $this->pagination->create_links();
 
+    if($this->input->post('RechercheAvancee'))
+    {
+      $DateDebut = $this->input->post('DateD').' '.$this->input->post('HeureD');
+      $DateFin = $this->input->post('DateF').' '.$this->input->post('HeureF');
+
+      if($DateDebut != null && $DateFin != null)
+      {
+        $config["total_rows"] = $this->ModelRecherche->nombrePeriode($DateDebut, $DateFin);
+
+        $lesDates = $this->ModelRecherche->periodeRecherche($DateDebut, $DateFin, $config['per_page'], $noPage);
+      }
+      else if($DateDebut != null)
+      {
+        $config["total_rows"] = $this->ModelRecherche->nombreDateDebut($DateDebut);
+
+        $lesDates = $this->ModelRecherche->dateDebutRecherche($DateDebut, $config['per_page'], $noPage);
+      }
+      else if($DateFin != null)
+      {
+        $config["total_rows"] = $this->ModelRecherche->nombreDateFin($DateFin);
+
+        $lesDates = $this->ModelRecherche->dateFinRecherche($DateFin, $config['per_page'], $noPage);
+      }
+
+    }
+
     if(!empty($RechercheMotCle))
     {
-
       $config["total_rows"] = $this->ModelRecherche->nombreRecherche($RechercheMotCle);
       $config["total_rows"] = $this->ModelRecherche->nombreActeur($RechercheMotCle);
       $config["total_rows"] = $this->ModelRecherche->nombreOrganisation($RechercheMotCle);
@@ -724,7 +749,6 @@ class Visiteur extends CI_Controller
       $lesLieux = $this->ModelRecherche->lieuRecherche($RechercheLieu, $config['per_page'], $noPage);
     }
 
-    //tests des doublons et création des 3 Tableaux finaux ET vérification de l'existence de résultats
     if(!empty($lesThematiques))
     {
       foreach($lesThematiques as $uneThematique):
@@ -755,7 +779,6 @@ class Visiteur extends CI_Controller
 
     if(!empty($lesMotsCles))
     {
-      //var_dump($lesMotsCles);
       foreach($lesMotsCles as $unMotCle):
         $exist = FALSE;
         $noAction = $unMotCle['NOACTION'];
@@ -840,8 +863,39 @@ class Visiteur extends CI_Controller
         $recherche = true;
       }
     }
-    
 
+    if(isset($lesDates))
+    {
+      if(!empty($lesDates))
+      {
+        foreach($lesDates as $uneDate):
+          $exist = FALSE;
+          $noAction = $uneDate['NOACTION'];
+  
+          if(!empty($DonneesInjectees['lesActions']))
+          {
+            foreach($DonneesInjectees['lesActions'] as $uneAction):
+              // faire test sur les dates de debut
+              if ($uneAction['NOACTION']==$noAction)
+              {
+                $exist = TRUE;
+              }
+            endforeach;
+            if ($exist==FALSE)
+            {
+              array_push($DonneesInjectees['lesActions'],$uneDate);
+            }
+          }
+          else
+          {
+            $DonneesInjectees['lesActions'] = array(0=>$uneDate);
+          } 
+        endforeach;
+        $recherche = true;
+      }
+    }
+
+    //var_dump($recherche);
     if($recherche == false)
     {
       redirect('Visiteur/loadAccueil');
@@ -939,8 +993,6 @@ class Visiteur extends CI_Controller
       $this->load->view('templates/PiedDePage');
 
   }
-
-  //Penser à refaire "Afficher Acteur" 
 
 }//Fin Visiteur
 
