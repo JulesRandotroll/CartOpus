@@ -168,12 +168,12 @@
                                 }
 
                             
-                               // var_dump($uneAction);
-                                
+                                //var_dump($uneAction);
+        
+                               //form_open('Acteur/SupprimerSousAction/'.$uneAction['NOACTION'])
                                 $entete =
-                                
                                 '<div class="row sousAction" style="background-color:#15B7D1;padding:20px" id="action'.$i.'">
-                                    '.form_open('Acteur/SupprimerSousAction/'.$uneAction['NOACTION'].'/'.$uneAction['NOMACTION'].'/'.$uneAction['DATEDEBUT'].'/'.$uneAction['NOLIEU'],array("id"=>"form_supprSousAction".$i)). '
+                                    '.form_open('Acteur/SupprimerSousAction/'.$uneAction['NOACTION'].'/'.$uneAction['TitreAction'].'/'.$uneAction['DATEDEBUT'].'/'.$uneAction['NOLIEU'],array("id"=>"form_supprSousAction".$i)). '
                                     <div class="col-sm-3">
                                     </div>
                                     <div class="col-sm-6">
@@ -181,7 +181,7 @@
                                             <section>
                                                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                                                     <div class="text-right">
-                                                        <a  href="'.site_url('Acteur/ModifierSousActionAction/'.$Actions[0]['NOACTION']).'" style="color:#FFFFFF"><span class="glyphicon glyphicon-pencil"></span>  </a>
+                                                        <a  href="'.site_url('Acteur/ModifierSousAction/'.$uneAction['NOACTION'].'/'.$uneAction['TitreAction'].'/'.$uneAction['DATEDEBUT'].'/'.$uneAction['NOLIEU']).'" style="color:#FFFFFF"><span class="glyphicon glyphicon-pencil"></span>  </a>
                                                         <a id="'.$i.'" href="#action'.$i.'" class="trash_SupprimerSousAction" style="color:#FFFFFF"><span class="glyphicon glyphicon-trash" ></span>  </a>
                                                     </div>';
                                         $pied = '</div>

@@ -42,32 +42,36 @@ $(function()
             },
         }   
     });
-
-    $('.trash_SupprimerSousAction').confirm(
+    $('.trash_SupprimerSousAction').on('click',function()
     {
-        icon: 'glyphicon glyphicon-alert',
-        title: 'Attention',
-        content: 'Voulez vous vraiment supprimer cette action',
-        type: 'red',
-        typeAnimated: true,
-        autoClose:"non|10000",
-        buttons: 
+        index=this.id;
+        //alert(index);
+
+        $.confirm(
         {
-            oui:
+            icon: 'glyphicon glyphicon-alert',
+            title: 'Attention',
+            content: 'Voulez vous vraiment supprimer cette action',
+            type: 'red',
+            typeAnimated: true,
+            autoClose:"non|10000",
+            buttons: 
             {
-                action: function () 
+                oui:
                 {
-                    index=$(this).attr('id');
-                    alert(index);
-                    //location.href = $('#form_supprSousAction'+i).attr('action');
-                }
-            },
-            non: 
-            {
-                btnClass:"btn-red",
-            },
-        }   
+                    action: function () 
+                    {
+                        location.href = $('#form_supprSousAction'+index).attr('action');
+                    }
+                },
+                non: 
+                {
+                    btnClass:"btn-red",
+                },
+            }   
+        });
     });
+
 
     
     $('.option').hover(
