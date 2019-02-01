@@ -277,6 +277,7 @@ $(document).ready(function()
     $('.delier_SousThematique').on('click',function()
     {
         noThematique = $(this).val();
+        //alert(noThematique);
         nomThematique = $(this).find("a").eq(0).html();
         document.getElementById('Dropdown_Delier_SousThematique').innerHTML=nomThematique; 
         document.getElementById('Dropdown_Delier_SousThematique').value=noThematique;
@@ -311,9 +312,9 @@ $(document).ready(function()
                 text:"Confirmer",
                 action: function () 
                 {
-                    if($('#Dropdown_Delier_Thematique').val() && $('#Dropdown_Delier_uneSousThematique').val())
+                    if($('#Dropdown_Delier_SousThematique').val() && $('#Dropdown_Delier_uneSousThematique').val())
                     {
-                        noThematique=$('#Dropdown_Delier_Thematique').val();
+                        noThematique=$('#Dropdown_Delier_SousThematique').val();
                         noSousThematique=$('#Dropdown_Delier_uneSousThematique').val();
 
                     }
@@ -322,7 +323,11 @@ $(document).ready(function()
                         noThematique ='0';
                         nosousThematique='0';
                     }
-                    location.href = $('#form_Delier_SousThematiques').attr('action')+'/'+noThematique+'/'+noSousThematique;
+                    localisation = $('#form_Delier_SousThematiques').attr('action')+'/'+noThematique+'/'+noSousThematique;
+                    
+                    // alert(localisation);
+                    
+                    location.href = localisation; 
                     //alert($('#form_Migrer').attr('action'));   
                 }
             },
