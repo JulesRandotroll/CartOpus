@@ -35,12 +35,12 @@
                         
                         echo '<div class="form-group">';
                             echo form_label('Nom : ', 'Nom');
-                            echo form_input('nom',$nom,array('disabled'=>"disabled",'class'=>'form-control')); 
+                            echo form_input('nom',$nom,array('disabled'=>"disabled",'class'=>'form-control','pattern'=>'[a-zA-Z0-9" éèëïùàäüô]')); 
                         echo '</div>';
                                 
                         echo '<div class="form-group">';
                             echo form_label('Prenom : ', 'Prenom');
-                            echo form_input('prenom',$prenom,array('disabled'=>"disabled",'class'=>'form-control'));                          
+                            echo form_input('prenom',$prenom,array('disabled'=>"disabled",'class'=>'form-control','pattern'=>'[a-zA-Z0-9" éèëïùàäüô]'));                          
                         echo '</div>';
                             
                         echo '<div class="form-group">';

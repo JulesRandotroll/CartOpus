@@ -319,7 +319,7 @@
         public function periodeRecherche($DateDebut, $DateFin, $nbLignesRetournees, $PremiereLigneRetournee)
         {
             $this->db->limit($nbLignesRetournees, $PremiereLigneRetournee);
-        $requete = $this->db->query("SELECT * FROM action, avoirlieu, lieu WHERE action.noaction = avoirlieu.noaction AND lieu.nolieu=avoirlieu.nolieu AND DATEDEBUT BETWEEN '".$DateDebut."' AND '".$DateFin."'");
+            $requete = $this->db->query("SELECT * FROM action, avoirlieu, lieu WHERE action.noaction = avoirlieu.noaction AND lieu.nolieu=avoirlieu.nolieu AND DATEDEBUT BETWEEN '".$DateDebut."' AND '".$DateFin."'");
             return $requete->result_array();
         }
 

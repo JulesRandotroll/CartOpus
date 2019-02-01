@@ -50,7 +50,7 @@
                         echo '<div class="form-group">';
                         echo '<span style="color:#FF0000"/> * </span>';
                         echo form_label('Nom : ', 'nom');
-                        echo form_input('nom',$nom,array('required'=>'required','placeholder'=>'Votre nom','class'=>'form-control')); 
+                        echo form_input('nom',$nom,array('required'=>'required','placeholder'=>'Votre nom','class'=>'form-control','pattern'=>'[a-zA-Z0-9" éèëïùàäüô]')); 
                         echo '</div>';
                         echo '</div>';
 
@@ -58,7 +58,7 @@
                         echo '<div class="form-group">';
                         echo '<span style="color:#FF0000"/> * </span>';
                         echo form_label('Prénom : ', 'prenom');
-                        echo form_input('prenom',$prenom,array('required'=>'required','placeholder'=>'Votre prénom','class'=>'form-control')); 
+                        echo form_input('prenom',$prenom,array('required'=>'required','placeholder'=>'Votre prénom','class'=>'form-control','pattern'=>'[a-zA-Z0-9" éèëïùàäüô]')); 
                         echo '</div>';
                          echo '</div>';
 
@@ -87,7 +87,7 @@
                         echo '<div class="form-group">';
                         echo '<span style="color:#FF0000"/> * </span>';
                         echo form_label('Message : ', 'mess');
-                        echo form_textarea('Message','',array('required'=>'required','placeholder'=>'Expliquez ici le motif de votre contacte','class'=>'form-control')); 
+                        echo form_textarea('Message','',array('required'=>'required','placeholder'=>'Expliquez ici le motif de votre contacte','class'=>'form-control','pattern'=>'[a-zA-Z0-9" éèëïùàäüô])); 
                         echo '</div>';
 
                         echo '<div class="text-right">';

@@ -33,7 +33,7 @@
                         echo '<div class="form-group">';
                         echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                             echo form_label('Nom de l\'action : ', 'Name');
-                            echo form_input('NomAction',$NomAction, array("placeholder"=>"Nom de votre action",'required'=>'required',"class"=>"form-control"));
+                            echo form_input('NomAction',$NomAction, array("placeholder"=>"Nom de votre action",'required'=>'required',"class"=>"form-control",'pattern'=>'[a-zA-Z0-9" éèëïùàäüô]'));
                         echo '</div>';
 
                         echo '<div class="row">';
@@ -109,7 +109,7 @@
 
                         echo '<div class="form-group">';
                             echo form_label('Description ', 'Desc');
-                            echo form_textarea('Description', $Description,Array("placeholder"=>"Ici, votre description","class"=>"form-control"));
+                            echo form_textarea('Description', $Description,Array("placeholder"=>"Ici, votre description","class"=>"form-control",'pattern'=>'[a-zA-Z0-9" éèëïùàäüô]'));
                         echo '</div>';
 
                         echo '<div class="form-group">';

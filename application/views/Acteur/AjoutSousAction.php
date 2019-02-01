@@ -36,7 +36,7 @@
                         <span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>
                             <?php 
                                 echo form_label('Nom de la sous action : ','lbl_TitreAction');
-                                echo form_input('TitreAction',$TitreAction,array('class'=>'form-control','required'=>'required','placeholder'=>'Veuillez saisir le nom de votre sous action'));
+                                echo form_input('TitreAction',$TitreAction,array('class'=>'form-control','pattern'=>'[a-zA-Z0-9" éèëïùàäüô]','required'=>'required','placeholder'=>'Veuillez saisir le nom de votre sous action'));
                             ?>
                         </div>
                         <div class='row'>
@@ -104,7 +104,7 @@
                         <div class='form-group'>
                             <?php 
                                 echo form_label('Description ', 'Desc');
-                                echo form_textarea('Description',$Description,Array("placeholder"=>"Ici, votre description",'class'=>'form-control'));
+                                echo form_textarea('Description',$Description,Array("placeholder"=>"Ici, votre description",'class'=>'form-control','pattern'=>'[a-zA-Z0-9" éèëïùàäüô]'));
                             ?>
                         </div>
                         <br><h6><span style="color:#FF0000"/> *</span> Ces champs sont obligatoires</h6>

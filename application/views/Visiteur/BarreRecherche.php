@@ -49,37 +49,48 @@
                         }
                         ?>
                     </ul>
-
                 </div>
             </div>
         </nav>
     </div>
 </div>
 <!--Barre de recherche-->
- <div class="row" style="background-color:#15B7D1;padding:20px">
+
+<script src="<?php echo js_url('js_recherche'); ?>"></script>
+
+ <div class="row" style="background-color:#15B7D1;">
     <?php
         echo form_open('Visiteur/Rechercher');
     ?>
-    <div class="col-sm-1">   
+    <div class="col-sm-2 text-center">   
+    <h3><label style="Font-Weight: Bold">Recherche : </label></h3>
     </div>
     <div class="col-sm-3" style="padding:10px">
         <div class = "text-center">
             <section>
                 <div class = "section-inner" style="padding:10px">
-                    <label>Recherche : </label>
+                
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Recherche" name="MotCle">
                         <div class="input-group-btn">
-                        <button class="btn btn-default form-control" type="submit" name="Recherche">
+                        <button class="btn btn-default form-control" type="submit" name="Recherche" id="loupe">
                             <i class="glyphicon glyphicon-search"></i>
                         </button>
                         </div>
                     </div>
                 </div>
+                <h4 class="text-center"><a href="#" class="glyphicon glyphicon-calendar" id='filtrer' style="color:#000000"> Filtrer par dates</a></h3>
+                <BR>
             </section>
         </div>
     </div>
-    <div class="col-sm-3" style="padding:10px">
+</div>
+
+<div class="row" style="background-color:#15B7D1;">
+    
+    <div class="col-sm-1">   
+    </div>
+    <div class="col-sm-3 dateHeure">
         <div class = "text-center">
             <section>
                 <div class = "section-inner" style="padding:10px">
@@ -97,7 +108,6 @@
                             echo '  ';
                         
                             echo '<input class="form-control" name="DateF" id="dateF" type="date">';
-
                         ?>
                     </div>
                 </div>
@@ -105,7 +115,7 @@
         </div>
     </div>
 
-    <div class="col-sm-2" style="padding:10px">
+    <div class="col-sm-3 dateHeure">
         <div class = "text-center">
             <section>
                 <div class = "section-inner" style="padding:10px">
@@ -120,7 +130,6 @@
                             echo '  ';
                         
                             echo '<input class="form-control" name="HeureF" id="heureF" type="time">';
-
                         ?>
                     </div>
                 </div>
@@ -128,7 +137,7 @@
         </div>
     </div>
     
-    <div class="col-sm-1">
+    <div class="col-sm-1 dateHeure">
         <div class = "text-center">
             <section >
                 <div class = "section-inner" style="padding:20px">

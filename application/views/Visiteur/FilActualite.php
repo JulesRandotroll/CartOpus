@@ -39,7 +39,8 @@
                                         
                                         date_default_timezone_set('Europe/Paris');
                                         // --- La setlocale() fonctionnne pour strftime mais pas pour DateTime->format()
-                                        setlocale(LC_TIME, 'fr_FR.utf8','fra');// OK
+                                        //setlocale(LC_TIME, 'fr_FR.UTF8','fra');// OK
+                                        setlocale (LC_TIME, 'fr_FR.UTF-8','fra');
                                         // strftime("jourEnLettres jour moisEnLettres annee") de la date courante
                                     
                                         $DateDebut = date_create($unFavoris['DATEDEBUT']);
@@ -64,11 +65,9 @@
                                             $Horaire = 'A partir du : '.strftime("%A %d %B %Y %H h %M",$DD).'<BR>';
                                         } // != null
 
-
                                         if($i == 0)
                                         {
                                             $class = "item active";
-                                            //echo $class;
                                         }
                                                 echo '<div class="'.$class.'">';
                                                     echo '<h1>'.$unFavoris['NOMACTION'].'</H1>';

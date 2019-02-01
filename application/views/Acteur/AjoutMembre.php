@@ -33,12 +33,12 @@
                         
                         echo '<div class="form-group">';
                             echo form_label('Nom : ', 'Nom');
-                            echo form_input('nom',$Nom,array('placeholder'=>'Votre nom','pattern'=>'[a-zA-Z ]{1,40}','class'=>'form-control')); 
+                            echo form_input('nom',$Nom,array('placeholder'=>'Votre nom','pattern'=>'[a-zA-Z0-9" éèëïùàäüô]{1,40}','class'=>'form-control')); 
                         echo '</div>';
                                 
                         echo '<div class="form-group">';
                             echo form_label('Prenom : ', 'Prenom');
-                            echo form_input('prenom',$Prenom,array('placeholder'=>'Votre prénom (facultatif)','pattern'=>'[a-zA-Z ]{1,20}','class'=>'form-control'));                          
+                            echo form_input('prenom',$Prenom,array('placeholder'=>'Votre prénom (facultatif)','pattern'=>'[a-zA-Z0-9" éèëïùàäüô]{1,20}','class'=>'form-control'));                          
                         echo '</div>';
                             
                         echo '<div class="form-group">';

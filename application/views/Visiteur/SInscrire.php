@@ -38,7 +38,7 @@
                         echo '<div class="form-group">';
                         echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                         echo form_label('Nom : ', 'Nom');
-                        echo form_input('nom',$nom,array('required'=>'required','placeholder'=>'Votre nom','pattern'=>'[a-zA-Z ]{1,40}','class'=>'form-control')); 
+                        echo form_input('nom',$nom,array('required'=>'required','placeholder'=>'Votre nom','pattern'=>'[a-zA-Z éèëïùàäüô]{1,40}','class'=>'form-control')); 
                         echo '</div>';
                             // echo('</td></tr>');
 
@@ -49,7 +49,7 @@
                       
                         echo '<div class="form-group">';
                         echo form_label('Prenom : ', 'Prenom');
-                        echo form_input('prenom',$prenom,array('placeholder'=>'Votre prénom (facultatif)','pattern'=>'[a-zA-Z ]{1,20}','class'=>'form-control'));                          
+                        echo form_input('prenom',$prenom,array('placeholder'=>'Votre prénom (facultatif)','pattern'=>'[a-zA-Z éèëïùàäüô]{1,20}','class'=>'form-control'));                          
                         echo '</div>';
                             // echo('</td></tr>');
 
@@ -135,7 +135,7 @@
                         echo '<div class="form-group">';
                         echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                         echo form_label('Reponse : ', 'Rep');
-                        echo form_input('reponse',$reponse,array('required'=>'required','placeholder'=>'La réponse à votre question secrète','pattern'=>'[A-Za-z0-9 ]{1,40}','class'=>'form-control'));
+                        echo form_input('reponse',$reponse,array('required'=>'required','placeholder'=>'La réponse à votre question secrète','pattern'=>'[a-zA-Z0-9 éèëïùàäü]{1,40}','class'=>'form-control'));
                         echo '</div>';
                             // echo('</td></tr>');
 
