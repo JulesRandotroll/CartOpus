@@ -47,9 +47,9 @@
         //var_dump($_FILES);
     ?>
     
-    <div class="col-sm-4">
+    <div class="col-sm-3">
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-6">
         <div class = "text-center">
             <section>
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
