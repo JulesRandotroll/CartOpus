@@ -122,12 +122,35 @@
                                     echo'</tr><tr>';
                                     $i=0;
                                 }
-                                echo '<td>
-                                        <a href="#" class="supprrole'.$unRole['Attribue'].'" style="color:#FFFFFF" id="'.$unRole['noRole'].'">'
-                                            .$unRole['nomRole'].'
-                                        </a>
-                                    </td>'
-                                ;
+                                if($unRole['noRole']==0)
+                                {
+                                    echo '<td>
+                                            <a href="#" data-toggle="popover" title="Non supprimable" data-content="Ce rôle ne peut être supprimé, car il s\'agit du rôle attribué à la personne qui met en ligne l\'action" data-trigger="hover" style="color:#CCCCB3">'
+                                                .$unRole['nomRole'].'
+                                            </a>
+                                        </td>'
+                                    ;
+                                }
+                                elseif($unRole['noRole']==1)
+                                {
+                                    //#CCCCB3
+                                    echo '<td>
+                                            <a href="#" data-toggle="popover" title="Non supprimable" data-content="Ce rôle ne peut être supprimé, car il s\'agit du rôle attribué par défaut à toute personne dont le rôle a été supprimé" data-trigger="hover" style="color:#CCCCB3">'
+                                                .$unRole['nomRole'].'
+                                            </a>
+                                        </td>'
+                                    ;
+                                }
+                                else
+                                {
+                                    echo '<td>
+                                            <a href="#" class="supprrole'.$unRole['Attribue'].'" style="color:#FFFFFF" id="'.$unRole['noRole'].'">'
+                                                .$unRole['nomRole'].'
+                                            </a>
+                                        </td>'
+                                    ;
+                                }
+                                
                                 $i++;
                             }
                             for($i;$i<$lim;$i++)

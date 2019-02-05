@@ -34,6 +34,7 @@
            $this->db->from('etrepartenaire');
            $this->db->join('acteur','etrepartenaire.noActeur=acteur.noActeur');
            $this->db->join('profilpouraction','etrepartenaire.noActeur=profilpouraction.noActeur');
+           $this->db->where('etrepartenaire.noAction=profilpouraction.noAction');
            $this->db->where('profilpouraction.NOACTION',$noAction);
            $this->db->group_by('etrepartenaire.noacteur'); 
            $requete = $this->db->get();
@@ -70,7 +71,7 @@
 
         public function TestExiste($noActeur,$noAction)
         {
-            //var_dump($noActeur);
+            //var_dump($noAction);
             $this->db->select('*');
             $this->db->from('etrepartenaire');
             $this->db->where('NOACTEUR=',$noActeur[0]['NOACTEUR']);
