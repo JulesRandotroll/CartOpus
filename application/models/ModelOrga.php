@@ -7,6 +7,11 @@
             /* chargement database.php (dans config), obligatoirement dans le constructeur */
         }
 
+        public function insertOrga($DonnéesOrga)
+        {
+            $this->db->insert('organisation',$DonnéesOrga);
+            return $this->db->insert_id(); 
+        }
         public function getOrgaSimple($noOrganisation)
         {
             //var_dump($noOrganisation);

@@ -16,6 +16,7 @@ class Acteur extends CI_Controller
         $this->load->model('ModelAction');
         $this->load->model('ModelMembre');
         $this->load->model('ModelThematique');
+        $this->load->model('ModelOrga');
         $this->load->library('upload');
  
         //var_dump($this->session->statut);
@@ -350,6 +351,11 @@ class Acteur extends CI_Controller
         {
             $noAction=$this->input->post('Action');
             redirect('Acteur/AfficherActionSelectionnee/'.$noAction); 
+        }
+        if($this->input->post('Choix_Lier'))
+        {
+            $noAction=$this->input->post('Action');
+            redirect('Acteur/AjoutThematique/'); 
         }
         else
         {
@@ -1366,39 +1372,15 @@ class Acteur extends CI_Controller
         // sortir toutes les thématiques dans faire références puis recup le nom correspondant puis les injectées
         $noActeur = $this->session->noActeur;
 
-        $Action =$this->ModelAction->getActionsActeur($noActeur);
-        foreach($Action as $uneAction)
-        {
-            if(empty($Actions))
-            {
-                $Actions = array($uneAction['NOACTION']=>$uneAction['NOMACTION']);
-            }
-            else
-            {
-                $temporaire = array($uneAction['NOACTION']=>$uneAction['NOMACTION']);
-                $Actions = $Actions + $temporaire;
-            }
-        }
-
+        
         $Thematique=$this->ModelThematique->getTheme_SousTheme();
-        var_dump($Thematique);
-        // foreach($Theme as $unTheme)
-        // {
-        //     if(empty($Themes))
-        //     {
-        //         $Themes = array($unTheme['NOACTION']=>$uneAction['NOMACTION']);
-        //     }
-        //     else
-        //     {
-        //         $temporaire = array($uneAction['NOACTION']=>$uneAction['NOMACTION']);
-        //         $Options = $Options + $temporaire;
-        //     }
-        // }
-        //var_dump($Options);
+        //var_dump($Thematique);
+        $MotCle=$this->ModelThematique->getMotCle();
+       // var_dump($MotCle);
         $DonnéesTitre = array('TitreDeLaPage'=>'Ajout Thématique');
         $DonnéesAInjecter=array(
-            'action'=>$Actions,
             'theme'=>$Thematique,
+            'motcle'=>$MotCle,
         );
 
         $this->load->view('templates/Entete',$DonnéesTitre);
@@ -1846,6 +1828,56 @@ class Acteur extends CI_Controller
 
         redirect('Acteur/AfficherActionSelectionnee/'.$noAction);
      
+    }
+
+    public function AjoutOrga()
+    {
+        if ($this->input->post('Ajouter'))
+        {
+            $DonnéesLieu=array(
+                'ADRESSE'=>$this->input->post('Adresse'),
+                'CodePostal'=>$this->input->post('CodePostal'),
+                'Ville'=>$this->input->post('Ville'),
+            );
+            var_dump($DonnéesLieu);
+            $nolieu=$this->ModelAction->getLieu($DonnéesLieu);
+              
+            if ($nolieu==null){
+                $Lieu=$this->ModelAction->insertLieu($DonnéesLieu);
+                $nolieu=$Lieu['noLieu'];
+            }
+            var_dump($nolieu);
+
+            // secu a faire sur nom, adresse et code postal pour les doublons
+            $DonnéesOrga=array(
+                'NOMORGANISATION'=>$this->input->post('NomOrga'),
+                'NOLIEU'=>$nolieu[0]['nolieu'],
+                'NOTELORGA'=>$this->input->post('tel'),
+                'NOFAXORGA'=>$this->input->post('fax'),
+                'SiteURL'=>$this->input->post('SiteURL'),
+            );
+
+            $this->ModelOrga->insertOrga($DonnéesOrga); 
+        }
+        else
+        {
+            $DonnéesTitre = array('TitreDeLaPage'=>'Ajout Organisation');
+            $DonnéesAInjecter=array(
+                'message'=>'',
+                'NomOrga'=>'',
+                'Adresse'=>'',
+                'CodePostal'=>'',
+                'tel'=>'',
+                'fax'=>'',
+                'Ville'=>'',
+                'SiteURL'=>'',
+    
+            );
+            $this->load->view('templates/Entete',$DonnéesTitre);
+            $this->load->view('Acteur/AjoutOrga',$DonnéesAInjecter);
+            $this->load->view('templates/PiedDePage'); 
+        }
+        
     }
 
 }

@@ -1,114 +1,76 @@
-<ul class="nav navbar-nav navbar-right">
-                        <?php 
-                echo'<li><a href="'.site_url('Acteur/ChoixAction/1').'" style="color:#FFFFFF"><span class="glyphicon list-alt"></span> Afficher Action</a></li>';
-                echo'<li><a href="'.site_url('Acteur/AccueilActeur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso </a></li>';    
-                echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se Déconnecter</a></li>';
-                        ?> 
+                    <ul class="nav navbar-nav navbar-right">
+                            <?php 
+                                echo'<li><a href="'.site_url('Acteur/ChoixAction/1').'" style="color:#FFFFFF"><span class="glyphicon list-alt"></span> Afficher Action</a></li>';
+                                echo'<li><a href="'.site_url('Acteur/AccueilActeur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso </a></li>';    
+                                echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se Déconnecter</a></li>';
+                            ?> 
                     </ul>
                 </div>
             </div>
         </nav>
     </div>
 </div>
+
 <div class="row" style="background-color:#15B7D1">
     <div class="col-sm-2">
     </div>
     <div class="col-sm-8" style="padding:20px">
-        <div style="padding:20px">
             <div class = "text-center">
                 <?php
-                    // $NomAction = str_replace('%20',' ',$NomAction);
-                    // $NomAction= str_replace('%C3%A9','é',$NomAction);
-                    // $NomAction= str_replace('%C3%BB','û',$NomAction);
-                    // $NomAction= str_replace('%C3%A0','à',$NomAction);
-                    // $NomAction= str_replace('%C3%BC','ü',$NomAction);
-                    // $NomAction= str_replace('%C3%B9','ù',$NomAction);
-                    // $NomAction= str_replace('%C3%AE','î',$NomAction);
-                    // $NomAction= str_replace('%C3%AF','ï',$NomAction);
-                    // $NomAction= str_replace('%C3%AB','ë',$NomAction);
-                    // $NomAction= str_replace('%C3%A8','è',$NomAction);
-                    
-
-                   // $ActionSelect=$NomAction; // faire passer le nom choisie en paramètre
                     echo '<H1 style="color:#FFFFFF">Liée une thématique à une action</H1>';
                 ?>
             </div>
-            <section >
-                <div class = "section-inner" style="background-color:#139CBC;padding:20px">
-                    <?php
-                        echo form_open('Acteur/AjoutThematique');
-                        
-                        echo '<div class="text-center">';
-                            echo form_label('Actions :', 'lbl_Action');
-                            echo ' ';
-                    
-                            echo form_dropdown('action', $action, 'default');
-                        echo '</div>';
-                        echo '<br><br>';
-                        echo '<div class="text-center">';
-                            echo '<table class="table">';
-                                echo '
-                                <thead>
-                                    <tr>
-                                        <th>Thématique</th>
-                                        <th>Mot Clé</th> 
-                                    </tr>
-                                </thead> ';
-                                echo'
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                        ';
-                                        //var_dump($theme);
-                                        
-                                        foreach($theme as $untheme)
-                                        {
-                                            //var_dump($untheme);
-                                            foreach($untheme as $soustheme)
-                                            {
-                                                //var_dump($soustheme);
-                                                echo form_label($soustheme, 'theme'); 
-                                                echo form_checkbox('cbx_theme','', TRUE);
-                                                
-                                                echo'<br>';  
-                                            }
-                                           // echo form_label($untheme, 'theme');   
-                                        }
-                                        
-                                        echo'
-                                        </td>
-                                        <td>
-                                        plop
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                ';
-                                // tableau des thématiques deja associées 
-                            echo '</table>';
-                        echo '</div>';
-                ?>
-                    <!-- <form action="AjoutThematique.php" method="post">
-                        <?php 
-                            foreach ($option as $uneOption) 
-                            {
-                                foreach($uneOption as $uneThematique):
-                                echo' <input type="checkbox" name="theme[]" value='.$uneThematique.' />'.$uneThematique.'<br>';
-                                endforeach;
-                            }
-                        ?>
-                        <input type="submit" value="Lier" />
-                    </form> -->
-                <?php       
-                        echo '<br><div class="text-center">';
-                            echo form_submit('lier', 'Lier',array('class'=>'btn btn-danger'));
-                        echo '</div>';
-                        echo '<div class="text-right">';
-                            echo'<h6><a href="'.site_url('Acteur/ContacterAdmin').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span>  Nouvelle Thématique ?</a></h6>';
-                        echo '</div>';
-                        
-                    ?>
-                </div>
-            </section>
-        </div>
-    </div>    
+    </div>
 </div>
+
+<div class="row" style="background-color:#15B7D1">
+    <div class="col-sm-2">
+    </div>
+    <div class="col-sm-4">
+    <section>
+        <div class = "section-inner" style="background-color:#139CBC;padding:20px">
+            <table class="text-center">
+                <tr>
+                    <th>Thématique</th>
+                
+                </tr>
+
+                <tr>
+                    <td>Carmen</td>
+
+                </tr>
+                <tr>
+                    <td>Michelle</td>
+
+                </tr>
+                </table>
+            
+        </div>
+
+    </section>
+    </div>
+    <div class="col-sm-4">
+    <section>
+        <div class = "section-inner" style="background-color:#139CBC;padding:20px">
+        
+        </div>
+    </section>
+    </div>
+</div>
+
+
+<div class="row" style="background-color:#15B7D1">
+<div  style="padding:20px">
+    <?php       
+        echo '<div class="text-center">';
+            echo form_submit('lier', 'Lier',array('class'=>'btn btn-danger'));
+        echo '</div>';
+
+        echo '<div class="text-right">';
+            echo'<h6><a href="'.site_url('Acteur/ContacterAdmin').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span>  Nouvelle Thématique ?</a></h6>';
+        echo '</div>';
+            
+    ?>
+</div> 
+    
+</div> 
