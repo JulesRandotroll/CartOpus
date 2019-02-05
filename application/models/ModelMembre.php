@@ -74,7 +74,7 @@
             $this->db->select('*');
             $this->db->from('etrepartenaire');
             $this->db->where('NOACTEUR=',$noActeur[0]['NOACTEUR']);
-            $this->db->where('NOACTION=',$noAction[0]['NOACTION']);
+            $this->db->where('NOACTION=',$noAction);
             $requete = $this->db->get();
             return $requete->result_array();
         }

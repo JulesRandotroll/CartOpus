@@ -1296,7 +1296,7 @@ class Acteur extends CI_Controller
                         $NoActeurAjout=$this->ModelActeur->getNoActeur($Mail);
                         //var_dump($NoActeurAjout);
 
-                        var_dump($noAction);
+                        //var_dump($noAction);
                         $test=$this->ModelMembre->TestExiste($NoActeurAjout,$noAction);
                         //echo ('plop?');
                         //var_dump($test);
@@ -1850,19 +1850,12 @@ class Acteur extends CI_Controller
             );
             //var_dump($DonnéesLieu);
             $nolieu=$this->ModelAction->getLieu($DonnéesLieu);
-              
+            //var_dump($nolieu);
             if ($nolieu==null){
                 $Lieu=$this->ModelAction->insertLieu($DonnéesLieu);
                 $nolieu=$Lieu['noLieu'];
             }
             //var_dump($nolieu);
-
-            $DonnéesDeTest=array(
-                'NOMORGANISATION'=>$DonnéesOrga['NOMORGANISATION'],
-                
-            
-            );
-            // secu a faire sur nom, adresse et code postal pour les doublons
             $DonnéesOrga=array(
                 'NOMORGANISATION'=>$this->input->post('NomOrga'),
                 'NOLIEU'=>$nolieu[0]['nolieu'],
@@ -1871,7 +1864,39 @@ class Acteur extends CI_Controller
                 'SiteURL'=>$this->input->post('SiteURL'),
             );
 
-            $this->ModelOrga->insertOrga($DonnéesOrga); 
+            $DonnéesDeTest=array(
+                'NOMORGANISATION'=>$DonnéesOrga['NOMORGANISATION'],
+                'NOLIEU'=>$nolieu[0]['nolieu'],
+            );
+            $test=$this->ModelOrga->TestDoublon($DonnéesDeTest); 
+            //var_dump($nolieu[0]['nolieu']);
+            if ($test[0]['count(*)']==0)
+            {
+                $this->ModelOrga->insertOrga($DonnéesOrga);
+                
+                redirect('Acteur/AccueilActeur');
+                 
+            }
+            else
+            {
+                $message='Cette organisation existe déjà';
+                $DonnéesAInjecter=array(
+                    'message'=>$message,
+                    'NomOrga'=>'',
+                    'Adresse'=>'',
+                    'CodePostal'=>'',
+                    'tel'=>'',
+                    'fax'=>'',
+                    'Ville'=>'',
+                    'SiteURL'=>'',
+        
+                );
+                $DonnéesTitre = array('TitreDeLaPage'=>'Ajout Organisation');
+                $this->load->view('templates/Entete',$DonnéesTitre);
+                $this->load->view('Acteur/AjoutOrga',$DonnéesAInjecter);
+                $this->load->view('templates/PiedDePage'); 
+            }
+
         }
         else
         {
@@ -1894,5 +1919,14 @@ class Acteur extends CI_Controller
         
     }
 
+    public function LieOrgaActeur($noActeur)
+    {
+        $noActeur=$this->session->noActeur;
+        var_dump($noActeur);
+        $DonnéesTitre = array('TitreDeLaPage'=>'Lié Organisation/Acteur');
+        $this->load->view('templates/Entete',$DonnéesTitre);
+        $this->load->view('Acteur/LieOrgaActeur');
+        $this->load->view('templates/PiedDePage');
+    }
 }
 ?>

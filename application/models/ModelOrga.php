@@ -9,6 +9,7 @@
 
         public function insertOrga($DonnéesOrga)
         {
+            //var_dump($DonnéesOrga);
             $this->db->insert('organisation',$DonnéesOrga);
             return $this->db->insert_id(); 
         }
@@ -35,6 +36,14 @@
             $this->db->join('travaillerdans td','td.nosecteur=s.nosecteur');
             $this->db->join('Acteur a','a.noActeur=td.noacteur');
             $this->db->join('Organisation o','o.no_Organisation=td.no_Organisation');
+            $this->db->where($DonnéesDeTest);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+        public function TestDoublon($DonnéesDeTest)
+        {
+            $this->db->select('count(*)');
+            $this->db->from('Organisation');
             $this->db->where($DonnéesDeTest);
             $requete = $this->db->get();
             return $requete->result_array();
