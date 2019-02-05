@@ -48,7 +48,7 @@
                                     //var_dump($unMembre);
                                     if ($unMembre['NOPROFIL']==3)
                                     {
-                                        if($unMembre['NOROLE']==2147483642)
+                                        if($unMembre['NOROLE']==0)
                                         {
                                             $cbx=form_checkbox('',$unMembre["NOACTEUR"], TRUE,array("class"=>"checkbox","disabled"=>"disabled"));
                                         }
@@ -60,7 +60,7 @@
                                     }
                                     else
                                     {
-                                        if($unMembre['NOROLE']==2147483642)
+                                        if($unMembre['NOROLE']==0)
                                         {
                                             $cbx=form_checkbox('',$unMembre["NOACTEUR"], FALSE,array("class"=>"checkbox","disabled"=>"disabled"));
                                         }

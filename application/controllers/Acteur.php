@@ -440,7 +440,7 @@ class Acteur extends CI_Controller
             $DateD=$this->ModelAction->getDate($noAction);
             $noRole=$this->ModelMembre->GetRoles($noActeur,$noAction,$DateD[0]);
             //var_dump($noRole);
-            if($noRole[0]['norole']==2147483642)
+            if($noRole[0]['norole']==0)
             {
                 $message='Cette personne est la créatrice de cette action, elle ne peut pas être modifiée';
                 $this->session->set_flashdata('message',$message);
@@ -503,7 +503,7 @@ class Acteur extends CI_Controller
         //var_dump($DateD);
         $noRole=$this->ModelMembre->GetRoles($noActeur,$noAction,$DateD[0]);
         //var_dump($noRole);
-         if($noRole[0]['norole']==2147483642)
+         if($noRole[0]['norole']==0)
         {
             $message='Cette personne est la créatrice de cette action, elle ne peut pas être supprimée';
             $this->session->set_flashdata('message',$message);
@@ -846,7 +846,7 @@ class Acteur extends CI_Controller
                         $donnéesEtrePartenaire = array(
                             'NoAction'=>$noAction,
                             'NoActeur'=> $this->session->noActeur,
-                            'NoRole'=> '2147483642',
+                            'NoRole'=> '0',
                             'DateDebut'=>$DateD,
                             'DateFin'=>$DateF,
                         );

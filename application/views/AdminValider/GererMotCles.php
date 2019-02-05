@@ -30,13 +30,58 @@
     </div>
 </div>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script src="<?php echo js_url('js_GererMotCles'); ?>"></script>
+
+
+
 <div class="row" style="background-color:#15B7D1" id='modif'> 
     <div class="col-sm-2">
     </div> 
     <div class="col-sm-8">
         <section >
             <div class = "section-inner" style="background-color:#139CBC;padding:20px">
+                <H1 style="color:#FFFFFF" class="text-center">Suppression des Mots-Cles</H1>
+
+                <div class='form-group'>
+                    <label> Rechercher : </label>
+                    <input class="form-control" id="myInput" type="text" placeholder="Rechercher..">
+                </div>
+                <table class="table" id="myTable">
+                    <tr>
+                        <?php 
+                            // var_dump($motsCles);
+                            $i = 0;
+                            $lim = 5;
+                            foreach($motsCles as $unMotCle)
+                            {
+                                if($i==$lim)
+                                {
+                                    echo'</tr><tr>';
+                                    $i=0;
+                                }
+
+                                echo '<td><a class="supprMotCle" value="#" style="color:#FFFFFF" id="'.$unMotCle['MotCle'].'">'.$unMotCle['MotCle'].'</a></td>';
+                                $i++;
+                            }
+                            //var_dump($i);
+                            for($i;$i<$lim;$i++)
+                            {
+                                echo"<td></td>";
+                            }
+                        ?>
+                    </tr>
+                </table>
+                <?php 
+                    echo form_open('AdminValider/SupprimerMotCle',array("id"=>"form_supprMotcle")); 
+                    echo form_close();
+                ?>
+                    <div class='text-right'>
+                        <a href="#" class="btn btn-danger" data-toggle="popover" title="INFORMATIONS" data-content="Pour supprimer un Mot-Clé clickez dessus" data-trigger="hover"><span class="glyphicon glyphicon-info-sign"></span></a>
+                    </div>
             </div>
         </section>
+        <BR>
     </div>
 </div>

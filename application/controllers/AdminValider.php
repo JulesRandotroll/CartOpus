@@ -18,6 +18,8 @@ class AdminValider extends CI_Controller
         $this->load->model('ModelOrga');
         $this->load->model('ModelRecherche');
         $this->load->model('ModelActeur');
+        $this->load->model('ModelRole');
+        $this->load->model('ModelThematique');
         $this->load->library("pagination");
 
         if($this->session->statut < 4)
@@ -74,11 +76,119 @@ class AdminValider extends CI_Controller
 
     public function GererMotCles()
     {
+        $motsCles = $this->ModelThematique->getMotCle();
+        
+        $DonneesInjectees = array('motsCles'=>$motsCles);
+
         $DonneesTitre = array('TitreDeLaPage'=>'Gérer mots cles');
         $this->load->view('templates/Entete',$DonneesTitre);
-        $this->load->view('AdminValider/GererMotCles');
-        //$this->load->view('Visiteur/FilActualite', $DonneesInjectees);
+        $this->load->view('AdminValider/GererMotCles',$DonneesInjectees);
         $this->load->view('templates/PiedDePage');
+    }
+
+    public function SupprimerMotCle($motCle)
+    {
+        if($motCle != '0')
+        {
+            $Tagg = '#'.$motCle;
+
+            $Where = array('Motcle'=>$Tagg);
+            $this->ModelThematique->DeleteMotcle($Where);
+            
+            redirect('AdminValider/GererMotCles');
+
+        }
+        else
+        {
+            redirect('AdminValider/GererMotCles');
+        }
+    }
+
+    public function GererRole()
+    {
+
+        
+
+        $Roles = $this->ModelRole->getRoles();
+
+        foreach($Roles as $unRole)
+        {
+            $Where = array('noRole'=>$unRole['NOROLE']);
+            //var_dump($Where);
+            $Attribue = $this->ModelRole->getIfRoleAttribue($Where);
+
+            if(empty($Array))
+            {
+                $Array = array(0=>array(
+                    'noRole'=>$unRole['NOROLE'],
+                    'nomRole'=>$unRole['NOMROLE'],
+                    'Attribue'=>$Attribue,
+                ));
+            }
+            else
+            {
+                $temp = array(
+                    'noRole'=>$unRole['NOROLE'],
+                    'nomRole'=>$unRole['NOMROLE'],
+                    'Attribue'=>$Attribue,
+                );
+                array_push($Array,$temp);
+            }
+        }
+        
+        
+        if($this->input->post('AjoutRole'))
+        {
+            $Where = array('nomRole'=>$this->input->post('nouvRole'));
+            $Array;
+            $test = $this->ModelRole->getRoleExist($Where);
+
+            if($test)
+            {
+                $this->ModelRole->insertRole($Where);
+
+                $DonneesInjectees = array(
+                    'Roles'=>$Array,
+                    'Message'=>'Insertion effectuee',
+                );
+            }
+            else
+            {
+                $DonneesInjectees = array(
+                    'Roles'=>$Array,
+                    'Attention'=>'Ce role existe déjà'
+                );
+            }
+
+        }
+        else
+        {
+            $DonneesInjectees = array(
+                'Roles'=>$Array,
+            );
+        }
+
+        
+        //var_dump($DonneesInjectees);
+
+        $DonneesTitre = array('TitreDeLaPage'=>'Gérer rôles');
+        $this->load->view('templates/Entete',$DonneesTitre);
+        $this->load->view('AdminValider/GererRole',$DonneesInjectees);
+        $this->load->view('templates/PiedDePage');
+    }
+    
+    public function SupprimerRole($Attribue,$norole)
+    {
+        if($norole != 0)
+        {
+            if($Attribue==1)
+            {
+                echo 'attribué';  
+            }
+        }
+        
+
+        //redirect('AdminValider/GererRole');
     }
 
 }
