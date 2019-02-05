@@ -181,16 +181,15 @@ class AdminValider extends CI_Controller
     {
         if($norole != 0)
         {
+            $Where = array('noRole'=>$norole);
             if($Attribue==1)
             {
-                echo 'attribué';  
+                $this->ModelRole->updateRole($Where);
             }
-            
+            $this->ModelRole->supprRole_tabRole($Where);
         }
-        else
-        {
-            redirect('AdminValider/GererRole');
-        }
+        
+        redirect('AdminValider/GererRole');
 
         //
     }
