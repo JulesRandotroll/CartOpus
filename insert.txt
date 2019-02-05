@@ -1,3 +1,25 @@
+Mise à jour de la BDD pour annonceur : 
+
+INSERT INTO `cartopus`.`role` (`NOROLE`, `NOMROLE`) VALUES ('0', 'Annonceur');
+UPDATE `cartopus`.`role` SET `NOROLE` = '0' WHERE `role`.`NOMROLE` = 'Annonceur' ;
+UPDATE `cartopus`.`etrepartenaire` SET `NOROLE` = '0' WHERE `NOROLE` = 2147483642 ;
+
+Mise à jour de la BDD pour Action : 
+
+ALTER TABLE `action` ADD `SIGNALIEE` BOOLEAN NOT NULL , ADD `VALIDEE` BOOLEAN NOT NULL ;
+UPDATE `cartopus`.`action` SET `VALIDEE` = 1 WHERE `action`.`VALIDEE` = 0
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

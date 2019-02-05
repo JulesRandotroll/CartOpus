@@ -30,9 +30,11 @@
         {
             $this->db->select("DISTINCT(MotCle)");
             $this->db->from("EtreTagge");
+            $this->db->order_by('MotCle');
             $requete = $this->db->get();
             return $requete->result_array();
         }
+
 
         public function getThematique_SousThematiqueExiste($Where)
         {
@@ -42,6 +44,7 @@
             $requete = $this->db->get();
             return $requete->result_array();
         }
+
 
 
 
@@ -145,6 +148,13 @@
             $this->db->delete('Thematique');
         }
 
+        public function DeleteMotcle($Where)
+        {
+            $this->db->where($Where);
+            $this->db->delete('EtreTagge'); 
+        }
+
+
         public function InsererThematique($Donnees)
         {
             $this->db->insert('Thematique',$Donnees);
@@ -164,7 +174,7 @@
             $requete = $this->db->get();
             $SousThematiques = $requete->result_array();
 
-            var_dump($SousThematiques);
+            // var_dump($SousThematiques);
 
             $this->updateSsThematique_To_Thematique($Where);
             //$this->DeleteThematique($Where);
@@ -175,8 +185,8 @@
                 $this->db->where($uneSousThematique);
                 $nb = $this->db->count_all_results();
 
-                var_dump($uneSousThematique);
-                Var_dump($nb);
+                // var_dump($uneSousThematique);
+                // Var_dump($nb);
 
                 if($nb==0)
                 {
