@@ -185,10 +185,14 @@ class AdminValider extends CI_Controller
             {
                 echo 'attribué';  
             }
+            
         }
-        
+        else
+        {
+            redirect('AdminValider/GererRole');
+        }
 
-        //redirect('AdminValider/GererRole');
+        //
     }
 
 }
