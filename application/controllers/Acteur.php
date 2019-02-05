@@ -445,13 +445,16 @@ class Acteur extends CI_Controller
         if($this->input->post('modif'))
         {
             $DateD=$this->ModelAction->getDate($noAction);
+            // var_dump($DateD[0]);
+            // var_dump($noActeur);
+            // var_dump($noAction);
             $noRole=$this->ModelMembre->GetRoles($noActeur,$noAction,$DateD[0]);
-            //var_dump($noRole);
+            var_dump($noRole);
             if($noRole[0]['norole']==0)
             {
                 $message='Cette personne est l\'annonceur de cette action, elle ne peut pas être modifiée';
                 $this->session->set_flashdata('message',$message);
-                redirect('Acteur/AfficherMembre/'.$noAction);
+                //redirect('Acteur/AfficherMembre/'.$noAction);
             }
             else
             {
@@ -464,6 +467,9 @@ class Acteur extends CI_Controller
                 );
                 //var_dump($DonnéesAUpdate);
                 $this->ModelMembre->UpdateRoleMembre($DonnéesDeTest,$DonnéesAUpdate);
+                
+                redirect('Acteur/AfficherMembre/'.$noAction);
+                
             }
         }
         else
@@ -1842,15 +1848,20 @@ class Acteur extends CI_Controller
                 'CodePostal'=>$this->input->post('CodePostal'),
                 'Ville'=>$this->input->post('Ville'),
             );
-            var_dump($DonnéesLieu);
+            //var_dump($DonnéesLieu);
             $nolieu=$this->ModelAction->getLieu($DonnéesLieu);
               
             if ($nolieu==null){
                 $Lieu=$this->ModelAction->insertLieu($DonnéesLieu);
                 $nolieu=$Lieu['noLieu'];
             }
-            var_dump($nolieu);
+            //var_dump($nolieu);
 
+            $DonnéesDeTest=array(
+                'NOMORGANISATION'=>$DonnéesOrga['NOMORGANISATION'],
+                
+            
+            );
             // secu a faire sur nom, adresse et code postal pour les doublons
             $DonnéesOrga=array(
                 'NOMORGANISATION'=>$this->input->post('NomOrga'),

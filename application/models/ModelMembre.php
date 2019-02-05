@@ -60,7 +60,7 @@
             $Wheres=array('NOACTEUR'=>$noActeur,
             'NOACTION'=>$noAction,
             'DATEDEBUT'=>$DateD['DATEDEBUT']);
-            //var_dump($Wheres);
+            var_dump($Wheres);
             $this->db->select('norole');
             $this->db->from('etrepartenaire');
             $this->db->where($Wheres);

@@ -33,24 +33,24 @@
                         
                         echo '<div class="form-group">';
                             echo form_label('Nom : ', 'Nom');
-                            echo form_input('nom',$Nom,array('placeholder'=>'Votre nom','pattern'=>'[a-zA-Z0-9" éèëïùàäüô]{1,40}','class'=>'form-control')); 
+                            echo form_input('nom',$Nom,array('placeholder'=>'Son nom','pattern'=>'[a-zA-Z0-9" éèëïùàäüô]{1,40}','class'=>'form-control')); 
                         echo '</div>';
                                 
                         echo '<div class="form-group">';
                             echo form_label('Prenom : ', 'Prenom');
-                            echo form_input('prenom',$Prenom,array('placeholder'=>'Votre prénom (facultatif)','pattern'=>'[a-zA-Z0-9" éèëïùàäüô]{1,20}','class'=>'form-control'));                          
+                            echo form_input('prenom',$Prenom,array('placeholder'=>'Son prénom (facultatif)','pattern'=>'[a-zA-Z0-9" éèëïùàäüô]{1,20}','class'=>'form-control'));                          
                         echo '</div>';
                             
                         echo '<div class="form-group">';
                         echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                             echo form_label('Mail : ', 'Mail');  
-                            echo form_input('mail',$Mail,array('required'=>'required','placeholder'=>'Votre mail. Exemple : abc@exemple.com','pattern'=>'[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})','class'=>'form-control'));
+                            echo form_input('mail',$Mail,array('required'=>'required','placeholder'=>'Son mail. Exemple : abc@exemple.com','pattern'=>'[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})','class'=>'form-control'));
                         echo '</div>';                           
                         
                         echo '<div class="form-group">';
                         echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                             echo form_label('Confirmation du Mail : ', 'ConfMail');
-                            echo form_input('confmail',$ConfMail,array('required'=>'required','placeholder'=>'Votre mail. Exemple : abc@exemple.com','pattern'=>'[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})','class'=>'form-control'));
+                            echo form_input('confmail',$ConfMail,array('required'=>'required','placeholder'=>'Son mail. Exemple : abc@exemple.com','pattern'=>'[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})','class'=>'form-control'));
                         echo '</div>';
 
                         
