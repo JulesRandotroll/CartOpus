@@ -449,7 +449,7 @@ class Acteur extends CI_Controller
             //var_dump($noRole);
             if($noRole[0]['norole']==0)
             {
-                $message='Cette personne est la créatrice de cette action, elle ne peut pas être modifiée';
+                $message='Cette personne est l\'annonceur de cette action, elle ne peut pas être modifiée';
                 $this->session->set_flashdata('message',$message);
                 redirect('Acteur/AfficherMembre/'.$noAction);
             }
@@ -512,7 +512,7 @@ class Acteur extends CI_Controller
         //var_dump($noRole);
          if($noRole[0]['norole']==0)
         {
-            $message='Cette personne est la créatrice de cette action, elle ne peut pas être supprimée';
+            $message='Cette personne est l\'annonceur de cette action, elle ne peut pas être supprimée';
             $this->session->set_flashdata('message',$message);
             redirect('Acteur/AfficherMembre/'.$noAction);
         }
@@ -830,6 +830,8 @@ class Acteur extends CI_Controller
                             'nomaction'=>$NomAction,
                             'publiccible'=>$Public,
                             'SiteURLAction'=>$SiteURL,
+                            'VALIDEE'=>true,
+                            'SIGNALEE'=>false,
                         );
 
                         $noAction = $this->ModelAction->insertAction($donnéesAction);
@@ -1288,7 +1290,8 @@ class Acteur extends CI_Controller
                         $NoActeurAjout=$this->ModelActeur->getNoActeur($Mail);
                         //var_dump($NoActeurAjout);
 
-                        $test=$this->ModelMembre->TestExiste($NoActeurAjout);
+                        var_dump($noAction);
+                        $test=$this->ModelMembre->TestExiste($NoActeurAjout,$noAction);
                         //echo ('plop?');
                         //var_dump($test);
                         if($test==null)

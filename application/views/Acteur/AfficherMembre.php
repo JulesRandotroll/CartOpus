@@ -40,7 +40,7 @@
                         }
 
                         echo'<div class="table-responsive">';
-                            $this->table->set_heading('Nom','Prenom','Mail','Responsable');
+                            $this->table->set_heading('Nom','Prenom','Mail','Représentant');
                             foreach($Membres as $unMembre)
                             {
                                 if($this->session->statut==3)

@@ -68,12 +68,13 @@
             return $requete->result_array();
         }
 
-        public function TestExiste($noActeur)
+        public function TestExiste($noActeur,$noAction)
         {
             //var_dump($noActeur);
             $this->db->select('*');
             $this->db->from('etrepartenaire');
             $this->db->where('NOACTEUR=',$noActeur[0]['NOACTEUR']);
+            $this->db->where('NOACTION=',$noAction[0]['NOACTION']);
             $requete = $this->db->get();
             return $requete->result_array();
         }
