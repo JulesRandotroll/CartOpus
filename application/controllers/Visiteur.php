@@ -204,6 +204,23 @@ class Visiteur extends CI_Controller
     }
   } // fin SInscrire
 
+  public function sInscrireVisiteur()
+  {
+
+    $DonnéesTitre = array('TitreDeLaPage'=>'Inscription Visiteur');
+
+    if ( $this->input->post('valider'))//si le bouton "Valider l'inscription" a été cliqué ...
+    {
+        
+    }
+    else
+    {
+      $this->load->view('templates/Entete',$DonnéesTitre);
+      $this->load->view('Visiteur/sInscrire');
+      $this->load->view('templates/PiedDePage');
+    }
+  }
+
   public function Validation()
   {
     $mail=$this->session->flashdata('mail');
@@ -346,6 +363,7 @@ class Visiteur extends CI_Controller
       {
         $noprofil = $this->ModelSeConnecter->GetNoProfil($donneesATester);
         $this->session->statut=$noprofil[0]['NoProfil'];
+        echo $this->session->statut;
         $noActeur = $this->ModelSeConnecter->GetNoActeur($donneesATester);
         $this->session->noActeur=$noActeur[0]['NoActeur'];
 

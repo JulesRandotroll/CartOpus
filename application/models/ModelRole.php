@@ -61,14 +61,16 @@
 
         public function supprRole_tabRole($RoleASupr)
         {
+            
             $this->db->where($RoleASupr);
             $this->db->delete('role');
         }
 
-        public function supprRole_tabEtrePartenaire($RoleASupr)
+        public function updateRole($RoleASupr)
         {
+            $Modif=array('norole'=>1);
             $this->db->where($RoleASupr);
-            $this->db->delete('etrePartenaire');
+            $this->db->update('etrePartenaire',$Modif);
         }
     }
 ?>

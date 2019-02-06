@@ -58,7 +58,7 @@ $(document).ready(function(){
         {
             icon: 'glyphicon glyphicon-alert',
             title: 'Attention',
-            content: 'Voulez vous vraiment supprimer ce rôle ?',
+            content: 'Ce rôle est attribué à un ou plusieurs acteurs, voulez-vous tout de même le supprimer ?',
             type: 'red',
             typeAnimated: true,
             autoClose:"non|10000",

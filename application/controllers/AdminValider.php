@@ -11,18 +11,15 @@ class AdminValider extends CI_Controller
         $this->load->library('email');
         $this->load->library('table');
         $this->load->helper('form');
-        $this->load->model('ModelSeConnecter');
-        $this->load->model('ModelSInscrire'); // on charge le modele correspondant
+
         $this->load->model('ModelAction');
-        $this->load->library('session');
-        $this->load->model('ModelOrga');
-        $this->load->model('ModelRecherche');
-        $this->load->model('ModelActeur');
         $this->load->model('ModelRole');
         $this->load->model('ModelThematique');
+        
+        $this->load->library('session');
         $this->load->library("pagination");
 
-        if($this->session->statut < 4)
+        if($this->session->statut != 4 && $this->session->statut != 5)
         {
             redirect('Visiteur/loadAccueil');
         }
@@ -31,9 +28,17 @@ class AdminValider extends CI_Controller
 
     public function AccueilAdminValider()
     {
+
+        $Where =array('SIGNALEE'=>true);
+        $Actions = $this->ModelAction->getActionsSignalees();
+
+        $DonneesInjectees = array(
+            'Actions'=>$Actions,
+        );
+
         $DonneesTitre = array('TitreDeLaPage'=>'Accueil');
         $this->load->view('templates/Entete',$DonneesTitre);
-        $this->load->view('AdminValider/AccueilAdminValider');
+        $this->load->view('AdminValider/AccueilAdminValider',$DonneesInjectees);
         $this->load->view('templates/PiedDePage');
     }
 
@@ -137,29 +142,19 @@ class AdminValider extends CI_Controller
         }
         
         
-        if($this->input->post('AjoutRole'))
+        if($this->session->flashdata('Message')!= null)
         {
-            $Where = array('nomRole'=>$this->input->post('nouvRole'));
-            $Array;
-            $test = $this->ModelRole->getRoleExist($Where);
-
-            if($test)
-            {
-                $this->ModelRole->insertRole($Where);
-
-                $DonneesInjectees = array(
-                    'Roles'=>$Array,
-                    'Message'=>'Insertion effectuee',
-                );
-            }
-            else
-            {
-                $DonneesInjectees = array(
-                    'Roles'=>$Array,
-                    'Attention'=>'Ce role existe déjà'
-                );
-            }
-
+            $DonneesInjectees = array(
+                'Message'=>$this->session->flashdata('Message'),
+                'Roles'=>$Array,
+            );
+        }
+        elseif($this->session->flashdata('Attention')!= null)
+        {
+            $DonneesInjectees = array(
+                'Roles'=>$Array,
+                'Attention'=>$this->session->flashdata('Attention'),
+            );
         }
         else
         {
@@ -167,6 +162,7 @@ class AdminValider extends CI_Controller
                 'Roles'=>$Array,
             );
         }
+        
 
         
         //var_dump($DonneesInjectees);
@@ -177,18 +173,42 @@ class AdminValider extends CI_Controller
         $this->load->view('templates/PiedDePage');
     }
     
+    public function AjouterRole()
+    {
+        $Where = array('nomRole'=>$this->input->post('nouvRole'));
+        $test = $this->ModelRole->getRoleExist($Where);
+        //Test = true si l'action n'a pas déjà été créée
+        if($test)
+        {
+            $this->ModelRole->insertRole($Where);
+
+            $this->session->set_flashdata('Message','Insertion effectuee');
+        }
+        else
+        {
+            $this->session->set_flashdata('Attention','Ce rôle existe déjà');
+        }
+        
+        redirect('AdminValider/GererRole');
+        
+    }
+
     public function SupprimerRole($Attribue,$norole)
     {
         if($norole != 0)
         {
+            $Where = array('noRole'=>$norole);
             if($Attribue==1)
             {
-                echo 'attribué';  
+                $this->ModelRole->updateRole($Where);
             }
+            $this->ModelRole->supprRole_tabRole($Where);
+            $this->session->set_flashdata('Message','Suppression effectuée');
         }
         
+        redirect('AdminValider/GererRole');
 
-        //redirect('AdminValider/GererRole');
+        //
     }
 
 }

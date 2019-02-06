@@ -87,7 +87,7 @@
                         echo '<div class="form-group">';
                         echo '<span style="color:#FF0000"/> * </span>';
                         echo form_label('Message : ', 'mess');
-                        echo form_textarea('Message','',array('required'=>'required','placeholder'=>'Expliquez ici le motif de votre contacte','class'=>'form-control','pattern'=>'[a-zA-Z0-9" éèëïùàäüô])); 
+                        echo form_textarea('Message','',array('required'=>'required','placeholder'=>'Expliquez ici le motif de votre contacte','class'=>'form-control','pattern'=>'[a-zA-Z0-9" éèëïùàäüô]')); 
                         echo '</div>';
 
                         echo '<div class="text-right">';

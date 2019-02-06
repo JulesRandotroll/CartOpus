@@ -15,6 +15,8 @@ class Acteur extends CI_Controller
         $this->load->model('ModelActeur');
         $this->load->model('ModelAction');
         $this->load->model('ModelMembre');
+        $this->load->model('ModelThematique');
+        $this->load->model('ModelOrga');
         $this->load->library('upload');
  
         //var_dump($this->session->statut);
@@ -350,6 +352,11 @@ class Acteur extends CI_Controller
             $noAction=$this->input->post('Action');
             redirect('Acteur/AfficherActionSelectionnee/'.$noAction); 
         }
+        if($this->input->post('Choix_Lier'))
+        {
+            $noAction=$this->input->post('Action');
+            redirect('Acteur/AjoutThematique/'); 
+        }
         else
         {
             //$noActeur = $this->session->noActeur;
@@ -438,13 +445,16 @@ class Acteur extends CI_Controller
         if($this->input->post('modif'))
         {
             $DateD=$this->ModelAction->getDate($noAction);
+            // var_dump($DateD[0]);
+            // var_dump($noActeur);
+            // var_dump($noAction);
             $noRole=$this->ModelMembre->GetRoles($noActeur,$noAction,$DateD[0]);
-            //var_dump($noRole);
+            var_dump($noRole);
             if($noRole[0]['norole']==0)
             {
-                $message='Cette personne est la créatrice de cette action, elle ne peut pas être modifiée';
+                $message='Cette personne est l\'annonceur de cette action, elle ne peut pas être modifiée';
                 $this->session->set_flashdata('message',$message);
-                redirect('Acteur/AfficherMembre/'.$noAction);
+                //redirect('Acteur/AfficherMembre/'.$noAction);
             }
             else
             {
@@ -457,6 +467,9 @@ class Acteur extends CI_Controller
                 );
                 //var_dump($DonnéesAUpdate);
                 $this->ModelMembre->UpdateRoleMembre($DonnéesDeTest,$DonnéesAUpdate);
+                
+                redirect('Acteur/AfficherMembre/'.$noAction);
+                
             }
         }
         else
@@ -505,7 +518,7 @@ class Acteur extends CI_Controller
         //var_dump($noRole);
          if($noRole[0]['norole']==0)
         {
-            $message='Cette personne est la créatrice de cette action, elle ne peut pas être supprimée';
+            $message='Cette personne est l\'annonceur de cette action, elle ne peut pas être supprimée';
             $this->session->set_flashdata('message',$message);
             redirect('Acteur/AfficherMembre/'.$noAction);
         }
@@ -823,6 +836,8 @@ class Acteur extends CI_Controller
                             'nomaction'=>$NomAction,
                             'publiccible'=>$Public,
                             'SiteURLAction'=>$SiteURL,
+                            'VALIDEE'=>true,
+                            'SIGNALEE'=>false,
                         );
 
                         $noAction = $this->ModelAction->insertAction($donnéesAction);
@@ -1281,9 +1296,11 @@ class Acteur extends CI_Controller
                         $NoActeurAjout=$this->ModelActeur->getNoActeur($Mail);
                         //var_dump($NoActeurAjout);
 
-                        $test=$this->ModelMembre->TestExiste($NoActeurAjout);
+                        // var_dump($noAction);
+                        $test=$this->ModelMembre->TestExiste($NoActeurAjout,$noAction);
                         //echo ('plop?');
-                        //var_dump($test);
+                        // var_dump($test);
+                        // var_dump($Role);
                         if($test==null)
                         {
                             $donnéesEtrePartenaire=array(
@@ -1304,7 +1321,7 @@ class Acteur extends CI_Controller
                             // var_dump($donnéesProfilPourAction);  
                             $this->ModelMembre->insertEtrePartenaire($donnéesEtrePartenaire);
                             $this->ModelMembre->insertProfilPourAction($donnéesProfilPourAction);  
-                            redirect('Acteur/AfficherMembre/'.$noAction);
+                            //redirect('Acteur/AfficherMembre/'.$noAction);
                         }
                         else
                         {
@@ -1360,13 +1377,22 @@ class Acteur extends CI_Controller
         $this->session->statut=array('NOPROFIL'=>$profil);
         redirect('Acteur/AfficherMembre/'.$noAction);
     }
-    public function AjoutThematique($NomAction)
+    public function AjoutThematique()
     {
         // sortir toutes les thématiques dans faire références puis recup le nom correspondant puis les injectées
-        $DonnéesAInjecter=array(
-            'NomAction'=>$NomAction,
-        );
+        $noActeur = $this->session->noActeur;
+
+        
+        $Thematique=$this->ModelThematique->getTheme_SousTheme();
+        //var_dump($Thematique);
+        $MotCle=$this->ModelThematique->getMotCle();
+       // var_dump($MotCle);
         $DonnéesTitre = array('TitreDeLaPage'=>'Ajout Thématique');
+        $DonnéesAInjecter=array(
+            'theme'=>$Thematique,
+            'motcle'=>$MotCle,
+        );
+
         $this->load->view('templates/Entete',$DonnéesTitre);
         $this->load->view('Acteur/AjoutThematique',$DonnéesAInjecter);
         $this->load->view('templates/PiedDePage');
@@ -1812,6 +1838,61 @@ class Acteur extends CI_Controller
 
         redirect('Acteur/AfficherActionSelectionnee/'.$noAction);
      
+    }
+
+    public function AjoutOrga()
+    {
+        if ($this->input->post('Ajouter'))
+        {
+            $DonnéesLieu=array(
+                'ADRESSE'=>$this->input->post('Adresse'),
+                'CodePostal'=>$this->input->post('CodePostal'),
+                'Ville'=>$this->input->post('Ville'),
+            );
+            //var_dump($DonnéesLieu);
+            $nolieu=$this->ModelAction->getLieu($DonnéesLieu);
+              
+            if ($nolieu==null){
+                $Lieu=$this->ModelAction->insertLieu($DonnéesLieu);
+                $nolieu=$Lieu['noLieu'];
+            }
+            //var_dump($nolieu);
+
+            $DonnéesDeTest=array(
+                'NOMORGANISATION'=>$DonnéesOrga['NOMORGANISATION'],
+                
+            
+            );
+            // secu a faire sur nom, adresse et code postal pour les doublons
+            $DonnéesOrga=array(
+                'NOMORGANISATION'=>$this->input->post('NomOrga'),
+                'NOLIEU'=>$nolieu[0]['nolieu'],
+                'NOTELORGA'=>$this->input->post('tel'),
+                'NOFAXORGA'=>$this->input->post('fax'),
+                'SiteURL'=>$this->input->post('SiteURL'),
+            );
+
+            $this->ModelOrga->insertOrga($DonnéesOrga); 
+        }
+        else
+        {
+            $DonnéesTitre = array('TitreDeLaPage'=>'Ajout Organisation');
+            $DonnéesAInjecter=array(
+                'message'=>'',
+                'NomOrga'=>'',
+                'Adresse'=>'',
+                'CodePostal'=>'',
+                'tel'=>'',
+                'fax'=>'',
+                'Ville'=>'',
+                'SiteURL'=>'',
+    
+            );
+            $this->load->view('templates/Entete',$DonnéesTitre);
+            $this->load->view('Acteur/AjoutOrga',$DonnéesAInjecter);
+            $this->load->view('templates/PiedDePage'); 
+        }
+        
     }
 
 }

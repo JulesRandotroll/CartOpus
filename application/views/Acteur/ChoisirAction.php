@@ -60,6 +60,11 @@
                         echo form_open('Acteur/SupprimerAction',array("id"=>"form_suppr"));
                         $page="Supprimer";
                     }
+                    if ($page ==6)
+                    {
+                        echo form_open('Acteur/ChoixAction/6');
+                        $page="Lier";
+                    }
 
                         echo '<div class="form-group">';
                         echo form_label('Action choisie : ', 'Action');

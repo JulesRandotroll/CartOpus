@@ -34,6 +34,8 @@
            $this->db->from('etrepartenaire');
            $this->db->join('acteur','etrepartenaire.noActeur=acteur.noActeur');
            $this->db->join('profilpouraction','etrepartenaire.noActeur=profilpouraction.noActeur');
+           $this->db->join('role','etrepartenaire.norole=role.norole');
+           $this->db->where('etrepartenaire.noAction=profilpouraction.noAction');
            $this->db->where('profilpouraction.NOACTION',$noAction);
            $this->db->group_by('etrepartenaire.noacteur'); 
            $requete = $this->db->get();
@@ -60,7 +62,7 @@
             $Wheres=array('NOACTEUR'=>$noActeur,
             'NOACTION'=>$noAction,
             'DATEDEBUT'=>$DateD['DATEDEBUT']);
-            //var_dump($Wheres);
+            var_dump($Wheres);
             $this->db->select('norole');
             $this->db->from('etrepartenaire');
             $this->db->where($Wheres);
@@ -68,12 +70,13 @@
             return $requete->result_array();
         }
 
-        public function TestExiste($noActeur)
+        public function TestExiste($noActeur,$noAction)
         {
-            //var_dump($noActeur);
+            //var_dump($noAction);
             $this->db->select('*');
             $this->db->from('etrepartenaire');
             $this->db->where('NOACTEUR=',$noActeur[0]['NOACTEUR']);
+            $this->db->where('NOACTION=',$noAction);
             $requete = $this->db->get();
             return $requete->result_array();
         }
