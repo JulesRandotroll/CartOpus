@@ -62,12 +62,12 @@
 
                         echo '<div class="form-group">';
                             echo form_label('Telephone : ', 'Telephone');
-                            echo form_input('tel',$tel,array('pattern'=>'[0-9]{10}','placeholder'=>'Votre numero de téléphone (facultatif)','class'=>'form-control'));
+                            echo form_input('tel',$tel,array('pattern'=>'(01|02|03|04|05|06|07|08|09)[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}','placeholder'=>'Votre numero de téléphone (facultatif)','class'=>'form-control'));
                         echo '</div>';
 
                         echo '<div class="form-group">';
                             echo form_label('Fax : ', 'fax');
-                            echo form_input('fax',$fax,array('pattern'=>'[0-9]{10}','placeholder'=>'Votre numero de fax (facultatif)','class'=>'form-control'));
+                            echo form_input('fax',$fax,array('pattern'=>'(01|02|03|04|05|06|07|08|09)[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}','placeholder'=>'Votre numero de fax (facultatif)','class'=>'form-control'));//
                         echo '</div>';
                         
                         echo '<div class="form-group">';

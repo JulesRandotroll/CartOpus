@@ -48,5 +48,12 @@
             $requete = $this->db->get();
             return $requete->result_array();
         }
+        public function GetOrgas()
+        {
+            $this->db->select('*');
+            $this->db->from('Organisation');
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
     }
 ?>

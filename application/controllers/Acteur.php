@@ -1851,10 +1851,11 @@ class Acteur extends CI_Controller
             );
             //var_dump($DonnéesLieu);
             $nolieu=$this->ModelAction->getLieu($DonnéesLieu);
-            //var_dump($nolieu);
+            
             if ($nolieu==null){
                 $Lieu=$this->ModelAction->insertLieu($DonnéesLieu);
-                $nolieu=$Lieu['noLieu'];
+                //var_dump($Lieu);
+                $nolieu=$Lieu;
             }
             //var_dump($nolieu);
             $DonnéesOrga=array(
@@ -1875,7 +1876,7 @@ class Acteur extends CI_Controller
             {
                 $this->ModelOrga->insertOrga($DonnéesOrga);
                 
-                redirect('Acteur/AccueilActeur');
+                redirect('Acteur/LieOrgaActeur');
                  
             }
             else
@@ -1920,14 +1921,34 @@ class Acteur extends CI_Controller
         
     }
 
-    public function LieOrgaActeur($noActeur)
+    public function LieOrgaActeur()
     {
-        $noActeur=$this->session->noActeur;
-        var_dump($noActeur);
-        $DonnéesTitre = array('TitreDeLaPage'=>'Lié Organisation/Acteur');
-        $this->load->view('templates/Entete',$DonnéesTitre);
-        $this->load->view('Acteur/LieOrgaActeur');
-        $this->load->view('templates/PiedDePage');
+            $noActeur=$this->session->noActeur;
+            //var_dump($noActeur);
+            $Organisation = $this->ModelOrga->GetOrgas();
+            //JEN SUIS LAc
+            foreach($Organisation as $uneOrganisation)
+            {
+                if(empty($Options))
+                {
+                    //$base=array('<a href="'.site_url('Acteur/AjoutOrga').'" style="color:#FFFFFF"></a>'=>'Ajouter une nouvelle organisation');
+                    $Options = array($uneOrganisation['NO_ORGANISATION']=>$uneOrganisation['NOMORGANISATION']);
+                    //$Options=$Options+$base;
+                }
+                else
+                {
+                    $temporaire =  array($uneOrganisation['NO_ORGANISATION']=>$uneOrganisation['NOMORGANISATION']);
+                    $Options = $Options + $temporaire;
+                }
+            }
+            $DonnéesAInjecter=array('Organisations'=>$Organisation);
+            //var_dump($DonnéesAInjecter);
+            $DonnéesTitre = array('TitreDeLaPage'=>'Lié Organisation/Acteur');
+            $this->load->view('templates/Entete',$DonnéesTitre);
+            $this->load->view('Acteur/LieOrgaActeur',$DonnéesAInjecter);
+            $this->load->view('templates/PiedDePage');
+        
+        
     }
 }
 ?>
