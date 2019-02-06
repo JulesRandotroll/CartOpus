@@ -50,6 +50,26 @@
             return $requete->result_array();
         }
 
+        public function getActionsSignalees()
+        {
+            /*
+            SELECT NOMACTION, PublicCible, e.DateDebut, NomActeur,PrenomActeur,SIGNALEE 
+            FROM action a, etrePartenaire e, Acteur ac 
+            WHERE a.noAction = e.noaction 
+            AND e.noActeur=ac.noActeur 
+            AND noRole=0 AND a.SIGNALEE > 0
+            */
+            $this->db->select('*');
+            $this->db->from('Action a');
+            $this->db->join('etrePartenaire e','e.noAction=a.noAction');
+            $this->db->join('Acteur ac','ac.noActeur=e.noActeur');
+            $this->db->where('Norole=0');
+            $this->db->where('Signalee > 0');
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
+
         public function getUneSousAction($DonnéesDeTest)
         {
             //var_dump($DonnéesDeTest);
@@ -60,6 +80,7 @@
             $requete = $this->db->get();
             return $requete->result_array();
         }
+
         public function Test($DonnéesDeTest,$DateD)
         {
             //var_dump($DateD);
@@ -192,6 +213,9 @@
             $requete = $this->db->get();
             return $requete->result_array();
         }
+
+
+
 
 
         public function UpdateAction($NoAction,$DonneesAModifier)

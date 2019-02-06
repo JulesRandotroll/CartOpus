@@ -34,6 +34,7 @@
            $this->db->from('etrepartenaire');
            $this->db->join('acteur','etrepartenaire.noActeur=acteur.noActeur');
            $this->db->join('profilpouraction','etrepartenaire.noActeur=profilpouraction.noActeur');
+           $this->db->join('role','etrepartenaire.norole=role.norole');
            $this->db->where('etrepartenaire.noAction=profilpouraction.noAction');
            $this->db->where('profilpouraction.NOACTION',$noAction);
            $this->db->group_by('etrepartenaire.noacteur'); 

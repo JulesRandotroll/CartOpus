@@ -40,7 +40,7 @@
                         }
 
                         echo'<div class="table-responsive">';
-                            $this->table->set_heading('Nom','Prenom','Mail','Représentant');
+                            $this->table->set_heading('Nom','Prenom','Mail','Role','Représentant','');
                             foreach($Membres as $unMembre)
                             {
                                 if($this->session->statut==3)
@@ -70,7 +70,7 @@
                                         }
                                         
                                     }
-                                    $this->table->add_row($unMembre['NOMACTEUR'],$unMembre['PRENOMACTEUR'],$unMembre['MAIL'],$cbx,'<a href="'.site_url('Acteur/ModifierMembre/'.$unMembre['NOACTEUR'].'/'.$noAction).'" class="btn btn-danger" ><span class="glyphicon glyphicon-pencil"></a> <a href="#" class="btn btn-danger trash_Supprimer" id="'.$unMembre["NOACTEUR"].'" ><span class="glyphicon glyphicon-trash"></a>'); 
+                                    $this->table->add_row($unMembre['NOMACTEUR'],$unMembre['PRENOMACTEUR'],$unMembre['MAIL'],$unMembre['NOMROLE'],$cbx,'<a href="'.site_url('Acteur/ModifierMembre/'.$unMembre['NOACTEUR'].'/'.$noAction).'" class="btn btn-danger" ><span class="glyphicon glyphicon-pencil"></a> <a href="#" class="btn btn-danger trash_Supprimer" id="'.$unMembre["NOACTEUR"].'" ><span class="glyphicon glyphicon-trash"></a>'); 
                                 }
                                 else
                                 {

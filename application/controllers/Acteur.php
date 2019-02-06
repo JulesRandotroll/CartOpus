@@ -409,7 +409,7 @@ class Acteur extends CI_Controller
 
         $DonnéesTitre = array('TitreDeLaPage'=>'Afficher les membres de l\'équipe');
         $Membres=$this->ModelMembre->GetMembre($noAction);
-        var_dump($Membres);
+        //var_dump($Membres);
         if($this->session->flashdata('message')!=null)
         {
             $DonneesInjectees=array(
