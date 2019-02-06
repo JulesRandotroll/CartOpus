@@ -19,6 +19,7 @@ class Visiteur extends CI_Controller
       $this->load->model('ModelOrga');
       $this->load->model('ModelRecherche');
       $this->load->model('ModelActeur');
+      $this->load->model('ModelCommentaire');
       $this->load->library("pagination");
   } // __construct
 
@@ -938,6 +939,7 @@ class Visiteur extends CI_Controller
   {
       $Where = array('a.noAction'=>$noAction);
       $Actions = $this->ModelAction->getAction($Where);
+      $Commentaire = $this->input->post('Commentaire');
 
       $DateDebut=$Actions[0]['DATEDEBUT'];
       
@@ -961,6 +963,10 @@ class Visiteur extends CI_Controller
       
       $DonnéesTitre = array('TitreDeLaPage'=>$Actions[0]['NOMACTION']);
       
+      $Données['lesVisiteurs'] = $this->ModelCommentaire->getCommentaireVisiteur($noAction);
+      $Données['lesMotCles'] = $this->ModelAction->getMotClePourAction($noAction);
+      $Données['lesPartenaires'] = $this->ModelAction->getPartenaire($noAction);
+
       $this->load->view('templates/Entete',$DonnéesTitre);
       $this->load->view('Visiteur/AfficherAction',$Données);
       $this->load->view('templates/PiedDePage');
@@ -1002,6 +1008,35 @@ class Visiteur extends CI_Controller
       $this->load->view('templates/PiedDePage');
 
   }
+
+  public function AjouterCommentaire($noAction)
+  {
+
+    if($this->input->post('Commenter'))
+    {
+      $Commentaire = $this->input->post('Commentaire');
+      $noVisiteur = $this->session->noVisiteur;
+      $toDay = date('Y-m-d H:i');
+      $Action=$this->ModelAction->getActionSimple($noAction);
+
+      $donneeAinserer = array
+      (
+        'DateHeure' => $toDay,
+        'NoAction' => $noAction,
+        'NomVisiteur' => 'VOYER',
+        'Commentaire' => $Commentaire,
+      );
+
+      
+      $DonneesInjectees = $this->ModelCommentaire->insererCommentaireVisiteur($donneeAinserer);
+      redirect('Visiteur/AfficherAction/'.$noAction);
+    }
+    else
+    {
+      $this->AfficherAction($noAction);
+    }
+  }
+
 
 }//Fin Visiteur
 

@@ -6,7 +6,7 @@ UPDATE `cartopus`.`etrepartenaire` SET `NOROLE` = '0' WHERE `NOROLE` = 214748364
 
 Mise à jour de la BDD pour Action : 
 
-ALTER TABLE `action` ADD `SIGNALIEE` BOOLEAN NOT NULL , ADD `VALIDEE` BOOLEAN NOT NULL ;
+ALTER TABLE `action` ADD `SIGNALEE` BOOLEAN NOT NULL , ADD `VALIDEE` BOOLEAN NOT NULL ;
 UPDATE `cartopus`.`action` SET `VALIDEE` = 1 WHERE `action`.`VALIDEE` = 0
 
 
