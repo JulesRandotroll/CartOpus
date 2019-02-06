@@ -45,21 +45,21 @@
             {
                 echo '<div class="alert alert-success alert-dismissible">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Message</strong>'.$Message.'
+                <strong>Message</strong> '.$Message.'
             </div>';
             }
             elseif(isset($Attention))
             {
                 echo '<div class="alert alert-warning alert-dismissible">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Attention</strong>'.$Attention.'
+                <strong>Attention</strong> '.$Attention.'
             </div>';
             }
             elseif(isset($Danger))
             {
                 echo '<div class="alert alert-danger alert-dismissible">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Attention ! </strong>'.$Danger.'
+                <strong>Attention ! </strong> '.$Danger.'
             </div>';
             }
         ?>
@@ -75,7 +75,7 @@
         <section >
             <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                 <?php 
-                    echo form_open('AdminValider/GererRole')."<BR>";
+                    echo form_open('AdminValider/AjouterRole')."<BR>";
                 ?>
                 <div class="form-group">
                     <?php

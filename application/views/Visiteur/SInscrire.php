@@ -14,9 +14,17 @@
     </div>
     <div class="col-sm-6" style="padding:20px">
         <div style="padding:20px">
+            <div class="text-right">
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
+                    <label class="custom-control-label" for="customSwitch1">Toggle this switch element</label>
+                    <input type="checkbox" data-toggle="toggle">
+                </div>
+            </div>
             <div class='text-center'>
                 <H1 style="color:#FFFFFF">Inscription</H1>
             </div>
+            
             <section >
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <H4>
@@ -155,6 +163,17 @@
         </div>
     </div>    
 </div>
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+<input id="toggle-one" checked type="checkbox">
+<script>
+  $(function() {
+    $('#toggle-one').bootstrapToggle();
+  })
+</script>
+
+
 
 <script>
 $(document).ready(function(){

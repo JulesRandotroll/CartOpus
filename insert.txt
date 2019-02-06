@@ -1,3 +1,25 @@
+Mise à jour BDD Visiteur
+
+CREATE TABLE IF NOT EXISTS `visiteur` (
+  `noVisiteur` int(11) NOT NULL AUTO_INCREMENT,
+  `pseudo` varchar(64) NOT NULL,
+  `mdp` varchar(64) NOT NULL,
+  `mail` int(11) NOT NULL,
+  PRIMARY KEY (`noVisiteur`),
+  UNIQUE KEY `pseudo` (`pseudo`,`mail`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+ALTER TABLE `visiteur` CHANGE `mail` `mail` VARCHAR(128) NOT NULL;
+
+
+//Nécessite manipulation 
+ALTER TABLE `commentervisiteur` ADD CONSTRAINT `commentervisiteur_ibfk_2` FOREIGN KEY (`NOVISITEUR`) REFERENCES `cartopus`.`visiteur`(`noVisiteur`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+
+
+
+
+
+
 Mise à jour de la BDD pour annonceur : 
 
 INSERT INTO `cartopus`.`role` (`NOROLE`, `NOMROLE`) VALUES ('0', 'Annonceur');
