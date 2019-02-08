@@ -12,6 +12,9 @@
 </div>
 
 <script src="<?php echo js_url('js_lieOrgaActeur'); ?>"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
 <div class="row" style="background-color:#15B7D1;padding:20px" id="action">
     <!-- <div class="col-lg-2">
     </div> -->

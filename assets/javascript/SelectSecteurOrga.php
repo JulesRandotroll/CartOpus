@@ -27,7 +27,7 @@
     {
         echo $msgRetour;
     }
-     echo '<li><a href="AjoutSecteur">Ajouter un Secteur</a></li>' ;
+     echo '<li class="secteur"><a value="0">Ajouter un Secteur</a></li>' ;
     //return $msgRetour;
     mysqli_close($cnx);
 
