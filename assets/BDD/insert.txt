@@ -1,3 +1,55 @@
+Modification signalement
+
+CREATE TABLE IF NOT EXISTS `signalement` (
+  `noSignalement` int(11) NOT NULL AUTO_INCREMENT,
+  `libelleSignalement` varchar(256) NOT NULL,
+  PRIMARY KEY (`noSignalement`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE IF NOT EXISTS `etresignalee` (
+  `noAction` int(11) NOT NULL,
+  `noSignalement` int(11) NOT NULL,
+  PRIMARY KEY (`noAction`,`noSignalement`),
+  KEY `noSignalementKey` (`noSignalement`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+ALTER TABLE `etresignalee`
+ADD CONSTRAINT `noSignalementKey` FOREIGN KEY (`noSignalement`) REFERENCES `signalement` (`noSignalement`),
+ADD CONSTRAINT `noActionKey` FOREIGN KEY (`noAction`) REFERENCES `action` (`NOACTION`);
+
+ALTER TABLE `action` DROP `SIGNALEE`;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Mise à jour BDD Visiteur
 
 CREATE TABLE IF NOT EXISTS `visiteur` (

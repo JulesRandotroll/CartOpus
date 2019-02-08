@@ -14,19 +14,16 @@
     </div>
     <div class="col-sm-6" style="padding:20px">
         <div style="padding:20px">
-            <div class="text-right">
-                <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
-                    <label class="custom-control-label" for="customSwitch1">Toggle this switch element</label>
-                    <input type="checkbox" data-toggle="toggle">
-                </div>
-            </div>
             <div class='text-center'>
-                <H1 style="color:#FFFFFF">Inscription</H1>
+                <H1 style="color:#FFFFFF">Inscription Acteur</H1>
             </div>
             
             <section >
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
+                    <div class="text-right">
+                        <label> Changer de mode d'inscription :  </label>
+                        <input id='transition' type="checkbox" data-toggle="toggle" data-on="Acteur" data-off="Visiteur" data-onstyle="danger" data-offstyle="info" data-style="ios">
+                    </div>
                     <H4>
                     <?php
                         echo validation_errors(); // mise en place de la validation
@@ -165,18 +162,12 @@
 </div>
 <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<script src="<?php echo js_url('js_inscription') ?>"></script>
 
-<input id="toggle-one" checked type="checkbox">
-<script>
-  $(function() {
-    $('#toggle-one').bootstrapToggle();
-  })
-</script>
+<style>
+  .slow .toggle-group { transition: left 0.7s; -webkit-transition: left 0.7s; }
+  .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; }
+  .toggle.ios .toggle-handle { border-radius: 20px; }
+</style>
 
 
-
-<script>
-$(document).ready(function(){
-$('[data-toggle="popover"]').popover();
-});
-</script>
