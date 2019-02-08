@@ -2,6 +2,7 @@
 <?php
                             if($this->session->statut ==5)
                             {
+                                echo'<li><a href="#" style="color:#FFFFFF"><span class="glyphicon glyphicon-remove"></span> Invalider l\'action</a></li>';
                                 echo '<li><a href="'.site_url('SuperAdmin/AjouterThematique').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-plus"></span> Ajouter Thématique</a></li>';
                                 echo '<li><a href="'.site_url('SuperAdmin/AffecterProfil/0').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-user"></span> Affecter un profil à un Utilisateur</a></li>';
                                 echo'<li><a href="'.site_url('SuperAdmin/AccueilSuperAdmin').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso</a></li>';
@@ -9,8 +10,9 @@
                             }
                             elseif($this->session->statut==4)
                             {
-                                echo'<li><a href="'.site_url('#').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso</a></li>'; 
-                                echo'<li><a href="'.site_url('#').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se deconnecter</a></li>'; 
+                                echo'<li><a href="#" style="color:#FFFFFF"><span class="glyphicon glyphicon-remove"></span> Invalider l\'action</a></li>';
+                                echo'<li><a href="'.site_url('AdminValider/AccueilAdminValider').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso</a></li>'; 
+                                echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se deconnecter</a></li>'; 
                             }
                             elseif($this->session->statut==1)
                             {

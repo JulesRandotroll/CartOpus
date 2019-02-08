@@ -214,8 +214,15 @@ class Visiteur extends CI_Controller
     }
     else
     {
+      $DonneesInjectees=array(
+        'nom'=>'',
+        'mail'=>'',
+        ''
+      );
+
+
       $this->load->view('templates/Entete',$DonnéesTitre);
-      $this->load->view('Visiteur/sInscrire');
+      $this->load->view('Visiteur/SInscrireVisiteur',$DonneesInjectees);
       $this->load->view('templates/PiedDePage');
     }
   }
