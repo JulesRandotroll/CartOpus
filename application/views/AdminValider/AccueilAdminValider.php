@@ -32,9 +32,61 @@
             <H1 align = "center" style="color:#FFFFFF">Accueil</H1><BR>
             <section >
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
-                    <?php 
-                        var_dump($Actions)
-                    ?>                    
+                    <table class="table">
+                        <tr>
+                            <th>
+                                Nom Action    
+                            </th>
+                            <th>
+                                Public ciblé
+                            </th>
+                            <th>
+                                Date début
+                            </th>
+                            <th>
+                                Acteur
+                            </th>
+                            <th>
+                                Signalement(s)
+                            </th>
+                            <th>
+                            
+                            </th>
+                        </tr>
+                        <?php 
+                            
+                            foreach($Actions as $uneAction)
+                            {
+                                echo '<tr>';
+                                    echo '<td>';
+                                        echo '<a href="'.site_url('Visiteur/AfficherAction/'.$uneAction['NOACTION']).'" style="color:#FFFFFF">'.
+                                            $uneAction['NOMACTION'].
+                                        '</a>';
+                                    echo '</td>';
+                                    echo '<td>';
+                                        echo $uneAction['PublicCible'];
+                                    echo '</td>';    
+                                    echo '<td>';
+                                        echo $uneAction['DATEDEBUT'];
+                                    echo '</td>';
+                                    echo '<td>';
+                                        echo '<a href="'.site_url('Visiteur/AfficherActeurAction/'.$uneAction['NOACTEUR']).'" style="color:#FFFFFF">'
+                                            .$uneAction['NOMACTEUR'].' '.$uneAction['PRENOMACTEUR'].
+                                        '</a>';
+                                    echo '</td>';
+                                    echo '<td class="text-center">';
+                                        echo $uneAction['SIGNALEE'];
+                                    echo '</td>';
+                                    echo '<td>';
+                                        echo form_open('AdminValider/InvaliderAction/'.$uneAction['NOACTION']);
+                                            echo form_submit('Invalider', 'Invalider',array('class'=>'btn btn-danger'));
+                                        echo form_close();
+                                    echo '</td>';
+                                echo '</tr>';
+
+                            }
+                        ?>                 
+                    </table>   
                 </div>
             </section>
             <BR>

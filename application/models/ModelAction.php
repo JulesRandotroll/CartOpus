@@ -69,6 +69,18 @@
             return $requete->result_array();
         }
 
+        public function getAnnonceur($noAction)
+        {
+            $this->db->select('*');
+            $this->db->from('Action a');
+            $this->db->join('etrePartenaire e','e.noAction=a.noAction');
+            $this->db->join('Acteur ac','ac.noActeur=e.noActeur');
+            $this->db->where('a.noaction',$noAction);
+            $this->db->where('NOROLE=0');
+            $this->db->order_by('SIGNALEE ASC');
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
 
         public function getUneSousAction($DonnéesDeTest)
         {
@@ -241,17 +253,18 @@
         
         public function UpdateAvoirLieu($DonnéesDeTest,$DonneesAModifier)
         { 
-            //echo("ddt");
-            //var_dump($DonnéesDeTest);
-            echo("dam");
-            var_dump($DonneesAModifier);
-
+            
             $Donnees = array('DATEDEBUT'=>$DonneesAModifier['DateDebut'],'DATEFIN'=>$DonneesAModifier['DateFin'],'TitreAction'=>$DonneesAModifier['TitreAction'],'Description'=>$DonneesAModifier['Description'],'NOLIEU'=>$DonneesAModifier['NOLIEU']);
-            //var_dump($Donnees);
             $this->db->where($DonnéesDeTest);
             $this->db->update('avoirlieu',$Donnees);
         }
         
+        public function updateValider($Where,$Valid)
+        {
+            $this->db->where($Where);
+            $this->db->update('Action',$Valid);
+        }
+
         public function UpdateEtrePartenaire($DonnéesDeTest,$DonneesAModifier)
         {
             //var_dump($DonnéesDeTest);
