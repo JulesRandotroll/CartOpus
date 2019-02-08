@@ -981,7 +981,7 @@ class Visiteur extends CI_Controller
       
       $DonnéesTitre = array('TitreDeLaPage'=>$Actions[0]['NOMACTION']);
       
-      $Données['lesVisiteurs'] = $this->ModelCommentaire->getCommentaireVisiteur($noAction);
+      $Données['lesVisiteurs'] = $this->ModelCommentaire->getCommentaires($noAction);
       $Données['lesMotCles'] = $this->ModelAction->getMotClePourAction($noAction);
       $Données['lesPartenaires'] = $this->ModelAction->getPartenaire($noAction);
 
