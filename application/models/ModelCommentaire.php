@@ -23,6 +23,12 @@
             return $this->db->insert_id();
         }
 
+        public function insererCommentaireActeur($donneeAinserer)
+        {
+            $this->db->insert('commenteracteur', $donneeAinserer);
+            return $this->db->insert_id();
+        }
+
         public function getCommentaires($noAction)
         {
             $requete = $this->db->query
@@ -55,7 +61,8 @@
                     SELECT noacteur 
                     FROM etrepartenaire 
                     WHERE noaction = $noAction 
-                );"
+                )
+                ORDER BY dateheure DESC;"
             );
             return $requete->result_array();
         }

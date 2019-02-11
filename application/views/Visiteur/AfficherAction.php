@@ -360,26 +360,54 @@
 </div>
 
 <?php
-echo '<div class="row" style="background-color:#15B7D1;padding:20px" id="action">';
-    echo '<div class="col-lg-2"></div>';
-    echo '<div class="col-xs-8">';
-        echo '<div class = "text-center">';
-            echo '<section>';
-                echo '<div class = "section-inner" style="background-color:#139CBC;padding:20px">';
-                    echo '<div class="form-group">';
-                    echo form_open('Visiteur/AjouterCommentaire/'.$Actions[0]['NOACTION']); 
-                        echo form_label('Commentaire ', 'Desc');
-                        echo form_textarea('Commentaire', '' ,Array("placeholder"=>"Commentez...","class"=>"form-control"));
-                    echo '</div>';
-                    echo '<div class="text-center">';
-                        echo form_submit('Commenter', 'Commenter',array('class'=>'btn btn-danger'));
+if($this->session->statut != 0)
+{
+    echo '<div class="row" style="background-color:#15B7D1;padding:20px" id="action">';
+        echo '<div class="col-lg-2"></div>';
+        echo '<div class="col-xs-8">';
+            echo '<div class = "text-center">';
+                echo '<section>';
+                    echo '<div class = "section-inner" style="background-color:#139CBC;padding:20px">';
+                        echo '<div class="form-group">';
+                        echo form_open('Acteur/AjouterCommentaire/'.$Actions[0]['NOACTION']); 
+                            echo form_label('Commentaire ', 'Desc');
+                            echo form_textarea('Commentaire', '' ,Array("placeholder"=>"Commentez...","class"=>"form-control"));
                         echo '</div>';
-                    echo form_close();
-                echo '</div>';
-            echo '</section>';
+                        echo '<div class="text-center">';
+                            echo form_submit('Commenter', 'Commenter',array('class'=>'btn btn-danger'));
+                            echo '</div>';
+                        echo form_close();
+                    echo '</div>';
+                echo '</section>';
+            echo '</div>';
         echo '</div>';
     echo '</div>';
-echo '</div>';
+
+}
+else
+{
+    echo '<div class="row" style="background-color:#15B7D1;padding:20px" id="action">';
+        echo '<div class="col-lg-2"></div>';
+        echo '<div class="col-xs-8">';
+            echo '<div class = "text-center">';
+                echo '<section>';
+                    echo '<div class = "section-inner" style="background-color:#139CBC;padding:20px">';
+                        echo '<div class="form-group">';
+                        echo form_open('Visiteur/AjouterCommentaire/'.$Actions[0]['NOACTION']); 
+                            echo form_label('Commentaire ', 'Desc');
+                            echo form_textarea('Commentaire', '' ,Array("placeholder"=>"Commentez...","class"=>"form-control"));
+                        echo '</div>';
+                        echo '<div class="text-center">';
+                            echo form_submit('Commenter', 'Commenter',array('class'=>'btn btn-danger'));
+                            echo '</div>';
+                        echo form_close();
+                    echo '</div>';
+                echo '</section>';
+            echo '</div>';
+        echo '</div>';
+    echo '</div>';
+}
+
 
 if(!empty($lesVisiteurs))
 {
@@ -398,57 +426,64 @@ if(!empty($lesVisiteurs))
                                 if($unVisiteur['profil'] == 0)
                                 {
                                     echo '<div class="media">';
-                                    echo '<div class="media-left media-top">';
-                                    echo '</div>';
-                                    echo '<div class="media-body" style="background-color:lightblue; border-radius: 5px;padding:10px">';
-                                    echo '<table>';
-                                    echo '<tr><td>';
-                                        echo (img($unVisiteur['PhotoProfil'])).'<BR><BR>';
-                                        echo '<h4 class="media-heading">'.$unVisiteur['nom'].'</h4>';
-                                    echo '</td><td>';
-                                        echo '<span style="padding:15px">'.$unVisiteur['commentaire'].'</span><BR>';
-                                    echo '</td></tr>';
-                                    echo '</table>';
-                                        echo '<div class = "text-right" style="font-style:italic;">'.$unVisiteur['dateheure'].'</div>';
+                                        echo '<div class="media-left media-top">';
+                                        echo '</div>';
+                                        echo '<div class="col-sm-8">';
+                                            echo '<div class="media-body" style="background-color:lightblue; border-radius: 5px;padding:10px">';
+                                                echo '<table align="left">';
+                                                    echo '<tr><td>';
+                                                        echo (img($unVisiteur['PhotoProfil'])).'<BR><BR>';
+                                                        echo '<h4 class="media-heading">'.$unVisiteur['nom'].'</h4>';
+                                                    echo '</td><td>';
+                                                        echo '<span style="padding:15px">'.$unVisiteur['commentaire'].'</span><BR>';
+                                                    echo '</td></tr>';
+                                                echo '</table>';
+                                            echo '<div class = "text-right" style="font-style:italic;">'.$unVisiteur['dateheure'].'</div>';
+                                        echo '</div>';
                                     echo '</div>';
                                 echo '</div>';
                                 }
                                 else if($unVisiteur['profil'] == 1)
                                 {
-                                    
                                     echo '<div class="media">';
-                                    echo '<div class="media-left media-top">';
+                                        echo '<div class="media-left media-top">';
+                                        echo '</div>';
+                                        echo '<div class="col-sm-8">';
+                                            echo '<div class="media-body" style="background-color:#ff6666;border-radius:10px;padding:10px">';
+                                                    echo '<table align="left">';
+                                                        echo '<tr><td>';
+                                                            echo (img($unVisiteur['PhotoProfil'])).'<BR><BR>';
+                                                            echo '<h4 class="media-heading">'.$unVisiteur['nom'].' '.$unVisiteur['prenom'].'</h4>';
+                                                        echo '</td><td>';
+                                                            echo '<span style="padding:15px">'.$unVisiteur['commentaire'].'</span><BR>';
+                                                        echo '</td></tr>';
+                                                    echo '</table>';
+                                                echo '<div class = "text-right" style="font-style:italic;">'.$unVisiteur['dateheure'].'</div>';
+                                            echo '</div>';
+                                        echo '</div>';
                                     echo '</div>';
-                                    echo '<div class="media-body" style="background-color:#ff6666;border-radius:10px;padding:10px">';
-                                    echo '<table>';
-                                        echo '<tr><td>';
-                                            echo (img($unVisiteur['PhotoProfil'])).'<BR><BR>';
-                                            echo '<h4 class="media-heading">'.$unVisiteur['nom'].' '.$unVisiteur['prenom'].'</h4>';
-                                        echo '</td><td>';
-                                            echo '<span style="padding:15px">'.$unVisiteur['commentaire'].'</span><BR>';
-                                        echo '</td></tr>';
-                                    echo '</table>';
-                                    echo '<div class = "text-right" style="font-style:italic;">'.$unVisiteur['dateheure'].'</div>';
-                                    echo '</div>';
-                                echo '</div>';
                                 }
                                 else if($unVisiteur['profil'] == 2)
                                 {
                                     echo '<div class="media">';
-                                    echo '<div class="media-right media-top">';
+                                        echo '<div class="media-right media-top">';
+                                        echo '</div>';
+                                        echo '<div class="col-lg-4">';
+                                        echo '</div>';
+                                        echo '<div class="col-sm-8">';
+                                            echo '<div class="media-body text-right" style="background-color:#ff9999; border-radius: 5px;padding:10px">';
+                                                echo '<table align="right">';
+                                                    echo '<tr><td>';
+                                                        echo '<div style="padding:15px">'.$unVisiteur['commentaire'].'</div>';
+                                                    echo '</td><td>';
+                                                        echo '<div>'.(img($unVisiteur['PhotoProfil'])).'<BR><BR>';
+                                                        echo '<h4 class="media-heading">'.$unVisiteur['nom'].' '.$unVisiteur['prenom'].'</h4></div>';                                            
+                                                    echo '</td></tr>';
+                                                echo '</table>';
+                                                echo '<div class = "text-left" style="font-style:italic;">'.$unVisiteur['dateheure'].'</div>';
+                                            echo '</div>';
+                                        echo '</div>';
                                     echo '</div>';
-                                    echo '<div class="media-body" style="background-color:#ff9999; border-radius: 5px;padding:10px">';
-                                    echo '<table>';
-                                        echo '<tr><td>';
-                                            echo '<div style="padding:15px">'.$unVisiteur['commentaire'].'</div><BR>';
-                                        echo '</td><td>';
-                                            echo '<div>'.(img($unVisiteur['PhotoProfil'])).'<BR><BR>';
-                                            echo '<h4 class="media-heading">'.$unVisiteur['nom'].' '.$unVisiteur['prenom'].'</h4></div>';                                            
-                                        echo '</td></tr>';
-                                    echo '</table>';
-                                    echo '<div class = "text-left" style="font-style:italic;">'.$unVisiteur['dateheure'].'</div>';
-                                    echo '</div>';
-                                echo '</div>';
                                 }
                                 
                             endforeach;

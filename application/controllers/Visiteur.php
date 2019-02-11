@@ -1036,22 +1036,20 @@ class Visiteur extends CI_Controller
 
   public function AjouterCommentaire($noAction)
   {
-
     if($this->input->post('Commenter'))
     {
       $Commentaire = $this->input->post('Commentaire');
       $noVisiteur = $this->session->noVisiteur;
-      $toDay = date('Y-m-d H:i');
+      $toDay = date('Y-m-d H:i:s');
       $Action=$this->ModelAction->getActionSimple($noAction);
 
       $donneeAinserer = array
       (
         'DateHeure' => $toDay,
         'NoAction' => $noAction,
-        'NomVisiteur' => 'VOYER',
+        'NoVisiteur' => 2,
         'Commentaire' => $Commentaire,
       );
-
       
       $DonneesInjectees = $this->ModelCommentaire->insererCommentaireVisiteur($donneeAinserer);
       redirect('Visiteur/AfficherAction/'.$noAction);
@@ -1061,7 +1059,6 @@ class Visiteur extends CI_Controller
       $this->AfficherAction($noAction);
     }
   }
-
 
 }//Fin Visiteur
 
