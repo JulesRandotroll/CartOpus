@@ -55,5 +55,11 @@
             $requete = $this->db->get();
             return $requete->result_array();
         }
+
+        public function UpdateOrga($DonnéesOrga,$noOrga)
+        {
+            $this->db->where('NO_ORGANISATION',$noOrga);
+            $this->db->update('Organisation',$DonnéesOrga);
+        }
     }
 ?>

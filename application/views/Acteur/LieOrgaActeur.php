@@ -24,12 +24,12 @@
     <div class="col-sm-8" style="padding:20px">
         <div style="padding:20px">
             <div class = "text-center">
-                <H1 style="color:#FFFFFF">Se lié à une organisation</H1>
+                <H1 style="color:#FFFFFF">Gestion organisation</H1>
             </div>
             <section>
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
-                    <?php
-               
+                    
+                <?php
                         // if (isset($message))
                         // {
                         //    echo'<div class="alert alert-danger alert-dismissible">
@@ -37,51 +37,54 @@
                         //            <strong>Attention</strong> '.$message.'
                         //        </div>';
                         // }
-
-                        echo form_open('Acteur/LieOrgaActeur');
-
-                        // echo '<div class="form-group">';
-                        // echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
-                        // echo form_label('Organisation', 'orga'); 
-                        // echo form_dropdown('orga', $Organisations, 'default',array('required'=>'required','class'=>'form-control'));
-                        // echo '</div>';
                         ?>
                         <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle form-control" type="button" data-toggle="dropdown" value='0'>
-                            <span id='Dropdown_Organisation'>Selectionnez une Organisation</span>
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" >
-                            <input class="form-control myInput" type="text" placeholder="Recherche">
-                            <li class="divider"></li>
-                            <?php 
-                                foreach ($Organisations as $uneOrganisation)
-                                {
-                                   // var_dump($uneOrganisation);
-                                    echo '<li class="Orga" id="'.$uneOrganisation['NO_ORGANISATION'].'"><a>'.$uneOrganisation['NOMORGANISATION'].'</a></li>';
-                                }
-                                echo'<li><a href="'.site_url('Acteur/AjoutOrga').'">Ajouter une nouvelle organisation</a></li>';
-                            ?>
-                        </ul> 
+                            <button class="btn btn-default dropdown-toggle form-control" type="button" data-toggle="dropdown" value='0'>
+                                <span id='Dropdown_Organisation'>Selectionnez une Organisation</span>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" >
+                                <input class="form-control myInput" type="text" placeholder="Recherche">
+                                <li class="divider"></li>
+                                <?php 
+                                    foreach ($Organisations as $uneOrganisation)
+                                    {
+                                    // var_dump($uneOrganisation);
+                                        echo '<li class="Orga" id="'.$uneOrganisation['NO_ORGANISATION'].'"><a>'.$uneOrganisation['NOMORGANISATION'].'</a></li>';
+                                    }
+                                    echo'<li><a href="'.site_url('Acteur/AjoutOrga').'">Ajouter une nouvelle organisation</a></li>';
+                                ?>
+                            </ul> 
                         </div>
 
-                        <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle form-control" type="button" data-toggle="dropdown" value='0'>
-                            <span id='Dropdown_Secteur'>Selectionnez un Secteur</span>
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu"  id="ici">
-                        </ul> 
-                    </div>
-                    <?php
-                        echo form_close();
-                    ?>
+                        <br>
+
+                        <div class="col-sm-6">
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle form-control disabled" id="secteur" type="button" data-toggle="dropdown" value='0'>
+                                    <span id='Dropdown_Secteur'>Selectionnez Secteur</span>
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu"  id="ici"></ul> 
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <button class="btn btn-default form-control disabled" type="button" id="modif">Modifier Organisation</button> 
+                        </div>
+                        <br>  <br>
+                        <button type="button" id="lier" class="btn btn-danger form-control disabled"=>Travailler dans</button> 
+                        
                 </div>
             </section>
         </div>
     </div>
 </div>
 </div>
+<?php
+   echo form_open('Acteur/ModifierOrga',array("id"=>"form_modif"));
+   echo form_close();
+?>
 
 
 

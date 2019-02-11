@@ -9,7 +9,7 @@
 
     while($resultatS=mysqli_fetch_array($reqSecteur))
 	{
-        echo 'ce secteur existe dans la table secteur<br>';
+        //echo 'ce secteur existe dans la table secteur<br>';
         //var_dump($resultatS);
         $cnx5=mysqli_connect('localhost','root','','cartopus');
         $reqPosseder=$cnx5->query("SELECT nosecteur FROM posseder WHERE nosecteur =".$resultatS[0]." AND no_organisation =". $noOrganisation);
