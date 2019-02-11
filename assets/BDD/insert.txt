@@ -1,3 +1,71 @@
+INSERT INTO `cartopus`.`signalement` (`noSignalement`, `libelleSignalement`) VALUES 
+(NULL, 'Autre'), 
+(NULL, 'Contenu illicite, inapproprié ou choquant'), 
+(NULL, 'Contenu mensongé'), 
+(NULL, 'Harcèlement'), 
+(NULL, 'Discours incitant à la haine'), 
+(NULL, 'Vente interdite'), 
+(NULL, 'Contenu grossier');
+
+
+CREATE TABLE IF NOT EXISTS `etresignalee` (
+  `noAction` int(11) NOT NULL,
+  `noSignalement` int(11) NOT NULL,
+  `commentaire` varchar(500) DEFAULT NULL,
+  `DateSignalement` datetime NOT NULL,
+  PRIMARY KEY (`noAction`,`noSignalement`,`DateSignalement`),
+  KEY `noSignalementKey` (`noSignalement`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `etresignalee`
+--
+
+INSERT INTO `etresignalee` (`noAction`, `noSignalement`, `commentaire`, `DateSignalement`) VALUES
+(13, 2, NULL, '2019-02-09 12:00:00'),
+(14, 2, NULL, '2019-02-10 09:00:00'),
+(14, 4, NULL, '2019-02-09 19:00:00'),
+(14, 5, NULL, '2019-02-10 16:00:00'),
+(15, 3, NULL, '2019-02-11 10:00:00');
+
+ALTER TABLE `etresignalee`
+  ADD CONSTRAINT `noActionKey` FOREIGN KEY (`noAction`) REFERENCES `action` (`NOACTION`),
+  ADD CONSTRAINT `noSignalementKey` FOREIGN KEY (`noSignalement`) REFERENCES `signalement` (`noSignalement`);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Modification signalement
 
 CREATE TABLE IF NOT EXISTS `signalement` (
