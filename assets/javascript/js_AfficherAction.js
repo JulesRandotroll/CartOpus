@@ -89,4 +89,16 @@ $(function()
         $(this).attr('style','background-color:#B64F53;border-radius: 10px');
         $('p').hide();
     });
+
+    
+    $('.signaler').hide();
+    
+    $('#signalerAction').on('click',function()
+    {
+        $('.signaler').show();
+    });
+    $('#annuler').on('click',function()
+    {
+        $('.signaler').hide();
+    });
 });

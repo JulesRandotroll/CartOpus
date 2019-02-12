@@ -238,6 +238,9 @@
                             echo '<div class="text-left">';
                             echo'<a  href="'.site_url('Visiteur/loadAccueil').'" style="color:#000000"><button type="button" class="btn btn-danger">Retour</button> </a>';
                             echo '</div>';
+                            echo '<div class="text-right">';
+                            echo'<button class="btn btn-danger" href="#signalement" style="color:#000000" id="signalerAction">Signaler l\'action</button>';
+                            echo '</div>';
 
                     echo '</div>';
                 echo '</section>';
@@ -360,53 +363,30 @@
 </div>
 
 <?php
-if($this->session->statut != 0)
-{
-    echo '<div class="row" style="background-color:#15B7D1;padding:20px" id="action">';
-        echo '<div class="col-lg-2"></div>';
-        echo '<div class="col-xs-8">';
-            echo '<div class = "text-center">';
-                echo '<section>';
-                    echo '<div class = "section-inner" style="background-color:#139CBC;padding:20px">';
-                        echo '<div class="form-group">';
-                        echo form_open('Acteur/AjouterCommentaire/'.$Actions[0]['NOACTION']); 
-                            echo form_label('Commentaire ', 'Desc');
-                            echo form_textarea('Commentaire', '' ,Array("placeholder"=>"Commentez...","class"=>"form-control"));
-                        echo '</div>';
-                        echo '<div class="text-center">';
-                            echo form_submit('Commenter', 'Commenter',array('class'=>'btn btn-danger'));
-                            echo '</div>';
-                        echo form_close();
-                    echo '</div>';
-                echo '</section>';
-            echo '</div>';
-        echo '</div>';
-    echo '</div>';
+// var_dump($Options);
+echo '<div class="row signaler"  id="signalement" style="background-color:#15B7D1;padding:20px" id="action">';
+    echo '<div class="col-lg-2"></div>';
+    echo '<div class="col-xs-8">';
+        echo '<div class = "text-center">';
+            echo '<section>';
+                echo '<div class = "section-inner" style="background-color:#139CBC;padding:20px">';
+                    echo '<div class="form-group">';
+                    echo form_open('Visiteur/AjouterSignalements/'.$Actions[0]['NOACTION']); 
 
-}
-else
-{
-    echo '<div class="row" style="background-color:#15B7D1;padding:20px" id="action">';
-        echo '<div class="col-lg-2"></div>';
-        echo '<div class="col-xs-8">';
-            echo '<div class = "text-center">';
-                echo '<section>';
-                    echo '<div class = "section-inner" style="background-color:#139CBC;padding:20px">';
-                        echo '<div class="form-group">';
-                        echo form_open('Visiteur/AjouterCommentaire/'.$Actions[0]['NOACTION']); 
-                            echo form_label('Commentaire ', 'Desc');
-                            echo form_textarea('Commentaire', '' ,Array("placeholder"=>"Commentez...","class"=>"form-control"));
-                        echo '</div>';
-                        echo '<div class="text-center">';
-                            echo form_submit('Commenter', 'Commenter',array('class'=>'btn btn-danger'));
-                            echo '</div>';
-                        echo form_close();
+                        echo form_label('Formulaire de Signalements ', 'Signalements');
+                        echo form_dropdown('Signalements', $Options,'' ,Array('class'=>'form-control',"id"=>"dropSignalements",'required'));
+                        echo '</br>';
+                        echo form_textarea('Commentaire', '' ,Array("placeholder"=>"Avis sur le signalement...","class"=>"form-control"));
                     echo '</div>';
-                echo '</section>';
-            echo '</div>';
+                        echo form_input('Signaler', 'Signaler',array('class'=>'btn btn-danger'));
+                        echo form_input('Annuler', 'Annuler',array('class'=>'btn btn-danger', 'id'=>'annuler'));
+                    echo form_close();
+                echo '</div>';
+            echo '</section>';
         echo '</div>';
     echo '</div>';
-}
+echo '</div>';
+
 
 
 if(!empty($lesVisiteurs))
@@ -439,6 +419,7 @@ if(!empty($lesVisiteurs))
                                                     echo '</td></tr>';
                                                 echo '</table>';
                                             echo '<div class = "text-right" style="font-style:italic;">'.$unVisiteur['dateheure'].'</div>';
+                                            echo '<button class="open-button" onclick="openForm()">Open Form</button>';
                                         echo '</div>';
                                     echo '</div>';
                                 echo '</div>';
@@ -489,6 +470,54 @@ if(!empty($lesVisiteurs))
                             endforeach;
                         }
                             
+                    echo '</div>';
+                echo '</section>';
+            echo '</div>';
+        echo '</div>';
+    echo '</div>';
+}
+
+if($this->session->statut != 0)
+{
+    echo '<div class="row" style="background-color:#15B7D1;padding:20px" id="action">';
+        echo '<div class="col-lg-1"></div>';
+        echo '<div class="col-xs-10">';
+            echo '<div class = "text-center">';
+                echo '<section>';
+                    echo '<div class = "section-inner" style="background-color:#139CBC;padding:20px">';
+                        echo '<div class="form-group">';
+                        echo form_open('Acteur/AjouterCommentaire/'.$Actions[0]['NOACTION']); 
+                            echo form_label('Commentaire ', 'Desc');
+                            echo form_textarea('Commentaire', '' ,Array("placeholder"=>"Commentez...","class"=>"form-control"));
+                        echo '</div>';
+                        echo '<div class="text-center">';
+                            echo form_submit('Commenter', 'Commenter',array('class'=>'btn btn-danger'));
+                            echo '</div>';
+                        echo form_close();
+                    echo '</div>';
+                echo '</section>';
+            echo '</div>';
+        echo '</div>';
+    echo '</div>';
+
+}
+else
+{
+    echo '<div class="row" style="background-color:#15B7D1;padding:20px" id="action">';
+        echo '<div class="col-lg-1"></div>';
+        echo '<div class="col-xs-10">';
+            echo '<div class = "text-center">';
+                echo '<section>';
+                    echo '<div class = "section-inner" style="background-color:#139CBC;padding:20px">';
+                        echo '<div class="form-group">';
+                        echo form_open('Visiteur/AjouterCommentaire/'.$Actions[0]['NOACTION']); 
+                            echo form_label('Commentaire ', 'Desc');
+                            echo form_textarea('Commentaire', '' ,Array("placeholder"=>"Commentez...","class"=>"form-control"));
+                        echo '</div>';
+                        echo '<div class="text-center">';
+                            echo form_submit('Commenter', 'Commenter',array('class'=>'btn btn-danger'));
+                            echo '</div>';
+                        echo form_close();
                     echo '</div>';
                 echo '</section>';
             echo '</div>';

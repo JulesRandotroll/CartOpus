@@ -1899,30 +1899,30 @@ class Acteur extends CI_Controller
     }
 
     public function AjouterCommentaire($noAction)
-  {
-    if($this->input->post('Commenter'))
     {
-        $Commentaire = $this->input->post('Commentaire');
-        $noActeur = $this->session->noActeur;
-        $toDay = date('Y-m-d H:i:s');
-        $Action=$this->ModelAction->getActionSimple($noAction);
+        if($this->input->post('Commenter'))
+        {
+            $Commentaire = $this->input->post('Commentaire');
+            $noActeur = $this->session->noActeur;
+            $toDay = date('Y-m-d H:i:s');
+            $Action=$this->ModelAction->getActionSimple($noAction);
 
-        $donneeAinserer = array
-        (
-        'DateHeure' => $toDay,
-        'NoAction' => $noAction,
-        'NoActeur' => $noActeur,
-        'Commentaire' => $Commentaire,
-        );
+            $donneeAinserer = array
+            (
+            'DateHeure' => $toDay,
+            'NoAction' => $noAction,
+            'NoActeur' => $noActeur,
+            'Commentaire' => $Commentaire,
+            );
 
-        $DonneesInjectees = $this->ModelCommentaire->insererCommentaireActeur($donneeAinserer);
-        redirect('Visiteur/AfficherAction/'.$noAction);
+            $DonneesInjectees = $this->ModelCommentaire->insererCommentaireActeur($donneeAinserer);
+            redirect('Visiteur/AfficherAction/'.$noAction);
+        }
+        else
+        {
+            $this->AfficherAction($noAction);
+        }
     }
-    else
-    {
-        $this->AfficherAction($noAction);
-    }
-  }
 
 }
 ?>

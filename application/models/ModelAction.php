@@ -244,10 +244,6 @@
             return $requete->result_array();
         }
 
-
-
-
-
         public function UpdateAction($NoAction,$DonneesAModifier)
         { 
             
@@ -391,6 +387,21 @@
             $this->db->where('a.noaction',$noAction);
             $requete = $this->db->get();
             return $requete->result_array();
+        }
+
+        public function getSignalements() 
+        {
+            $this->db->select('*');
+            $this->db->from('Signalement');
+            $this->db->order_by('noSignalement', 'DESC');
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
+        public function insererSignalement($donneeAinserer)
+        {
+            $this->db->insert('etresignalee', $donneeAinserer);
+            return $this->db->insert_id();
         }
     }
 ?>

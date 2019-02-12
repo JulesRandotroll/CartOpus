@@ -964,18 +964,34 @@ class Visiteur extends CI_Controller
   {
       $Where = array('a.noAction'=>$noAction);
       $Actions = $this->ModelAction->getAction($Where);
-      $Commentaire = $this->input->post('Commentaire');
+      //$Commentaire = $this->input->post('Commentaire');
 
       $DateDebut=$Actions[0]['DATEDEBUT'];
       
       $Donnes = array('NOACTION'=>$noAction,'DATEACTION'=>$DateDebut,);
       $Fichiers = $this->ModelAction->getFichersPourAction($Donnes);
 
+      $Signalements = $this->ModelAction->getSignalements();
+      //var_dump($Signalements);
+      foreach($Signalements as $unSignalement)
+      {
+        if(empty($Options))
+        {
+            $Options = array($unSignalement['noSignalement']=>$unSignalement['libelleSignalement']);
+        }
+        else
+        {
+            $temporaire = array($unSignalement['noSignalement']=>$unSignalement['libelleSignalement']);
+            $Options = $Options + $temporaire;
+        }
+      }
+
       if(empty($Fichiers))
       {
           
           $Données = array(
               'Actions'=>$Actions,
+              'Options'=>$Options,
           );
       }
       else
@@ -983,6 +999,7 @@ class Visiteur extends CI_Controller
           $Données = array(
               'Actions'=>$Actions,
               'Fichiers'=>$Fichiers,
+              'Options'=>$Options,
           );
       }
       
@@ -1056,7 +1073,35 @@ class Visiteur extends CI_Controller
     }
     else
     {
-      $this->AfficherAction($noAction);
+      redirect('Visiteur/AfficherAction/'.$noAction);
+    }
+  }
+
+  
+  public function AjouterSignalements($noAction)
+  {
+    //insertion
+    if($this->input->post('Signaler'))
+    {
+      $Action = $this->ModelAction->getActionSimple($noAction);
+      $Signalement = $this->input->post('Signalements');
+      $Commentaire = $this->input->post('Commentaire');
+      $toDay = date('Y-m-d H:i:s');
+    
+      $donneeAinserer = array
+      (
+        'noAction' => $noAction,
+        'noSignalement' => $Signalement,
+        'commentaire' => $Commentaire,
+        'DateSignalement' => $toDay,
+      );
+      
+      $DonneesInjectees = $this->ModelAction->insererSignalement($donneeAinserer);
+      redirect('Visiteur/AfficherAction/'.$noAction);
+    }
+    else
+    {
+      redirect('Visiteur/AfficherAction/'.$noAction);
     }
   }
 
