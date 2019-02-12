@@ -87,12 +87,12 @@
                                     //echo 'Test : '.(($DF-$DD)/60/60/24).'<BR><BR><BR>';
                                     if(($DF-$DD)/60/60/24 >= 1)
                                     {
-                                        echo "Du :".strftime("%A %d %B %Y %H h %M",$DD).'<BR> Au : '.strftime("%A %d %B %Y %H h %M",$DF).'<BR>';
+                                        echo "Du :".strftime("%A %d %B %Y %Hh%M",$DD).'<BR> Au : '.strftime("%A %d %B %Y %Hh%M",$DF).'<BR>';
                                         echo '<H4>'.$Description.'</H4><BR>';
                                     }
                                     else
                                     {
-                                        echo "De : ".strftime("%H h %M",$DD).' à '.strftime("%H h %M le %A %d %B %Y",$DF);
+                                        echo "De : ".strftime("%Hh%M",$DD).' à '.strftime("%H h %M le %A %d %B %Y",$DF);
                                         
                                         echo '<H4>'.$Description.'</H4><BR>';
 
@@ -101,7 +101,7 @@
                                 }// != null
                                 else
                                 {
-                                    echo 'A partir du : '.strftime("%A %d %B %Y %H h %M",$DD).'<BR>';
+                                    echo 'A partir du : '.strftime("%A %d %B %Y %Hh%M",$DD).'<BR>';
                                     echo '<H4>'.$Description.'</H4><BR>';
                                 }  // != null
                             

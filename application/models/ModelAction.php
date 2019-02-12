@@ -80,7 +80,7 @@
             $this->db->join('etresignalee es', 'es.noAction = a.noAction');
             $this->db->join('signalement s', 's.noSignalement = es.noSignalement');
             $this->db->where('Norole=0');
-            $this->db->order_by('NOMACTION ASC, compteur DESC');
+            $this->db->order_by('NOMACTION ASC, s.noSignalement ASC');
             $requete = $this->db->get();
             return $requete->result_array();
         }
