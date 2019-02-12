@@ -101,15 +101,6 @@
 
                                     if($uneAction['DATEFIN'] != null)
                                     {
-<<<<<<< HEAD
-                                        echo "Du :".strftime("%A %d %B %Y %Hh%M",$DD).'<BR> Au : '.strftime("%A %d %B %Y %Hh%M",$DF).'<BR>';
-                                        echo '<H4>'.$Description.'</H4><BR>';
-                                    }
-                                    else
-                                    {
-                                        echo "De : ".strftime("%Hh%M",$DD).' à '.strftime("%H h %M le %A %d %B %Y",$DF);
-                                        
-=======
                                         $DateFin = date_create($uneAction['DATEFIN']);
                                         $DF = date_timestamp_get($DateFin);
 
@@ -131,7 +122,6 @@
                                     else
                                     {
                                         echo 'A partir du : '.strftime("%A %d %B %Y %H h %M",$DD).'<BR>';
->>>>>>> c16f56c94ef0e562d33e9837f1d8561938d7d921
                                         echo '<H4>'.$Description.'</H4><BR>';
                                     }  // != null
                                 
@@ -139,25 +129,6 @@
                                 }// ==0
                                 else
                                 {
-<<<<<<< HEAD
-                                    echo 'A partir du : '.strftime("%A %d %B %Y %Hh%M",$DD).'<BR>';
-                                    echo '<H4>'.$Description.'</H4><BR>';
-                                }  // != null
-                            
-
-                            }// ==0
-                            else
-                            {
-                                if($i== 1)
-                                {
-                                    echo'<div class="table-responsive">';
-                                    //$this->table->set_heading('Jour  ', 'Horraires ');
-                                }//== 1
-                                if($uneAction['DATEFIN']==null)
-                                {
-                                    $uneAction['DATEFIN']=0;
-                                }
-=======
                                     if($i== 1)
                                     {
                                         echo'<div class="table-responsive">';
@@ -167,7 +138,6 @@
                                     {
                                         $uneAction['DATEFIN']=0;
                                     }
->>>>>>> c16f56c94ef0e562d33e9837f1d8561938d7d921
 
                                     $Action = '<a href="#action'.$i.'" style="color:FFFFFF" class="lienSousAction">'.'<H4>'.$uneAction['TitreAction'].'</H4></a>';
                                     
