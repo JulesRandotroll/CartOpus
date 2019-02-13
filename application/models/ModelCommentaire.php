@@ -33,13 +33,13 @@
         {
             $requete = $this->db->query
             (
-                "SELECT visiteur.noVisiteur as 'no', pseudo as 'nom','' as 'prenom',commentaire , dateheure,'4pPaR31L_1Ph20T' as 'PhotoProfil',0 as 'profil' 
+                "SELECT visiteur.noVisiteur as 'no', pseudo as 'nom','' as 'prenom',commentaire , dateheure,'4pPaR31L_1Ph20T' as 'PhotoProfil',0 as 'profil', noCommentaireVisiteur as 'noCommentaire' 
                 FROM Visiteur, commentervisiteur, action 
                 WHERE visiteur.novisiteur = commentervisiteur.novisiteur 
                 AND commentervisiteur.noaction = action.noaction 
                 AND action.noAction = $noAction
                 UNION 
-                SELECT acteur.noacteur, nomacteur,prenomacteur as 'prenom',commentaire ,dateheure, PhotoProfil as 'PhotoProfil', 2 as 'profil' 
+                SELECT acteur.noacteur as 'no', nomacteur,prenomacteur as 'prenom',commentaire ,dateheure, PhotoProfil as 'PhotoProfil', 2 as 'profil' , noCommentaireActeur as 'noCommentaire'
                 FROM acteur, commenteracteur, action 
                 WHERE acteur.noacteur = commenteracteur.NOACTEUR 
                 AND commenteracteur.noaction = action.noaction 
@@ -51,7 +51,7 @@
                     WHERE noAction = $noAction 
                 ) 
                 UNION 
-                SELECT acteur.noacteur, nomacteur as 'nom',prenomacteur as 'prenom',commentaire, dateheure, PhotoProfil as 'PhotoProfil',1 as 'profil' 
+                SELECT acteur.noacteur as 'no', nomacteur as 'nom',prenomacteur as 'prenom',commentaire, dateheure, PhotoProfil as 'PhotoProfil', noprofil as 'profil' , noCommentaireActeur as 'noCommentaire'
                 FROM acteur, commenteracteur, action 
                 WHERE acteur.noacteur = commenteracteur.NOACTEUR 
                 AND commenteracteur.noaction = action.noaction 
@@ -65,6 +65,12 @@
                 ORDER BY dateheure DESC;"
             );
             return $requete->result_array();
+        }
+
+        public function insererSignalementComm($donneeAinserer)
+        {
+            $this->db->insert('signalementcommentaire', $donneeAinserer);
+            return $this->db->insert_id();
         }
     }
 ?>

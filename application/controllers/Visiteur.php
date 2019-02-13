@@ -1105,6 +1105,34 @@ class Visiteur extends CI_Controller
     }
   }
 
+  public function AjouterSignalementsComm($noAction,$noCommentaire)
+  {
+    //insertion
+    if($this->input->post('SignalerComm'))
+    {
+      //$Action = $this->ModelCommentaire->getCommentaires($noAction);
+      $SignalementComm = $this->input->post('SignalementsComm');
+      $CommentaireComm = $this->input->post('CommentaireComm');
+      $toDay = date('Y-m-d H:i:s');
+    
+      $donneeAinserer = array
+      (
+        'noCommentaire'=>$noCommentaire,
+        'DateSignalComm' => $toDay,
+        'motifSignalement' => $CommentaireComm,
+        'noSignalement' => $SignalementComm,
+        
+      );
+      
+      $DonneesInjectees = $this->ModelCommentaire->insererSignalementComm($donneeAinserer);
+      redirect('Visiteur/AfficherAction/'.$noAction);
+    }
+    else
+    {
+      redirect('Visiteur/AfficherAction/'.$noAction);
+    }
+  }
+
 }//Fin Visiteur
 
 ?>
