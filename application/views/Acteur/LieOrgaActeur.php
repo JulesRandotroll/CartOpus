@@ -30,13 +30,13 @@
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     
                 <?php
-                        // if (isset($message))
-                        // {
-                        //    echo'<div class="alert alert-danger alert-dismissible">
-                        //            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        //            <strong>Attention</strong> '.$message.'
-                        //        </div>';
-                        // }
+                        if (isset($message))
+                        {
+                           echo'<div class="alert alert-danger alert-dismissible">
+                                   <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                   <strong>Information</strong> '.$message.'
+                               </div>';
+                        }
                         ?>
                         <div class="dropdown">
                             <button class="btn btn-default dropdown-toggle form-control" type="button" data-toggle="dropdown" value='0'>
@@ -73,8 +73,11 @@
                             <button class="btn btn-default form-control disabled" type="button" id="modif">Modifier Organisation</button> 
                         </div>
                         <br>  <br>
-                        <button type="button" id="lier" class="btn btn-danger form-control disabled"=>Travailler dans</button> 
-                        
+                        <?php
+                            echo form_open('Acteur/SeLier/'.$noActeur,array("id"=>"form_lier"));
+                                echo form_input('lier', 'Travailler dans', array('class'=>"btn btn-danger form-control disabled","id"=>"lier"));
+                            echo form_close();
+                        ?>
                 </div>
             </section>
         </div>
@@ -84,6 +87,7 @@
 <?php
    echo form_open('Acteur/ModifierOrga',array("id"=>"form_modif"));
    echo form_close();
+
 ?>
 
 

@@ -74,33 +74,265 @@ class Visiteur extends CI_Controller
 
   public function SInscrire()
   {
+
+    // affichage des questions et des check cochés a revoir
+
     $DonnéesTitre = array('TitreDeLaPage'=>'Inscription');
+
     if ( $this->input->post('valider'))//si le bouton "Valider l'inscription" a été cliqué ...
     {
-      if (($this->input->post('mdp'))==($this->input->post('confmdp')))// si ce que l'utilisateur a rentré dans la case mdp est égale a ce qu'il a rentré dans la case confmdp ...
+      $checktest=$this->input->post('checkmail');
+              
+      if (isset($checktest))
       {
-        $donneeATester=array('mail'=>$this->input->post('mail'));// dans la variable donneeATester on met le mail rentré par l'utilisateur
-        $test = $this->ModelSInscrire->Test_Inscrit($donneeATester);// on appelle la fonction Test de ce modele et on passe la variable a tester en paramètre
-  
-        if($test['count(*)']!=0) // si la fonction nous retourne un résultat différent de 0 ( si ce mail existe déjà dans la bdd ...)
+        $visibleMail=true;
+      }
+      else
+      {
+        $visibleMail=false;
+      }
+
+      $checktest=$this->input->post('checktel');
+      if (isset($checktest))
+      {
+        $visibleTel=true;
+      }
+      else
+      {
+        $visibleTel=false;
+      }
+
+      $NewDonnées=array(
+          'nom'=>$this->input->post('nom'),
+          'prenom'=>$this->input->post('prenom'),
+          'mail'=>$this->input->post('mail'),
+          'confmail'=>$this->input->post('confmail'),
+          'tel'=>$this->input->post('tel'),
+          'mdp'=>$this->input->post('mdp'),
+          'confmdp'=>$this->input->post('confmdp'),
+          'Questions'=>$this->input->post('question'),
+          'reponse'=>$this->input->post('reponse'),
+          'telvisible'=>$visibleTel,
+          'mailvisible'=>$visibleMail,
+          'message'=>'',
+      );
+      //var_dump($NewDonnées);
+
+      $nomQuestion=$this->ModelSInscrire->getUneQuestion($NewDonnées['Questions']);
+      //var_dump($nomQuestion);
+      
+      if(($NewDonnées['mail'])==($NewDonnées['confmail']))
+      {
+        if(($NewDonnées['mdp'])==($NewDonnées['confmdp']))// si ce que l'utilisateur a rentré dans la case mdp est égale a ce qu'il a rentré dans la case confmdp ...
+        {
+          $donneeATester=array('mail'=>$NewDonnées['mail']);// dans la variable donneeATester on met le mail rentré par l'utilisateur
+
+          $testActeur = $this->ModelSInscrire->Test_Inscrit($donneeATester);// on appelle la fonction Test de ce modele et on passe la variable a tester en paramètre
+
+          if($testActeur['count(*)']!=0) // si la fonction nous retourne un résultat différent de 0 ( si ce mail existe déjà dans la bdd ...)
+          {
+            $Options= $this->ObtenirQuestions_Secretes();
+            $DonneesInjectees=array
+            (
+              'nom'=>'',
+              'prenom'=>'',
+              'mail'=>'',
+              'tel' =>'',
+              'message' => 'Vous êtes déjà inscrit avec cette adresse mail',
+              'confmdp'=>'',
+              'confmail'=>'',
+              'Questions'=>$Options,
+              'mailvisible'=>false,
+              'telvisible'=>false,
+              'reponse'=>'',
+            );
+            
+              $this->load->view('templates/Entete',$DonnéesTitre);
+              $this->load->view('Visiteur/sInscrire',$DonneesInjectees);
+              $this->load->view('templates/PiedDePage');
+          }
+          else // sinon on insert les bonnes valeurs dans la base de donnée
+          {
+            //echo'test Visiteur';
+            $testVisiteur = $this->ModelSInscrire->Test_InscritVisiteur($donneeATester);
+            //var_dump($testVisiteur);
+            if($testVisiteur['count(*)']!=0) // si la fonction nous retourne un résultat différent de 0 ( si ce mail existe déjà dans la bdd ...)
+            {
+              $NewDonnées["transfert"]=TRUE;
+              $NewDonnées["Questions"]=$nomQuestion[0]['nomQuestion'];
+              //var_dump($NewDonnées);
+              
+              $this->load->view('templates/Entete',$DonnéesTitre);
+              $this->load->view('Visiteur/sInscrire',$NewDonnées);
+              $this->load->view('templates/PiedDePage');
+            }
+            else
+            {
+              
+    
+              $donneeAinserer=array(
+                'noprofil'=>'1',
+                'nomacteur'=>$this->input->post('nom'),
+                'prenomacteur'=>$this->input->post('prenom'),
+                'motdepasse'=>$this->input->post('mdp'),
+                'mail' => $this->input->post('mail'),
+                'notel' => $this->input->post('tel'),
+                'photoprofil'=>'4pPaR31L_1Ph20T.png',
+                'noquestion'=>$Options,
+                'reponse'=>$this->input->post('reponse'),
+                'mailvisible'=>$visibleMail,
+                'notelvisible'=>$visibleTel,
+                'finaliser'=>false,
+              );
+              //var_dump($donneeAinserer);
+    
+              $code=$this->GenererMotDePasse();
+              $date= date('Y-m-d H:i:s');
+              //var_dump($code);
+              $donneeEncours=array(
+                'code'=>$code,
+                'mail'=> $this->input->post('mail'),
+                'dateJour'=>$date,
+              );
+              $this->ModelSInscrire->Insert_Acteur($donneeAinserer);
+              $this->ModelSInscrire->Insert_EnCours($donneeEncours);
+              $mail=$this->input->post('mail');
+              $this->session->set_flashdata('mail',$mail);
+              $this->session->set_flashdata('code',$code);
+              $this->Validation();
+            }
+          }
+        }// if mdp== confmdp
+        else //sinon ...
         {
           $Options= $this->ObtenirQuestions_Secretes();
-          $DonneesInjectees=array
-          (
-            'nom'=>'',
-            'prenom'=>'',
-            'mail'=>'',
-            'tel' =>'',
-            'message' => 'Vous êtes déjà inscrit avec cette adresse mail',
-            'Questions'=>$Options,
+  
+          $DonneesInjectees=array(
+            'nom'=>$this->input->post('nom'),
+            'prenom'=>$this->input->post('prenom'),
+            'mail' => $this->input->post('mail'),
+            'tel' => $this->input->post('tel'),
+            'confmail'=>$this->input->post('confmail'),
+            'mdp'=>'',
+            'confmdp'=>'',          
             'mailvisible'=>false,
             'telvisible'=>false,
-            'reponse'=>'',
+            'reponse'=>$this->input->post('rep'),
+            'Questions'=>$Options,
+            'message' => 'La confirmation de mot de passe n\'est pas similaire au mot de passe écrit',
+            'transfert'=>false,
           );
-          
-            $this->load->view('templates/Entete',$DonnéesTitre);
-            $this->load->view('Visiteur/sInscrire',$DonneesInjectees);
-            $this->load->view('templates/PiedDePage');
+  
+          $this->load->view('templates/Entete',$DonnéesTitre);
+          $this->load->view('Visiteur/sInscrire',$DonneesInjectees);
+          $this->load->view('templates/PiedDePage');
+          //echo 'La confirmation de mot de passe n\'est pas similaire au mot de passe écrit';
+        }
+      }
+      else
+      {
+        $Options= $this->ObtenirQuestions_Secretes();
+  
+          $DonneesInjectees=array(
+            'nom'=>$this->input->post('nom'),
+            'prenom'=>$this->input->post('prenom'),
+            'mail' => $this->input->post('mail'),
+            'confmail'=>'',
+            'mdp'=>'',
+            'confmdp'=>'',
+            'tel' =>$this->input->post('tel'),
+            'mailvisible'=>false,
+            'telvisible'=>false,
+            'reponse'=>$this->input->post('rep'),
+            'Questions'=>$Options,
+            'message' => 'La confirmation de mail n\'est pas similaire au mail écrit',
+            'transfert'=>false,
+          );
+  
+          $this->load->view('templates/Entete',$DonnéesTitre);
+          $this->load->view('Visiteur/sInscrire',$DonneesInjectees);
+          $this->load->view('templates/PiedDePage');
+          //echo 'La confirmation de mot de passe n\'est pas similaire au mot de passe écrit';
+      }  
+    }// if bouton valider
+    else //sinon ...
+    {
+      if($this->input->post('oui'))
+      {
+        
+        // transferer les commentaires visiteurs 
+        // direction les commentaires acteurs
+        // recup le novisiteur avec le mail
+
+        // insert dans acteur et delete dans visiteur
+        echo 'miou';
+      }
+      elseif($this->input->post('non'))
+      {
+        redirect('Visiteur/loadAccueil');
+      }
+      else
+      {
+        $Options= $this->ObtenirQuestions_Secretes();
+
+        $DonneesInjectees=array
+        (
+          'nom'=>"",
+          'prenom'=>"",
+          'mail' =>"",
+          'confmail'=>"",
+          'mdp'=>"",
+          'confmdp'=>"",
+          'tel' => "",
+          'message'=>'',
+          'reponse'=>'',
+          'Questions'=>$Options,
+          'mailvisible'=>false,
+          'telvisible'=>false,
+          'transfert'=>false,
+        );
+        
+        // var_dump($DonneesInjectees);
+        $this->load->view('templates/Entete',$DonnéesTitre);
+        $this->load->view('Visiteur/sInscrire',$DonneesInjectees);
+        $this->load->view('templates/PiedDePage');
+      }
+    }
+  } // fin SInscrire
+
+  public function sInscrireVisiteur()
+  {
+    $DonnéesTitre = array('TitreDeLaPage'=>'Inscription Visiteur');
+
+    if ( $this->input->post('valider'))//si le bouton "Valider l'inscription" a été cliqué ...
+    {
+      if(($this->input->post('mail'))==($this->input->post('confmail')))
+      {
+        if (($this->input->post('mdp'))==($this->input->post('confmdp')))// si ce que l'utilisateur a rentré dans la case mdp est égale a ce qu'il a rentré dans la case confmdp ...
+        {
+          $donneeATester=array('mail'=>$this->input->post('mail'));// dans la variable donneeATester on met le mail rentré par l'utilisateur
+          $test = $this->ModelSInscrire->Test_Inscrit($donneeATester);// on appelle la fonction Test de ce modele et on passe la variable a tester en paramètre
+  
+          if($test['count(*)']!=0) // si la fonction nous retourne un résultat différent de 0 ( si ce mail existe déjà dans la bdd ...)
+          {
+            $Options= $this->ObtenirQuestions_Secretes();
+            $DonneesInjectees=array
+            (
+              'nom'=>'',
+              'prenom'=>'',
+              'mail'=>'',
+              'tel' =>'',
+              'message' => 'Vous êtes déjà inscrit avec cette adresse mail',
+              'Questions'=>$Options,
+              'mailvisible'=>false,
+              'telvisible'=>false,
+              'reponse'=>'',
+            );
+            
+              $this->load->view('templates/Entete',$DonnéesTitre);
+              $this->load->view('Visiteur/sInscrire',$DonneesInjectees);
+              $this->load->view('templates/PiedDePage');
+          }
         }
         else // sinon on insert les bonnes valeurs dans la base de donnée
         {
@@ -181,49 +413,17 @@ class Visiteur extends CI_Controller
     }// if bouton valider
     else //sinon ...
     {
-      $Options= $this->ObtenirQuestions_Secretes();
       
-      $DonneesInjectees=array
-      (
-        'nom'=>"",
-        'prenom'=>"",
-        'mail' =>"",
-        'tel' => "",
-        'message'=>'',
-        'reponse'=>'',
-        'Questions'=>$Options,
-        'mailvisible'=>false,
-        'telvisible'=>false,
-      );
-      
-      // var_dump($DonneesInjectees);
-      $this->load->view('templates/Entete',$DonnéesTitre);
-      $this->load->view('Visiteur/sInscrire',$DonneesInjectees);
-      $this->load->view('templates/PiedDePage');
-    }
-  } // fin SInscrire
-
-  public function sInscrireVisiteur()
-  {
-
-    $DonnéesTitre = array('TitreDeLaPage'=>'Inscription Visiteur');
-
-    if ( $this->input->post('valider'))//si le bouton "Valider l'inscription" a été cliqué ...
-    {
-        
-    }
-    else
-    {
       $DonneesInjectees=array(
         'nom'=>'',
         'mail'=>'',
         ''
       );
 
-
       $this->load->view('templates/Entete',$DonnéesTitre);
       $this->load->view('Visiteur/SInscrireVisiteur',$DonneesInjectees);
       $this->load->view('templates/PiedDePage');
+    
     }
   }
 

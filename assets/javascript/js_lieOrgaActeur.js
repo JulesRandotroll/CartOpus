@@ -97,7 +97,11 @@ $(document).ready(function()
 
     $('#lier').on("click",function()
     {
-
+        noOrga=$('#Dropdown_Organisation').val();
+        noSecteur=$('#Dropdown_Secteur').val();
+        //alert(noOrga);
+        //alert(noSecteur);
+        location.href = $('#form_lier').attr('action')+'/'+noOrga+'/'+noSecteur;
     });
 });
 

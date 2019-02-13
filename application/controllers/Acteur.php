@@ -1922,6 +1922,7 @@ class Acteur extends CI_Controller
 
     public function LieOrgaActeur()
     {
+        $message=$this->session->flashdata('message');
         $noActeur=$this->session->noActeur;
         //var_dump($noActeur);
         $Organisation = $this->ModelOrga->GetOrgas();
@@ -1940,7 +1941,9 @@ class Acteur extends CI_Controller
                 $Options = $Options + $temporaire;
             }
         }
-        $DonnéesAInjecter=array('Organisations'=>$Organisation);
+        $DonnéesAInjecter=array('Organisations'=>$Organisation,
+            'noActeur'=>$noActeur,
+            'message'=>$message);
         //var_dump($DonnéesAInjecter);
         $DonnéesTitre = array('TitreDeLaPage'=>'Lié Organisation/Acteur');
         $this->load->view('templates/Entete',$DonnéesTitre);
@@ -2033,9 +2036,22 @@ class Acteur extends CI_Controller
 
     }
 
-    public function SupprimerOrga($noOrga)
+    public function SeLier($noActeur,$noOrga,$noSecteur)
     {
-        
+        // test doublon
+        $test= $this->ModelOrga->DoublonTravaillerDans($noActeur,$noOrga,$noSecteur);
+        //var_dump($test);
+        if($test[0]['count(*)']==0)
+        {
+            $TravaillerDans = $this->ModelOrga->InsertTravaillerDans($noActeur,$noOrga,$noSecteur);
+            $message='Insertion effectuée';
+        }
+        else
+        {
+            $message='Vous travaillez déjà dans cette organisation';
+        }
+        $this->session->set_flashdata('message',$message);
+        redirect('Acteur/LieOrgaActeur');
     }
 }
 ?>

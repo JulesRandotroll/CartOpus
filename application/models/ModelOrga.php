@@ -61,5 +61,31 @@
             $this->db->where('NO_ORGANISATION',$noOrga);
             $this->db->update('Organisation',$DonnéesOrga);
         }
+
+        public function InsertTravaillerDans($noActeur,$noOrga,$noSecteur)
+        {
+            $DonnéesAInserer=array(
+                "NOACTEUR"=>$noActeur,
+                "NO_ORGANISATION"=>$noOrga,
+                "NOSECTEUR"=>$noSecteur);
+
+            $this->db->insert('travaillerdans',$DonnéesAInserer);
+            return $this->db->insert_id(); 
+        }
+
+        public function DoublonTravaillerDans($noActeur,$noOrga,$noSecteur)
+        {
+            $DonnéesDeTest=array(
+                "NOACTEUR"=>$noActeur,
+                "NO_ORGANISATION"=>$noOrga,
+                "NOSECTEUR"=>$noSecteur);
+
+            //var_dump($DonnéesDeTest);
+            $this->db->select('count(*)');
+            $this->db->from('travaillerdans');
+            $this->db->where($DonnéesDeTest);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
     }
 ?>
