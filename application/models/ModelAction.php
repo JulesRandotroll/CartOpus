@@ -13,6 +13,7 @@
             $this->db->from('action a');
             $this->db->join('AvoirLieu al','al.noAction=a.noAction');
             $this->db->where('nomaction=titreaction');
+            $this->db->where('VALIDEE = TRUE');
             $requete = $this->db->get();
             return $requete->result_array();
         }
@@ -40,13 +41,13 @@
 
         public function getActionSimple($noAction)
         {
-            //var_dump($noAction);
             $DonnéesDeTest=array("a.NOACTION"=>$noAction);
 
             $this->db->select('*');
             $this->db->from('action a');
             $this->db->join('AvoirLieu al','al.noAction=a.noAction');
             $this->db->where($DonnéesDeTest);
+            $this->db->where('VALIDEE = TRUE');
             $requete = $this->db->get();
             return $requete->result_array();
         }
@@ -58,6 +59,7 @@
             $this->db->join('AvoirLieu al','al.noAction=a.noAction');
             $this->db->join('Lieu l','l.nolieu=al.nolieu');
             $this->db->where($DonnéesDeTest);
+            $this->db->where('VALIDEE = TRUE');
             $requete = $this->db->get();
             return $requete->result_array();
         }
@@ -80,7 +82,7 @@
             $this->db->join('etresignalee es', 'es.noAction = a.noAction');
             $this->db->join('signalement s', 's.noSignalement = es.noSignalement');
             $this->db->where('Norole=0');
-            $this->db->order_by('NOMACTION ASC, compteur DESC');
+            $this->db->order_by('NOMACTION ASC, s.noSignalement ASC');
             $requete = $this->db->get();
             return $requete->result_array();
         }
@@ -242,10 +244,6 @@
             return $requete->result_array();
         }
 
-
-
-
-
         public function UpdateAction($NoAction,$DonneesAModifier)
         { 
             
@@ -296,9 +294,6 @@
             $this->db->Where($Where);
             $this->db->update('action',$Set);
         }
-
-
-
 
         public function insertAction($InsertAction)//,$InsertLieu,$InsertAvoirLieu,$InsertEtrePartenaire)
         {
@@ -373,5 +368,40 @@
             return $requete->result_array();
         }
     
+        public function getMotClePourAction($noAction)
+        {
+            $this->db->select('*');
+            $this->db->from('etretagge e');
+            $this->db->join('action a', 'a.noAction = e.noAction');
+            $this->db->where('a.noaction',$noAction);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
+        public function getPartenaire($noAction)
+        {
+            $this->db->select('*');
+            $this->db->from('action a');
+            $this->db->join('etrepartenaire e', 'a.noAction = e.noAction');
+            $this->db->join('acteur ac', 'e.noActeur = ac.noActeur');
+            $this->db->where('a.noaction',$noAction);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
+        public function getSignalements() 
+        {
+            $this->db->select('*');
+            $this->db->from('Signalement');
+            $this->db->order_by('noSignalement', 'DESC');
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
+        public function insererSignalement($donneeAinserer)
+        {
+            $this->db->insert('etresignalee', $donneeAinserer);
+            return $this->db->insert_id();
+        }
     }
 ?>

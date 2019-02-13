@@ -1,3 +1,62 @@
+Gestion signalement commentaires : 
+
+CREATE TABLE IF NOT EXISTS `signalementcommentaire` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `DateSignalComm` datetime NOT NULL,
+  `MotifSignalComm` varchar(550) DEFAULT NULL,
+  `noSignalement` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `noSignalement` (`noSignalement`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Contraintes pour les tables exportées
+--
+
+--
+-- Contraintes pour la table `signalementcommentaire`
+--
+ALTER TABLE `signalementcommentaire`
+  ADD CONSTRAINT `ibk_signalementPourCommentaire` FOREIGN KEY (`noSignalement`) REFERENCES `signalement` (`noSignalement`);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 INSERT INTO `cartopus`.`signalement` (`noSignalement`, `libelleSignalement`) VALUES 
 (NULL, 'Autre'), 
 (NULL, 'Contenu illicite, inapproprié ou choquant'), 
@@ -148,7 +207,7 @@ UPDATE `cartopus`.`etrepartenaire` SET `NOROLE` = '0' WHERE `NOROLE` = 214748364
 
 Mise à jour de la BDD pour Action : 
 
-ALTER TABLE `action` ADD `SIGNALIEE` BOOLEAN NOT NULL , ADD `VALIDEE` BOOLEAN NOT NULL ;
+ALTER TABLE `action` ADD `SIGNALEE` BOOLEAN NOT NULL , ADD `VALIDEE` BOOLEAN NOT NULL ;
 UPDATE `cartopus`.`action` SET `VALIDEE` = 1 WHERE `action`.`VALIDEE` = 0
 
 

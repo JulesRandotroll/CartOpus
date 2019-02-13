@@ -16,6 +16,7 @@ class Acteur extends CI_Controller
         $this->load->model('ModelAction');
         $this->load->model('ModelMembre');
         $this->load->model('ModelThematique');
+        $this->load->model('ModelCommentaire');
         $this->load->model('ModelOrga');
         $this->load->library('upload');
  
@@ -287,6 +288,7 @@ class Acteur extends CI_Controller
 
         $Where = array('a.noAction'=>$noAction);
         $Actions = $this->ModelAction->getAction($Where);
+        $Commentaire = $this->input->post('Commentaire');
 
         $DateDebut=$Actions[0]['DATEDEBUT'];
         //var_dump($Actions);
@@ -309,6 +311,7 @@ class Acteur extends CI_Controller
             );
         }
         
+        $Données['lesVisiteurs'] = $this->ModelCommentaire->getCommentaires($noAction);
 
         $DonnéesTitre = array('TitreDeLaPage'=>$Actions[0]['NOMACTION']);
         
@@ -1920,6 +1923,7 @@ class Acteur extends CI_Controller
         
     }
 
+<<<<<<< HEAD
     public function LieOrgaActeur()
     {
         $message=$this->session->flashdata('message');
@@ -2053,5 +2057,33 @@ class Acteur extends CI_Controller
         $this->session->set_flashdata('message',$message);
         redirect('Acteur/LieOrgaActeur');
     }
+=======
+    public function AjouterCommentaire($noAction)
+    {
+        if($this->input->post('Commenter'))
+        {
+            $Commentaire = $this->input->post('Commentaire');
+            $noActeur = $this->session->noActeur;
+            $toDay = date('Y-m-d H:i:s');
+            $Action=$this->ModelAction->getActionSimple($noAction);
+
+            $donneeAinserer = array
+            (
+            'DateHeure' => $toDay,
+            'NoAction' => $noAction,
+            'NoActeur' => $noActeur,
+            'Commentaire' => $Commentaire,
+            );
+
+            $DonneesInjectees = $this->ModelCommentaire->insererCommentaireActeur($donneeAinserer);
+            redirect('Visiteur/AfficherAction/'.$noAction);
+        }
+        else
+        {
+            $this->AfficherAction($noAction);
+        }
+    }
+
+>>>>>>> 00535b78760ccbf89ea1aa0194cc9ca0d28b0b8c
 }
 ?>

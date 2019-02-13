@@ -45,6 +45,45 @@
 
 <div class="row" style="background-color:#15B7D1;padding:20px" id="action">
     <div class="col-lg-2">
+    <section>
+            <div class = "section-inner" style="background-color:#139CBC;padding:20px">
+                <h4 style="text-decoration: underline;">Les Mots Clés : </h4><BR>
+                <?php
+                    if(!empty($lesMotCles))
+                    {
+                        if(isset($lesMotCles))
+                        {
+                            foreach($lesMotCles as $unMotCle)
+                            {
+                                    echo '<h5>'.$unMotCle['MotCle'].'</h5>';
+                            }
+                        }
+                    }
+
+                ?>
+            </div>
+        </section>
+        <BR>
+        <section>
+            <div class = "section-inner" style="background-color:#139CBC;padding:20px">
+
+                <h4 style="text-decoration: underline;">Les Partenaires : </h4><BR>
+
+                <?php
+                    if(!empty($lesPartenaires))
+                    {
+                        if(isset($lesPartenaires))
+                        {
+                            foreach($lesPartenaires as $unPartenaire)
+                            {
+                                echo '<a href="'.site_url('Visiteur/AfficherActeurAction/'.($unPartenaire['NOACTEUR'])).'" style="color:#000000"><h5>'.$unPartenaire['NOMACTEUR'].' '.$unPartenaire['PRENOMACTEUR'].'</h5>';
+                            }
+                        }
+                    }
+
+                ?>
+            </div>
+        </section>
     </div>
     <div class="col-xs-8">
         <div class = "text-center">

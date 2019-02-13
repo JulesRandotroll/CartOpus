@@ -19,6 +19,7 @@ class Visiteur extends CI_Controller
       $this->load->model('ModelOrga');
       $this->load->model('ModelRecherche');
       $this->load->model('ModelActeur');
+      $this->load->model('ModelCommentaire');
       $this->load->library("pagination");
   } // __construct
 
@@ -1163,17 +1164,34 @@ class Visiteur extends CI_Controller
   {
       $Where = array('a.noAction'=>$noAction);
       $Actions = $this->ModelAction->getAction($Where);
+      //$Commentaire = $this->input->post('Commentaire');
 
       $DateDebut=$Actions[0]['DATEDEBUT'];
       
       $Donnes = array('NOACTION'=>$noAction,'DATEACTION'=>$DateDebut,);
       $Fichiers = $this->ModelAction->getFichersPourAction($Donnes);
 
+      $Signalements = $this->ModelAction->getSignalements();
+      //var_dump($Signalements);
+      foreach($Signalements as $unSignalement)
+      {
+        if(empty($Options))
+        {
+            $Options = array($unSignalement['noSignalement']=>$unSignalement['libelleSignalement']);
+        }
+        else
+        {
+            $temporaire = array($unSignalement['noSignalement']=>$unSignalement['libelleSignalement']);
+            $Options = $Options + $temporaire;
+        }
+      }
+
       if(empty($Fichiers))
       {
           
           $Données = array(
               'Actions'=>$Actions,
+              'Options'=>$Options,
           );
       }
       else
@@ -1181,11 +1199,16 @@ class Visiteur extends CI_Controller
           $Données = array(
               'Actions'=>$Actions,
               'Fichiers'=>$Fichiers,
+              'Options'=>$Options,
           );
       }
       
       $DonnéesTitre = array('TitreDeLaPage'=>$Actions[0]['NOMACTION']);
       
+      $Données['lesVisiteurs'] = $this->ModelCommentaire->getCommentaires($noAction);
+      $Données['lesMotCles'] = $this->ModelAction->getMotClePourAction($noAction);
+      $Données['lesPartenaires'] = $this->ModelAction->getPartenaire($noAction);
+
       $this->load->view('templates/Entete',$DonnéesTitre);
       $this->load->view('Visiteur/AfficherAction',$Données);
       $this->load->view('templates/PiedDePage');
@@ -1226,6 +1249,60 @@ class Visiteur extends CI_Controller
       $this->load->view('Visiteur/AfficherActeurAction',$Données);
       $this->load->view('templates/PiedDePage');
 
+  }
+
+  public function AjouterCommentaire($noAction)
+  {
+    if($this->input->post('Commenter'))
+    {
+      $Commentaire = $this->input->post('Commentaire');
+      $noVisiteur = $this->session->noVisiteur;
+      $toDay = date('Y-m-d H:i:s');
+      $Action=$this->ModelAction->getActionSimple($noAction);
+
+      $donneeAinserer = array
+      (
+        'DateHeure' => $toDay,
+        'NoAction' => $noAction,
+        'NoVisiteur' => 2,
+        'Commentaire' => $Commentaire,
+      );
+      
+      $DonneesInjectees = $this->ModelCommentaire->insererCommentaireVisiteur($donneeAinserer);
+      redirect('Visiteur/AfficherAction/'.$noAction);
+    }
+    else
+    {
+      redirect('Visiteur/AfficherAction/'.$noAction);
+    }
+  }
+
+  
+  public function AjouterSignalements($noAction)
+  {
+    //insertion
+    if($this->input->post('Signaler'))
+    {
+      $Action = $this->ModelAction->getActionSimple($noAction);
+      $Signalement = $this->input->post('Signalements');
+      $Commentaire = $this->input->post('Commentaire');
+      $toDay = date('Y-m-d H:i:s');
+    
+      $donneeAinserer = array
+      (
+        'noAction' => $noAction,
+        'noSignalement' => $Signalement,
+        'commentaire' => $Commentaire,
+        'DateSignalement' => $toDay,
+      );
+      
+      $DonneesInjectees = $this->ModelAction->insererSignalement($donneeAinserer);
+      redirect('Visiteur/AfficherAction/'.$noAction);
+    }
+    else
+    {
+      redirect('Visiteur/AfficherAction/'.$noAction);
+    }
   }
 
 }//Fin Visiteur

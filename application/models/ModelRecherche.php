@@ -16,6 +16,7 @@
             }
             $this->db->from('action', 'avoirlieu', 'lieu');
             $this->db->like('NOMACTION', $Recherche);
+            $this->db->where('VALIDEE = TRUE');
             $requete = $this->db->count_all_results();
             return $requete;
         }
@@ -28,6 +29,7 @@
             $this->db->join('avoirlieu al', 'al.noaction=a.noaction');
             $this->db->join('lieu l', 'al.nolieu=l.nolieu');
             $this->db->like('NOMACTION', $nomAction);
+            $this->db->where('VALIDEE = TRUE');
             $query = $this->db->get();
             if($query->num_rows()>0)
             {
@@ -126,6 +128,7 @@
             $this->db->join('avoirlieu al', 'al.noaction=a.noaction');
             $this->db->join('lieu l', 'al.nolieu=l.nolieu');
             $this->db->like('NOMTHEMATIQUE', $nomThematique);
+            $this->db->where('VALIDEE = TRUE');
             $query = $this->db->get();
             if($query->num_rows()>0)
             {
@@ -181,6 +184,7 @@
                 $this->db->join('action a', 'aL.noAction=a.noAction');
                 $this->db->join('lieu l', 'al.nolieu=l.nolieu');
                 $this->db->where_in($test);
+                $this->db->where('VALIDEE = TRUE');
                 $query = $this->db->get();
                 $Action = $query->result_array();
                 //var_dump($Action);
@@ -219,6 +223,7 @@
             $this->db->join('action a', 'e.noaction=a.noaction');
             $this->db->join('avoirlieu al', 'al.noaction=a.noaction');
             $this->db->join('lieu l', 'al.nolieu=l.nolieu');
+            $this->db->where('VALIDEE = TRUE');
             $this->db->like('MOTCLE', $nomMotCle);
             $query = $this->db->get();
             if($query->num_rows()>0)
