@@ -20,13 +20,22 @@
         }
         public function Test_Inscrit($donneeATester)
         {
-          
            $this->db->select('count(*)');
            $this->db->from('acteur');
            $this->db->where($donneeATester);
            $requete = $this->db->get();
            return $requete->row_array();
            // Select
+        }
+
+        public function Test_InscritVisiteur($donneeATester)
+        {  
+          //var_dump($donneeATester);         
+           $this->db->select('count(*)');
+           $this->db->from('visiteur');
+           $this->db->where($donneeATester);
+           $requete = $this->db->get();
+           return $requete->row_array();
         }
         public function getActeur($mail)
         {
@@ -57,6 +66,14 @@
        
         } 
 
+        public function getUneQuestion($noQuestion)
+        {
+            $this->db->select('nomQuestion'); 
+            $this->db->from('QuestionSecrete');
+            $this->db->where('noQuestion',$noQuestion);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
         public function deleteTempo($mail)
         {
             $donnéesATester=array('mail'=>$mail);

@@ -226,7 +226,7 @@
 
         public function getLieu($DonnéesLieu)
         {    
-            var_dump($DonnéesLieu);
+            //var_dump($DonnéesLieu);
             $this->db->select('nolieu');
             $this->db->from('lieu');
             $this->db->where($DonnéesLieu);
