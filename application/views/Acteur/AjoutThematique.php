@@ -24,34 +24,35 @@
 </div>
 
 <div class="row" style="background-color:#15B7D1">
-    <div class="col-sm-2">
+    <div class="col-sm-1">
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-5">
     <section>
         <div class = "section-inner" style="background-color:#139CBC;padding:20px">
-            <table class="text-center">
-                <tr>
-                    <th>Thématique</th>
-                
-                </tr>
-
-                <tr>
-                    <td>Carmen</td>
-
-                </tr>
-                <tr>
-                    <td>Michelle</td>
-
-                </tr>
-                </table>
+            <h4 align="center">Thématiques</h4>
             
+
+            <?php
+                echo '<div class="text-center">';
+                    echo form_submit('lier', 'Lier',array('class'=>'btn btn-danger'));
+                echo '</div>';
+            ?>
+
         </div>
 
     </section>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-5">
     <section>
         <div class = "section-inner" style="background-color:#139CBC;padding:20px">
+            <h4 align="center">Mots Clé</h4>
+
+
+            <?php
+                echo '<div class="text-center">';
+                    echo form_submit('lier', 'Lier',array('class'=>'btn btn-danger'));
+                echo '</div>';
+            ?>
         
         </div>
     </section>
@@ -62,9 +63,6 @@
 <div class="row" style="background-color:#15B7D1">
 <div  style="padding:20px">
     <?php       
-        echo '<div class="text-center">';
-            echo form_submit('lier', 'Lier',array('class'=>'btn btn-danger'));
-        echo '</div>';
 
         echo '<div class="text-right">';
             echo'<h6><a href="'.site_url('Acteur/ContacterAdmin').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span>  Nouvelle Thématique ?</a></h6>';
