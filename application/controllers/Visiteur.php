@@ -1394,7 +1394,7 @@ class Visiteur extends CI_Controller
     }
   }
 
-  public function AjouterSignalementsComm($noAction,$noCommentaire)
+  public function AjouterSignalementsComm($noAction,$noCommentaire,$acteur)
   {
     //insertion
     if($this->input->post('SignalerComm'))
@@ -1404,13 +1404,14 @@ class Visiteur extends CI_Controller
       $CommentaireComm = $this->input->post('CommentaireComm');
       $toDay = date('Y-m-d H:i:s');
     
+      
       $donneeAinserer = array
       (
         'noCommentaire'=>$noCommentaire,
         'DateSignalComm' => $toDay,
         'motifSignalement' => $CommentaireComm,
         'noSignalement' => $SignalementComm,
-        
+        'acteur'=>$acteur,
       );
       
       $DonneesInjectees = $this->ModelCommentaire->insererSignalementComm($donneeAinserer);

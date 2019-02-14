@@ -1,6 +1,12 @@
 $(function()
 {
+    
+    var url = $('#form_signalComm').attr('action');
+    //alert(url);
+    
     $('.sousAction').hide();
+
+
 
     $('.lienSousAction').on('click',function()
     {
@@ -104,15 +110,26 @@ $(function()
 
     $('.SignalerComm').on('click',function()
     {
-        var noCommentaire=this.id;
-        var id = noCommentaire;
+        
+        var id=this.id;
+        var noCommentaire = id.substring(1);
+        // alert(noCommentaire);
+        // alert(id);
         var comm = $('#commentaire'+id).html();
         var date = $('#date'+id).html();
         var nom = $('#nom'+id).html();
 
-        var url= $('#form_signalComm').attr('action');
-        $('#form_signalComm').attr('action',url+'/'+noCommentaire);
-
+        
+        //alert(url);
+        
+        if(id.substring(0,1)=='a')
+        {
+            $('#form_signalComm').attr('action',url+'/'+noCommentaire+'/'+'1');
+        }
+        else
+        {
+            $('#form_signalComm').attr('action',url+'/'+noCommentaire+'/'+'0');    
+        }
 
         var retour = '<div class="media">' +
                         '<div class="media-left media-top">' +
