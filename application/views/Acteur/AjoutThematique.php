@@ -29,10 +29,40 @@
     <div class="col-sm-5">
     <section>
         <div class = "section-inner" style="background-color:#139CBC;padding:20px">
-            <h4 align="center">Thématiques</h4>
-            
+        <H1 style="color:#FFFFFF" class="text-center">Thématiques</H1>
 
             <?php
+                var_dump($lesThematiques);
+                if(isset($lesThematiques))
+                {
+                    echo '<ul>';
+                    foreach($lesThematiques as $uneThematique)
+                    {
+                        $i = 0;
+                        echo '<ul>';
+                        if(isset($uneThematique))
+                        {
+                            foreach($uneThematique as $uneSsThematique)
+                            {
+                                if($i==0)
+                                {
+                                    // les thematiques 
+                                    echo '<li class="Thematique" type="checkbox" value="#" style="color:#FFFFFF" id="'.$uneSsThematique['NOMTHEMATIQUE'].'"> '.$uneSsThematique['NOMTHEMATIQUE'].'</li>';
+                                }
+                                else
+                                {
+                                    // les sous thematiques
+                                }
+                            }
+                        }
+                        
+                        echo '</ul>';
+                    }
+                    echo '</ul>';
+                }
+                
+
+
                 echo '<div class="text-center">';
                     echo form_submit('lier', 'Lier',array('class'=>'btn btn-danger'));
                 echo '</div>';
@@ -45,8 +75,42 @@
     <div class="col-sm-5">
     <section>
         <div class = "section-inner" style="background-color:#139CBC;padding:20px">
-            <h4 align="center">Mots Clé</h4>
 
+            <H1 style="color:#FFFFFF" class="text-center">Mots-Clés</H1>
+
+                <div class='form-group'>
+                    <label> Rechercher : </label>
+                    <input class="form-control" id="myInput" type="text" placeholder="Rechercher..">
+                </div>
+                <table class="table" id="myTable">
+                    <tr>
+                        <?php 
+                             //var_dump($motsCles);
+                            $i = 0;
+                            $lim = 5;
+                            if(isset($motsCles))
+                            {
+                                foreach($motsCles as $unMotCle)
+                                {
+                                    if($i==$lim)
+                                    {
+                                        echo'</tr><tr>';
+                                        $i=0;
+                                    }
+    
+                                    echo '<td><input class="MotCle" type="checkbox" value="#" style="color:#FFFFFF" id="'.$unMotCle['MotCle'].'"> '.$unMotCle['MotCle'].'</input></td>';
+                                    $i++;
+                                }
+                            }
+                         
+                            //var_dump($i);
+                            for($i;$i<$lim;$i++)
+                            {
+                                echo"<td></td>";
+                            }
+                        ?>
+                    </tr>
+                </table>
 
             <?php
                 echo '<div class="text-center">';

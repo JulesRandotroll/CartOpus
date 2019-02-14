@@ -431,7 +431,6 @@ if(!empty($lesVisiteurs))
                                             echo '</div>';
                                         echo '</div>';
                                     echo '</div>';
-                                    echo ($unVisiteur['noCommentaire']);
                                 }
                                 else if($unVisiteur['profil'] == 1)
                                 {
@@ -455,7 +454,6 @@ if(!empty($lesVisiteurs))
                                             echo '</div>';
                                         echo '</div>';
                                     echo '</div>';
-                                    echo ($unVisiteur['noCommentaire']);
                                 }
                                 else if($unVisiteur['profil'] == 2)
                                 {
@@ -481,7 +479,6 @@ if(!empty($lesVisiteurs))
                                             echo '</div>';
                                         echo '</div>';
                                     echo '</div>';
-                                    echo ($unVisiteur['noCommentaire']);
                                 }
                                 else if($unVisiteur['profil'] == 4)
                                 {

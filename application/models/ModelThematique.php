@@ -16,7 +16,6 @@
             return $requete->result_array();
         }
         
-
         public function getSousThematiqueExiste($Where)
         {
             $this->db->select('*');
@@ -35,7 +34,6 @@
             return $requete->result_array();
         }
 
-
         public function getThematique_SousThematiqueExiste($Where)
         {
             $this->db->select('*');
@@ -44,9 +42,6 @@
             $requete = $this->db->get();
             return $requete->result_array();
         }
-
-
-
 
         public function getSurThematiques()
         {
@@ -127,10 +122,10 @@
                     else
                     {
                         $leTheme = array($unTheme["NOTHEMATIQUE"]=>$unTheme["NOMTHEMATIQUE"]);
-                        echo 'leTheme';
+                       
                         //var_dump($leTheme);
                         $array =  $leTheme+ $array;
-                        echo 'array';
+                       
                         //var_dump($array);
                         $temp = array($unTheme["NOMTHEMATIQUE"]=>$array);
                          
