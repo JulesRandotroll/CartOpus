@@ -32,7 +32,7 @@
         <H1 style="color:#FFFFFF" class="text-center">Thématiques</H1>
 
             <?php
-                var_dump($lesThematiques);
+                //var_dump($lesThematiques);
                 if(isset($lesThematiques))
                 {
                     echo '<ul>';
@@ -40,25 +40,33 @@
                     {
                         $i = 0;
                         echo '<ul>';
+
+                        //var_dump($uneThematique);
+
                         if(isset($uneThematique))
                         {
                             foreach($uneThematique as $uneSsThematique)
                             {
+                                //var_dump($uneSsThematique);
                                 if($i==0)
                                 {
                                     // les thematiques 
                                     echo '<li class="Thematique" type="checkbox" value="#" style="color:#FFFFFF" id="'.$uneSsThematique['NOMTHEMATIQUE'].'"> '.$uneSsThematique['NOMTHEMATIQUE'].'</li>';
+                                    echo '<ul>';
+                                    $i++;
                                 }
                                 else
                                 {
                                     // les sous thematiques
+                                    echo '<li class="Thematique" type="checkbox" value="#" style="color:#FFFFFF" id="'.$uneSsThematique['NOMTHEMATIQUE'].'"> '.$uneSsThematique['NOMTHEMATIQUE'].'</li>';
                                 }
                             }
+                            echo '</ul>';
                         }
                         
                         echo '</ul>';
                     }
-                    echo '</ul>';
+                    
                 }
                 
 
@@ -87,7 +95,7 @@
                         <?php 
                              //var_dump($motsCles);
                             $i = 0;
-                            $lim = 5;
+                            $lim = 4;
                             if(isset($motsCles))
                             {
                                 foreach($motsCles as $unMotCle)

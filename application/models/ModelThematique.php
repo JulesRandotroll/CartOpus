@@ -147,62 +147,46 @@
         {
             $Themes = $this->getSurThematiques();
             //var_dump($Themes);
+            $array = null;
             foreach($Themes as $unTheme)
             {
+                //echo'changement de theme<BR>';
+                
                 //var_dump($unTheme);
                 $Where = array("s.noThematique"=>$unTheme["NOTHEMATIQUE"]);
-                $SsTheme = $this->getSousTheme($Where);
-                //var_dump($SsTheme);
-                foreach($SsTheme as $unSsTheme)
+                $SsThemes = $this->getSousTheme($Where);
+                
+                if(!empty($SsThemes))
                 {
-                    if(empty($array) || $array == null)
-                    {
-                        $array = array($unSsTheme['NOMTHEMATIQUE']=>array($unSsTheme['NOSOUSTHEMATIQUE']=>$unSsTheme['NOMTHEMATIQUE']));
-                    }
-                    else
-                    {
-                        $temp = array($unSsTheme['NOMTHEMATIQUE']=>array($unSsTheme['NOSOUSTHEMATIQUE']=>$unSsTheme['NOMTHEMATIQUE']));
-                        $array = $array + $temp;
-                    }
-                }
+                    // echo('SsThemes');
+                    // var_dump($SsThemes);
+                    
+                    array_push($SsThemes,$unTheme);
+                    
+                    //echo'Theme ? ';
+                    //var_dump($SsThemes);
+                    $array = array_reverse($SsThemes);
 
-                if(empty($final))
-                {
-                    if(empty($array) || $array == null)
-                    {
-                        $final = array($unTheme["NOMTHEMATIQUE"]=>array($unTheme["NOTHEMATIQUE"]=>$unTheme["NOMTHEMATIQUE"]));
-                    }
-                    else
-                    {
-                        $leTheme = array($unTheme["NOTHEMATIQUE"]=>$unTheme["NOMTHEMATIQUE"]);
-                        $array =  $leTheme+ $array;
-                        $final = array($unTheme["NOMTHEMATIQUE"]=>$array);
-                    }
+                    //echo'Theme dans l\'bon sens ? ';
+                    //var_dump($array);
                 }
                 else
                 {
-                    if(empty($array) || $array == null)
-                    {
-                        $temp = array($unTheme["NOMTHEMATIQUE"]=>array($unTheme["NOTHEMATIQUE"]=>$unTheme["NOMTHEMATIQUE"]));
-                    }
-                    else
-                    {
-                        $leTheme = array($unTheme["NOTHEMATIQUE"]=>$unTheme["NOMTHEMATIQUE"]);
-                        echo 'leTheme';
-                        //var_dump($leTheme);
-                        $array =  $leTheme+ $array;
-                        echo 'array';
-                        //var_dump($array);
-                        $temp = array($unTheme["NOMTHEMATIQUE"]=>$array);
-                         
-                    }
-                    $final = $final + $temp;   
+                    $array = array(0=>$unTheme);
                 }
-
+                if(empty($final))
+                {
+                    $final = array($unTheme["NOTHEMATIQUE"]=>$array);
+                }
+                else
+                {
+                    $temp = array($unTheme["NOTHEMATIQUE"]=>$array);
+                    $final = $final + $temp;
+                }
                 $array = null;
+                
             }
-            //var_dump($final);
-
+            var_dump($final);
             return $final;
         }
 

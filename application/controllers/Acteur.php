@@ -1379,18 +1379,19 @@ class Acteur extends CI_Controller
         $this->session->statut=array('NOPROFIL'=>$profil);
         redirect('Acteur/AfficherMembre/'.$noAction);
     }
+
     public function AjoutThematique($noAction)
     {
         // sortir toutes les thématiques dans faire références puis recup le nom correspondant puis les injectées
         $noActeur = $this->session->noActeur;
         
-        $Thematique=$this->ModelThematique->getTheme_SousTheme();
-        //var_dump($Thematique);
+        $Thematiques=$this->ModelThematique->getTheme_SousThemeALier();
+        //var_dump($Thematiques);
         $MotCle=$this->ModelThematique->getMotCle();
         //var_dump($MotCle);
         $DonnéesTitre = array('TitreDeLaPage'=>'Ajout Thématique');
         $DonnéesAInjecter=array(
-            'lesThematiques'=>$Thematique,
+            'lesThematiques'=>$Thematiques,
             'motsCles'=>$MotCle,
         );
 
