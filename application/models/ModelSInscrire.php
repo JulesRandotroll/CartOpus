@@ -13,6 +13,12 @@
             return $this->db->insert_id();
         }
 
+        public function Insert_Visiteur($donneeAinserer)
+        {
+            $this->db->insert('visiteur', $donneeAinserer);
+            return $this->db->insert_id();
+        }
+
         public function Insert_EnCours($donneeAinserer)
         {
             $this->db->insert('encoursinscription', $donneeAinserer);
@@ -89,6 +95,15 @@
             //var_dump($DonnéesAUpdate['finaliser']);
             $this->db->where('NOACTEUR',$DonnéesAUpdate["noActeur"]);
             $this->db->update('acteur',$DonnéesAUpdate);
+        }
+
+        public function getVisiteur($mail)
+        {
+            $this->db->select('noVisiteur'); 
+            $this->db->from('visiteur');
+            $this->db->where('mail',$mail);
+            $requete = $this->db->get();
+            return $requete->result_array();
         }
     }
 ?>

@@ -31,6 +31,15 @@ class Visiteur extends CI_Controller
     {
       $this->session->statut = 0;
     }
+    //echo $this->session->statut;
+    if($this->session->statut==0 && $this->session->noVisiteur!=null)
+    {
+      //echo $this->session->noVisiteur;
+      $pseudo=$this->ModelSeConnecter->getPseudo($this->session->noVisiteur);
+      $this->session->pseudo=$pseudo[0]['pseudo']; 
+      //var_dump($this->session->pseudo);
+      //var_dump($pseudo);
+    }
 
     $Where = array(
       'a.Favoris'=>true,
@@ -39,7 +48,7 @@ class Visiteur extends CI_Controller
     if($this->session->flashdata('message')!=null)
     {
       $DonneesMessage= array('message'=>$this->session->flashdata('message'));
-      $DonneesInjectees=array('lesFavoris'=> $this->ModelAction->getActionFavorite($Where));
+      $DonneesInjectees=array('lesFavoris'=> $this->ModelAction->getActionFavorite($Where),);
 
 
      // var_dump($DonneesInjectees);
@@ -169,8 +178,6 @@ class Visiteur extends CI_Controller
             }
             else
             {
-              
-    
               $donneeAinserer=array(
                 'noprofil'=>'1',
                 'nomacteur'=>$this->input->post('nom'),
@@ -216,8 +223,8 @@ class Visiteur extends CI_Controller
             'confmail'=>$this->input->post('confmail'),
             'mdp'=>'',
             'confmdp'=>'',          
-            'mailvisible'=>false,
-            'telvisible'=>false,
+            'mailvisible'=>$visibleMail,
+            'telvisible'=>$visibleTel,
             'reponse'=>$this->input->post('rep'),
             'Questions'=>$Options,
             'message' => 'La confirmation de mot de passe n\'est pas similaire au mot de passe écrit',
@@ -242,8 +249,8 @@ class Visiteur extends CI_Controller
             'mdp'=>'',
             'confmdp'=>'',
             'tel' =>$this->input->post('tel'),
-            'mailvisible'=>false,
-            'telvisible'=>false,
+            'mailvisible'=>$visibleMail,
+            'telvisible'=>$visibleTel,
             'reponse'=>$this->input->post('rep'),
             'Questions'=>$Options,
             'message' => 'La confirmation de mail n\'est pas similaire au mail écrit',
@@ -260,13 +267,87 @@ class Visiteur extends CI_Controller
     {
       if($this->input->post('oui'))
       {
-        
-        // transferer les commentaires visiteurs 
-        // direction les commentaires acteurs
-        // recup le novisiteur avec le mail
+        $checktest=$this->input->post('checkmail');
+              
+        if (isset($checktest))
+        {
+          $visibleMail=true;
+        }
+        else
+        {
+          $visibleMail=false;
+        }
 
-        // insert dans acteur et delete dans visiteur
-        echo 'miou';
+        $checktest=$this->input->post('checktel');
+        if (isset($checktest))
+        {
+          $visibleTel=true;
+        }
+        else
+        {
+          $visibleTel=false;
+        }
+
+        $noVisiteur=$this->ModelSInscrire->getVisiteur($this->input->post('mail'));
+        //var_dump($noVisiteur);
+        $Comm=$this->ModelCommentaire->getCommUnVisiteur($noVisiteur[0]["noVisiteur"]); 
+        //var_dump($Comm);
+
+        $donneeAinserer=array(
+          'NOMACTEUR'=>$this->input->post('nom'),
+          'PRENOMACTEUR'=>$this->input->post('prenom'),
+          'MAIL'=>$this->input->post('mail'),
+          'NOTEL'=>$this->input->post('tel'),
+          'MOTDEPASSE'=>$this->input->post('mdp'),
+          'noQuestion'=>$this->input->post('question'),
+          'Reponse'=>$this->input->post('reponse'),
+          'NoTelVisible'=>$visibleTel,
+          'MailVisible'=>$visibleMail,
+          'NOPROFIL'=>1,
+          'PhotoProfil'=>'4pPaR31L_1Ph20T.png',
+          'finaliser'=>false,
+        );
+        //var_dump($donneeAinserer);
+    
+        $code=$this->GenererMotDePasse();
+        $date= date('Y-m-d H:i:s');
+        //var_dump($code);
+        $donneeEncours=array(
+          'code'=>$code,
+          'mail'=> $this->input->post('mail'),
+          'dateJour'=>$date,
+        );
+  
+        $noActeur=$this->ModelSInscrire->Insert_Acteur($donneeAinserer);
+        $this->ModelSInscrire->Insert_EnCours($donneeEncours);
+        $mail=$this->input->post('mail');
+
+        foreach($Comm as $unComm)
+        {
+          $DonnéesAInserer=array(
+            'NOACTEUR'=>$noActeur,
+            'NOACTION'=>$unComm['NOACTION'],
+            'DATEHEURE'=>$unComm['DATEHEURE'],
+            'COMMENTAIRE'=>$unComm['COMMENTAIRE'],
+  
+          );
+          var_dump($DonnéesAInserer);
+          $this->ModelCommentaire->insererCommentaireActeur($DonnéesAInserer); 
+        }
+
+        $this->ModelCommentaire->DeleteVisiteur($noVisiteur[0]["noVisiteur"]);
+
+        $this->session->set_flashdata('mail',$mail);
+        $this->session->set_flashdata('code',$code);
+        $this->Validation();
+      
+      
+        // var_dump($DonneesInjectees);
+        $this->load->view('templates/Entete',$DonnéesTitre);
+        $this->load->view('Visiteur/sInscrire',$DonneesInjectees);
+        $this->load->view('templates/PiedDePage');
+
+        
       }
       elseif($this->input->post('non'))
       {
@@ -312,113 +393,112 @@ class Visiteur extends CI_Controller
         if (($this->input->post('mdp'))==($this->input->post('confmdp')))// si ce que l'utilisateur a rentré dans la case mdp est égale a ce qu'il a rentré dans la case confmdp ...
         {
           $donneeATester=array('mail'=>$this->input->post('mail'));// dans la variable donneeATester on met le mail rentré par l'utilisateur
-          $test = $this->ModelSInscrire->Test_Inscrit($donneeATester);// on appelle la fonction Test de ce modele et on passe la variable a tester en paramètre
+          $testActeur = $this->ModelSInscrire->Test_Inscrit($donneeATester);// on appelle la fonction Test de ce modele et on passe la variable a tester en paramètre
   
-          if($test['count(*)']!=0) // si la fonction nous retourne un résultat différent de 0 ( si ce mail existe déjà dans la bdd ...)
+          if($testActeur['count(*)']!=0) // si la fonction nous retourne un résultat différent de 0 ( si ce mail existe déjà dans la bdd ...)
           {
-            $Options= $this->ObtenirQuestions_Secretes();
             $DonneesInjectees=array
             (
-              'nom'=>'',
-              'prenom'=>'',
+              'pseudo'=>'',
               'mail'=>'',
-              'tel' =>'',
-              'message' => 'Vous êtes déjà inscrit avec cette adresse mail',
-              'Questions'=>$Options,
-              'mailvisible'=>false,
-              'telvisible'=>false,
-              'reponse'=>'',
+              'confmail' =>'',
+              'message' => 'Vous êtes déjà inscrit avec cette adresse mail en tant qu\'acteur',
+              'mdp'=>'',
+              'confmdp'=>'',
             );
             
-              $this->load->view('templates/Entete',$DonnéesTitre);
-              $this->load->view('Visiteur/sInscrire',$DonneesInjectees);
-              $this->load->view('templates/PiedDePage');
+            $this->load->view('templates/Entete',$DonnéesTitre);
+            $this->load->view('Visiteur/sInscrireVisiteur',$DonneesInjectees);
+            $this->load->view('templates/PiedDePage');
           }
-        }
-        else // sinon on insert les bonnes valeurs dans la base de donnée
+          else // sinon on insert les bonnes valeurs dans la base de donnée
+          {
+            $testVisiteur= $this->ModelSInscrire->Test_InscritVisiteur($donneeATester);
+            if($testVisiteur['count(*)']!=0) 
+            {
+              $DonneesInjectees=array
+              (
+                'pseudo'=>'',
+                'mail'=>'',
+                'confmail' =>'',
+                'message' => 'Vous êtes déjà inscrit avec cette adresse mail',
+                'mdp'=>'',
+                'confmdp'=>'',
+              );
+              
+                $this->load->view('templates/Entete',$DonnéesTitre);
+                $this->load->view('Visiteur/sInscrireVisiteur',$DonneesInjectees);
+                $this->load->view('templates/PiedDePage');
+            }
+            else
+            {
+              $donneeAinserer=array(
+              'pseudo'=>$this->input->post('pseudo'),
+              'mdp'=>$this->input->post('mdp'),
+              'mail' => $this->input->post('mail'),
+              'Finaliser'=>false,
+              );
+              //var_dump($donneeAinserer);
+  
+              $code=$this->GenererMotDePasse();
+              $date= date('Y-m-d H:i:s');
+              //var_dump($code);
+              $donneeEncours=array(
+                'code'=>$code,
+                'mail'=> $this->input->post('mail'),
+                'dateJour'=>$date,
+              );
+              $this->ModelSInscrire->Insert_Visiteur($donneeAinserer);
+              $this->ModelSInscrire->Insert_EnCours($donneeEncours);
+              $mail=$this->input->post('mail');
+              $this->session->set_flashdata('mail',$mail);
+              $this->session->set_flashdata('code',$code);
+              $this->Validation();
+            }
+          }
+        }// if mdp== confmdp
+        else //sinon ...
         {
-          $checktest=$this->input->post('checkmail');
-          
-          if (isset($checktest))
-          {
-            $visibleMail=true;
-          }
-          else
-          {
-            $visibleMail=false;
-          }
-
-          $checktest=$this->input->post('checktel');
-          if (isset($checktest))
-          {
-            $visibleTel=true;
-          }
-          else
-          {
-            $visibleTel=false;
-          }
-
-          $donneeAinserer=array(
-          'noprofil'=>'1',
-          'nomacteur'=>$this->input->post('nom'),
-          'prenomacteur'=>$this->input->post('prenom'),
-          'motdepasse'=>$this->input->post('mdp'),
-          'mail' => $this->input->post('mail'),
-          'notel' => $this->input->post('tel'),
-          'photoprofil'=>'4pPaR31L_1Ph20T.png',
-          'noquestion'=>$this->input->post('question'),
-          'reponse'=>$this->input->post('reponse'),
-          'mailvisible'=>$visibleMail,
-          'notelvisible'=>$visibleTel,
-          'finaliser'=>false,
+          $DonneesInjectees=array(
+            'pseudo'=>$this->input->post('pseudo'),
+            'mail'=>$this->input->post('mail'),
+            'confmail'=>$this->input->post('confmail'),
+            'mdp'=>$this->input->post('mdp'),
+            'confmdp'=>'',
+            'message' => 'La confirmation de mot de passe n\'est pas similaire au mot de passe écrit'
           );
-          //var_dump($donneeAinserer);
 
-          $code=$this->GenererMotDePasse();
-          $date= date('Y-m-d H:i:s');
-          //var_dump($code);
-          $donneeEncours=array(
-            'code'=>$code,
-            'mail'=> $this->input->post('mail'),
-            'dateJour'=>$date,
-          );
-          $this->ModelSInscrire->Insert_Acteur($donneeAinserer);
-          $this->ModelSInscrire->Insert_EnCours($donneeEncours);
-          $mail=$this->input->post('mail');
-          $this->session->set_flashdata('mail',$mail);
-          $this->session->set_flashdata('code',$code);
-          $this->Validation();
+          $this->load->view('templates/Entete',$DonnéesTitre);
+          $this->load->view('Visiteur/SInscrireVisiteur',$DonneesInjectees);
+          $this->load->view('templates/PiedDePage');
+          //echo 'La confirmation de mot de passe n\'est pas similaire au mot de passe écrit';
         }
-      }// if mdp== confmdp
+      }// if bouton valider
       else //sinon ...
       {
-        $Options= $this->ObtenirQuestions_Secretes();
-
         $DonneesInjectees=array(
-          'nom'=>$this->input->post('nom'),
-          'prenom'=>$this->input->post('prenom'),
-          'mail' => $this->input->post('mail'),
-          'tel' => $this->input->post('tel'),
-          'mailvisible'=>false,
-          'telvisible'=>false,
-          'reponse'=>$this->input->post('rep'),
-          'Questions'=>$Options,
-          'message' => 'La confirmation de mot de passe n\'est pas similaire au mot de passe écrit'
+          'pseudo'=>$this->input->post('pseudo'),
+          'mail'=>$this->input->post('mail'),
+          'confmail'=>'',
+          'mdp'=>$this->input->post('mdp'),
+          'confmdp'=>$this->input->post('confmdp'),
+          'message'=>'La confirmation du mail n\'est pas semblable au mail écrit',
         );
 
         $this->load->view('templates/Entete',$DonnéesTitre);
-        $this->load->view('Visiteur/sInscrire',$DonneesInjectees);
+        $this->load->view('Visiteur/SInscrireVisiteur',$DonneesInjectees);
         $this->load->view('templates/PiedDePage');
-        //echo 'La confirmation de mot de passe n\'est pas similaire au mot de passe écrit';
+      
       }
-    }// if bouton valider
+    }
     else //sinon ...
     {
-      
       $DonneesInjectees=array(
-        'nom'=>'',
+        'pseudo'=>'',
         'mail'=>'',
-        ''
+        'confmail'=>'',
+        'mdp'=>'',
+        'confmdp'=>'',
       );
 
       $this->load->view('templates/Entete',$DonnéesTitre);
@@ -538,7 +618,6 @@ class Visiteur extends CI_Controller
     $message=array(
       'message'=>'',
     );
-    $DonneesInjectees['Titre de la page']='Connexion';
     if($this->input->post('submit'))
     {
       $donneesATester=array
@@ -548,13 +627,13 @@ class Visiteur extends CI_Controller
         'Finaliser'=>true,
       );
       
-      $test = $this->ModelSeConnecter->Test_Inscrit($donneesATester);
+      $testActeur = $this->ModelSeConnecter->Test_Inscrit($donneesATester);
       // echo'deja inscrit ?';
       // var_dump($test);
-      if($test['count(*)']==0)
+      if($testActeur['count(*)']==0) // s'il n'est pas acteur
       {
-        
-        if ($this->session->statut==0) // 0 : statut visiteur
+        $testVisiteur = $this->ModelSInscrire->Test_InscritVisiteur($donneesATester);
+        if($testVisiteur['count(*)']==0)//s'il n'est pas visiteur
         {
           $message=array(
             'message'=>'Vous n\'êtes pas encore inscrit',
@@ -563,14 +642,26 @@ class Visiteur extends CI_Controller
           $this->load->view('templates/Entete',$DonnéesTitre);
           $this->load->view('Visiteur/SeConnecter',$message);
           $this->load->view('templates/PiedDePage');
-        
         }
+        else // s'il est visiteur
+        {
+          $noprofil = 0;
+          $this->session->statut=$noprofil;
+      
+          $noVisiteur=$this->ModelSInscrire->getVisiteur($this->input->post('mail'));
+          //var_dump($noVisiteur);
+          $this->session->noVisiteur=$noVisiteur[0]['noVisiteur'];
+          //echo $this->session->statut;
+          $this->session->set_flashdata('pseudo',$this->input->post('pseudo'));
+          redirect('Visiteur/loadAccueil');
+        }
+     
       }
-      else
+      else // s'il est acteur
       {
         $noprofil = $this->ModelSeConnecter->GetNoProfil($donneesATester);
         $this->session->statut=$noprofil[0]['NoProfil'];
-        echo $this->session->statut;
+        //echo $this->session->statut;
         $noActeur = $this->ModelSeConnecter->GetNoActeur($donneesATester);
         $this->session->noActeur=$noActeur[0]['NoActeur'];
 
@@ -601,8 +692,6 @@ class Visiteur extends CI_Controller
           // var_dump($noprofil[0]['NoProfil']);
           echo'une cape et un slip';
         }
-        //redirect(site_url('Visiteur/loadAccueil'));
-        //redirect('Visiteur/loadAccueil');
       }
     }
     else

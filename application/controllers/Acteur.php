@@ -1923,7 +1923,6 @@ class Acteur extends CI_Controller
         
     }
 
-<<<<<<< HEAD
     public function LieOrgaActeur()
     {
         $message=$this->session->flashdata('message');
@@ -2057,7 +2056,6 @@ class Acteur extends CI_Controller
         $this->session->set_flashdata('message',$message);
         redirect('Acteur/LieOrgaActeur');
     }
-=======
     public function AjouterCommentaire($noAction)
     {
         if($this->input->post('Commenter'))
@@ -2084,6 +2082,5 @@ class Acteur extends CI_Controller
         }
     }
 
->>>>>>> 00535b78760ccbf89ea1aa0194cc9ca0d28b0b8c
 }
 ?>

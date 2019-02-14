@@ -17,6 +17,14 @@
             return $requete->result_array();
         }
 
+        public function getCommUnVisiteur($noVisiteur)
+        {
+            $this->db->select('*');
+            $this->db->from('commentervisiteur');
+            $this->db->where('NOVISITEUR',$noVisiteur);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
         public function insererCommentaireVisiteur($donneeAinserer)
         {
             $this->db->insert('commentervisiteur', $donneeAinserer);
@@ -65,6 +73,13 @@
                 ORDER BY dateheure DESC;"
             );
             return $requete->result_array();
+        }
+
+        public function DeleteVisiteur($noVisiteur)
+        {
+            $tables=array('commenterVisiteur', 'Visiteur');
+            $this->db->where('noVisiteur', $noVisiteur);
+            $this->db->delete($tables);
         }
     }
 ?>

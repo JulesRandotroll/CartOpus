@@ -70,5 +70,15 @@
             $requete = $this->db->get();
             return $requete->result_array();
         }
+
+        public function getPseudo($noVisiteur)
+        {
+            $this->db->select('pseudo');
+            $this->db->from('visiteur ');
+            $this->db->where('noVisiteur',$noVisiteur);
+
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
     }
 ?>
