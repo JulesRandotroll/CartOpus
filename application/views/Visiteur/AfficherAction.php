@@ -61,11 +61,10 @@
                         {
                             foreach($lesMotCles as $unMotCle)
                             {
-                                    echo '<h5>'.$unMotCle['MotCle'].'</h5>';
+                                echo '<h5>'.$unMotCle['MotCle'].'</h5>';
                             }
                         }
                     }
-
                 ?>
             </div>
         </section>
@@ -239,7 +238,7 @@
                             echo'<a  href="'.site_url('Visiteur/loadAccueil').'" style="color:#000000"><button type="button" class="btn btn-danger">Retour</button> </a>';
                             echo '</div>';
                             echo '<div class="text-right">';
-                            echo'<button class="btn btn-danger" href="#signalement" style="color:#000000" id="signalerAction">Signaler l\'action</button>';
+                            echo'<button class="text-right btn btn-danger" href="#signalement" style="color:#000000" id="signalerAction">Signaler l\'action</button>';
                             echo '</div>';
 
                     echo '</div>';
@@ -364,31 +363,36 @@
 
 <?php
 // var_dump($Options);
-echo '<div class="row signaler"  id="signalement" style="background-color:#15B7D1;padding:20px" id="action">';
-    echo '<div class="col-lg-2"></div>';
-    echo '<div class="col-xs-8">';
-        echo '<div class = "text-center">';
-            echo '<section>';
-                echo '<div class = "section-inner" style="background-color:#139CBC;padding:20px">';
-                    echo '<div class="form-group">';
-                    echo form_open('Visiteur/AjouterSignalements/'.$Actions[0]['NOACTION']); 
+    echo '<div class="row signaler"  id="signalement" style="background-color:#15B7D1;padding:20px" id="action">';
+        echo '<div class="col-lg-2"></div>';
+        echo '<div class="col-xs-8">';
+            echo '<div class = "text-center">';
+                echo '<section>';
+                    echo '<div class = "section-inner" style="background-color:#139CBC;padding:20px">';
+                        echo '<div class="form-group">';
+                        echo form_open('Visiteur/AjouterSignalements/'.$Actions[0]['NOACTION']); 
 
-                        echo form_label('Formulaire de Signalements ', 'Signalements');
-                        echo form_dropdown('Signalements', $Options,'' ,Array('class'=>'form-control',"id"=>"dropSignalements",'required'));
-                        echo '</br>';
-                        echo form_textarea('Commentaire', '' ,Array("placeholder"=>"Avis sur le signalement...","class"=>"form-control"));
+                            echo form_label('Formulaire de Signalements ', 'Signalements');
+                            echo form_dropdown('Signalements', $Options,'' ,Array('class'=>'form-control',"id"=>"dropSignalements",'required'));
+                            echo '</br>';
+                            echo form_textarea('Commentaire', '' ,Array("placeholder"=>"Avis sur le signalement...","class"=>"form-control"));
+                        echo '</div>';
+                            echo form_submit('Signaler', 'Signaler',array('class'=>'btn btn-danger'));
+                            echo form_input('Annuler', 'Annuler',array('class'=>'btn btn-danger', 'id'=>'annuler'));
+                        echo form_close();
                     echo '</div>';
-                        echo form_input('Signaler', 'Signaler',array('class'=>'btn btn-danger'));
-                        echo form_input('Annuler', 'Annuler',array('class'=>'btn btn-danger', 'id'=>'annuler'));
-                    echo form_close();
-                echo '</div>';
-            echo '</section>';
+                echo '</section>';
+            echo '</div>';
         echo '</div>';
     echo '</div>';
-echo '</div>';
+?>
 
+<?php 
+    /// affiche les sous actions
+    echo $AffichageAction;
+?>
 
-
+<?php
 if(!empty($lesVisiteurs))
 {
     echo '<div class="row" style="background-color:#15B7D1;padding:20px" id="action">';
@@ -402,7 +406,9 @@ if(!empty($lesVisiteurs))
                         {
                             //var_dump($lesVisiteurs);
                             echo '';
+                            
                             foreach($lesVisiteurs as $unVisiteur):
+
                                 if($unVisiteur['profil'] == 0)
                                 {
                                     echo '<div class="media">';
@@ -412,17 +418,19 @@ if(!empty($lesVisiteurs))
                                             echo '<div class="media-body" style="background-color:lightblue; border-radius: 5px;padding:10px">';
                                                 echo '<table align="left">';
                                                     echo '<tr><td>';
-                                                        echo (img($unVisiteur['PhotoProfil'])).'<BR><BR>';
-                                                        echo '<h4 class="media-heading">'.$unVisiteur['nom'].'</h4>';
+                                                        echo '<div align="center">'.(img($unVisiteur['PhotoProfil'])).'<BR><BR>';
+                                                        echo '<h4 class="media-heading" id ="nom'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['nom'].'</h4>';
+                                                        echo '<h5 class="media-heading" style="font-style: italic;color:#000000"><strong>( Visiteur )</strong></h5></div>';
                                                     echo '</td><td>';
-                                                        echo '<span style="padding:15px">'.$unVisiteur['commentaire'].'</span><BR>';
+                                                        echo '<span style="padding:15px" id="commentaire'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['commentaire'].'</span><BR>';
                                                     echo '</td></tr>';
                                                 echo '</table>';
-                                            echo '<div class = "text-right" style="font-style:italic;">'.$unVisiteur['dateheure'].'</div>';
-                                            echo '<button class="open-button" onclick="openForm()">Open Form</button>';
+                                                echo '<div class = "text-right" style="font-style:italic;" id="date'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['dateheure'].'</div>';
+                                                echo '<BR><BR><BR><BR><BR>';
+                                            echo '<div class = "text-right"><a href="#signalementComm" class="btn btn-link SignalerComm" id ="'.$unVisiteur['noCommentaire'].'">Signaler</a></div>';
+                                            echo '</div>';
                                         echo '</div>';
                                     echo '</div>';
-                                echo '</div>';
                                 }
                                 else if($unVisiteur['profil'] == 1)
                                 {
@@ -431,18 +439,22 @@ if(!empty($lesVisiteurs))
                                         echo '</div>';
                                         echo '<div class="col-sm-8">';
                                             echo '<div class="media-body" style="background-color:#ff6666;border-radius:10px;padding:10px">';
-                                                    echo '<table align="left">';
-                                                        echo '<tr><td>';
-                                                            echo (img($unVisiteur['PhotoProfil'])).'<BR><BR>';
-                                                            echo '<h4 class="media-heading">'.$unVisiteur['nom'].' '.$unVisiteur['prenom'].'</h4>';
-                                                        echo '</td><td>';
-                                                            echo '<span style="padding:15px">'.$unVisiteur['commentaire'].'</span><BR>';
-                                                        echo '</td></tr>';
-                                                    echo '</table>';
-                                                echo '<div class = "text-right" style="font-style:italic;">'.$unVisiteur['dateheure'].'</div>';
+                                                echo '<table align="left">';
+                                                    echo '<tr><td>';
+                                                        echo '<div align="center">'.(img($unVisiteur['PhotoProfil'])).'<BR><BR>';
+                                                        echo '<h4 class="media-heading" id ="nom'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['nom'].' '.$unVisiteur['prenom'].'</h4>';
+                                                        echo '<h5 class="media-heading" style="font-style: italic;color:#000000"><strong>( Acteur )</strong></h5></div>';
+                                                    echo '</td><td>';
+                                                        echo '<span style="padding:15px" id="commentaire'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['commentaire'].'</span><BR>';
+                                                    echo '</td></tr>';
+                                                echo '</table>';
+                                                echo '<div class = "text-right" style="font-style:italic;" id="date'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['dateheure'].'</div>';
+                                                echo '<BR><BR><BR><BR><BR>';
+                                            echo '<div class="text-right"><a href="#signalementComm" class="btn btn-link SignalerComm" id ="'.$unVisiteur['noCommentaire'].'">Signaler</a></div>';
                                             echo '</div>';
                                         echo '</div>';
                                     echo '</div>';
+                                    $i++;
                                 }
                                 else if($unVisiteur['profil'] == 2)
                                 {
@@ -455,10 +467,38 @@ if(!empty($lesVisiteurs))
                                             echo '<div class="media-body text-right" style="background-color:#ff9999; border-radius: 5px;padding:10px">';
                                                 echo '<table align="right">';
                                                     echo '<tr><td>';
+                                                        echo '<div style="padding:15px" id="commentaire'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['commentaire'].'</div>';
+                                                    echo '</td><td>';
+                                                        echo '<div align="center">'.(img($unVisiteur['PhotoProfil'])).'<BR><BR>';
+                                                        echo '<h4 class="media-heading" id ="nom'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['nom'].' '.$unVisiteur['prenom'].'</h4>';
+                                                        echo '<h5 class="media-heading" style="font-style: italic;color:#000000"><strong>( Membre de l\'action )</strong></h5></div>';                                            
+                                                    echo '</td></tr>';
+                                                echo '</table>';
+                                                echo '<div class = "text-left" style="font-style:italic;" id="date'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['dateheure'].'</div>';
+                                                echo '<BR><BR><BR><BR><BR>';
+                                            echo '<div class = "text-left"><a href="#signalementComm" class="btn btn-link SignalerComm" id ="'.$unVisiteur['noCommentaire'].'">Signaler</a></div>';
+                                            echo '</div>';
+                                        echo '</div>';
+                                    echo '</div>';
+                                    $i++;
+                                }
+                                else if($unVisiteur['profil'] == 4)
+                                {
+                                    echo '<div class="media">';
+                                        echo '<div class="media-right media-top">';
+                                        echo '</div>';
+                                        echo '<div class="col-lg-4">';
+                                        echo '</div>';
+                                        echo '<div class="col-sm-8">';
+                                        //#e6e6e6 : gris clair
+                                            echo '<div class="media-body text-right" style="background-color:#80ff80; border-radius: 5px;padding:10px">';
+                                                echo '<table align="right">';
+                                                    echo '<tr><td>';
                                                         echo '<div style="padding:15px">'.$unVisiteur['commentaire'].'</div>';
                                                     echo '</td><td>';
-                                                        echo '<div>'.(img($unVisiteur['PhotoProfil'])).'<BR><BR>';
-                                                        echo '<h4 class="media-heading">'.$unVisiteur['nom'].' '.$unVisiteur['prenom'].'</h4></div>';                                            
+                                                        echo '<div align="center">'.(img($unVisiteur['PhotoProfil'])).'<BR><BR>';
+                                                        echo '<h4 class="media-heading">'.$unVisiteur['nom'].' '.$unVisiteur['prenom'].'</h4>';
+                                                        echo '<h5 class="media-heading" style="font-style: italic;color:#cc0000"><strong>( Modérateur )</strong></h5></div>';                                            
                                                     echo '</td></tr>';
                                                 echo '</table>';
                                                 echo '<div class = "text-left" style="font-style:italic;">'.$unVisiteur['dateheure'].'</div>';
@@ -477,7 +517,8 @@ if(!empty($lesVisiteurs))
     echo '</div>';
 }
 
-if($this->session->statut != 0)
+
+if($this->session->statut != 0 && $this->session->statut !=5)
 {
     echo '<div class="row" style="background-color:#15B7D1;padding:20px" id="action">';
         echo '<div class="col-lg-1"></div>';
@@ -501,7 +542,7 @@ if($this->session->statut != 0)
     echo '</div>';
 
 }
-else
+else if($this->session->noVisiteur!=null)
 {
     echo '<div class="row" style="background-color:#15B7D1;padding:20px" id="action">';
         echo '<div class="col-lg-1"></div>';
@@ -527,6 +568,31 @@ else
 
 ?>
 
-<?php 
-    echo $AffichageAction;
+<?php
+echo '<div class="row SignalerCommentaire"  id="signalementComm" style="background-color:#15B7D1;padding:20px" id="action">';
+    echo '<div class="col-lg-2"></div>';
+    echo '<div class="col-xs-8">';
+        echo '<div class = "text-center">';
+            echo '<section>';
+                echo '<div class = "section-inner" style="background-color:#139CBC;padding:20px">';
+                    echo '<div class="form-group">';
+                    echo form_open('Visiteur/AjouterSignalementsComm/'.$Actions[0]['NOACTION'],array('id'=>'form_signalComm')); 
+
+                        echo form_label('Formulaire de Signalements ', 'Signalements');
+                        echo '<div id="commASignaler"></div>';
+                        echo form_dropdown('SignalementsComm', $Options,'' ,Array('class'=>'form-control',"id"=>"dropSignalements",'required'));
+                        echo '</br>';
+                        echo form_textarea('CommentaireComm', '' ,Array("placeholder"=>"Avis sur le signalement...","class"=>"form-control"));
+                    echo '</div>';
+                        echo form_submit('SignalerComm', 'Signaler',array('class'=>'btn btn-danger'));
+                        echo form_input('Annuler', 'Annuler',array('class'=>'btn btn-danger', 'id'=>'annulerComm'));
+                    echo form_close();
+                echo '</div>';
+            echo '</section>';
+        echo '</div>';
+    echo '</div>';
+echo '</div>';
 ?>
+
+
+
