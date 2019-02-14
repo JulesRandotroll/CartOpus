@@ -16,12 +16,12 @@
     <div class="col-sm-8" style="padding:20px">
         <div style="padding:20px">
             <div class = "text-center">
-                <H1 style="color:#FFFFFF">Ajouter une nouvelle organisation</H1>
+                <H1 style="color:#FFFFFF">Modifier une organisation</H1>
             </div>
             <section>
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <?php
-                        echo form_open('Acteur/AjoutOrga');
+                        echo form_open('Acteur/ModifierOrga/'.$noOrga);
                         //var_dump($message);
                         if ($message!="")
                         {
@@ -77,7 +77,7 @@
                         echo '</div>';
                             
                         echo '<div class="text-center">';
-                            echo form_submit('Ajouter', 'Ajouter',array("class"=>"btn btn-danger btn-lg"));
+                            echo form_submit('modif', 'Modifier',array("class"=>"btn btn-danger btn-lg"));
                         echo '</div>';
                         
                         echo '<br><h6><span style="color:#FF0000"/> *</span> Ces champs sont obligatoires</h6> ';

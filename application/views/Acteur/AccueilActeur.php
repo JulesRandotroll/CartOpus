@@ -2,6 +2,7 @@
                         <?php 
                             if ($this->session->nbaction==0)
                             {
+                                echo '<li><a href="'.site_url('Acteur/LieOrgaActeur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-briefcase"></span> Se Lier Organisation</a></li>';
                                 echo '<li><a href="'.site_url('Acteur/NouvelleAction/0').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-plus"></span> Ajouter Action</a></li>';
                                 echo'<li><a href="'.site_url('Acteur/GestionProfil').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-cog"></span> Compte</a></li>';
                                 echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se Déconnecter</a></li>';
@@ -9,6 +10,7 @@
                             else
                             {
                                 //var_dump($this->session->statut);
+                                echo '<li><a href="'.site_url('Acteur/LieOrgaActeur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-briefcase"></span> Se Lier Organisation</a></li>';
                                 echo '<li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:#FFFFFF ;background-color:#0E7896">Action
                                 <span class="caret"></span></a>

@@ -13,6 +13,12 @@
             return $this->db->insert_id();
         }
 
+        public function Insert_Visiteur($donneeAinserer)
+        {
+            $this->db->insert('visiteur', $donneeAinserer);
+            return $this->db->insert_id();
+        }
+
         public function Insert_EnCours($donneeAinserer)
         {
             $this->db->insert('encoursinscription', $donneeAinserer);
@@ -20,13 +26,22 @@
         }
         public function Test_Inscrit($donneeATester)
         {
-          
            $this->db->select('count(*)');
            $this->db->from('acteur');
            $this->db->where($donneeATester);
            $requete = $this->db->get();
            return $requete->row_array();
            // Select
+        }
+
+        public function Test_InscritVisiteur($donneeATester)
+        {  
+          //var_dump($donneeATester);         
+           $this->db->select('count(*)');
+           $this->db->from('visiteur');
+           $this->db->where($donneeATester);
+           $requete = $this->db->get();
+           return $requete->row_array();
         }
         public function getActeur($mail)
         {
@@ -57,6 +72,14 @@
        
         } 
 
+        public function getUneQuestion($noQuestion)
+        {
+            $this->db->select('nomQuestion'); 
+            $this->db->from('QuestionSecrete');
+            $this->db->where('noQuestion',$noQuestion);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
         public function deleteTempo($mail)
         {
             $donnéesATester=array('mail'=>$mail);
@@ -72,6 +95,15 @@
             //var_dump($DonnéesAUpdate['finaliser']);
             $this->db->where('NOACTEUR',$DonnéesAUpdate["noActeur"]);
             $this->db->update('acteur',$DonnéesAUpdate);
+        }
+
+        public function getVisiteur($mail)
+        {
+            $this->db->select('noVisiteur'); 
+            $this->db->from('visiteur');
+            $this->db->where('mail',$mail);
+            $requete = $this->db->get();
+            return $requete->result_array();
         }
     }
 ?>

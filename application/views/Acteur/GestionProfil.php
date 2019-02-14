@@ -8,6 +8,7 @@
                              }
                              else
                              {
+                                echo '<li><a href="'.site_url('Acteur/LieOrgaActeur').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-briefcase"></span> Se Lier Organisation</a></li>';
                                 echo '<li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:#FFFFFF ;background-color:#0E7896">Action
                                 <span class="caret"></span></a>
@@ -142,10 +143,21 @@
                            
                                     echo '<div class="text-center">'.form_submit('modif', 'Modifier',array("class"=>"btn btn-danger btn-lg")).'</div>';
                
-                                    echo '<div class="text-right">';
-                                    echo '<a style="color:#FFFFFF" href="'.site_url('Acteur/ModifierMDP').'">Modifier son mot de passe ? </a>';
-                                    echo '</div>';  
-   
+
+                                    echo '<div class="row">';
+                                        echo '<div class="col-sm-4">';
+                                        //echo '<div class="text-left">';
+                                            echo '<a href="'.site_url('Acteur/LieOrgaActeur').'" style="color:#FFFFFF"> Se Lier Organisation</a>';
+                                        echo '</div>'; 
+
+                                        echo '<div class="col-sm-4">';
+                                        echo '</div>'; 
+
+                                        echo '<div class="col-sm-4">';
+                                        // echo '<div class="text-right">';
+                                             echo '<a style="color:#FFFFFF" href="'.site_url('Acteur/ModifierMDP').'">Modifier son mot de passe ? </a>';
+                                         echo '</div>';  
+                                    echo '</div>'; 
                                     echo form_close();
                                 ?>
                                 </H4>

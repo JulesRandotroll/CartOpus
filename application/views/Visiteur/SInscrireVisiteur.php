@@ -43,7 +43,7 @@
                         echo '<div class="form-group">';
                         echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                         echo form_label('Pseudo : ', 'Nom');
-                        echo form_input('nom',$nom,array('required'=>'required','placeholder'=>'Votre nom','pattern'=>'[a-zA-Z éèëïùàäüô]{1,40}','class'=>'form-control')); 
+                        echo form_input('pseudo',$pseudo,array('required'=>'required','placeholder'=>'Votre nom','pattern'=>'[a-zA-Z éèëïùàäüô]{1,40}','class'=>'form-control')); 
                         echo '</div>';
                         
                         echo '<div class="form-group">';
@@ -55,19 +55,19 @@
                         echo '<div class="form-group">';
                             echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/>* </span>';
                             echo form_label('Confirmer Mail : ', 'Mail');  
-                            echo form_input('mailConf','',array('required'=>'required','placeholder'=>'Votre mail. Exemple : abc@exemple.com','pattern'=>'[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})','class'=>'form-control'));
+                            echo form_input('confmail',$confmail,array('required'=>'required','placeholder'=>'Votre mail. Exemple : abc@exemple.com','pattern'=>'[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})','class'=>'form-control'));
                         echo '</div>';
 
                         echo '<div class="form-group">';
                             echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                             echo form_label('Mot de passe : ', 'MDP');
-                            echo form_password('mdp','',array('required'=>'required','placeholder'=>'Saisir votre mot de passe','class'=>'form-control'));// VERIF si confirme == mdp
+                            echo form_password('mdp',$mdp,array('required'=>'required','placeholder'=>'Saisir votre mot de passe','class'=>'form-control'));// VERIF si confirme == mdp
                         echo '</div>';
                         
                         echo '<div class="form-group">';
                             echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                             echo form_label('Confirmer mot de passe : ', 'ConfMDP');
-                            echo form_password('confmdp','',array('required'=>'required','placeholder'=>'La confirmation de votre mot de passe','class'=>'form-control'));// VERIF si confirme == mdp
+                            echo form_password('confmdp',$confmdp,array('required'=>'required','placeholder'=>'La confirmation de votre mot de passe','class'=>'form-control'));// VERIF si confirme == mdp
                         echo '</div>';
 
                         echo '<div class="text-center">';

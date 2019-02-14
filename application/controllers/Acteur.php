@@ -840,7 +840,6 @@ class Acteur extends CI_Controller
                             'publiccible'=>$Public,
                             'SiteURLAction'=>$SiteURL,
                             'VALIDEE'=>true,
-                            'SIGNALEE'=>false,
                         );
 
                         $noAction = $this->ModelAction->insertAction($donnéesAction);
@@ -1854,19 +1853,13 @@ class Acteur extends CI_Controller
             );
             //var_dump($DonnéesLieu);
             $nolieu=$this->ModelAction->getLieu($DonnéesLieu);
-              
+            
             if ($nolieu==null){
                 $Lieu=$this->ModelAction->insertLieu($DonnéesLieu);
-                $nolieu=$Lieu['noLieu'];
+                //var_dump($Lieu);
+                $nolieu=$Lieu;
             }
             //var_dump($nolieu);
-
-            $DonnéesDeTest=array(
-                'NOMORGANISATION'=>$DonnéesOrga['NOMORGANISATION'],
-                
-            
-            );
-            // secu a faire sur nom, adresse et code postal pour les doublons
             $DonnéesOrga=array(
                 'NOMORGANISATION'=>$this->input->post('NomOrga'),
                 'NOLIEU'=>$nolieu[0]['nolieu'],
@@ -1875,7 +1868,39 @@ class Acteur extends CI_Controller
                 'SiteURL'=>$this->input->post('SiteURL'),
             );
 
-            $this->ModelOrga->insertOrga($DonnéesOrga); 
+            $DonnéesDeTest=array(
+                'NOMORGANISATION'=>$DonnéesOrga['NOMORGANISATION'],
+                'NOLIEU'=>$nolieu[0]['nolieu'],
+            );
+            $test=$this->ModelOrga->TestDoublon($DonnéesDeTest); 
+            //var_dump($nolieu[0]['nolieu']);
+            if ($test[0]['count(*)']==0)
+            {
+                $this->ModelOrga->insertOrga($DonnéesOrga);
+                
+                redirect('Acteur/LieOrgaActeur');
+                 
+            }
+            else
+            {
+                $message='Cette organisation existe déjà';
+                $DonnéesAInjecter=array(
+                    'message'=>$message,
+                    'NomOrga'=>'',
+                    'Adresse'=>'',
+                    'CodePostal'=>'',
+                    'tel'=>'',
+                    'fax'=>'',
+                    'Ville'=>'',
+                    'SiteURL'=>'',
+        
+                );
+                $DonnéesTitre = array('TitreDeLaPage'=>'Ajout Organisation');
+                $this->load->view('templates/Entete',$DonnéesTitre);
+                $this->load->view('Acteur/AjoutOrga',$DonnéesAInjecter);
+                $this->load->view('templates/PiedDePage'); 
+            }
+
         }
         else
         {
@@ -1898,6 +1923,139 @@ class Acteur extends CI_Controller
         
     }
 
+    public function LieOrgaActeur()
+    {
+        $message=$this->session->flashdata('message');
+        $noActeur=$this->session->noActeur;
+        //var_dump($noActeur);
+        $Organisation = $this->ModelOrga->GetOrgas();
+        //JEN SUIS LAc
+        foreach($Organisation as $uneOrganisation)
+        {
+            if(empty($Options))
+            {
+                //$base=array('<a href="'.site_url('Acteur/AjoutOrga').'" style="color:#FFFFFF"></a>'=>'Ajouter une nouvelle organisation');
+                $Options = array($uneOrganisation['NO_ORGANISATION']=>$uneOrganisation['NOMORGANISATION']);
+                //$Options=$Options+$base;
+            }
+            else
+            {
+                $temporaire =  array($uneOrganisation['NO_ORGANISATION']=>$uneOrganisation['NOMORGANISATION']);
+                $Options = $Options + $temporaire;
+            }
+        }
+        $DonnéesAInjecter=array('Organisations'=>$Organisation,
+            'noActeur'=>$noActeur,
+            'message'=>$message);
+        //var_dump($DonnéesAInjecter);
+        $DonnéesTitre = array('TitreDeLaPage'=>'Lié Organisation/Acteur');
+        $this->load->view('templates/Entete',$DonnéesTitre);
+        $this->load->view('Acteur/LieOrgaActeur',$DonnéesAInjecter);
+        $this->load->view('templates/PiedDePage');
+        
+        
+    }
+    public function ModifierOrga($noOrga)
+    {
+        if($this->input->post('modif'))
+        {
+            $DonnéesLieu=array(
+                'ADRESSE'=>$this->input->post('Adresse'),
+                'CodePostal'=>$this->input->post('CodePostal'),
+                'Ville'=>$this->input->post('Ville'),
+            );
+            //var_dump($DonnéesLieu);
+            $nolieu=$this->ModelAction->getLieu($DonnéesLieu);
+            
+            if ($nolieu==null){
+                $Lieu=$this->ModelAction->insertLieu($DonnéesLieu);
+                //var_dump($Lieu);
+                $nolieu=$Lieu;
+            }
+            //var_dump($nolieu);
+            $DonnéesOrga=array(
+                'NOMORGANISATION'=>$this->input->post('NomOrga'),
+                'NOLIEU'=>$nolieu[0]['nolieu'],
+                'NOTELORGA'=>$this->input->post('tel'),
+                'NOFAXORGA'=>$this->input->post('fax'),
+                'SiteURL'=>$this->input->post('SiteURL'),
+            );
+
+            $DonnéesDeTest=array(
+                'NOMORGANISATION'=>$DonnéesOrga['NOMORGANISATION'],
+                'NOLIEU'=>$nolieu[0]['nolieu'],
+            );
+            $test=$this->ModelOrga->TestDoublon($DonnéesDeTest); 
+            //var_dump($nolieu[0]['nolieu']);
+            if ($test[0]['count(*)']==0)
+            {
+                $this->ModelOrga->UpdateOrga($DonnéesOrga,$noOrga);
+                
+                redirect('Acteur/LieOrgaActeur');
+                 
+            }
+            else
+            {
+                $message='Cette organisation existe déjà';
+                $DonnéesAInjecter=array(
+                    'noOrga'=>$noOrga,
+                    'message'=>$message,
+                    'NomOrga'=>'',
+                    'Adresse'=>'',
+                    'CodePostal'=>'',
+                    'tel'=>'',
+                    'fax'=>'',
+                    'Ville'=>'',
+                    'SiteURL'=>'',
+        
+                );
+                $DonnéesTitre = array('TitreDeLaPage'=>'Ajout Organisation');
+                $this->load->view('templates/Entete',$DonnéesTitre);
+                $this->load->view('Acteur/ModifOrga',$DonnéesAInjecter);
+                $this->load->view('templates/PiedDePage'); 
+            }
+        }
+        else
+        {
+            $Orga=$this->ModelOrga->getOrgaSimple($noOrga);
+
+            //var_dump($Orga);
+            $DonnéesAInjecter=array(
+                'noOrga'=>$noOrga,
+                'message'=>'',
+                'NomOrga'=>$Orga[0]['NOMORGANISATION'],
+                'Adresse'=>$Orga[0]['ADRESSE'],
+                'CodePostal'=>$Orga[0]['CodePostal'],
+                'Ville'=>$Orga[0]['Ville'],
+                'tel'=>$Orga[0]['NOTELORGA'],
+                'fax'=>$Orga[0]['NOFAXORGA'],
+                'SiteURL'=>$Orga[0]['SITEURL'],
+            );
+            $DonnéesTitre = array('TitreDeLaPage'=>'Modifier Organisation');
+            $this->load->view('templates/Entete',$DonnéesTitre);
+            $this->load->view('Acteur/ModifierOrga',$DonnéesAInjecter);
+            $this->load->view('templates/PiedDePage');
+        }
+
+    }
+
+    public function SeLier($noActeur,$noOrga,$noSecteur)
+    {
+        // test doublon
+        $test= $this->ModelOrga->DoublonTravaillerDans($noActeur,$noOrga,$noSecteur);
+        //var_dump($test);
+        if($test[0]['count(*)']==0)
+        {
+            $TravaillerDans = $this->ModelOrga->InsertTravaillerDans($noActeur,$noOrga,$noSecteur);
+            $message='Insertion effectuée';
+        }
+        else
+        {
+            $message='Vous travaillez déjà dans cette organisation';
+        }
+        $this->session->set_flashdata('message',$message);
+        redirect('Acteur/LieOrgaActeur');
+    }
     public function AjouterCommentaire($noAction)
     {
         if($this->input->post('Commenter'))
