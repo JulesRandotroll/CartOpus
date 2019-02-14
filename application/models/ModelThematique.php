@@ -88,6 +88,7 @@
             //var_dump($Themes);
             foreach($Themes as $unTheme)
             {
+                //var_dump($unTheme);
                 $Where = array("s.noThematique"=>$unTheme["NOTHEMATIQUE"]);
                 $SsTheme = $this->getSousTheme($Where);
                 //var_dump($SsTheme);
@@ -112,6 +113,8 @@
                     }
                     else
                     {
+                        $leTheme = array($unTheme["NOTHEMATIQUE"]=>$unTheme["NOMTHEMATIQUE"]);
+                        $array =  $leTheme+ $array;
                         $final = array($unTheme["NOMTHEMATIQUE"]=>$array);
                     }
                 }
@@ -123,6 +126,12 @@
                     }
                     else
                     {
+                        $leTheme = array($unTheme["NOTHEMATIQUE"]=>$unTheme["NOMTHEMATIQUE"]);
+                        echo 'leTheme';
+                        //var_dump($leTheme);
+                        $array =  $leTheme+ $array;
+                        echo 'array';
+                        //var_dump($array);
                         $temp = array($unTheme["NOMTHEMATIQUE"]=>$array);
                          
                     }
@@ -131,6 +140,8 @@
 
                 $array = null;
             }
+            //var_dump($final);
+
             return $final;
         }
         
