@@ -145,6 +145,73 @@
             return $final;
         }
         
+
+
+
+        public function getTheme_SousThemeALier()
+        {
+            $Themes = $this->getSurThematiques();
+            //var_dump($Themes);
+            foreach($Themes as $unTheme)
+            {
+                //var_dump($unTheme);
+                $Where = array("s.noThematique"=>$unTheme["NOTHEMATIQUE"]);
+                $SsTheme = $this->getSousTheme($Where);
+                //var_dump($SsTheme);
+                foreach($SsTheme as $unSsTheme)
+                {
+                    if(empty($array) || $array == null)
+                    {
+                        $array = array($unSsTheme['NOMTHEMATIQUE']=>array($unSsTheme['NOSOUSTHEMATIQUE']=>$unSsTheme['NOMTHEMATIQUE']));
+                    }
+                    else
+                    {
+                        $temp = array($unSsTheme['NOMTHEMATIQUE']=>array($unSsTheme['NOSOUSTHEMATIQUE']=>$unSsTheme['NOMTHEMATIQUE']));
+                        $array = $array + $temp;
+                    }
+                }
+
+                if(empty($final))
+                {
+                    if(empty($array) || $array == null)
+                    {
+                        $final = array($unTheme["NOMTHEMATIQUE"]=>array($unTheme["NOTHEMATIQUE"]=>$unTheme["NOMTHEMATIQUE"]));
+                    }
+                    else
+                    {
+                        $leTheme = array($unTheme["NOTHEMATIQUE"]=>$unTheme["NOMTHEMATIQUE"]);
+                        $array =  $leTheme+ $array;
+                        $final = array($unTheme["NOMTHEMATIQUE"]=>$array);
+                    }
+                }
+                else
+                {
+                    if(empty($array) || $array == null)
+                    {
+                        $temp = array($unTheme["NOMTHEMATIQUE"]=>array($unTheme["NOTHEMATIQUE"]=>$unTheme["NOMTHEMATIQUE"]));
+                    }
+                    else
+                    {
+                        $leTheme = array($unTheme["NOTHEMATIQUE"]=>$unTheme["NOMTHEMATIQUE"]);
+                        echo 'leTheme';
+                        //var_dump($leTheme);
+                        $array =  $leTheme+ $array;
+                        echo 'array';
+                        //var_dump($array);
+                        $temp = array($unTheme["NOMTHEMATIQUE"]=>$array);
+                         
+                    }
+                    $final = $final + $temp;   
+                }
+
+                $array = null;
+            }
+            //var_dump($final);
+
+            return $final;
+        }
+
+
         //Sert aussi à supprimer une sousthematique 
         //Et delier les sous thématiques associées à une thématique 
         public function updateSsThematique_To_Thematique($Where)

@@ -125,10 +125,12 @@ $(function()
         if(id.substring(0,1)=='a')
         {
             $('#form_signalComm').attr('action',url+'/'+noCommentaire+'/'+'1');
+            Niveau = 'Acteur';
         }
         else
         {
             $('#form_signalComm').attr('action',url+'/'+noCommentaire+'/'+'0');    
+            Niveau = 'Visiteur';
         }
 
         var retour = '<div class="media">' +
@@ -139,7 +141,7 @@ $(function()
                                 '<table align="left">' +
                                     '<tr><td style="padding:15px">' +
                                         '<h4 class="media-heading">'+ nom + '</h4>' +
-                                        '<h5 class="media-heading" style="font-style: italic;color:#000000"><strong>( Visiteur )</strong></h5></div>' +
+                                        '<h5 class="media-heading" style="font-style: italic;color:#000000"><strong>( '+Niveau+' )</strong></h5></div>' +
                                     '</td><td>' +
                                         '<div class="text-center" style="padding:15px">' + comm + '</div><BR>' +
                                     '</td></td>' +

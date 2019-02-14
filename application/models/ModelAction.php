@@ -427,6 +427,12 @@
             $this->db->insert('etresignalee', $donneeAinserer);
             return $this->db->insert_id();
         }
+
+        public function deleteSignalements($Where)
+        {
+            $this->db->where($Where);
+            $this->db->delete('etresignalee');
+        }
     }
 ?>
 

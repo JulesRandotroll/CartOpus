@@ -434,7 +434,7 @@ class Visiteur extends CI_Controller
             {
               $donneeAinserer=array(
               'pseudo'=>$this->input->post('pseudo'),
-              'mdp'=>$this->input->post('mdp'),
+              'motdepasse'=>$this->input->post('mdp'),
               'mail' => $this->input->post('mail'),
               'Finaliser'=>false,
               );
@@ -1353,7 +1353,7 @@ class Visiteur extends CI_Controller
       (
         'DateHeure' => $toDay,
         'NoAction' => $noAction,
-        'NoVisiteur' => 2,
+        'NoVisiteur' => $noVisiteur,
         'Commentaire' => $Commentaire,
       );
       
