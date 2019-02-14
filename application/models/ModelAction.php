@@ -67,13 +67,15 @@
         public function getActionsSignalees()
         {
             /*
-            SELECT NOMACTION, PublicCible, e.DateDebut, NomActeur,PrenomActeur,libelleSignalement, compteur
+            SELECT NOMACTION, PublicCible, e.DateDebut, NomActeur,PrenomActeur,libelleSignalement
             FROM action a, etrePartenaire e, acteur ac, etresignalee es, signalement s
             WHERE e.noAction=a.noAction
             AND ac.noActeur=e.noActeur
             AND es.noAction = a.noAction
             AND s.noSignalement = es.noSignalement
             AND noRole = 0
+            AND Validee = true
+            ORDER BY NOMACTION ASC AND s.noSignalement ASC
             */
             $this->db->select('*');
             $this->db->from('Action a');
@@ -82,6 +84,22 @@
             $this->db->join('etresignalee es', 'es.noAction = a.noAction');
             $this->db->join('signalement s', 's.noSignalement = es.noSignalement');
             $this->db->where('Norole=0');
+            $this->db->where('Validee=true');
+            $this->db->order_by('NOMACTION ASC, s.noSignalement ASC');
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
+        public function getActionInvalidees()
+        {
+            $this->db->select('*');
+            $this->db->from('Action a');
+            $this->db->join('etrePartenaire e','e.noAction=a.noAction');
+            $this->db->join('Acteur ac','ac.noActeur=e.noActeur');
+            $this->db->join('etresignalee es', 'es.noAction = a.noAction');
+            $this->db->join('signalement s', 's.noSignalement = es.noSignalement');
+            $this->db->where('Norole=0');
+            $this->db->where('Validee=false');
             $this->db->order_by('NOMACTION ASC, s.noSignalement ASC');
             $requete = $this->db->get();
             return $requete->result_array();
@@ -279,6 +297,12 @@
             $this->db->update('Action',$Valid);
         }
 
+        public function enleverSignalementAction($Where)
+        {
+            $this->db->where($Where);
+            $this->db->delete('etresignalee');
+        }
+
         public function UpdateEtrePartenaire($DonnéesDeTest,$DonneesAModifier)
         {
             //var_dump($DonnéesDeTest);
@@ -405,3 +429,4 @@
         }
     }
 ?>
+

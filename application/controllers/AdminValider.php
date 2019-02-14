@@ -15,6 +15,7 @@ class AdminValider extends CI_Controller
         $this->load->model('ModelAction');
         $this->load->model('ModelRole');
         $this->load->model('ModelThematique');
+        $this->load->model('ModelActeur');
         
         $this->load->library('session');
         $this->load->library("pagination");
@@ -211,6 +212,31 @@ class AdminValider extends CI_Controller
         //
     }
 
+    public function InvaliderActionDepuisAction($noAction)
+    {
+        // echo($noAction.'<BR>');
+        $noAdmin = $this->session->noActeur;
+        $Admin=$this->ModelActeur->getActeur($noAdmin);
+
+        //var_dump($Admin);
+
+        $toDay = date('Y-m-d H:i:s');
+        $ajd = date('d/m/Y à H:i:s');
+
+        $donneeAinserer = array
+        (
+            'noAction' => $noAction,
+            'noSignalement' => '1',
+            'commentaire' => 'Action signalée par l\'administrateur de validation '.$Admin[0]['NOMACTEUR'].' '.$Admin[0]['PRENOMACTEUR'].' le : '.$ajd,
+            'DateSignalement' => $toDay,
+        );
+      
+        //var_dump($donneeAinserer);
+        $DonneesInjectees = $this->ModelAction->insererSignalement($donneeAinserer);
+        redirect('AdminValider/InvaliderAction/'.$noAction);
+        // echo $noAdmin;
+    }
+
     public function InvaliderAction($noAction)
     {
         $Annonceur = $this->ModelAction->getAnnonceur($noAction);
@@ -234,14 +260,14 @@ class AdminValider extends CI_Controller
             $Where= array('noAction'=>$noAction);
             $Valid=array(
                 'VALIDEE'=>false,
-                'SIGNALEE'=>0,
+                'Favoris'=>false,
             );
             //Passage a valider false
             $this->ModelAction->updateValider($Where,$Valid);
 
 
 
-            //redirect('AdminValider/AccueilAdminValider');
+            redirect('AdminValider/AccueilAdminValider');
         }
         else
         {
@@ -271,7 +297,7 @@ class AdminValider extends CI_Controller
                 $mois = 'août';
             }
             
-            $DateDebutAction = $jour.' '.$mois.' '.$Annee.' '.$Heure;
+            $DateDebutAction = $jour.' '.$mois.' '.$Annee.' à '.$Heure;
 
             $DonneesInjectees = array(
                 'noAction'=>$noAction,

@@ -10,7 +10,7 @@
                             }
                             elseif($this->session->statut==4)
                             {
-                                echo'<li><a href="#" style="color:#FFFFFF"><span class="glyphicon glyphicon-remove"></span> Invalider l\'action</a></li>';
+                                echo'<li><a href="'.site_url('AdminValider/InvaliderActionDepuisAction/'.$Actions[0]['NOACTION']).'" style="color:#FFFFFF"><span class="glyphicon glyphicon-remove"></span> Invalider l\'action</a></li>';
                                 echo'<li><a href="'.site_url('AdminValider/AccueilAdminValider').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-home"></span> Page Perso</a></li>'; 
                                 echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se deconnecter</a></li>'; 
                             }
@@ -80,7 +80,7 @@
 
                             $i = 0;
                             $AffichageAction="";
-                            //var_dump($Action);
+                            //var_dump($Actions);
                             foreach($Actions as $uneAction)
                             {   
                                 $Description = str_replace("\n",'<BR>', $uneAction['Description']);

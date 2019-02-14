@@ -44,7 +44,7 @@
                 </div>
                 <div class='form-group'>
                     <?php 
-                        $objet = 'Mise en quarantaine de l\'action '.$nomAction.' ayant lieu le '.$dateDebutAction;
+                        $objet = 'Mise en quarantaine de l\'action : "'.$nomAction.'", ayant lieu le '.$dateDebutAction;
                         // echo $objet;
                         echo form_label('Objet : ','lblobjet');
                         echo form_input('objet',$objet,array('class'=>'form-control','required'=>'required'));
@@ -64,6 +64,10 @@
                 <?php
                     echo form_close();
                 ?>
+                <BR><BR>
+                <div class='text-left'>
+                    <a href="<?php echo site_url('AdminValider/AccueilAdminValider');?>" class="btn btn-danger"> Retour à l'accueil </a>                   
+                </div>
             </div>
         </section>
         <br>

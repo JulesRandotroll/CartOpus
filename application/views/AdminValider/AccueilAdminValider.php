@@ -24,11 +24,9 @@
         </nav>
     </div>
 </div>
-<?php 
 
-// var_dump($Actions);
+<script src="<?php echo js_url('js_AccueilAdmin'); ?>"></script>
 
-?>
 <div class="row" id='principale' style="background-color:#15B7D1"> 
     <div class="col-sm-2">
     </div> 
@@ -124,7 +122,7 @@
                                         $btn =  form_open('AdminValider/InvaliderAction/'.$uneAction['NOACTION']).
                                                     form_submit('Invalider', 'Invalider',array('class'=>'btn btn-danger')).
                                                 form_close().
-                                            '<a href="#'.$uneAction['NOACTION'].'" style="color:#FFFFFF">détails +</a>'
+                                            '<a id="'.$uneAction['NOACTION'].'" href="#info'.$uneAction['NOACTION'].'" class="lienInfo" style="color:#FFFFFF">détails +</a>'
                                         ;
                                     }
                                     
@@ -147,7 +145,7 @@
                                 $pied = 
                                                         '</table>
                                                         <div class="text-right">
-                                                            <a href="#principale" style="color:#FFFFFF">Retour</a>
+                                                            <a class="backUp" href="#principale" style="color:#FFFFFF">Retour</a>
                                                         </div>
                                                     </div>
                                                 </section>
@@ -235,7 +233,7 @@
                                             $Details = $Details.$entete.$tableau.$pied;
                                         }
 
-                                        $tableau = '<tr><th>Motif</th><th>Date premier commentaire</th><th>Commentaire(s)</th></tr>';
+                                        $tableau = '<tr><th>Motif</th><th>Date dernier commentaire</th><th>Commentaire(s)</th></tr>';
 
                                         $nom=$uneAction['NOMACTION'];
 
@@ -306,7 +304,7 @@
                                         $tableau = $tableau.'<tr><td>'.$SignalementActuel.'</td><td>'.$dateSignalement;
 
                                         $entete = 
-                                            '<div class="row info" id="'.$uneAction['NOACTION'].'"  style="background-color:#15B7D1"> 
+                                            '<div class="row info" id="info'.$uneAction['NOACTION'].'"  style="background-color:#15B7D1"> 
                                                 <div class="col-sm-2">
                                                 </div> 
                                                 <div class="col-sm-8">
@@ -318,6 +316,7 @@
                                         ;
                                     }
                                 }//fin foreach
+
                                 if($CommentairesSignalement==null)
                                 {
                                     $CommentairesSignalement='Aucun commentaire pour ce signalement';
@@ -328,17 +327,18 @@
                             }
                             else
                             {
-                                echo '<H4> Aucune action signalée pour l\'instant. </H4>';
+                                echo '<H4> Aucune action signalée encore validée pour l\'instant. </H4>';
                             }
                         
                         ?>
                 </div>
             </section>
             <BR>
+            <BR>
         </div>
     </div>
 </div>
 <?php 
     echo $Details;
-
 ?>
+
