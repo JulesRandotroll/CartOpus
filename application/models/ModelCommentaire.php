@@ -75,18 +75,16 @@
             return $requete->result_array();
         }
 
-<<<<<<< HEAD
         public function DeleteVisiteur($noVisiteur)
         {
             $tables=array('commenterVisiteur', 'Visiteur');
             $this->db->where('noVisiteur', $noVisiteur);
             $this->db->delete($tables);
-=======
+        }
         public function insererSignalementComm($donneeAinserer)
         {
             $this->db->insert('signalementcommentaire', $donneeAinserer);
             return $this->db->insert_id();
->>>>>>> 986b0160c0214077a85d58df1726b41dbfd25ab0
         }
     }
 ?>
