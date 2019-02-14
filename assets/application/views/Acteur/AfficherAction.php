@@ -31,6 +31,8 @@
                             echo'<li><a href="'.site_url('Visiteur/SeDeconnecter').'" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Se Déconnecter</a></li>';
                         }
                          
+
+                        //var_dump($Actions[0]['NOACTION']);
                         ?>
                     </ul>
                 </div>
@@ -283,6 +285,15 @@
                     </a>
                 </li>
                 <li>
+                    <a href="<?php echo site_url('Acteur/AjoutPhotoAction/'.$Actions[0]['NOACTION']); ?>" class="option" id='Photo'>
+                        <H4>
+                            <span class="glyphicon glyphicon-camera" style="color:#FFFFFF" >
+                            </span>
+                            <p id='txt_Photo' style="color:#FFFFFF">Ajouter Photo</p>
+                        </H4>
+                    </a>
+                </li>
+                <li>
                     <a href="<?php echo site_url('Acteur/AjoutSousAction/'.$Actions[0]['NOACTION']); ?>" class="option" id='AjouterSousAction'>
                         <H4>
                             <span class="glyphicon glyphicon-plus-sign" style="color:#FFFFFF">
@@ -326,9 +337,9 @@
     if(!empty($Fichiers))
     {
         echo '<div class="row" style="background-color:#15B7D1">
-        <div class="col-sm-2" style="padding:20px">
+        <div class="col-sm-3" style="padding:20px">
         </div>
-        <div class="col-sm-8" style="padding:20px">
+        <div class="col-sm-6" style="padding:20px">
             <div class = "text-center">
                 <section >
                     <div class = "section-inner" style="background-color:#139CBC;padding:20px">
@@ -374,12 +385,13 @@
                                         echo '<div class="'.$class.'">';
 
                                         echo '<div class="row">';
-                                            echo '<div class="col-sm-2">';
+                                            echo '<div class="col-sm-3">';
                                             echo '</div>';
-                                            echo '<div class="col-sm-8">';
+                                            echo '<div class="col-sm-6">';
+                                            echo '</br></br>';
                                                 echo img($unFichier['FICHIER']);
                                                 echo '</br></br>';
-                                                echo '</br></br>';
+                                                //echo '</br></br>';
                                                 echo '</br></br>';
                                             echo '</div>';
                                         echo '</div>';

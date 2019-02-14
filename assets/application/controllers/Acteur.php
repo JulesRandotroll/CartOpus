@@ -218,66 +218,6 @@ class Acteur extends CI_Controller
         }
     }
 
-    public function RedimensionnerPhoto($Image,$Source,$Destination,$ratio,$ext)
-    {
-        $src = $ext;
-       // echo $src;
-        if($src==".jpeg")
-        {
-            $src=imagecreatefromjpeg($Source.$Image);
-            $ext = 'jpeg';
-        }
-        else if($src==".png")
-        {
-            $src=imagecreatefrompng($Source.$Image);
-            $ext = 'png';
-        }
-        else if($src==".jpg")
-        {
-            $src=imagecreatefromjpeg($Source.$Image);
-            $ext = 'jpg';
-        }
-        else
-        {
-            echo 'erreur';
-        }
-
-        //echo 'taille avant :';
-        $size = getimagesize($Source.$Image);
-        $largeur = $size[0];
-        $hauteur = $size[1];
-        //var_dump($size);
-        if($largeur > $hauteur)
-        {
-            $newlargeur = $ratio;
-            $newhauteur = round(($hauteur/$largeur)*$ratio);
-        }
-        else {
-            $newlargeur = ($largeur/$hauteur)*$ratio;
-            $newhauteur = $ratio;
-        }
-        // the document recommends you to use truecolor to get better result
-        $imtn = imagecreatetruecolor( $newlargeur, $newhauteur );
-  
-
-        imagecopyresampled($imtn, $src, 0, 0, 0, 0, $newlargeur, $newhauteur, $largeur, $hauteur);
-        //var_dump($Destination.$Image);
-        if ($ext == 'jpg')
-        {
-            imagejpeg($imtn, $Destination.$Image);
-        
-        }
-        else if ($ext == 'png' ) 
-        {
-            imagepng($imtn, $Destination.$Image);
-        }
-        else if ($ext == 'jpeg') {
-            imagejpeg($imtn, $Destination.$Image);
-       
-        }
-        return $Image;
-    }
-
     public function AfficherActionSelectionnee($noAction)
     {
         $noActeur = $this->session->noActeur;
@@ -655,6 +595,170 @@ class Acteur extends CI_Controller
         }
         
     }
+
+    public function RedimensionnerPhoto($Image,$Source,$Destination,$ratio,$ext)
+    {
+        $src = $ext;
+       // echo $src;
+        if($src==".jpeg")
+        {
+            $src=imagecreatefromjpeg($Source.$Image);
+            $ext = 'jpeg';
+        }
+        else if($src==".png")
+        {
+            $src=imagecreatefrompng($Source.$Image);
+            $ext = 'png';
+        }
+        else if($src==".jpg")
+        {
+            $src=imagecreatefromjpeg($Source.$Image);
+            $ext = 'jpg';
+        }
+        else
+        {
+            echo 'erreur';
+        }
+
+        //echo 'taille avant :';
+        $size = getimagesize($Source.$Image);
+        $largeur = $size[0];
+        $hauteur = $size[1];
+        //var_dump($size);
+        if($largeur > $hauteur)
+        {
+            $newlargeur = $ratio;
+            $newhauteur = round(($hauteur/$largeur)*$ratio);
+        }
+        else {
+            $newlargeur = ($largeur/$hauteur)*$ratio;
+            $newhauteur = $ratio;
+        }
+        // the document recommends you to use truecolor to get better result
+        $imtn = imagecreatetruecolor( $newlargeur, $newhauteur );
+  
+
+        imagecopyresampled($imtn, $src, 0, 0, 0, 0, $newlargeur, $newhauteur, $largeur, $hauteur);
+        //var_dump($Destination.$Image);
+        if ($ext == 'jpg')
+        {
+            imagejpeg($imtn, $Destination.$Image);
+        
+        }
+        else if ($ext == 'png' ) 
+        {
+            imagepng($imtn, $Destination.$Image);
+        }
+        else if ($ext == 'jpeg') {
+            imagejpeg($imtn, $Destination.$Image);
+       
+        }
+        return $Image;
+    }
+    public function AjoutPhotoAction($noAction)
+    {
+        //var_dump($noAction);
+        if($this->input->post('envoyer'))
+        {
+            var_dump($_FILES['avatar']);
+            if(isset($_FILES['avatar']))
+            { 
+                //var_dump($_FILES);
+                if (is_uploaded_file($_FILES['avatar']['tmp_name']))
+                {
+                    $extensions = array('.png', '.gif', '.jpg', '.jpeg');
+                    // récupère la partie de la chaine à partir du dernier . pour connaître l'extension.
+                    $extension = strrchr($_FILES['avatar']['name'], '.');
+    
+                    //Ensuite on teste
+                    if(!in_array($extension, $extensions)) //Si l'extension n'est pas dans le tableau
+                    {
+                        $message = 'Vous devez uploader un fichier de type png, gif, jpg, jpeg, txt ou doc...';
+                        //echo $message;
+                    }
+                    else
+                    {
+                        $message= 'Upload effectué avec succès !';
+                        //echo $message;
+
+                        //$temp=$this->ModelAction->GetPhoto($noAction);
+                        //var_dump($temp);
+                        //$AnciennePhoto=$temp[0]['photoaction'];
+                        
+                        $str=$_FILES['avatar']['tmp_name'].'\\';
+                        $chaine=explode('\\',$str);
+                        $Source=$chaine[0].'/'.$chaine[1].'/'.$chaine[2].'/';
+                       // echo '<br>Source:';
+                        //var_dump($Source);
+
+                        $PhotoTempo=$chaine[3];
+                        //echo 'phototempo: ';
+                        //var_dump($PhotoTempo);
+                     
+                        $str=$_FILES['avatar']['type'];
+                        $chaine=explode('/',$str);
+                        //echo 'Extension:';
+                        $ext='.'.$chaine[1];
+                        //var_dump($ext);
+    
+                        $Destination='assets\images\\';
+                        //echo 'Destination :';
+                        //var_dump($Destination);
+                        $ratio='300';
+                        //var_dump($ratio);
+                        $Redimension=$this->RedimensionnerPhoto($PhotoTempo,$Source,$Destination,$ratio,$ext);
+    
+                        //echo 'photo redimensionnée :';
+                        //var_dump($Redimension);
+                        //var_dump($noAction);
+                        $nomPhoto=$noAction.'_'.date('Y-m-d_H_i_s');
+                        //echo 'renommage: ';
+                        //var_dump($nomPhoto);
+                 
+    
+                        $new=$nomPhoto.$ext;
+                        //echo 'photo toute belle renommée: ';
+                        var_dump($new);
+    
+                        rename($Destination.$Redimension,$Destination.$new);
+                     
+                        $DateAction=$this->ModelAction->GetMinDate($noAction);
+                        
+                        $DonnéesAInserer=array(
+                            'NOACTION'=>$noAction,
+                            'DATEHEURE'=> date('Y-m-d_H_i_s'), 
+                            'DateAction'=>$DateAction[0]['DATEDEBUT'],
+                            'FICHIER'=>$new,
+                        );
+                        var_dump($DonnéesAInserer);
+                        $this->ModelAction->InsertPhoto($DonnéesAInserer);
+                        //$this->ModelActeur->UpdatePhoto($AnciennePhoto,$nomPhoto.$ext,$noAction);
+                        
+                        //unlink($Destination.$PhotoTempo);
+                        //redirect('Acteur/AfficherActionSelectionnee/'.$noAction);
+                    }
+                   
+                }
+                else //Sinon (la fonction renvoie FALSE).
+                {
+                    echo 'Echec de l\'upload !';
+                }
+            }
+        }
+        else
+        {
+            $DonnéesTitre = array('TitreDeLaPage'=>'Ajouter une photo à l\'action');
+
+            $Photo='4pPaR31L_1Ph20T.png';
+            // var_dump($Photo);
+            $Données = array("Photo"=> $Photo,
+                            "noAction"=>$noAction);
+    
+            $this->load->view('templates/Entete',$DonnéesTitre);
+            $this->load->view('Acteur/AjoutPhotoAction',$Données);//,$Données
+            $this->load->view('templates/PiedDePage');
+        }  
+    }
     public function RenommerPhoto($Image)
     {
         $noActeur = $this->session->noActeur;
@@ -663,8 +767,6 @@ class Acteur extends CI_Controller
 
     public function GestionPhoto($Photo)//$ratio
     {
-        
-        
         // <!-- <form method="POST" action="GestionPhoto" enctype="multipart/form-data">-->
         // <!-- On limite le fichier à 2Mo -->
         // <!--<input type="hidden" name="MAX_FILE_SIZE" value="2000000">-->
@@ -740,8 +842,9 @@ class Acteur extends CI_Controller
                     //var_dump(rename($Destination.$Redimension,$Destination.$new) );
                                 
                     $this->ModelActeur->UpdatePhoto($AnciennePhoto,$nomPhoto.$ext,$noActeur);
-                    //unlink($Destination.$PhotoTempo);
-                    redirect('Acteur/AccueilActeur');
+                    var_dump($AnciennePhoto);
+                    unlink($Destination.$AnciennePhoto);
+                    //redirect('Acteur/AccueilActeur');
                 }
                
             }
