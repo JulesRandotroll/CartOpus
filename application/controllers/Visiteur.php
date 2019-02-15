@@ -1088,7 +1088,7 @@ class Visiteur extends CI_Controller
               $exist = TRUE;
             }
           endforeach;
-          if ($exist==FALSE)
+          if($exist==FALSE)
           {
             array_push($DonneesInjectees['lesActions'],$uneThematique);
           }
