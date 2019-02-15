@@ -298,7 +298,7 @@ class Acteur extends CI_Controller
         if($this->input->post('Choix_Lier'))
         {
             $noAction=$this->input->post('Action');
-            redirect('Acteur/AjoutThematique/'); 
+            redirect('Acteur/AjoutThematique/'.$noAction); 
         }
         else
         {
@@ -1539,20 +1539,20 @@ class Acteur extends CI_Controller
         $this->session->statut=array('NOPROFIL'=>$profil);
         redirect('Acteur/AfficherMembre/'.$noAction);
     }
-    public function AjoutThematique()
+
+    public function AjoutThematique($noAction)
     {
         // sortir toutes les thématiques dans faire références puis recup le nom correspondant puis les injectées
         $noActeur = $this->session->noActeur;
-
         
-        $Thematique=$this->ModelThematique->getTheme_SousTheme();
-        //var_dump($Thematique);
+        $Thematiques=$this->ModelThematique->getTheme_SousThemeALier();
+        //var_dump($Thematiques);
         $MotCle=$this->ModelThematique->getMotCle();
-       // var_dump($MotCle);
+        //var_dump($MotCle);
         $DonnéesTitre = array('TitreDeLaPage'=>'Ajout Thématique');
         $DonnéesAInjecter=array(
-            'theme'=>$Thematique,
-            'motcle'=>$MotCle,
+            'lesThematiques'=>$Thematiques,
+            'motsCles'=>$MotCle,
         );
 
         $this->load->view('templates/Entete',$DonnéesTitre);

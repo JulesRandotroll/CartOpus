@@ -1,6 +1,12 @@
 $(function()
 {
+    
+    var url = $('#form_signalComm').attr('action');
+    //alert(url);
+    
     $('.sousAction').hide();
+
+
 
     $('.lienSousAction').on('click',function()
     {
@@ -134,15 +140,28 @@ $(function()
 
     $('.SignalerComm').on('click',function()
     {
-        var noCommentaire=this.id;
-        var id = noCommentaire;
+        
+        var id=this.id;
+        var noCommentaire = id.substring(1);
+        // alert(noCommentaire);
+        // alert(id);
         var comm = $('#commentaire'+id).html();
         var date = $('#date'+id).html();
         var nom = $('#nom'+id).html();
 
-        var url= $('#form_signalComm').attr('action');
-        $('#form_signalComm').attr('action',url+'/'+noCommentaire);
-
+        
+        //alert(url);
+        
+        if(id.substring(0,1)=='a')
+        {
+            $('#form_signalComm').attr('action',url+'/'+noCommentaire+'/'+'1');
+            Niveau = 'Acteur';
+        }
+        else
+        {
+            $('#form_signalComm').attr('action',url+'/'+noCommentaire+'/'+'0');    
+            Niveau = 'Visiteur';
+        }
 
         var retour = '<div class="media">' +
                         '<div class="media-left media-top">' +
@@ -152,7 +171,7 @@ $(function()
                                 '<table align="left">' +
                                     '<tr><td style="padding:15px">' +
                                         '<h4 class="media-heading">'+ nom + '</h4>' +
-                                        '<h5 class="media-heading" style="font-style: italic;color:#000000"><strong>( Visiteur )</strong></h5></div>' +
+                                        '<h5 class="media-heading" style="font-style: italic;color:#000000"><strong>( '+Niveau+' )</strong></h5></div>' +
                                     '</td><td>' +
                                         '<div class="text-center" style="padding:15px">' + comm + '</div><BR>' +
                                     '</td></td>' +

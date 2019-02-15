@@ -34,7 +34,7 @@
         <section >
             <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                 <?php 
-                    echo form_open('AdminValider/InvaliderAction/'.$noAction);
+                    echo form_open($path.$noAction);
                 ?>
                 <div class='form-group'>
                     <?php 
@@ -44,7 +44,6 @@
                 </div>
                 <div class='form-group'>
                     <?php 
-                        $objet = 'Mise en quarantaine de l\'action : "'.$nomAction.'", ayant lieu le '.$dateDebutAction;
                         // echo $objet;
                         echo form_label('Objet : ','lblobjet');
                         echo form_input('objet',$objet,array('class'=>'form-control','required'=>'required'));

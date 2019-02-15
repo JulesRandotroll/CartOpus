@@ -429,15 +429,15 @@ if(!empty($lesVisiteurs))
                                                 echo '<table align="left">';
                                                     echo '<tr><td>';
                                                         echo '<div align="center">'.(img($unVisiteur['PhotoProfil'])).'<BR><BR>';
-                                                        echo '<h4 class="media-heading" id ="nom'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['nom'].'</h4>';
+                                                        echo '<h4 class="media-heading" id ="nomv'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['nom'].'</h4>';
                                                         echo '<h5 class="media-heading" style="font-style: italic;color:#000000"><strong>( Visiteur )</strong></h5></div>';
                                                     echo '</td><td>';
-                                                        echo '<span style="padding:15px" id="commentaire'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['commentaire'].'</span><BR>';
+                                                        echo '<span style="padding:15px" id="commentairev'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['commentaire'].'</span><BR>';
                                                     echo '</td></tr>';
                                                 echo '</table>';
-                                                echo '<div class = "text-right" style="font-style:italic;" id="date'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['dateheure'].'</div>';
+                                                echo '<div class = "text-right" style="font-style:italic;" id="datev'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['dateheure'].'</div>';
                                                 echo '<BR><BR><BR><BR><BR>';
-                                            echo '<div class = "text-right"><a href="#signalementComm" class="btn btn-link SignalerComm" id ="'.$unVisiteur['noCommentaire'].'">Signaler</a></div>';
+                                            echo '<div class = "text-right"><a href="#signalementComm" class="btn btn-link SignalerComm" id ="v'.$unVisiteur['noCommentaire'].'">Signaler</a></div>';
                                             echo '</div>';
                                         echo '</div>';
                                     echo '</div>';
@@ -452,19 +452,18 @@ if(!empty($lesVisiteurs))
                                                 echo '<table align="left">';
                                                     echo '<tr><td>';
                                                         echo '<div align="center">'.(img($unVisiteur['PhotoProfil'])).'<BR><BR>';
-                                                        echo '<h4 class="media-heading" id ="nom'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['nom'].' '.$unVisiteur['prenom'].'</h4>';
+                                                        echo '<h4 class="media-heading" id ="noma'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['nom'].' '.$unVisiteur['prenom'].'</h4>';
                                                         echo '<h5 class="media-heading" style="font-style: italic;color:#000000"><strong>( Acteur )</strong></h5></div>';
                                                     echo '</td><td>';
-                                                        echo '<span style="padding:15px" id="commentaire'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['commentaire'].'</span><BR>';
+                                                        echo '<span style="padding:15px" id="commentairea'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['commentaire'].'</span><BR>';
                                                     echo '</td></tr>';
                                                 echo '</table>';
-                                                echo '<div class = "text-right" style="font-style:italic;" id="date'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['dateheure'].'</div>';
+                                                echo '<div class = "text-right" style="font-style:italic;" id="datea'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['dateheure'].'</div>';
                                                 echo '<BR><BR><BR><BR><BR>';
-                                            echo '<div class="text-right"><a href="#signalementComm" class="btn btn-link SignalerComm" id ="'.$unVisiteur['noCommentaire'].'">Signaler</a></div>';
+                                            echo '<div class="text-right"><a href="#signalementComm" class="btn btn-link SignalerComm" id ="a'.$unVisiteur['noCommentaire'].'">Signaler</a></div>';
                                             echo '</div>';
                                         echo '</div>';
                                     echo '</div>';
-                                    $i++;
                                 }
                                 else if($unVisiteur['profil'] == 2)
                                 {
@@ -477,20 +476,19 @@ if(!empty($lesVisiteurs))
                                             echo '<div class="media-body text-right" style="background-color:#ff9999; border-radius: 5px;padding:10px">';
                                                 echo '<table align="right">';
                                                     echo '<tr><td>';
-                                                        echo '<div style="padding:15px" id="commentaire'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['commentaire'].'</div>';
+                                                        echo '<div style="padding:15px" id="commentairea'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['commentaire'].'</div>';
                                                     echo '</td><td>';
                                                         echo '<div align="center">'.(img($unVisiteur['PhotoProfil'])).'<BR><BR>';
-                                                        echo '<h4 class="media-heading" id ="nom'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['nom'].' '.$unVisiteur['prenom'].'</h4>';
+                                                        echo '<h4 class="media-heading" id ="noma'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['nom'].' '.$unVisiteur['prenom'].'</h4>';
                                                         echo '<h5 class="media-heading" style="font-style: italic;color:#000000"><strong>( Membre de l\'action )</strong></h5></div>';                                            
                                                     echo '</td></tr>';
                                                 echo '</table>';
-                                                echo '<div class = "text-left" style="font-style:italic;" id="date'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['dateheure'].'</div>';
+                                                echo '<div class = "text-left" style="font-style:italic;" id="datea'.$unVisiteur['noCommentaire'].'">'.$unVisiteur['dateheure'].'</div>';
                                                 echo '<BR><BR><BR><BR><BR>';
-                                            echo '<div class = "text-left"><a href="#signalementComm" class="btn btn-link SignalerComm" id ="'.$unVisiteur['noCommentaire'].'">Signaler</a></div>';
+                                            echo '<div class = "text-left"><a href="#signalementComm" class="btn btn-link SignalerComm" id ="a'.$unVisiteur['noCommentaire'].'">Signaler</a></div>';
                                             echo '</div>';
                                         echo '</div>';
                                     echo '</div>';
-                                    $i++;
                                 }
                                 else if($unVisiteur['profil'] == 4)
                                 {

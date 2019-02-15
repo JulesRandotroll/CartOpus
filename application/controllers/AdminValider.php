@@ -30,7 +30,7 @@ class AdminValider extends CI_Controller
     public function AccueilAdminValider()
     {
 
-        $Where =array('SIGNALEE'=>true);
+        
         $Actions = $this->ModelAction->getActionsSignalees();
 
         $DonneesInjectees = array(
@@ -307,6 +307,8 @@ class AdminValider extends CI_Controller
                 'noActeur'=>$Annonceur[0]['NOACTEUR'],
                 'nomAction'=>$Annonceur[0]['NOMACTION'],
                 'dateDebutAction'=>$DateDebutAction,
+                'objet'=>'Mise en quarantaine de l\'action : "'.$Annonceur[0]['NOMACTION'].'", ayant lieu le '.$DateDebutAction,
+                'path'=> 'AdminValider/InvaliderAction/',
             );
 
             $DonneesTitre = array('TitreDeLaPage'=>'Invalider '.$Annonceur[0]['NOMACTION']);
@@ -316,6 +318,99 @@ class AdminValider extends CI_Controller
         }
     }
 
+    public function gererValidationAction()
+    {
+        $Actions = $this->ModelAction->getActionInvalidees();
+        
+        $DonneesInjectees = array(
+            'Actions'=>$Actions,
+        );
+
+        $DonneesTitre = array('TitreDeLaPage'=>'Gestion Validation');
+        $this->load->view('templates/Entete',$DonneesTitre);
+        $this->load->view('AdminValider/ValiderAction',$DonneesInjectees);
+        $this->load->view('templates/PiedDePage');
+    
+    }
+    public function ValiderAction($noAction)
+    {
+        $Annonceur = $this->ModelAction->getAnnonceur($noAction);
+
+        if($this->input->post('Envoyer'))
+        {
+            $mail=$Annonceur[0]['MAIL'];
+            $objet = $this->input->post('objet');
+            $message = $this->input->post('message');
+
+
+            $this->email->from('cartopus22@gmail.com');
+            $this->email->to($mail); 
+            $this->email->subject($objet);
+            $this->email->message($message."\r\n\r\n".'Ce message a été envoyé par : CartOpus. Contact: cartopus22@gmail.com');
+            if (!$this->email->send())
+            {
+                $this->email->print_debugger();
+            }
+
+            $Where= array('noAction'=>$noAction);
+            $Valid=array(
+                'VALIDEE'=>true,
+            );
+            //Passage a valider true, plus suppression des signalements
+            $this->ModelAction->updateValider($Where,$Valid);
+            $this->ModelAction->deleteSignalements($Where);
+
+
+            redirect('AdminValider/gererValidationAction');
+        }
+        else
+        {
+            
+            
+            $DateDebutAction = $Annonceur[0]['DATEDEBUT'];
+            
+            // %d %B %Y %Hh%M
+
+            setlocale (LC_TIME, 'fr_FR.UTF-8','fra');
+            $jour = strftime("%A %d",strtotime($DateDebutAction));
+            $mois = strftime("%B",strtotime($DateDebutAction));
+            $Annee = strftime("%Y",strtotime($DateDebutAction));
+            $Heure = strftime("%Hh%M",strtotime($DateDebutAction)); 
+            
+
+            if(substr($mois,0,1) == 'f')
+            {
+                $mois = 'février';
+            }
+            elseif(substr($mois,0,1) == 'd')
+            {
+                $mois = 'décembre';
+            }
+            elseif(substr($mois,0,1) == 'a')
+            {
+                $mois = 'août';
+            }
+            
+            $DateDebutAction = $jour.' '.$mois.' '.$Annee.' à '.$Heure;
+
+            $DonneesInjectees = array(
+                'noAction'=>$noAction,
+                'mail'=>$Annonceur[0]['MAIL'],
+                'nom'=>$Annonceur[0]['NOMACTEUR'],
+                'prenom'=>$Annonceur[0]['PRENOMACTEUR'],
+                'noActeur'=>$Annonceur[0]['NOACTEUR'],
+                'nomAction'=>$Annonceur[0]['NOMACTION'],
+                'dateDebutAction'=>$DateDebutAction,
+                'objet'=>'Revalidation de l\'action : "'.$Annonceur[0]['NOMACTION'].'", ayant lieu le '.$DateDebutAction,
+                'path'=> 'AdminValider/ValiderAction/',
+            );
+
+            $DonneesTitre = array('TitreDeLaPage'=>'Invalider '.$Annonceur[0]['NOMACTION']);
+            $this->load->view('templates/Entete',$DonneesTitre);
+            $this->load->view('AdminValider/MailingInvalidation',$DonneesInjectees);
+            $this->load->view('templates/PiedDePage');
+        }
+    }
 }
 
 

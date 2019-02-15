@@ -16,7 +16,6 @@
             return $requete->result_array();
         }
         
-
         public function getSousThematiqueExiste($Where)
         {
             $this->db->select('*');
@@ -35,7 +34,6 @@
             return $requete->result_array();
         }
 
-
         public function getThematique_SousThematiqueExiste($Where)
         {
             $this->db->select('*');
@@ -44,9 +42,6 @@
             $requete = $this->db->get();
             return $requete->result_array();
         }
-
-
-
 
         public function getSurThematiques()
         {
@@ -88,6 +83,7 @@
             //var_dump($Themes);
             foreach($Themes as $unTheme)
             {
+                //var_dump($unTheme);
                 $Where = array("s.noThematique"=>$unTheme["NOTHEMATIQUE"]);
                 $SsTheme = $this->getSousTheme($Where);
                 //var_dump($SsTheme);
@@ -112,6 +108,8 @@
                     }
                     else
                     {
+                        $leTheme = array($unTheme["NOTHEMATIQUE"]=>$unTheme["NOMTHEMATIQUE"]);
+                        $array =  $leTheme+ $array;
                         $final = array($unTheme["NOMTHEMATIQUE"]=>$array);
                     }
                 }
@@ -123,6 +121,12 @@
                     }
                     else
                     {
+                        $leTheme = array($unTheme["NOTHEMATIQUE"]=>$unTheme["NOMTHEMATIQUE"]);
+                       
+                        //var_dump($leTheme);
+                        $array =  $leTheme+ $array;
+                       
+                        //var_dump($array);
                         $temp = array($unTheme["NOMTHEMATIQUE"]=>$array);
                          
                     }
@@ -131,9 +135,59 @@
 
                 $array = null;
             }
+            //var_dump($final);
+
             return $final;
         }
         
+        public function getTheme_SousThemeALier()
+        {
+            $Themes = $this->getSurThematiques();
+            //var_dump($Themes);
+            $array = null;
+            foreach($Themes as $unTheme)
+            {
+                //echo'changement de theme<BR>';
+                
+                //var_dump($unTheme);
+                $Where = array("s.noThematique"=>$unTheme["NOTHEMATIQUE"]);
+                $SsThemes = $this->getSousTheme($Where);
+                
+                if(!empty($SsThemes))
+                {
+                    // echo('SsThemes');
+                    // var_dump($SsThemes);
+                    
+                    array_push($SsThemes,$unTheme);
+                    
+                    //echo'Theme ? ';
+                    //var_dump($SsThemes);
+                    $array = array_reverse($SsThemes);
+
+                    //echo'Theme dans l\'bon sens ? ';
+                    //var_dump($array);
+                }
+                else
+                {
+                    $array = array(0=>$unTheme);
+                }
+                if(empty($final))
+                {
+                    $final = array($unTheme["NOTHEMATIQUE"]=>$array);
+                }
+                else
+                {
+                    $temp = array($unTheme["NOTHEMATIQUE"]=>$array);
+                    $final = $final + $temp;
+                }
+                $array = null;
+                
+            }
+            var_dump($final);
+            return $final;
+        }
+
+
         //Sert aussi à supprimer une sousthematique 
         //Et delier les sous thématiques associées à une thématique 
         public function updateSsThematique_To_Thematique($Where)

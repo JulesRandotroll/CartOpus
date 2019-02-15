@@ -86,5 +86,14 @@
             $this->db->insert('signalementcommentaire', $donneeAinserer);
             return $this->db->insert_id();
         }
+
+        public function getCommentairesSignales()
+        {
+            $this->db->select('*');
+            $this->db->from('signalementcommentare sc');
+            $this->db->join('signalement s','s.noSignalement=sc.noSignalement');
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
     }
 ?>
