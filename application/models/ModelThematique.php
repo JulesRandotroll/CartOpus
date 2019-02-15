@@ -140,9 +140,6 @@
             return $final;
         }
         
-
-
-
         public function getTheme_SousThemeALier()
         {
             $Themes = $this->getSurThematiques();

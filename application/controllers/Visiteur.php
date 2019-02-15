@@ -1266,7 +1266,7 @@ class Visiteur extends CI_Controller
       {
         if(empty($Options))
         {
-            $Options = array($unSignalement['noSignalement']=>$unSignalement['libelleSignalement']);
+            $Options = array(($unSignalement['noSignalement'] == 0)=>$unSignalement['libelleSignalement']);
         }
         else
         {

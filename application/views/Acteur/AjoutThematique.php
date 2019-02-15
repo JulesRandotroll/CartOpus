@@ -51,14 +51,14 @@
                                 if($i==0)
                                 {
                                     // les thematiques 
-                                    echo '<li class="Thematique" type="checkbox" value="#" style="color:#FFFFFF" id="'.$uneSsThematique['NOMTHEMATIQUE'].'"> '.$uneSsThematique['NOMTHEMATIQUE'].'</li>';
+                                    echo '<h4><input class="Thematique" type="checkbox" value="#" style="color:#FFFFFF" id="'.$uneSsThematique['NOMTHEMATIQUE'].'"> '.$uneSsThematique['NOMTHEMATIQUE'].'</input></h4>';
                                     echo '<ul>';
                                     $i++;
                                 }
                                 else
                                 {
                                     // les sous thematiques
-                                    echo '<li class="Thematique" type="checkbox" value="#" style="color:#FFFFFF" id="'.$uneSsThematique['NOMTHEMATIQUE'].'"> '.$uneSsThematique['NOMTHEMATIQUE'].'</li>';
+                                    echo '<h4><input class="Thematique" type="checkbox" value="#" style="color:#FFFFFF" id="'.$uneSsThematique['NOMTHEMATIQUE'].'"> '.$uneSsThematique['NOMTHEMATIQUE'].'</input><BR></h4>';
                                 }
                             }
                             echo '</ul>';
@@ -106,7 +106,7 @@
                                         $i=0;
                                     }
     
-                                    echo '<td><input class="MotCle" type="checkbox" value="#" style="color:#FFFFFF" id="'.$unMotCle['MotCle'].'"> '.$unMotCle['MotCle'].'</input></td>';
+                                    echo '<td><h4><input class="MotCle" type="checkbox" value="#" style="color:#FFFFFF" id="'.$unMotCle['MotCle'].'"> '.$unMotCle['MotCle'].'</input></h4></td>';
                                     $i++;
                                 }
                             }
@@ -144,3 +144,4 @@
 </div> 
     
 </div> 
+<script src=<?php echo('"'.js_url("js_ActeurAjoutThematique").'"')?>></script>
