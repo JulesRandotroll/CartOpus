@@ -91,6 +91,7 @@ class Visiteur extends CI_Controller
 
     if ( $this->input->post('valider'))//si le bouton "Valider l'inscription" a été cliqué ...
     {
+      $Options= $this->ObtenirQuestions_Secretes();
       $checktest=$this->input->post('checkmail');
               
       if (isset($checktest))
@@ -186,7 +187,7 @@ class Visiteur extends CI_Controller
                 'mail' => $this->input->post('mail'),
                 'notel' => $this->input->post('tel'),
                 'photoprofil'=>'4pPaR31L_1Ph20T.png',
-                'noquestion'=>$Options,
+                'noquestion'=>$this->input->post('Questions'),
                 'reponse'=>$this->input->post('reponse'),
                 'mailvisible'=>$visibleMail,
                 'notelvisible'=>$visibleTel,
