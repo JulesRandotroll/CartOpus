@@ -477,6 +477,21 @@ class Acteur extends CI_Controller
             redirect('Acteur/AfficherMembre/'.$noAction);
         }
     }
+
+    public function SupprimerPhoto($noAction,$fichier)
+    {
+        echo'plop';
+        $donneeAsupprimer=array('FICHiER'=>$fichier,
+                                'NOACTION'=>$noAction);
+
+        var_dump($donneeAsupprimer);
+        $this->ModelAction->Suppr_Stocker($donneeAsupprimer);
+
+        //redirect('Acteur/AfficherActionSelectionnee/'.$noAction);
+     
+        echo ($noAction);
+    }
+
     public function RenouvelerAction($noAction)
     {
         $noActeur = $this->session->noActeur;
@@ -673,7 +688,7 @@ class Acteur extends CI_Controller
                     //Ensuite on teste
                     if(!in_array($extension, $extensions)) //Si l'extension n'est pas dans le tableau
                     {
-                        $message = 'Vous devez uploader un fichier de type png, gif, jpg, jpeg, txt ou doc...';
+                        $message = 'Vous devez uploader un fichier de type png, gif, jpg, jpeg,txt ou doc...';
                         //echo $message;
                     }
                     else
@@ -735,7 +750,7 @@ class Acteur extends CI_Controller
                         //$this->ModelActeur->UpdatePhoto($AnciennePhoto,$nomPhoto.$ext,$noAction);
                         
                         //unlink($Destination.$PhotoTempo);
-                        //redirect('Acteur/AfficherActionSelectionnee/'.$noAction);
+                        redirect('Acteur/AfficherActionSelectionnee/'.$noAction);
                     }
                    
                 }
@@ -759,6 +774,7 @@ class Acteur extends CI_Controller
             $this->load->view('templates/PiedDePage');
         }  
     }
+
     public function RenommerPhoto($Image)
     {
         $noActeur = $this->session->noActeur;
@@ -842,9 +858,9 @@ class Acteur extends CI_Controller
                     //var_dump(rename($Destination.$Redimension,$Destination.$new) );
                                 
                     $this->ModelActeur->UpdatePhoto($AnciennePhoto,$nomPhoto.$ext,$noActeur);
-                    var_dump($AnciennePhoto);
-                    unlink($Destination.$AnciennePhoto);
-                    //redirect('Acteur/AccueilActeur');
+                    //var_dump($Destination.$AnciennePhoto);
+                    unlink( $Destination.$AnciennePhoto);
+                    redirect('Acteur/AccueilActeur');
                 }
                
             }
@@ -1238,6 +1254,7 @@ class Acteur extends CI_Controller
         $this->ModelAction->Suppr_EtrePartenaire($donneeAsupprimer);
         $this->ModelAction->Suppr_ProfilPourAction($donneeAsupprimer);
         $this->ModelAction->Suppr_Action($donneeAsupprimer);
+        $this->ModelAction->Suppr_Stocker($donneeAsupprimer);
         if ($this->input->post("Choix_Supprimer"))
         {
             redirect('Acteur/ChoixAction/5','refresh');
@@ -1293,6 +1310,46 @@ class Acteur extends CI_Controller
         }
     }
     
+    public function EnvoieMail()
+    {
+        if ( $this->input->post('Envoyer'))
+        {
+            $objet = $this->input->post('subject');
+            $message=$this->input->post('Message');
+            $mail = $this->input->post('mail');
+            //1cape1slip@gmail.com mdp: goldebutger007
+            $nom = $this->input->post('nom');
+            $prenom = $this->input->post('prenom');
+            $this->email->from('cartopus22@gmail.com');
+            $this->email->to('1cape1slip@gmail.com'); 
+            $this->email->subject($objet);
+            $this->email->message($message."\r\n".'Ce message a été envoyé par : '.$nom.' '.$prenom.'. Contact: '.$mail);
+            if (!$this->email->send())
+            {
+                $this->email->print_debugger();
+            }
+            else
+            {
+                $this->AccueilActeur();
+            }
+            
+        }
+        else{
+            $acteur=$this->ModelActeur->getActeur($noActeur); 
+            //var_dump($acteur);
+            $DonneesAInjectees=array
+            (
+                'mail'=> $acteur[0]['MAIL'],
+                'nom'=>$acteur[0]['NOMACTEUR'],
+                'prenom'=>$acteur[0]['PRENOMACTEUR'],
+            );
+            //var_dump($DonneesAInjectees);
+            $DonnéesTitre = array('TitreDeLaPage'=>'Contactez Nous');
+            $this->load->view('templates/Entete',$DonnéesTitre);
+            $this->load->view('Acteur/ContacterAdmin',$DonneesAInjectees);
+            $this->load->view('templates/PiedDePage');
+        }
+    }
     public function AjoutMembre($noAction)
     {
         $DonnéesTitre = array('TitreDeLaPage'=>'Ajout Membre');

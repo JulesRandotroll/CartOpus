@@ -30,8 +30,6 @@
                                     //echo form_open('Acteur/AjoutPhotoAction/'.$noAction);
                                    // var_dump($Photo);
                                     echo img($Photo);
-                                    
-                          
                                 ?>
                             </td>
                             <td>

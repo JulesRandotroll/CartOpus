@@ -189,10 +189,6 @@
         
         }
 
-        // public function InsertPhoto($PhotoTempo,$nomPhoto.$ext,$noAction)
-        // {
-
-        // }
         public function GetPhoto($noAction)
         {
             $this->db->select('FICHIER');
@@ -216,6 +212,14 @@
             $this->db->where('noAction',$noAction);
             $this->db->where('PhotoProfil',$AnciennePhoto);
             $this->db->update('acteur',$Donnees);
+        }
+
+        
+        public function Suppr_Stocker($donneeAsupprimer)
+        {
+           // var_dump($DonneesASupprimer);
+            $this->db->where($donneeAsupprimer);
+            $this->db->delete('stocker');
         }
         public function getDerniereAction($noAction)
         {
