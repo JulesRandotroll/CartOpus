@@ -7,6 +7,7 @@
             /* chargement database.php (dans config), obligatoirement dans le constructeur */
         }
 
+
         public function getActions()
         {
             $this->db->select('*');
@@ -148,6 +149,15 @@
             $requete = $this->db->get();
             return $requete->result_array(); 
         }
+
+        public function GetMinDate($noAction)
+        {
+            $this->db->select_min('DATEDEBUT');
+            $this->db->from('Avoirlieu');
+            $this->db->where('NOACTION',$noAction);
+            $requete = $this->db->get();
+            return $requete->result_array(); 
+        }
         public function getActionFavorite($DonnéesDeTest)
         {
             $this->db->select('*');
@@ -171,7 +181,6 @@
 
         public function getFichersPourAction($DonnéesDeTest)
         {   
-            
             $this->db->select('FICHIER');
             $this->db->from('Stocker');
             $this->db->where($DonnéesDeTest);
@@ -180,6 +189,38 @@
         
         }
 
+        public function GetPhoto($noAction)
+        {
+            $this->db->select('FICHIER');
+            $this->db->from('stocker');
+            $this->db->where('noAction',$noAction);
+            $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
+        public function InsertPhoto($DonnéesAInserer)
+        {
+            $this->db->insert('stocker',$DonnéesAInserer);
+        }
+
+        public function UpdatePhoto($AnciennePhoto,$NewPhoto,$noAction)
+        {
+            //var_dump($noActeur);
+           //var_dump($AnciennePhoto);
+           // var_dump($NewPhoto);
+            $Donnees = array('PhotoAction' => $NewPhoto);
+            $this->db->where('noAction',$noAction);
+            $this->db->where('PhotoProfil',$AnciennePhoto);
+            $this->db->update('acteur',$Donnees);
+        }
+
+        
+        public function Suppr_Stocker($donneeAsupprimer)
+        {
+           // var_dump($DonneesASupprimer);
+            $this->db->where($donneeAsupprimer);
+            $this->db->delete('stocker');
+        }
         public function getDerniereAction($noAction)
         {
             $this->db->select_max('datedebut');

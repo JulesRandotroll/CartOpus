@@ -48,6 +48,38 @@ $(function()
             },
         }   
     });
+    
+    $('.suppr_Photo').on('click',function()
+    {
+        index=this.id;
+        //alert(index);
+
+        $.confirm(
+        {
+            icon: 'glyphicon glyphicon-alert',
+            title: 'Attention',
+            content: 'Voulez vous vraiment supprimer cette photo',
+            type: 'red',
+            typeAnimated: true,
+            autoClose:"non|10000",
+            buttons: 
+            {
+                oui:
+                {
+                    action: function () 
+                    {
+                        location.href = $('#form_SupprPhoto'+index).attr('action');
+                        //location.href = $('#form-SupprPhoto'+index).attr('action');
+                    }
+                },
+                non: 
+                {
+                    btnClass:"btn-red",
+                },
+            }   
+        });
+    });
+
     $('.trash_SupprimerSousAction').on('click',function()
     {
         index=this.id;
@@ -78,8 +110,6 @@ $(function()
         });
     });
 
-
-    
     $('.option').hover(
     function()
     {
