@@ -37,14 +37,13 @@
         <div style="padding:20px">
             <div class = "text-center">
             <?php
-            $ActionSelect='BabelDance'; // faire passer le nom choisie en paramètre
-                echo '<H1 style="color:#FFFFFF">Contactez Nous</H1>';
+                echo '<H1 style="color:#FFFFFF">Mail groupé</H1>';
             ?>
             </div>
             <section >
                 <div class = "section-inner" style="background-color:#139CBC;padding:20px">
                     <?php
-                        echo form_open('Acteur/ContacterAdmin');
+                        echo form_open('Acteur/EnvoieMail/'.$noAction);
     
                         echo '<div class="col-xs-6">';
                         echo '<div class="form-group">';
@@ -68,26 +67,16 @@
                         echo form_input('mail',$mail,array('required'=>'required','placeholder'=>'Ex : abc@exemple.com','class'=>'form-control')); 
                         echo '</div>';
 
-                        $options=array(
-                            'Ajout Thématique'=>'Ajout Thematique',
-                            'Ajout Rôle'=>'Ajout Role',
-                            'Recuperer Donnees BDD'=>'Droit d\'acces aux données personnelles',
-                            'Supprimer Donnees BDD'=>'Droit de suppression aux données personnelles',
-                            'Modifier Donnees BDD'=>'Droit de modification aux données personnelles',
-                            'Signalé un problème'=>'Signalé un problème',
-                            'Question'=>'Question',
-                            'Autre'=>'Autre',
-                        );
                         echo '<div class="form-group">';
                         echo '<span style="color:#FF0000"/> * </span>';
                         echo form_label('Objet : ', 'objet');
-                        echo form_dropdown('subject', $options, 'default',array('required'=>'required','class'=>'form-control'));
+                        echo form_input('subject','',array('required'=>'required','placeholder'=>'Ex : Changement d\'organisation','class'=>'form-control'));
                         echo '</div>';
 
                         echo '<div class="form-group">';
                         echo '<span style="color:#FF0000"/> * </span>';
                         echo form_label('Message : ', 'mess');
-                        echo form_textarea('Message','',array('required'=>'required','placeholder'=>'Expliquez ici le motif de votre contacte','class'=>'form-control','pattern'=>'[a-zA-Z0-9" éèëïùàäüô]')); 
+                        echo form_textarea('Message','',array('required'=>'required','placeholder'=>'Expliquez ici le motif de votre contact','class'=>'form-control','pattern'=>'[a-zA-Z0-9" éèëïùàäüô]')); 
                         echo '</div>';
 
                         echo '<div class="text-right">';

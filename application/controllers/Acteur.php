@@ -1310,35 +1310,59 @@ class Acteur extends CI_Controller
         }
     }
     
-    public function EnvoieMail()
+    public function EnvoieMail($noAction)
     {
+        $Membres=$this->ModelMembre->GetMembreSansAnnonceur($noAction);
+        //var_dump($Membres);
+        foreach($Membres as $unMembre)
+        {
+            if(empty($Options))
+            {
+                $Options = array($unMembre['NOACTEUR']=>$unMembre['MAIL']);
+            }
+            else
+            {
+                $temporaire = array($unMembre['NOACTEUR']=>$unMembre['MAIL']);
+                $Options = $Options + $temporaire;
+            }
+        }
+
+        //var_dump($Options);
         if ( $this->input->post('Envoyer'))
         {
+           
             $objet = $this->input->post('subject');
             $message=$this->input->post('Message');
             $mail = $this->input->post('mail');
-            //1cape1slip@gmail.com mdp: goldebutger007
+            
+
+            //to : array des mails des autres collabo
+
             $nom = $this->input->post('nom');
             $prenom = $this->input->post('prenom');
-            $this->email->from('cartopus22@gmail.com');
-            $this->email->to('1cape1slip@gmail.com'); 
+            $this->email->from($mail);
+            $this->email->to($Options); 
             $this->email->subject($objet);
-            $this->email->message($message."\r\n".'Ce message a été envoyé par : '.$nom.' '.$prenom.'. Contact: '.$mail);
+            $this->email->message($message."\r\n".'Ce message a été envoyé par : '.$nom.' '.$prenom.'.');
             if (!$this->email->send())
             {
                 $this->email->print_debugger();
             }
             else
-            {
-                $this->AccueilActeur();
+            {  
+                redirect('Acteur/AccueilActeur');
             }
             
         }
-        else{
+        else
+        {
+            $noActeur=$this->session->noActeur;
+            //var_dump($noActeur);
             $acteur=$this->ModelActeur->getActeur($noActeur); 
             //var_dump($acteur);
             $DonneesAInjectees=array
             (
+                'noAction'=>$noAction,
                 'mail'=> $acteur[0]['MAIL'],
                 'nom'=>$acteur[0]['NOMACTEUR'],
                 'prenom'=>$acteur[0]['PRENOMACTEUR'],
@@ -1346,7 +1370,7 @@ class Acteur extends CI_Controller
             //var_dump($DonneesAInjectees);
             $DonnéesTitre = array('TitreDeLaPage'=>'Contactez Nous');
             $this->load->view('templates/Entete',$DonnéesTitre);
-            $this->load->view('Acteur/ContacterAdmin',$DonneesAInjectees);
+            $this->load->view('Acteur/EnvoieMail',$DonneesAInjectees);
             $this->load->view('templates/PiedDePage');
         }
     }
@@ -1483,7 +1507,7 @@ class Acteur extends CI_Controller
                             // var_dump($donnéesProfilPourAction);  
                             $this->ModelMembre->insertEtrePartenaire($donnéesEtrePartenaire);
                             $this->ModelMembre->insertProfilPourAction($donnéesProfilPourAction);  
-                            //redirect('Acteur/AfficherMembre/'.$noAction);
+                            redirect('Acteur/AfficherMembre/'.$noAction);
                         }
                         else
                         {

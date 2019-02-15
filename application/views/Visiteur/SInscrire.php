@@ -124,7 +124,7 @@
                             echo '<div class="form-group">';
                                 echo '<span style="color:#FF0000" data-toggle="popover" title="*" data-trigger="hover" data-content="Ce champ est obligatoire"/> * </span>';
                                 echo form_label('Question Secrète', 'Question'); 
-                                echo form_dropdown('question', $Questions, 'default',array('required'=>'required','class'=>'form-control'));
+                                echo form_dropdown('Questions', $Questions, 'default',array('required'=>'required','class'=>'form-control'));
                             echo '</div>';
                     
                             //REPONSES

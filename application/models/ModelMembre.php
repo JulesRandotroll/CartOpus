@@ -42,6 +42,24 @@
             return $requete->result_array();
         }
 
+        public function GetMembreSansAnnonceur($noAction)
+        {
+
+           $this->db->select('*');  
+           $this->db->from('etrepartenaire');
+           $this->db->join('acteur','etrepartenaire.noActeur=acteur.noActeur');
+           $this->db->join('profilpouraction','etrepartenaire.noActeur=profilpouraction.noActeur');
+           $this->db->join('role','etrepartenaire.norole=role.norole');
+           $this->db->where('etrepartenaire.noAction=profilpouraction.noAction');
+           $this->db->where('profilpouraction.NOACTION',$noAction);
+           $this->db->where('etrepartenaire.NOROLE != 0');
+           //$this->db->having('etrepartenaire.NOROLE != 0');
+           //$this->db->not_like('etrepartenaire.NOROLE', 0);
+           $this->db->group_by('etrepartenaire.noacteur'); 
+           $requete = $this->db->get();
+            return $requete->result_array();
+        }
+
         public function Suppr_Membre($DonneesASupprimer)
         {
             //var_dump($DonneesASupprimer);
