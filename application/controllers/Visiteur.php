@@ -121,7 +121,7 @@ class Visiteur extends CI_Controller
           'tel'=>$this->input->post('tel'),
           'mdp'=>$this->input->post('mdp'),
           'confmdp'=>$this->input->post('confmdp'),
-          'Questions'=>$this->input->post('question'),
+          'Questions'=>$this->input->post('Questions'),
           'reponse'=>$this->input->post('reponse'),
           'telvisible'=>$visibleTel,
           'mailvisible'=>$visibleMail,
