@@ -58,7 +58,7 @@
                                 else
                                 {
                                     // les sous thematiques
-                                    echo '<h4><input class="Thematique" type="checkbox" value="#" style="color:#FFFFFF" id="'.$uneSsThematique['NOMTHEMATIQUE'].'"> '.$uneSsThematique['NOMTHEMATIQUE'].'</input><BR></h4>';
+                                    echo '<h4><input class="SousThematique" type="checkbox" value="#" style="color:#FFFFFF" id="'.$uneSsThematique['NOMTHEMATIQUE'].'"> '.$uneSsThematique['NOMTHEMATIQUE'].'</input><BR></h4>';
                                 }
                             }
                             echo '</ul>';
