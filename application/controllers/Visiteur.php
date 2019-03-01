@@ -526,7 +526,7 @@ class Visiteur extends CI_Controller
     else
     {
       //var_dump($mail);
-      $SiteURL="http://127.0.0.1/SIO1/CartOpus/index.php/Visiteur/finaliser/".$code; 
+      $SiteURL="http://127.0.0.1/CartOpus/index.php/Visiteur/finaliser/".$code; 
       $message="Vous vous inscrivez actuellement sur le site de CartOpus, veuillez cliquer sur ce lien pour finaliser l'inscription: ".$SiteURL;
       $objet="Validation d'inscription";
       $this->email->from('cartopus22@gmail.com');
